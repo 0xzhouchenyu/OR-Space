@@ -1,4 +1,4 @@
-# OR-Claw · Supplementary Code
+# OR-Space · Supplementary Code
 
 This folder contains the **core scripts** released alongside the paper. It is
 self-contained and does **not** include: (i) the LLM-under-test rollout
@@ -25,7 +25,7 @@ evaluation server and are not redistributed here.
 All LLM scripts read the key from env:
 
 ```bash
-export OR_CLAW_API_KEY="sk-..."
+export OR_SPACE_API_KEY="sk-..."
 ```
 
 Models used in the released runs:

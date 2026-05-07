@@ -60,7 +60,7 @@ OUT_CSV = os.path.join(BASE, "revise_difficulty_llm.csv")
 OUT_JSONL = os.path.join(LOG_DIR, "difficulty_full.jsonl")
 os.makedirs(LOG_DIR, exist_ok=True)
 
-API_KEY  = os.environ.get("OR_CLAW_API_KEY", "REDACTED_SET_ENV_VAR")
+API_KEY  = os.environ.get("OR_SPACE_API_KEY", "REDACTED_SET_ENV_VAR")
 BASE_URL = "https://api.shubiaobiao.cn/v1"
 MODEL    = "gpt-5.1"
 

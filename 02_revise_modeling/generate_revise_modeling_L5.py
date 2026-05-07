@@ -40,7 +40,7 @@ LOG_DIR = os.path.join(ROOT, "logs_regen16")
 os.makedirs(LOG_DIR, exist_ok=True)
 
 CLIENT = OpenAI(
-    api_key=os.environ.get("OR_CLAW_API_KEY", "REDACTED_SET_ENV_VAR"),
+    api_key=os.environ.get("OR_SPACE_API_KEY", "REDACTED_SET_ENV_VAR"),
     base_url="https://api.modelverse.cn/v1/",
     timeout=180.0,   # hard per-request timeout so a hung call fails fast
     max_retries=1,

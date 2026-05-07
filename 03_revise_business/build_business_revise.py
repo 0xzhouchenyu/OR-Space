@@ -45,7 +45,7 @@ LOGF    = os.path.join(LOG_DIR, "build_business.log")
 os.makedirs(DST_DIR, exist_ok=True)
 os.makedirs(LOG_DIR, exist_ok=True)
 
-API_KEY  = os.environ.get("OR_CLAW_API_KEY", "REDACTED_SET_ENV_VAR")
+API_KEY  = os.environ.get("OR_SPACE_API_KEY", "REDACTED_SET_ENV_VAR")
 BASE_URL = "https://api.shubiaobiao.cn/v1"
 MODEL    = "gpt-5.4"
 

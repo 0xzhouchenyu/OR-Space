@@ -55,7 +55,7 @@ import os, sys, json, time, argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from openai import OpenAI
 
-API_KEY  = os.environ.get("OR_CLAW_API_KEY", "REDACTED_SET_ENV_VAR")
+API_KEY  = os.environ.get("OR_SPACE_API_KEY", "REDACTED_SET_ENV_VAR")
 BASE_URL = "https://api.shubiaobiao.cn/v1"
 MODEL    = "gpt-5.4"
 

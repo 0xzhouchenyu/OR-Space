@@ -20,7 +20,7 @@ from openai import OpenAI
 # ============================================================
 # API 配置
 # ============================================================
-API_KEY = os.environ.get("OR_CLAW_API_KEY", "REDACTED_SET_ENV_VAR")
+API_KEY = os.environ.get("OR_SPACE_API_KEY", "REDACTED_SET_ENV_VAR")
 BASE_URL = "https://api.modelverse.cn/v1/"
 MODEL_NAME = "claude-opus-4-6"
 
@@ -242,7 +242,7 @@ def main():
     total = 0
     
     print("=" * 70)
-    print("🚀 OR-Claw Solution Generator")
+    print("🚀 OR-Space Solution Generator")
     print(f"  模型: {MODEL_NAME}")
     print(f"  数据目录: {data_dir}")
     print(f"  范围: IndustryOR_{args.start} ~ IndustryOR_{args.end}")

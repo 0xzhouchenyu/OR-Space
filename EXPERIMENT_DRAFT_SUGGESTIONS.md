@@ -159,7 +159,7 @@ Verdict:    |obj - GT| / max(1, |GT|) < 1e-3 under CBC/GLPK/HiGHS agreement
 Timeout:    120 s per solver run; LLM budget = one shot, no self-reflection
 Models:     claude-opus-4-7, gemini-3.1-pro-preview, gpt-5.1 (benchmarks);
             gpt-5.4 (rewriter / rubric judge); gemini-2.5-pro (cross judge)
-API key:    read from $OR_CLAW_API_KEY (never in code)
+API key:    read from $OR_SPACE_API_KEY (never in code)
 Seeds:      the forge is LLM-generative; seed = accepted checkpoint, not RNG
 ```
 
@@ -168,9 +168,9 @@ Seeds:      the forge is LLM-generative; seed = accepted checkpoint, not RNG
 ## 8. What is explicitly **not** in this draft and why
 
 * No custom solver — we deliberately do not propose a new solving algorithm;
-  §1 should re-state that OR-Claw is a **benchmark and workspace abstraction**,
+  §1 should re-state that OR-Space is a **benchmark and workspace abstraction**,
   not a solving method. Any performance win comes from the agent setup, not
-  from OR-Claw itself.
+  from OR-Space itself.
 * No Gurobi numbers in the released artefact — Gurobi is only used on the
   evaluation server as an oracle cross-check; the public pipeline stays on
   open solvers so that the benchmark is reproducible without a Gurobi licence.
