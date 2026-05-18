@@ -1,0 +1,17 @@
+OR-Space review snapshot license
+
+This dataset package is released for non-commercial research use under terms
+compatible with Creative Commons Attribution-NonCommercial 4.0 International
+(CC BY-NC 4.0): https://creativecommons.org/licenses/by-nc/4.0/
+
+You may share and adapt the benchmark for non-commercial research purposes,
+provided that you give appropriate credit, indicate changes, and do not imply
+endorsement by the authors.
+
+The package may derive from or transform IndustryOR seed topologies, which are
+distributed under CC BY-NC 4.0. Downstream users must comply with those inherited
+terms as well as the terms of any external tools they use to run evaluations.
+
+This license does not cover proprietary solver binaries, commercial API
+credentials, or third-party model services. Those assets are not redistributed in
+this package and remain governed by their respective providers' terms.
