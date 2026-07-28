@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "paper": "OR-Space KDD",
+  "table": "Table 2",
+  "solver": "gurobi",
+  "task": "revise_code",
+  "metric": "pass_at_1",
+  "expected_instances_per_model": 100,
+  "expected_models": 18,
+  "overleaf_commit": "9a95339",
+  "overleaf_experiments_tex_sha256": "a0334f646abe038f25a7ddb699e18a51df54ab576d922d14970f660fedbb5003",
+  "snapshot_file": "table2_snapshot.csv",
+  "provenance_file": "provenance_review.csv",
+  "archival_ready": false,
+  "blocking_models": [
+    "gemini-3.1-pro",
+    "claude-opus-4-6",
+    "claude-sonnet-4.5",
+    "qwen3.5-27b"
+  ],
+  "artifact_policy": {
+    "snapshot_is_evidence": false,
+    "require_100_unique_rows": true,
+    "require_raw_and_extracted_outputs": true,
+    "require_execution_logs": true,
+    "require_prompt_and_environment_hashes": true,
+    "allow_posthoc_resamples": false,
+    "allow_unresolved_infrastructure_rows": false
+  }
+}
