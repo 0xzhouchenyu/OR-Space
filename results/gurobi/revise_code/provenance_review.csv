@@ -1,9 +1,9 @@
 paper_model,reported_passed,evidence_passed,evidence_class,protocol_status,public_artifacts,status,note
-gemini-3.1-pro,87,87,legacy_canonical,posthoc_resample_rows,missing,blocked,"IDs 18;36;38;65;95 carry deflated/resample markers; restored first-call result is 92"
+gemini-3.1-pro,87,87,historical_pass_both_at_2,metric_header_mismatch,aggregate_only,blocked,"92 first attempts passed; IDs 18;36;38;65;95 failed the temperature-0.7 repeat, so 87 passed both; this is PassBoth@2 rather than Pass@1"
 gemini-3-flash,82,82,merged_infrastructure_recovery,adapter_fixed_recovery,aggregate_only,provisional,"37 of 47 truncated/empty historical rows were rerun; merged aggregate reports 82"
 claude-opus-4-6,87,90,historical_first_result,no_matching_87_cell,missing,blocked,"available Gurobi Revise-code cell reports 90; locate a valid 87 cell or correct the paper"
 gpt-5.4,85,85,exact_predeflate_restoration,restored_first_call,aggregate_only,provisional,"three temperature-0.7 substitutions removed using exact pre-deflate rows"
-claude-sonnet-4.5,82,82,legacy_canonical,posthoc_resample_and_infrastructure_rows,missing,blocked,"historical 82 cell is contaminated; restored first-call result is 89"
+claude-sonnet-4.5,82,82,historical_pass_both_at_2,metric_header_mismatch_and_infrastructure_review,aggregate_only,blocked,"89 first attempts passed and seven failed the repeat, so 82 passed both; infrastructure rows still require review"
 gpt-5.1,81,81,exact_predeflate_restoration,restored_first_call,aggregate_only,provisional,"ten temperature-0.7 substitutions removed using exact pre-deflate rows"
 gemini-2.5-flash,71,71,historical_first_result,no_resample_marker,aggregate_only,provisional,"publish the complete 100-row result cell and run manifest"
 gemini-2.5-pro,81,81,invariant_restoration,first_artifacts_preserved_telemetry_partial,aggregate_only,provisional,"twelve replaced passes recovered from preserved first artifacts; first-call telemetry is unavailable"

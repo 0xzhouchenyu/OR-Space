@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "paper": "OR-Space KDD",
   "table": "Table 2",
   "solver": "gurobi",
@@ -11,6 +11,18 @@
   "overleaf_experiments_tex_sha256": "a0334f646abe038f25a7ddb699e18a51df54ab576d922d14970f660fedbb5003",
   "snapshot_file": "table2_snapshot.csv",
   "provenance_file": "provenance_review.csv",
+  "per_instance_catalog_file": "per_instance/instance_catalog.csv",
+  "per_instance_results_file": "per_instance/results.csv",
+  "per_instance_schema_file": "per_instance/schema.json",
+  "available_pass_both_summary_file": "pass_both_at_2_available.csv",
+  "metric_semantics": {
+    "paper_snapshot_metric": "pass_at_1",
+    "repeatability_metric": "pass_both_at_2",
+    "repeatability_display_name": "PassBoth@2",
+    "repeatability_rule": "attempt_1_passed AND attempt_2_passed",
+    "conventional_pass_at_2": false,
+    "table2_is_uniform_pass_both_at_2": false
+  },
   "archival_ready": false,
   "blocking_models": [
     "gemini-3.1-pro",
@@ -25,6 +37,8 @@
     "require_execution_logs": true,
     "require_prompt_and_environment_hashes": true,
     "allow_posthoc_resamples": false,
-    "allow_unresolved_infrastructure_rows": false
+    "allow_unresolved_infrastructure_rows": false,
+    "require_explicit_metric_per_attempt_set": true,
+    "forbid_mixing_pass_at_1_and_pass_both_at_2": true
   }
 }

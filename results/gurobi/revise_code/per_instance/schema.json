@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OR-Space per-instance Gurobi Revise-code CSV semantics",
+  "type": "object",
+  "required": [
+    "paper_model",
+    "artifact_model",
+    "instance_id",
+    "benchmark_instance_id",
+    "attempt_1_passed",
+    "attempt_2_passed",
+    "attempt_2_policy",
+    "pass_at_1",
+    "pass_both_at_2",
+    "conditional_resample_passed",
+    "evidence_status"
+  ],
+  "properties": {
+    "instance_id": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "attempt_1_passed": {
+      "enum": ["", "true", "false"]
+    },
+    "attempt_2_passed": {
+      "enum": ["", "true", "false"]
+    },
+    "attempt_2_policy": {
+      "enum": ["", "all_instances", "first_passes_only"]
+    },
+    "pass_at_1": {
+      "enum": ["", "true", "false"]
+    },
+    "pass_both_at_2": {
+      "enum": ["", "true", "false"]
+    },
+    "conditional_resample_passed": {
+      "enum": ["", "true", "false"]
+    },
+    "evidence_status": {
+      "enum": [
+        "missing",
+        "attempt_1_complete",
+        "pass_both_at_2_complete",
+        "conditional_resample_only"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "pass_both_at_2": {
+            "enum": ["true", "false"]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "attempt_2_policy": {
+            "enum": ["all_instances", "first_passes_only"]
+          }
+        }
+      }
+    }
+  ]
+}

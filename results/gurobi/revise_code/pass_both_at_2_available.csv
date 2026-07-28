@@ -1,0 +1,10 @@
+paper_model,artifact_model,attempt_1_passed,repeated_first_passes,repeat_failures,pass_both_at_2_passed,total,pass_both_at_2_percent,attempt_2_temperature,matches_table2_snapshot,per_instance_public_evidence,source
+gemini-3.1-pro,gemini-3.1-pro-preview,92,92,5,87,100,87.0,0.7,true,false,audit/server_reruns/20260727/revise_code_pass_at1_restoration_manifest.json
+gpt-5.4,gpt-5.4,85,85,3,82,100,82.0,0.7,false,false,audit/server_reruns/20260727/revise_code_pass_at1_restoration_manifest.json
+claude-sonnet-4.5,claude-sonnet-4.5,89,89,7,82,100,82.0,0.7,true,false,audit/server_reruns/20260727/revise_code_pass_at1_restoration_manifest.json
+gpt-5.1,gpt-5.1,81,81,10,71,100,71.0,0.7,false,false,audit/server_reruns/20260727/revise_code_pass_at1_restoration_manifest.json
+gemini-2.5-pro,gemini-2.5-pro,81,81,12,69,100,69.0,0.7,false,false,audit/server_reruns/20260727/revise_code_pass_at1_restoration_manifest.json
+deepseek-v4-pro,deepseek-v4-pro,80,80,9,71,100,71.0,0.7,false,false,audit/server_reruns/20260727/revise_code_pass_at1_restoration_manifest.json
+deepseek-v4-flash,deepseek-v4-flash,70,70,7,63,100,63.0,0.7,false,false,audit/server_reruns/20260727/revise_code_pass_at1_restoration_manifest.json
+qwen3-max,Qwen_Qwen3-Max,68,68,8,60,100,60.0,0.7,false,false,audit/server_reruns/20260727/revise_code_pass_at1_restoration_manifest.json
+qwen3-32b,Qwen_Qwen3-32B,32,32,12,20,100,20.0,0.7,false,false,audit/server_reruns/20260727/revise_code_pass_at1_restoration_manifest.json
