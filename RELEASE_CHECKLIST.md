@@ -1,7 +1,6 @@
 # OR-Space Public Release Checklist
 
-Use this checklist before flipping the GitHub repository and Hugging Face dataset
-to public.
+Use this checklist before publishing a new GitHub and Hugging Face snapshot.
 
 ## 1. GitHub Project Page
 
@@ -32,7 +31,7 @@ hf upload Chenyu-Zhou/OR-Space hf_dataset --repo-type dataset \
   --commit-message "Prepare OR-Space public release"
 ```
 
-- Create an immutable tag for the paper snapshot:
+- Create an immutable tag for the paper snapshot after validation:
 
 ```bash
 hf repos tag create Chenyu-Zhou/OR-Space neurips2026-submission \
@@ -47,8 +46,25 @@ hf repos tag create Chenyu-Zhou/OR-Space neurips2026-submission \
     `assets/task_visibility.png` render correctly.
   - The dataset viewer loads `metadata/workspace_index.csv`.
   - `build-revise-explain_workspaces.zip` is tracked with LFS.
+  - `explain_rubrics/rubrics.jsonl` contains 100 complete rubrics.
+  - `oracle/build_revise_objectives.csv` contains 200 references.
+  - `paper_results/table2_main_results.csv` and
+    `paper_results/gurobi_revise_code.csv` agree exactly.
 
-## 3. Package Hygiene
+## 3. Package Hygiene and Visibility
+
+- Regenerate the participant archive from the authoring archive:
+
+```bash
+python tools/stage_participant_workspaces.py \
+  --source EXTRACTED_AUTHORING_ROOT \
+  --output STAGED_PARTICIPANT_ROOT \
+  --source-id IMMUTABLE_SOURCE_ID
+```
+
+- Confirm Build has no reference source, Revise exposes only the correct
+  original heuristic/utility/runtime code, revised reference source is absent,
+  and Explain participant metadata has no checklist or reference answer.
 
 - Confirm the zip archive has no macOS metadata:
 
@@ -62,6 +78,15 @@ bad = [n for n in names if n.startswith("__MACOSX/") or n.endswith(".DS_Store")]
 print(f"bad entries: {len(bad)}")
 assert not bad
 PY
+```
+
+- Run the release validator and evaluator tests:
+
+```bash
+python -m unittest discover -s tests -v
+python tools/validate_public_release.py \
+  --rubrics HF_REPO/explain_rubrics/rubrics.jsonl \
+  --participant-root STAGED_PARTICIPANT_ROOT
 ```
 
 - Recompute checksums after any file change:
@@ -94,3 +119,4 @@ shasum -a 256 \
   100 Explain rows.
 - Open one workspace from each task and confirm the paths in the metadata index
   resolve after extraction.
+- Run the one-item examples in both evaluator READMEs.

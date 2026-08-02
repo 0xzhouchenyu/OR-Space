@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OR-Space Explain judge output",
+  "type": "object",
+  "required": [
+    "llm_boolean_judgments",
+    "reasoning",
+    "grounding",
+    "answer_quality",
+    "hallucination_penalty"
+  ],
+  "properties": {
+    "llm_boolean_judgments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["criterion_id", "hit", "reason"],
+        "properties": {
+          "criterion_id": {"type": "string", "pattern": "^c[0-9]+$"},
+          "hit": {"type": "integer", "enum": [0, 1]},
+          "reason": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "reasoning": {"$ref": "#/$defs/reasoningScore"},
+    "grounding": {"$ref": "#/$defs/groundingScore"},
+    "answer_quality": {"$ref": "#/$defs/qualityScore"},
+    "hallucination_penalty": {"$ref": "#/$defs/penaltyScore"}
+  },
+  "$defs": {
+    "reasoningScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 35}}}]},
+    "groundingScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 20}}}]},
+    "qualityScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 10}}}]},
+    "penaltyScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 12}}}]},
+    "scored": {
+      "type": "object",
+      "required": ["score", "reason"],
+      "properties": {
+        "score": {"type": "number", "minimum": 0},
+        "reason": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
