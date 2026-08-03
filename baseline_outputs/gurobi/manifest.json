@@ -14,8 +14,8 @@
       "paper_model": "gpt-5.4",
       "artifact_model": "gpt-5.4",
       "archive": "models/gpt-5.4.zip",
-      "archive_bytes": 2028105,
-      "archive_sha256": "6ce32faf0d397df60ba623ea8cc9e614781cb0f6d70ed8928b6a880295f1bd29",
+      "archive_bytes": 1966997,
+      "archive_sha256": "92d8694055bfb2022d398aa75936866610ba5c93adaf08f0126132759a98af10",
       "build_rows": 100,
       "build_passed": 59,
       "build_code_files": 100,
@@ -25,15 +25,15 @@
       "revise_release_mode": "restored_historical_first_call",
       "explain_rows": 100,
       "explain_answer_files": 100,
-      "explain_stored_mean": "86.56",
+      "explain_stored_mean": "88.37",
       "explain_table2_mean": "86.52"
     },
     {
       "paper_model": "deepseek-v4-flash",
       "artifact_model": "deepseek-v4-flash",
       "archive": "models/deepseek-v4-flash.zip",
-      "archive_bytes": 1778161,
-      "archive_sha256": "af9f9917a50ab15726c1f77cb338aab675139b58049bf98b4d82de477c7dcaab",
+      "archive_bytes": 1843625,
+      "archive_sha256": "e36479b04e883f359ca2aad2b8be937ec2cf66d212610f177faa1e02ce611ed1",
       "build_rows": 100,
       "build_passed": 54,
       "build_code_files": 100,
@@ -43,7 +43,7 @@
       "revise_release_mode": "restored_historical_first_call",
       "explain_rows": 100,
       "explain_answer_files": 100,
-      "explain_stored_mean": "77.95",
+      "explain_stored_mean": "77.79",
       "explain_table2_mean": "77.77"
     }
   ],

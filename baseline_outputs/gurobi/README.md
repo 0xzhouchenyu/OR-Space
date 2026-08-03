@@ -35,6 +35,11 @@ Some directories are absent for instances where the model or provider returned
 no usable artifact. `results.json` still contains exactly one record for every
 instance from 1 through 100.
 
+All 100 public Explain answers in each archive are complete model responses with
+`finish_reason=stop`, and each has a corresponding raw response and rubric score.
+`model_index.csv` reports both the mean stored in the canonical complete-answer
+archive and the frozen Table 2 value when the two snapshots differ.
+
 The files are the model-level traces, not only aggregate table exports. They
 include raw model responses; generated solver programs and their stdout/stderr
 for code-producing tasks; Revise prompts where recorded; Explain answers and

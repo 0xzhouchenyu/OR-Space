@@ -8,6 +8,7 @@ import csv
 import hashlib
 import json
 import re
+import zipfile
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -83,6 +84,37 @@ def validate_results(repo: Path, errors: list[str]) -> None:
         expected = expected_status.get(model, "pass_at_1")
         if audit["pass_at_1_status"] != expected:
             errors.append(f"Unexpected Revise protocol status for {model}")
+
+    for model, archive in archive_by_model.items():
+        archive_path = repo / "baseline_outputs/gurobi" / archive["archive"]
+        if not archive_path.is_file():
+            errors.append(f"Missing public archive for {model}")
+            continue
+        digest = hashlib.sha256(archive_path.read_bytes()).hexdigest()
+        if digest != archive["archive_sha256"]:
+            errors.append(f"Archive checksum mismatch for {model}")
+            continue
+        with zipfile.ZipFile(archive_path) as bundle:
+            broken = bundle.testzip()
+            if broken:
+                errors.append(f"Corrupt member in {model} archive: {broken}")
+                continue
+            prefix = f"{model}/explain/"
+            results = json.loads(bundle.read(prefix + "results.json"))
+            if len(results) != 100 or {row["id"] for row in results} != set(range(1, 101)):
+                errors.append(f"Incomplete Explain result rows for {model}")
+            unfinished = [row["id"] for row in results if row.get("finish_reason") != "stop"]
+            if unfinished:
+                errors.append(f"Non-complete Explain responses for {model}: {unfinished}")
+            names = set(bundle.namelist())
+            for directory, suffix in (("raw", "txt"), ("answers", "txt"), ("scores", "json")):
+                missing = [
+                    instance_id
+                    for instance_id in range(1, 101)
+                    if f"{prefix}{directory}/instance_{instance_id}.{suffix}" not in names
+                ]
+                if missing:
+                    errors.append(f"Missing Explain {directory} files for {model}: {missing}")
 
 
 def validate_benchmark_metadata(repo: Path, errors: list[str]) -> None:
