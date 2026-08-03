@@ -43,9 +43,25 @@ workspace inputs are published once in the dataset and can be joined by the
 rules in each archive's `provenance.json`.
 
 `provenance.json` states the artifact-model name, task-to-workspace join rule,
-paper metrics, stored checks, and the Revise-code release mode. For conservative
-two-run Revise results, the archive also retains the source-run artifacts needed
-to reproduce the per-instance rule.
+paper metrics, stored checks, and Revise-code release mode.
+
+## Revise-code protocol provenance
+
+The archives reproduce the paper-aligned Revise-code column, but not every row
+is an ordinary first-call Pass@1 result. The exact row-level classification is
+released in [`revise_code_protocol.csv`](revise_code_protocol.csv):
+
+- `gemini-3.1-pro`, `claude-opus-4-6`, and `claude-sonnet-4.5` use conservative
+  repeatability rules involving a second run; their published values are not
+  standard Pass@1.
+- `gemini-3-flash` includes recovery of calls affected by infrastructure
+  failures and is marked as a recovery composite.
+- the remaining 14 rows restore the historical first call and are marked
+  `pass_at_1`.
+
+The affected archives retain source-run artifacts where available. This
+separation preserves the manuscript numbers while making their evidence and
+measurement provenance explicit.
 
 Validate an archive with:
 

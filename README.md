@@ -10,169 +10,125 @@
 [![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Benchmark](https://img.shields.io/badge/Tasks-300%20workspace%20views-005BBB)](#benchmark)
 
-OR-Space evaluates whether language-model agents can perform reliable operations
-research work inside executable, multi-file workspaces. Each instance separates
-business requirements, structured parameter files, code artifacts, solver state,
-and evaluation targets instead of flattening the optimization problem into one
-prompt.
+OR-Space evaluates whether language-model agents can perform reliable
+operations research work in executable, multi-file workspaces. Each instance
+separates business requirements, structured data, code artifacts, solver state,
+and evaluation targets instead of flattening the problem into one prompt.
 
 <p align="center">
   <img src="figs/main.png" width="860" alt="Overview of the OR-Space Build, Revise, and Explain benchmark">
 </p>
 
-## Links
-
-| Resource | Location |
-| --- | --- |
-| Dataset | [huggingface.co/datasets/Chenyu-Zhou/OR-Space](https://huggingface.co/datasets/Chenyu-Zhou/OR-Space) |
-| Code repository | [github.com/0xzhouchenyu/OR-Space](https://github.com/0xzhouchenyu/OR-Space) |
-| Paper | arXiv link coming with the public manuscript release |
-
 ## Benchmark
 
-OR-Space contains 100 industrial optimization topologies, each rendered as three
-task views on the same underlying mathematical problem:
+OR-Space contains 100 industrial optimization topologies, each represented by
+three task views of the same underlying problem.
 
-| Task | What the agent receives | What is evaluated |
+| Task | Participant-visible artifacts | Evaluation |
 | --- | --- | --- |
-| Build | Business documents, tabular data, and an empty `src/` scaffold | Whether the agent can write solver-ready code from heterogeneous files |
-| Revise | Original workspace, revised requirements, updated data, and legacy heuristic code | Whether the agent can preserve valid logic while implementing changed requirements |
-| Explain | Original and revised workspaces plus recorded solver artifacts | Whether the agent can ground an explanation in code, data, solver state, and OR theory |
+| Build | Business documents, tabular data, and an empty `src/` directory | Execute generated code and compare its objective with the oracle |
+| Revise | Revised documents and data plus the correct Build implementation | Execute the revised program and compare its objective with the revised oracle |
+| Explain | Correct original and revised workspaces, execution logs, and solver records | Score checklist coverage, reasoning, evidence grounding, answer quality, and unsupported claims |
 
-Build and Revise are scored by executing the submitted solver program and
-matching the reference objective value within 1% relative error. Explain is
-scored with exact-match checklist items plus rubric-based judgments for
-reasoning, grounding, answer quality, and hallucination control.
+Build and Revise require an `Optimal` status and an objective within 1% relative
+error of the reference value. Explain uses instance-specific checklists and the
+released rubric. The paper's default track uses the Filesystem interface,
+Revise-code context, and Gurobi. Solver tracks require complete programs written
+against the corresponding solver API.
 
-The default paper track uses the filesystem interface, Revise-code context,
-and Gurobi. Build and Revise submissions are complete solver-specific programs;
-each backend track uses its corresponding API rather than a shared PuLP model
-with a backend mounted by the evaluator.
+## Repository contents
 
-## Quick Start
-
-Download the release from Hugging Face:
-
-```bash
-pip install -U huggingface_hub pandas
-python - <<'PY'
-from huggingface_hub import snapshot_download
-
-snapshot_download(
-    repo_id="Chenyu-Zhou/OR-Space",
-    repo_type="dataset",
-    local_dir="OR-Space",
-)
-PY
-unzip -q OR-Space/build-revise-explain_workspaces.zip -d OR-Space
-```
-
-Inspect the task index:
-
-```bash
-python - <<'PY'
-import pandas as pd
-
-index = pd.read_csv("OR-Space/metadata/workspace_index.csv")
-print(index.groupby("task_type").size())
-print(index.head()[["workspace_id", "task_type", "workspace_path"]])
-PY
-```
-
-The expanded workspaces follow this pattern:
-
-```text
-build-revise-explain_workspaces/
-  build_workspaces/instance_1/
-    docs/
-    data/
-    src/
-    metadata.json
-  revise_workspaces/instance_1/
-    original/
-    revised/
-    metadata.json
-  explain_workspaces/instance_1/
-    original/
-    revised/
-    solver_artifacts/
-    metadata.json
-```
-
-## What This Repo Contains
-
-The public GitHub repository is the project and supplementary-code companion.
-The full dataset package is published through the Hugging Face dataset
-repository.
+This repository is the complete research release. Participant workspaces and
+evaluation references are available from the
+[OR-Space dataset](https://huggingface.co/datasets/Chenyu-Zhou/OR-Space); this
+repository additionally contains benchmark construction code, paper snapshots,
+and model-run evidence.
 
 ```text
 .
-  README.md
-  LICENSE
-  figs/                     Project-page figures
-  01_build/                 Build workspace generation utilities
-  02_revise_modeling/       Revise workspace generation utilities
-  03_revise_business/       Business-voice rewriting utilities
-  04_difficulty_judge/      Difficulty judging utilities
-  05_business_quality_rubric/
-  06_static_diff/           Static revision-diff analysis
-  evaluation/               Executable Build/Revise and Explain scoring
-  results/                  Machine-readable paper table snapshots
-  baseline_outputs/gurobi/  Complete 18-model, three-task Gurobi traces
-  tools/                    Participant staging and release validation
-  tests/                    Evaluator smoke tests
+├── 01_build/ ... 06_static_diff/  Benchmark construction and analysis code
+├── evaluation/                    Build, Revise, and Explain evaluators
+├── benchmark_metadata/            Workspace index and empirical difficulty labels
+├── results/                       Machine-readable paper-result snapshots
+├── baseline_outputs/gurobi/       Full Gurobi traces for 18 models and three tasks
+├── tools/                         Packaging and release-validation utilities
+└── tests/                         Evaluator tests
 ```
 
-The Hugging Face repository contains the 300 participant-visible task views,
-Build/Revise objective references, all 100 Explain rubrics/checklists, and the
-same evaluation protocol. It also publishes the 18-model Gurobi baselines for
-Build, Revise-code, and Explain: 5,400 per-instance result rows with generated
-programs, raw responses, logs, answers, and stored scores. Participant
-workspaces and evaluator-only labels are kept in separate paths so models are
-not accidentally given reference code or answers.
+The 18 model archives contain 5,400 model-by-instance records: 100 Build, 100
+Revise-code, and 100 Explain records for each model. Generated programs, raw
+responses, execution logs, answers, stored scores, checksums, and provenance are
+retained where available. See
+[`baseline_outputs/gurobi/`](baseline_outputs/gurobi/) for archive structure and
+the row-level Revise protocol audit.
 
-## Evaluation
+## Dataset quick start
 
-See [`evaluation/`](evaluation/) for runnable scorers. In particular,
-[`evaluation/explain/`](evaluation/explain/) documents the complete Explain
-workflow: deterministic normalized entity checks, criterion-level semantic
-judgments, verified workspace evidence, the independent judge prompt and JSON
-schema, and aggregation into the paper's 35/35/20/10 rubric with an unsupported-
-claim penalty of up to 12 points.
+```bash
+pip install -U huggingface_hub pandas
+huggingface-cli download Chenyu-Zhou/OR-Space \
+  --repo-type dataset --local-dir OR-Space
+```
 
-The current 18-model Table 2 snapshot is published in
-[`results/table2_main_results.csv`](results/table2_main_results.csv). Its
-Revise-code/Gurobi column is also available separately in
-[`results/gurobi/revise_code.csv`](results/gurobi/revise_code.csv); release
-validation checks that the two remain identical.
+```python
+import pandas as pd
 
-The corresponding baseline archives and checksum index are available directly
-in [`baseline_outputs/gurobi/`](baseline_outputs/gurobi/) and are mirrored in
-the Hugging Face dataset. The 18 model archives contain all 100 Build, 100
-Revise-code, and 100 Explain traces per model. The packaging script is
-[`tools/package_gurobi_baselines.py`](tools/package_gurobi_baselines.py); it
-requires all 18 Build and Revise-code aggregates to match Table 2 before it
-writes any archive.
+index = pd.read_csv(
+    "OR-Space/supporting_files/metadata/workspace_index.csv"
+)
+print(index.groupby(["task_type", "difficulty"]).size())
+```
 
-## Main Paper Findings
+Participant-visible task data are organized as:
 
-| Finding | Result |
-| --- | --- |
-| Workspace construction remains hard | The best Build score is 72.0% Pass@1 |
-| Revision context is model-dependent | Legacy heuristic code helps strong models but hurts weaker models |
-| Explanation is a distinct capability | Explain scores are weakly correlated with Build and Revise success |
+```text
+OR-Space/
+├── workspace_benchmark/
+│   ├── build/
+│   ├── revise/
+│   └── explain/
+├── evaluation/
+│   ├── build_evaluation/
+│   ├── revise_evaluation/
+│   └── explain_evaluation/
+├── evaluation_programs/
+└── supporting_files/
+```
 
-These results should be interpreted as benchmark evidence about synthetic,
-executable OR workspaces, not as a deployment certificate for production
-optimization systems.
+## Empirical difficulty
 
-## Release Policy
+Difficulty labels are derived from real benchmark outcomes under a fixed
+evaluation panel, separately for each task. Build and Revise use empirical
+executable pass rates; Explain uses the empirical mean rubric score. Boundaries
+approximate tertiles without splitting tied scores. The released distributions
+are Build 35/32/33, Revise 39/30/31, and Explain 33/33/34 for
+Easy/Medium/Hard. See
+[`benchmark_metadata/difficulty_methodology.md`](benchmark_metadata/difficulty_methodology.md)
+and [`benchmark_metadata/empirical_difficulty.csv`](benchmark_metadata/empirical_difficulty.csv).
 
-For reproducibility, cite a Hugging Face Hub tag or commit SHA rather than a
-moving `main` branch. Planned public tags are:
+## Evaluation and results
 
-- `neurips2026-submission`: paper submission snapshot
-- `v1.0`: first public archival release
+[`evaluation/`](evaluation/) provides runnable scorers. The Explain release
+includes normalized exact checks, semantic checklist judgments, evidence
+verification, the judge prompt and schema, and the final 35/35/20/10 rubric
+with an unsupported-claim penalty of up to 12 points.
+
+[`results/table2_main_results.csv`](results/table2_main_results.csv) is the
+18-model main-table snapshot. Its Revise-code values are preserved exactly as
+reported. Because several released Revise rows use conservative repeated runs
+or infrastructure recovery rather than an ordinary first call, consult
+[`baseline_outputs/gurobi/revise_code_protocol.csv`](baseline_outputs/gurobi/revise_code_protocol.csv)
+before interpreting that column as Pass@1.
+
+## Validation
+
+```bash
+python tools/validate_public_release.py
+python -m unittest discover -s tests
+```
+
+The validator checks paper-table alignment, difficulty metadata, model-archive
+coverage, Revise provenance, checksums, and accidental credentials.
 
 ## Citation
 
@@ -187,7 +143,7 @@ moving `main` branch. Planned public tags are:
 
 ## License
 
-The dataset release is for non-commercial research use under CC BY-NC
-4.0-compatible terms, following the inherited license constraints of the
-IndustryOR seed topologies. Proprietary solver binaries, commercial API
-credentials, and third-party model services are not redistributed.
+The release is for non-commercial research use under CC BY-NC 4.0-compatible
+terms, following the inherited license constraints of the IndustryOR seed
+topologies. Proprietary solver binaries, commercial credentials, and
+third-party model services are not redistributed.

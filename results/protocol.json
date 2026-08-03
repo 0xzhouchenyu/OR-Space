@@ -35,6 +35,8 @@
   "instances_per_task": 100,
   "models": 18,
   "paper_table": "Table 2",
+  "revise_release_note": "The paper-aligned Revise-code snapshot contains row-level protocol exceptions; see baseline_outputs/gurobi/revise_code_protocol.csv.",
+  "revise_row_provenance": "baseline_outputs/gurobi/revise_code_protocol.csv",
   "schema_version": "1.0",
   "solver_api_tracks": {
     "copt": "coptpy",
