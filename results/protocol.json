@@ -1,0 +1,45 @@
+{
+  "build_revise_scoring": {
+    "metric": "Pass@1",
+    "relative_error": "abs(objective-reference)/max(1,abs(reference))",
+    "relative_tolerance": 0.01,
+    "requires_status": "Optimal"
+  },
+  "default_track": {
+    "interface": "filesystem",
+    "revise_context": "revise-code",
+    "solver": "Gurobi",
+    "solver_version": "13.0.1",
+    "wall_clock_limit_seconds": 180
+  },
+  "explain_scoring": {
+    "answer_quality_points": 10,
+    "checklist_types": [
+      "exact_match",
+      "llm_boolean_judgment"
+    ],
+    "coverage_atomic_units": "each exact target entity and each semantic checklist item",
+    "coverage_weighting": "equal atomic weight",
+    "exact_coverage_points": 35,
+    "final_score": "clip(coverage+reasoning+grounding+answer_quality-hallucination_penalty,0,100)",
+    "grounding_points": 20,
+    "hallucination_penalty_max": 12,
+    "judge_max_attempts": 3,
+    "judge_max_completion_tokens": 4000,
+    "judge_prompt_sha256": "6c7ea896c82577022882e41d4bfb7da646a33b9fe005ac0c51320d6a1d217a7b",
+    "judge_temperature": 0.0,
+    "length_only_answer_failures": "regenerated with a larger answer budget before scoring",
+    "reasoning_points": 35,
+    "reference_judge_model": "gpt-5.1"
+  },
+  "instances_per_task": 100,
+  "models": 18,
+  "paper_table": "Table 2",
+  "schema_version": "1.0",
+  "solver_api_tracks": {
+    "copt": "coptpy",
+    "gurobi": "gurobipy",
+    "highs": "highspy",
+    "pulp_cbc": "pulp"
+  }
+}

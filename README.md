@@ -44,6 +44,11 @@ matching the reference objective value within 1% relative error. Explain is
 scored with exact-match checklist items plus rubric-based judgments for
 reasoning, grounding, answer quality, and hallucination control.
 
+The default paper track uses the filesystem interface, Revise-code context,
+and Gurobi. Build and Revise submissions are complete solver-specific programs;
+each backend track uses its corresponding API rather than a shared PuLP model
+with a backend mounted by the evaluator.
+
 ## Quick Start
 
 Download the release from Hugging Face:
@@ -111,7 +116,40 @@ repository.
   04_difficulty_judge/      Difficulty judging utilities
   05_business_quality_rubric/
   06_static_diff/           Static revision-diff analysis
+  evaluation/               Executable Build/Revise and Explain scoring
+  results/                  Machine-readable paper table snapshots
+  tools/                    Participant staging and release validation
+  tests/                    Evaluator smoke tests
 ```
+
+The Hugging Face repository contains the 300 participant-visible task views,
+Build/Revise objective references, all 100 Explain rubrics/checklists, and the
+same evaluation protocol. It also publishes the 18-model Gurobi baselines for
+Build, Revise-code, and Explain: 5,400 per-instance result rows with generated
+programs, raw responses, logs, answers, and stored scores. Participant
+workspaces and evaluator-only labels are kept in separate paths so models are
+not accidentally given reference code or answers.
+
+## Evaluation
+
+See [`evaluation/`](evaluation/) for runnable scorers. In particular,
+[`evaluation/explain/`](evaluation/explain/) documents the complete Explain
+workflow: deterministic normalized entity checks, criterion-level semantic
+judgments, verified workspace evidence, the independent judge prompt and JSON
+schema, and aggregation into the paper's 35/35/20/10 rubric with an unsupported-
+claim penalty of up to 12 points.
+
+The current 18-model Table 2 snapshot is published in
+[`results/table2_main_results.csv`](results/table2_main_results.csv). Its
+Revise-code/Gurobi column is also available separately in
+[`results/gurobi/revise_code.csv`](results/gurobi/revise_code.csv); release
+validation checks that the two remain identical.
+
+The corresponding baseline archives and checksum index are available under
+`baseline_outputs/gurobi/` in the Hugging Face dataset. The packaging script is
+[`tools/package_gurobi_baselines.py`](tools/package_gurobi_baselines.py); it
+requires all 18 Build and Revise-code aggregates to match Table 2 before it
+writes any archive.
 
 ## Main Paper Findings
 
