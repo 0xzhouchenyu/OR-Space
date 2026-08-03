@@ -118,6 +118,7 @@ repository.
   06_static_diff/           Static revision-diff analysis
   evaluation/               Executable Build/Revise and Explain scoring
   results/                  Machine-readable paper table snapshots
+  baseline_outputs/gurobi/  Complete 18-model, three-task Gurobi traces
   tools/                    Participant staging and release validation
   tests/                    Evaluator smoke tests
 ```
@@ -145,8 +146,10 @@ Revise-code/Gurobi column is also available separately in
 [`results/gurobi/revise_code.csv`](results/gurobi/revise_code.csv); release
 validation checks that the two remain identical.
 
-The corresponding baseline archives and checksum index are available under
-`baseline_outputs/gurobi/` in the Hugging Face dataset. The packaging script is
+The corresponding baseline archives and checksum index are available directly
+in [`baseline_outputs/gurobi/`](baseline_outputs/gurobi/) and are mirrored in
+the Hugging Face dataset. The 18 model archives contain all 100 Build, 100
+Revise-code, and 100 Explain traces per model. The packaging script is
 [`tools/package_gurobi_baselines.py`](tools/package_gurobi_baselines.py); it
 requires all 18 Build and Revise-code aggregates to match Table 2 before it
 writes any archive.
