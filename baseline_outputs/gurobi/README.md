@@ -1,7 +1,7 @@
 # Gurobi baselines
 
 This directory contains representative Gurobi traces for two models from the
-OR-Space main table: the higher-capability `gpt-5.4` and lightweight `qwen3-8b`.
+OR-Space main table: `gpt-5.4` and `deepseek-v4-flash`.
 Each archive contains 100 Build, 100 Revise-code, and 100 Explain records, for
 600 model-by-instance records in total, with the following layout:
 

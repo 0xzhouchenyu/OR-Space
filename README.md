@@ -55,9 +55,9 @@ and model-run evidence.
 └── tests/                         Evaluator tests
 ```
 
-The public trace subset contains one higher-capability model (`gpt-5.4`) and one
-lightweight model (`qwen3-8b`), with 100 Build, 100 Revise-code, and 100 Explain
-records for each. Generated programs, raw responses, execution logs, answers,
+The public trace subset contains two representative models, `gpt-5.4` and
+`deepseek-v4-flash`, with 100 Build, 100 Revise-code, and 100 Explain records
+for each. Generated programs, raw responses, execution logs, answers,
 stored scores, checksums, and provenance are retained where available. See
 [`baseline_outputs/gurobi/`](baseline_outputs/gurobi/) for archive structure and
 the row-level Revise protocol audit.

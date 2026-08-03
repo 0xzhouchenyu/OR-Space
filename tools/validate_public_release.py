@@ -61,7 +61,7 @@ def validate_results(repo: Path, errors: list[str]) -> None:
         )
     archive_by_model = {row["paper_model"]: row for row in archives}
     protocol_by_model = {row["paper_model"]: row for row in protocol}
-    if set(archive_by_model) != {"gpt-5.4", "qwen3-8b"}:
+    if set(archive_by_model) != {"gpt-5.4", "deepseek-v4-flash"}:
         errors.append(f"Unexpected public Gurobi archive set: {sorted(archive_by_model)}")
     if set(protocol_by_model) != set(main_by_model):
         errors.append("Revise protocol and Table 2 model sets differ")

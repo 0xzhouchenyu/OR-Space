@@ -29,22 +29,22 @@
       "explain_table2_mean": "86.52"
     },
     {
-      "paper_model": "qwen3-8b",
-      "artifact_model": "qwen3-8b",
-      "archive": "models/qwen3-8b.zip",
-      "archive_bytes": 1675444,
-      "archive_sha256": "f485923f1df9eee70ddecdf9b07ff0aefea72a6eb4b56bca7bac82362c6feaf1",
+      "paper_model": "deepseek-v4-flash",
+      "artifact_model": "deepseek-v4-flash",
+      "archive": "models/deepseek-v4-flash.zip",
+      "archive_bytes": 1778161,
+      "archive_sha256": "af9f9917a50ab15726c1f77cb338aab675139b58049bf98b4d82de477c7dcaab",
       "build_rows": 100,
-      "build_passed": 22,
-      "build_code_files": 96,
+      "build_passed": 54,
+      "build_code_files": 100,
       "revise_code_rows": 100,
-      "revise_code_passed": 12,
+      "revise_code_passed": 70,
       "revise_code_files": 100,
       "revise_release_mode": "restored_historical_first_call",
       "explain_rows": 100,
       "explain_answer_files": 100,
-      "explain_stored_mean": "55.19",
-      "explain_table2_mean": "55.19"
+      "explain_stored_mean": "77.95",
+      "explain_table2_mean": "77.77"
     }
   ],
   "model_count": 2,

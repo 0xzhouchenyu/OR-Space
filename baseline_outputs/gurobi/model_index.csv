@@ -1,3 +1,3 @@
 paper_model,artifact_model,archive,archive_bytes,archive_sha256,build_rows,build_passed,build_code_files,revise_code_rows,revise_code_passed,revise_code_files,revise_release_mode,explain_rows,explain_answer_files,explain_stored_mean,explain_table2_mean
 gpt-5.4,gpt-5.4,models/gpt-5.4.zip,2028105,6ce32faf0d397df60ba623ea8cc9e614781cb0f6d70ed8928b6a880295f1bd29,100,59,100,100,85,100,restored_historical_first_call,100,100,86.56,86.52
-qwen3-8b,qwen3-8b,models/qwen3-8b.zip,1675444,f485923f1df9eee70ddecdf9b07ff0aefea72a6eb4b56bca7bac82362c6feaf1,100,22,96,100,12,100,restored_historical_first_call,100,100,55.19,55.19
+deepseek-v4-flash,deepseek-v4-flash,models/deepseek-v4-flash.zip,1778161,af9f9917a50ab15726c1f77cb338aab675139b58049bf98b4d82de477c7dcaab,100,54,100,100,70,100,restored_historical_first_call,100,100,77.95,77.77
