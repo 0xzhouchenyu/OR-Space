@@ -1,0 +1,68 @@
+{
+  "artifact": "OR-Space anonymous review dataset",
+  "snapshot": "frozen-review",
+  "counts": {
+    "task_instances": 300,
+    "build_instances": 100,
+    "revise_instances": 100,
+    "explain_instances": 100,
+    "build_revise_objectives": 200,
+    "explain_rubrics": 100
+  },
+  "files": [
+    {
+      "path": "build-revise-explain_workspaces.zip",
+      "bytes": 4130825,
+      "sha256": "8c3965eef109ad1593eee600f130b6ad9cf876b79d14537239497a17853b67c6"
+    },
+    {
+      "path": "explain_rubrics/README.md",
+      "bytes": 1283,
+      "sha256": "b7d97a7148b7739a3520b1fc927b5d58697ce87294d7489a0c515f8446930f3e"
+    },
+    {
+      "path": "explain_rubrics/judge_prompt.md",
+      "bytes": 1789,
+      "sha256": "e17bf7325712aa1729a87451b4f03804cb3bda6de2015e6ab970e23dcf72d59b"
+    },
+    {
+      "path": "explain_rubrics/normalization.md",
+      "bytes": 914,
+      "sha256": "8ddf2fe445de5d9b25d480f4a64be6daace15676d142a0120095633d157c8af4"
+    },
+    {
+      "path": "explain_rubrics/rubric_schema.json",
+      "bytes": 1536,
+      "sha256": "90d042efb4604f117ae30c74fa103793fd5b5fc47cdbf6e8ed3a221a0421c9ba"
+    },
+    {
+      "path": "explain_rubrics/rubrics.jsonl",
+      "bytes": 512627,
+      "sha256": "bcb0ebd0b9225cc596a1948afa00eea1e92c2703088e43d831d658b27277a65d"
+    },
+    {
+      "path": "metadata/schema.md",
+      "bytes": 2900,
+      "sha256": "e3e7d26a1aa6cff0c777553400389f4d102d531d45fe2014eaf521708d2deaf6"
+    },
+    {
+      "path": "metadata/workspace_index.csv",
+      "bytes": 171972,
+      "sha256": "23d1119f815d31780a36c89d75a47bd73833f3d7609cdebd615742b5358e2768"
+    },
+    {
+      "path": "oracle/build_revise_objectives.csv",
+      "bytes": 12754,
+      "sha256": "fcc55cd3ace928c76f82dbaf5b93841367597f7a49dbfeed57cd497269259ca9"
+    },
+    {
+      "path": "splits/public_test.json",
+      "bytes": 8961,
+      "sha256": "34d21a1b6228f2ac32e853df86d06820f5b664714f20f22b2ce750f9d6896be1"
+    }
+  ],
+  "notes": [
+    "Author, citation, source-host, and local-machine metadata are excluded.",
+    "Raw baseline archives are excluded because their execution logs contain identifying machine paths."
+  ]
+}

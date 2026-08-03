@@ -21,10 +21,9 @@ prompt.
 
 ## Anonymous Review Artifact
 
-This repository is the anonymized code and evaluation companion for the
-double-anonymous submission. The dataset artifact is provided separately
-through the anonymous link in the paper. Public project, author, and citation
-metadata will be added after the review period.
+This repository is the anonymized code, data, and evaluation artifact for the
+double-anonymous submission. Public project, author, and citation metadata will
+be added after the review period.
 
 ## Benchmark
 
@@ -55,14 +54,17 @@ Install the lightweight Python dependencies:
 pip install -U pandas
 ```
 
-Download the anonymous dataset artifact from the link in the paper, unpack it
-next to this repository, and inspect the task index:
+Unpack the bundled workspace archive and inspect the task index:
+
+```bash
+unzip data/build-revise-explain_workspaces.zip -d data/
+```
 
 ```bash
 python - <<'PY'
 import pandas as pd
 
-index = pd.read_csv("OR-Space/metadata/workspace_index.csv")
+index = pd.read_csv("data/metadata/workspace_index.csv")
 print(index.groupby("task_type").size())
 print(index.head()[["workspace_id", "task_type", "workspace_path"]])
 PY
@@ -90,15 +92,14 @@ build-revise-explain_workspaces/
 
 ## What This Repo Contains
 
-This repository contains the generation utilities, runnable evaluators, and
-machine-readable result snapshots used by the paper. The accompanying
-anonymous dataset artifact contains the participant workspaces and evaluator
-metadata.
+This repository contains the participant dataset, generation utilities,
+runnable evaluators, and machine-readable result snapshots used by the paper.
 
 ```text
 .
   README.md
   LICENSE
+  data/                     Review dataset, indexes, oracle values, and rubrics
   figs/                     Project-page figures
   01_build/                 Build workspace generation utilities
   02_revise_modeling/       Revise workspace generation utilities
@@ -112,13 +113,10 @@ metadata.
   tests/                    Evaluator smoke tests
 ```
 
-The accompanying dataset artifact contains the 300 participant-visible task
-views, Build/Revise objective references, all 100 Explain rubrics/checklists,
-and the same evaluation protocol. It also contains the 18-model Gurobi
-baselines for Build, Revise-code, and Explain: 5,400 per-instance result rows
-with generated programs, raw responses, logs, answers, and stored scores.
-Participant workspaces and evaluator-only labels are kept in separate paths so
-models are not accidentally given reference code or answers.
+The `data/` directory contains the 300 participant-visible task views,
+Build/Revise objective references, all 100 Explain rubrics/checklists, and the
+public-test split. Participant workspaces and evaluator-only labels are kept in
+separate paths so models are not accidentally given reference code or answers.
 
 ## Evaluation
 
@@ -135,11 +133,13 @@ Revise-code/Gurobi column is also available separately in
 [`results/gurobi/revise_code.csv`](results/gurobi/revise_code.csv); release
 validation checks that the two remain identical.
 
-The corresponding baseline archives and checksum index are available under
-`baseline_outputs/gurobi/` in the anonymous dataset artifact. The packaging
-script is [`tools/package_gurobi_baselines.py`](tools/package_gurobi_baselines.py);
-it requires all 18 Build and Revise-code aggregates to match Table 2 before it
-writes any archive.
+The frozen aggregate results needed to reproduce the paper tables are included
+under [`results/`](results/). Raw per-instance execution archives are
+intentionally omitted from the anonymous review snapshot because execution
+logs may contain identifying machine paths. The packaging script is
+[`tools/package_gurobi_baselines.py`](tools/package_gurobi_baselines.py); it
+requires all 18 Build and Revise-code aggregates to match Table 2 before it
+writes any archive for the post-review release.
 
 ## Main Paper Findings
 
