@@ -50,15 +50,15 @@ and model-run evidence.
 ├── evaluation/                    Build, Revise, and Explain evaluators
 ├── benchmark_metadata/            Workspace index and empirical difficulty labels
 ├── results/                       Machine-readable paper-result snapshots
-├── baseline_outputs/gurobi/       Full Gurobi traces for 18 models and three tasks
+├── baseline_outputs/gurobi/       Representative Gurobi traces for two models
 ├── tools/                         Packaging and release-validation utilities
 └── tests/                         Evaluator tests
 ```
 
-The 18 model archives contain 5,400 model-by-instance records: 100 Build, 100
-Revise-code, and 100 Explain records for each model. Generated programs, raw
-responses, execution logs, answers, stored scores, checksums, and provenance are
-retained where available. See
+The public trace subset contains one higher-capability model (`gpt-5.4`) and one
+lightweight model (`qwen3-8b`), with 100 Build, 100 Revise-code, and 100 Explain
+records for each. Generated programs, raw responses, execution logs, answers,
+stored scores, checksums, and provenance are retained where available. See
 [`baseline_outputs/gurobi/`](baseline_outputs/gurobi/) for archive structure and
 the row-level Revise protocol audit.
 
@@ -127,8 +127,8 @@ python tools/validate_public_release.py
 python -m unittest discover -s tests
 ```
 
-The validator checks paper-table alignment, difficulty metadata, model-archive
-coverage, Revise provenance, checksums, and accidental credentials.
+The validator checks paper-table alignment, difficulty metadata, the two public
+model archives, Revise provenance, checksums, and accidental credentials.
 
 ## Citation
 

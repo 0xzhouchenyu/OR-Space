@@ -11,8 +11,7 @@ metadata distributed with the participant workspaces.
 | `schema.md` | Field definitions |
 | `provenance.md` | Source and release provenance |
 
-Difficulty is calculated from released benchmark evaluations under the fixed
-18-model Gurobi panel represented in `baseline_outputs/gurobi/`. This repository
-therefore exposes both the derived labels and the model-run evidence from which
-they were computed. Participant workspaces use the same labels in their local
-`metadata.json` files.
+Difficulty is calculated from benchmark evaluations under a fixed 18-model
+Gurobi panel. This repository releases the derived labels and a representative
+two-model trace subset. Participant workspaces use the same labels in their
+local `metadata.json` files.

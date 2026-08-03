@@ -54,15 +54,17 @@ def validate_results(repo: Path, errors: list[str]) -> None:
         newline="", encoding="utf-8"
     ) as handle:
         protocol = list(csv.DictReader(handle))
-    if len(archives) != 18 or len(protocol) != 18:
+    if len(archives) != 2 or len(protocol) != 18:
         errors.append(
-            f"Expected 18 Gurobi archive/protocol rows; archives={len(archives)}, "
+            f"Expected 2 public archives and 18 protocol rows; archives={len(archives)}, "
             f"protocol={len(protocol)}"
         )
     archive_by_model = {row["paper_model"]: row for row in archives}
     protocol_by_model = {row["paper_model"]: row for row in protocol}
-    if set(archive_by_model) != set(main_by_model) or set(protocol_by_model) != set(main_by_model):
-        errors.append("Gurobi archive, protocol, and Table 2 model sets differ")
+    if set(archive_by_model) != {"gpt-5.4", "qwen3-8b"}:
+        errors.append(f"Unexpected public Gurobi archive set: {sorted(archive_by_model)}")
+    if set(protocol_by_model) != set(main_by_model):
+        errors.append("Revise protocol and Table 2 model sets differ")
     expected_status = {
         "gemini-3.1-pro": "not_pass_at_1",
         "claude-opus-4-6": "not_pass_at_1",
@@ -70,14 +72,13 @@ def validate_results(repo: Path, errors: list[str]) -> None:
         "gemini-3-flash": "recovery_composite",
     }
     for model, table_row in main_by_model.items():
-        if model not in archive_by_model or model not in protocol_by_model:
+        if model not in protocol_by_model:
             continue
-        archive = archive_by_model[model]
         audit = protocol_by_model[model]
         published = float(table_row["revise_code_gurobi_pass_at_1_percent"])
         if float(audit["published_revise_score"]) != published:
             errors.append(f"Revise protocol/Table 2 mismatch for {model}")
-        if audit["release_mode"] != archive["revise_release_mode"]:
+        if model in archive_by_model and audit["release_mode"] != archive_by_model[model]["revise_release_mode"]:
             errors.append(f"Revise release mode mismatch for {model}")
         expected = expected_status.get(model, "pass_at_1")
         if audit["pass_at_1_status"] != expected:
