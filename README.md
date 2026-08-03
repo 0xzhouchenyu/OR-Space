@@ -124,9 +124,11 @@ repository.
 
 The Hugging Face repository contains the 300 participant-visible task views,
 Build/Revise objective references, all 100 Explain rubrics/checklists, and the
-same evaluation protocol. Participant workspaces and evaluator-only labels are
-kept in separate paths so models are not accidentally given reference code or
-answers.
+same evaluation protocol. It also publishes the 18-model Gurobi baselines for
+Build, Revise-code, and Explain: 5,400 per-instance result rows with generated
+programs, raw responses, logs, answers, and stored scores. Participant
+workspaces and evaluator-only labels are kept in separate paths so models are
+not accidentally given reference code or answers.
 
 ## Evaluation
 
@@ -142,6 +144,12 @@ The current 18-model Table 2 snapshot is published in
 Revise-code/Gurobi column is also available separately in
 [`results/gurobi/revise_code.csv`](results/gurobi/revise_code.csv); release
 validation checks that the two remain identical.
+
+The corresponding baseline archives and checksum index are available under
+`baseline_outputs/gurobi/` in the Hugging Face dataset. The packaging script is
+[`tools/package_gurobi_baselines.py`](tools/package_gurobi_baselines.py); it
+requires all 18 Build and Revise-code aggregates to match Table 2 before it
+writes any archive.
 
 ## Main Paper Findings
 
