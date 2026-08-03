@@ -6,7 +6,6 @@
 
 **A full-lifecycle workspace benchmark for industrial optimization agents.**
 
-[![Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-ffcc4d)](https://huggingface.co/datasets/Chenyu-Zhou/OR-Space)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Benchmark](https://img.shields.io/badge/Tasks-300%20workspace%20views-005BBB)](#benchmark)
 
@@ -20,13 +19,12 @@ prompt.
   <img src="figs/main.png" width="860" alt="Overview of the OR-Space Build, Revise, and Explain benchmark">
 </p>
 
-## Links
+## Anonymous Review Artifact
 
-| Resource | Location |
-| --- | --- |
-| Dataset | [huggingface.co/datasets/Chenyu-Zhou/OR-Space](https://huggingface.co/datasets/Chenyu-Zhou/OR-Space) |
-| Code repository | [github.com/0xzhouchenyu/OR-Space](https://github.com/0xzhouchenyu/OR-Space) |
-| Paper | arXiv link coming with the public manuscript release |
+This repository is the anonymized code and evaluation companion for the
+double-anonymous submission. The dataset artifact is provided separately
+through the anonymous link in the paper. Public project, author, and citation
+metadata will be added after the review period.
 
 ## Benchmark
 
@@ -51,23 +49,14 @@ with a backend mounted by the evaluator.
 
 ## Quick Start
 
-Download the release from Hugging Face:
+Install the lightweight Python dependencies:
 
 ```bash
-pip install -U huggingface_hub pandas
-python - <<'PY'
-from huggingface_hub import snapshot_download
-
-snapshot_download(
-    repo_id="Chenyu-Zhou/OR-Space",
-    repo_type="dataset",
-    local_dir="OR-Space",
-)
-PY
-unzip -q OR-Space/build-revise-explain_workspaces.zip -d OR-Space
+pip install -U pandas
 ```
 
-Inspect the task index:
+Download the anonymous dataset artifact from the link in the paper, unpack it
+next to this repository, and inspect the task index:
 
 ```bash
 python - <<'PY'
@@ -101,9 +90,10 @@ build-revise-explain_workspaces/
 
 ## What This Repo Contains
 
-The public GitHub repository is the project and supplementary-code companion.
-The full dataset package is published through the Hugging Face dataset
-repository.
+This repository contains the generation utilities, runnable evaluators, and
+machine-readable result snapshots used by the paper. The accompanying
+anonymous dataset artifact contains the participant workspaces and evaluator
+metadata.
 
 ```text
 .
@@ -122,13 +112,13 @@ repository.
   tests/                    Evaluator smoke tests
 ```
 
-The Hugging Face repository contains the 300 participant-visible task views,
-Build/Revise objective references, all 100 Explain rubrics/checklists, and the
-same evaluation protocol. It also publishes the 18-model Gurobi baselines for
-Build, Revise-code, and Explain: 5,400 per-instance result rows with generated
-programs, raw responses, logs, answers, and stored scores. Participant
-workspaces and evaluator-only labels are kept in separate paths so models are
-not accidentally given reference code or answers.
+The accompanying dataset artifact contains the 300 participant-visible task
+views, Build/Revise objective references, all 100 Explain rubrics/checklists,
+and the same evaluation protocol. It also contains the 18-model Gurobi
+baselines for Build, Revise-code, and Explain: 5,400 per-instance result rows
+with generated programs, raw responses, logs, answers, and stored scores.
+Participant workspaces and evaluator-only labels are kept in separate paths so
+models are not accidentally given reference code or answers.
 
 ## Evaluation
 
@@ -146,9 +136,9 @@ Revise-code/Gurobi column is also available separately in
 validation checks that the two remain identical.
 
 The corresponding baseline archives and checksum index are available under
-`baseline_outputs/gurobi/` in the Hugging Face dataset. The packaging script is
-[`tools/package_gurobi_baselines.py`](tools/package_gurobi_baselines.py); it
-requires all 18 Build and Revise-code aggregates to match Table 2 before it
+`baseline_outputs/gurobi/` in the anonymous dataset artifact. The packaging
+script is [`tools/package_gurobi_baselines.py`](tools/package_gurobi_baselines.py);
+it requires all 18 Build and Revise-code aggregates to match Table 2 before it
 writes any archive.
 
 ## Main Paper Findings
@@ -163,24 +153,11 @@ These results should be interpreted as benchmark evidence about synthetic,
 executable OR workspaces, not as a deployment certificate for production
 optimization systems.
 
-## Release Policy
+## Review Snapshot
 
-For reproducibility, cite a Hugging Face Hub tag or commit SHA rather than a
-moving `main` branch. Planned public tags are:
-
-- `neurips2026-submission`: paper submission snapshot
-- `v1.0`: first public archival release
-
-## Citation
-
-```bibtex
-@misc{zhou2026orspace,
-  title = {OR-Space: A Full-Lifecycle Workspace Benchmark for Industrial Optimization Agents},
-  author = {Zhou, Chenyu and Lu, Xinyun and Zhao, Jiangyue and Lin, Jianghao and Ge, Dongdong and Ye, Yinyu},
-  year = {2026},
-  note = {Dataset: https://huggingface.co/datasets/Chenyu-Zhou/OR-Space}
-}
-```
+The anonymous artifact is pinned to a fixed submission snapshot. Public release
+URLs, archival tags, and citation metadata will be added after the review
+period.
 
 ## License
 
