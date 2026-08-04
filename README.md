@@ -141,18 +141,6 @@ python evaluation_programs/validate_dataset.py
 Representative model traces and their release metadata are documented under
 [`baseline_outputs/gurobi/`](baseline_outputs/gurobi/).
 
-## Main Paper Findings
-
-| Finding | Result |
-| --- | --- |
-| Workspace construction remains hard | The best Build score is 72.0% Pass@1 |
-| Revision context is model-dependent | Legacy heuristic code helps strong models but hurts weaker models |
-| Explanation is a distinct capability | Explain scores are weakly correlated with Build and Revise success |
-
-These results should be interpreted as benchmark evidence about synthetic,
-executable OR workspaces, not as a deployment certificate for production
-optimization systems.
-
 ## Review Snapshot
 
 The anonymous artifact is pinned to a fixed submission snapshot. Public release
