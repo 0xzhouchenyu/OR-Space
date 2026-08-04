@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
-"""Validate OR-Space model archives, metadata, and staged workspaces."""
+"""Validate OR-Space metadata and staged workspaces."""
 
 from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import json
 import re
-import zipfile
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -23,48 +21,6 @@ SECRET_PATTERNS = (
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     with path.open(encoding="utf-8") as handle:
         return [json.loads(line) for line in handle if line.strip()]
-
-
-def validate_model_archives(repo: Path, errors: list[str]) -> None:
-    with (repo / "baseline_outputs/gurobi/model_index.csv").open(
-        newline="", encoding="utf-8"
-    ) as handle:
-        archives = list(csv.DictReader(handle))
-    if len(archives) != 2:
-        errors.append(f"Expected 2 public archives; found {len(archives)}")
-    archive_by_model = {row["model"]: row for row in archives}
-    if set(archive_by_model) != {"gpt-5.4", "deepseek-v4-flash"}:
-        errors.append(f"Unexpected public Gurobi archive set: {sorted(archive_by_model)}")
-    for model, archive in archive_by_model.items():
-        archive_path = repo / "baseline_outputs/gurobi" / archive["archive"]
-        if not archive_path.is_file():
-            errors.append(f"Missing public archive for {model}")
-            continue
-        digest = hashlib.sha256(archive_path.read_bytes()).hexdigest()
-        if digest != archive["archive_sha256"]:
-            errors.append(f"Archive checksum mismatch for {model}")
-            continue
-        with zipfile.ZipFile(archive_path) as bundle:
-            broken = bundle.testzip()
-            if broken:
-                errors.append(f"Corrupt member in {model} archive: {broken}")
-                continue
-            prefix = f"{model}/explain/"
-            results = json.loads(bundle.read(prefix + "results.json"))
-            if len(results) != 100 or {row["id"] for row in results} != set(range(1, 101)):
-                errors.append(f"Incomplete Explain result rows for {model}")
-            unfinished = [row["id"] for row in results if row.get("finish_reason") != "stop"]
-            if unfinished:
-                errors.append(f"Non-complete Explain responses for {model}: {unfinished}")
-            names = set(bundle.namelist())
-            for directory, suffix in (("raw", "txt"), ("answers", "txt"), ("scores", "json")):
-                missing = [
-                    instance_id
-                    for instance_id in range(1, 101)
-                    if f"{prefix}{directory}/instance_{instance_id}.{suffix}" not in names
-                ]
-                if missing:
-                    errors.append(f"Missing Explain {directory} files for {model}: {missing}")
 
 
 def validate_release_metadata(repo: Path, errors: list[str]) -> None:
@@ -201,7 +157,6 @@ def main() -> int:
     parser.add_argument("--participant-root", type=Path)
     args = parser.parse_args()
     errors: list[str] = []
-    validate_model_archives(args.repo, errors)
     validate_release_metadata(args.repo, errors)
     scan_secrets(args.repo, errors)
     if args.rubrics:

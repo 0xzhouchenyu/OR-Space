@@ -38,9 +38,8 @@ against the corresponding solver API.
 
 ## Repository contents
 
-This repository is the complete research release. It contains participant
-workspaces, evaluation references and programs, benchmark construction code,
-and representative model-run evidence.
+This repository contains participant workspaces, evaluation references and
+programs, and benchmark construction code.
 
 ```text
 .
@@ -49,16 +48,9 @@ and representative model-run evidence.
 ├── evaluation/                    Task references and Explain rubrics
 ├── evaluation_programs/           Build, Revise, and Explain evaluators
 ├── supporting_files/              Metadata, task splits, and visual assets
-├── baseline_outputs/gurobi/       Representative Gurobi traces for two models
 ├── tools/                         Staging and release-validation utilities
 └── tests/                         Evaluator tests
 ```
-
-The public trace subset contains two representative models, `gpt-5.4` and
-`deepseek-v4-flash`, with 100 Build, 100 Revise-code, and 100 Explain records
-for each. Generated programs, raw responses, execution logs, answers,
-stored scores, checksums, and provenance are retained where available. See
-[`baseline_outputs/gurobi/`](baseline_outputs/gurobi/) for the archive structure.
 
 ## Quick start
 
@@ -102,16 +94,13 @@ Easy/Medium/Hard. See
 [`supporting_files/metadata/difficulty_methodology.md`](supporting_files/metadata/difficulty_methodology.md)
 and [`supporting_files/metadata/empirical_difficulty.csv`](supporting_files/metadata/empirical_difficulty.csv).
 
-## Evaluation and model traces
+## Evaluation
 
 [`evaluation_programs/`](evaluation_programs/) provides runnable scorers, while
 [`evaluation/`](evaluation/) contains task references and Explain rubrics. The
 Explain release includes normalized exact checks, semantic checklist judgments,
 evidence verification, the judge prompt and schema, and the final 35/35/20/10
 rubric with an unsupported-claim penalty of up to 20 points.
-
-Representative model traces and their release metadata are documented under
-[`baseline_outputs/gurobi/`](baseline_outputs/gurobi/).
 
 ## Validation
 
@@ -121,8 +110,8 @@ python evaluation_programs/validate_dataset.py
 python -m unittest discover -s tests
 ```
 
-The validator checks difficulty metadata, the two public model archives,
-checksums, completeness, and accidental credentials.
+The validator checks difficulty metadata, workspace completeness, and
+accidental credentials.
 
 ## Citation
 
