@@ -1,0 +1,9 @@
+Parameter_Name,Value,Unit,Context_Description
+profit_per_kg_product_A,30,GBP,Profit generated per kilogram of product A sold
+profit_per_kg_product_B,10,GBP,Profit generated per kilogram of product B sold
+max_production_hours_per_week,40,hours,Maximum production hours allocated per week
+hours_per_kg_product_A,6,hours,Production hours required per kilogram of product A
+hours_per_kg_product_B,3,hours,Production hours required per kilogram of product B
+min_output_ratio_product_B_to_A,3,ratio,Market demand requires output of product B to be at least three times the output of product A
+storage_space_ratio_product_A_to_B,4,ratio,Storage space required for product A is four times that of product B
+max_storage_product_A,4,kg,Maximum storage capacity for product A per week

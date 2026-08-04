@@ -1,0 +1,56 @@
+{
+  "solver": "gurobi",
+  "model_name": "Investment",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 510000.0,
+  "objective_bound": 510000.0,
+  "mip_gap": null,
+  "runtime": 0.0005450248718261719,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_fed1el15/solver_records/Investment.gurobi.log",
+  "variables": {
+    "x0_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x0_2": {
+      "value": 100000.0,
+      "reduced_cost": 0.0
+    },
+    "x1_1": {
+      "value": 0.0,
+      "reduced_cost": -0.11000000000000032
+    },
+    "x1_2": {
+      "value": 0.0,
+      "reduced_cost": -0.0
+    },
+    "x2_1": {
+      "value": 300000.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "year0_budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 5.1
+    },
+    "year1_budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 3.0
+    },
+    "year2_budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.7
+    }
+  }
+}

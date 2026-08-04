@@ -1,0 +1,296 @@
+{
+  "solver": "gurobi",
+  "model_name": "farm_two_seasons_water",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 510909.0909090909,
+  "objective_bound": 510909.0909090909,
+  "mip_gap": 0.0,
+  "runtime": 0.003434896469116211,
+  "node_count": 1.0,
+  "iteration_count": 4.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_sqt7afb6/solver_records/farm_two_seasons_water.gurobi.log",
+  "variables": {
+    "area_apples_autumn": {
+      "value": 74.54545454545455,
+      "reduced_cost": null
+    },
+    "area_apples_spring": {
+      "value": 120.0,
+      "reduced_cost": null
+    },
+    "area_lemons_autumn": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "area_lemons_spring": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "area_oranges_autumn": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "area_oranges_spring": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "area_pears_autumn": {
+      "value": 45.45454545454545,
+      "reduced_cost": null
+    },
+    "area_pears_spring": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "v": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "water_apples_autumn": {
+      "value": 894.5454545454545,
+      "reduced_cost": null
+    },
+    "water_apples_spring": {
+      "value": 1200.0,
+      "reduced_cost": null
+    },
+    "water_lemons_autumn": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "water_lemons_spring": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "water_oranges_autumn": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "water_oranges_spring": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "water_pears_autumn": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "water_pears_spring": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_apples": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_lemons": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_oranges": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_pears": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z_apples": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z_lemons": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "z_oranges": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "z_pears": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "land_season_spring": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "land_season_autumn": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ratio_apples_pears": {
+      "sense": ">=",
+      "slack": -103.63636363636365,
+      "dual_value": null
+    },
+    "ratio_apples_lemons": {
+      "sense": ">=",
+      "slack": -194.54545454545456,
+      "dual_value": null
+    },
+    "ratio_oranges_lemons": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_area_y_apples": {
+      "sense": "<=",
+      "slack": 45.45454545454544,
+      "dual_value": null
+    },
+    "link_area_y_pears": {
+      "sense": "<=",
+      "slack": 194.54545454545456,
+      "dual_value": null
+    },
+    "link_area_y_oranges": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_area_y_lemons": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_types_rule": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "water_def_apples_spring": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "water_def_apples_autumn": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "water_def_pears_spring": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "water_def_pears_autumn": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "water_def_oranges_spring": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "water_def_oranges_autumn": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "water_def_lemons_spring": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "water_def_lemons_autumn": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "water_cap_spring": {
+      "sense": "<=",
+      "slack": 3800.0,
+      "dual_value": null
+    },
+    "water_cap_autumn": {
+      "sense": "<=",
+      "slack": 3605.4545454545455,
+      "dual_value": null
+    },
+    "total_water_budget": {
+      "sense": "<=",
+      "slack": 5405.454545454546,
+      "dual_value": null
+    },
+    "link_water_z_ub_apples": {
+      "sense": "<=",
+      "slack": 2705.4545454545455,
+      "dual_value": null
+    },
+    "link_water_z_lb_apples": {
+      "sense": ">=",
+      "slack": -1594.5454545454545,
+      "dual_value": null
+    },
+    "z_eq_y_apples": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_water_z_ub_pears": {
+      "sense": "<=",
+      "slack": 4300.0,
+      "dual_value": null
+    },
+    "link_water_z_lb_pears": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "z_eq_y_pears": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_water_z_ub_oranges": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_water_z_lb_oranges": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "z_eq_y_oranges": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_water_z_ub_lemons": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_water_z_lb_lemons": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "z_eq_y_lemons": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "div_min_two": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "div_upper": {
+      "sense": "<=",
+      "slack": 3.0,
+      "dual_value": null
+    }
+  }
+}

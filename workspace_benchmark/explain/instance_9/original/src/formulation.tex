@@ -1,0 +1,93 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $T$: set of toy types, indexed by $t$. In this instance,
+    \[
+    T=\{\text{truck},\text{airplane},\text{boat},\text{train}\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $p_t$: profit per unit of toy type $t$.
+    \item $w_t$: wood required per unit of toy type $t$.
+    \item $s_t$: steel required per unit of toy type $t$.
+    \item $W$: total available wood (\texttt{available\_wood}).
+    \item $S$: total available steel (\texttt{available\_steel}).
+    \item $M$: big-$M$ upper bound used in the linking constraints (\texttt{M}=1000).
+\end{itemize}
+
+For this instance, the parameter values are
+\[
+\begin{array}{c|cccc}
+t & \text{truck} & \text{airplane} & \text{boat} & \text{train} \\
+\hline
+p_t & 5 & 10 & 8 & 7 \\
+w_t & 12 & 20 & 15 & 10 \\
+s_t & 6 & 3 & 5 & 4
+\end{array}
+\]
+with
+\[
+W=890,\qquad S=500,\qquad M=1000.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_t$ (code: \texttt{x[t]}): nonnegative production quantity of toy type $t$.
+    \item $y_t$ (code: \texttt{y[t]}): binary indicator equal to $1$ if toy type $t$ is manufactured, and $0$ otherwise.
+\end{itemize}
+
+Thus,
+\[
+x_t \ge 0 \quad \forall t\in T,
+\qquad
+y_t \in \{0,1\} \quad \forall t\in T.
+\]
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \sum_{t\in T} p_t x_t.
+\]
+
+For this instance,
+\[
+\max \; 5x_{\text{truck}} + 10x_{\text{airplane}} + 8x_{\text{boat}} + 7x_{\text{train}}.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{t\in T} w_t x_t &\le W
+&& \text{(wood capacity)} \\
+\sum_{t\in T} s_t x_t &\le S
+&& \text{(steel capacity)} \\
+x_t &\le M y_t \qquad \forall t\in T
+&& \text{(link production to manufacture decision)} \\
+y_{\text{truck}} + y_{\text{train}} &\le 1
+&& \text{(truck--train exclusion)} \\
+y_{\text{boat}} &\le y_{\text{airplane}}
+&& \text{(boat implies airplane)} \\
+x_{\text{boat}} &\le x_{\text{train}}
+&& \text{(boat quantity cannot exceed train quantity)}.
+\end{align}
+
+Expanded resource constraints for this instance are
+\begin{align}
+12x_{\text{truck}} + 20x_{\text{airplane}} + 15x_{\text{boat}} + 10x_{\text{train}} &\le 890, \\
+6x_{\text{truck}} + 3x_{\text{airplane}} + 5x_{\text{boat}} + 4x_{\text{train}} &\le 500.
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program with continuous production variables $x_t$ and binary manufacture indicators $y_t$.
+    \item The binary variables are linked to production only through upper bounds $x_t \le M y_t$; there is no lower-bound constraint forcing positive production when $y_t=1$.
+    \item The truck--train and boat--airplane business rules are modeled on the binary variables, while the boat--train limit is modeled directly on production quantities as $x_{\text{boat}} \le x_{\text{train}}$.
+    \item The code fixes the big-$M$ value to $1000$ rather than deriving a tighter bound from resource capacities.
+    \item The model is solved exactly by a MIP solver through \texttt{GUROBI\_CMD(msg=0)} in the current implementation.
+\end{itemize}

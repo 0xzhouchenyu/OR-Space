@@ -1,0 +1,100 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Months $M=\{1,2,3\}$, indexed by $m$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $p_m$: regular purchase price in month $m$ (code: \texttt{purchase\_prices[m]}).
+    \item $q_m$: selling price in month $m$ (code: \texttt{selling\_prices[m]}).
+    \item $W$: warehouse capacity (code: \texttt{warehouse\_capacity}).
+    \item $S_0$: initial stock at the start of month 1 (code: \texttt{initial\_stock}).
+    \item $F_0$: initial funds at the start of month 1 (code: \texttt{initial\_funds}).
+    \item $E$: required end-of-quarter inventory (code: \texttt{end\_inventory}).
+    \item $B^{\text{fast}}$: per-month fast purchase capacity (code: \texttt{buy\_fast\_capacity}).
+    \item $\alpha$: fast purchase premium ratio (code: \texttt{fast\_purchase\_premium\_ratio}).
+    \item $L$: credit limit (code: \texttt{credit\_limit}).
+    \item $r$: monthly interest rate on used credit (code: \texttt{monthly\_interest\_rate}).
+    \item $I^{\min}_m$: minimum closing inventory in month $m$ (code: \texttt{min\_inventory[m]}).
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each $m \in M$:
+\begin{itemize}
+    \item $b^{R}_m \ge 0$: regular purchases in month $m$ (code: \texttt{buy\_regular[m]}).
+    \item $b^{F}_m \ge 0$: fast purchases in month $m$ (code: \texttt{buy\_fast[m]}).
+    \item $x_m \ge 0$: sales in month $m$ (code: \texttt{sell[m]}).
+    \item $s_m \ge 0$: closing stock at the end of month $m$ (code: \texttt{stock[m]}).
+    \item $f_m \ge 0$: end-of-month liquid funds (code: \texttt{funds[m]}).
+    \item $c_m \ge 0$: credit line used at the end of month $m$ (code: \texttt{credit\_used[m]}).
+\end{itemize}
+
+\section*{Objective}
+
+Maximize final funds minus initial funds minus the sum of monthly interest charges:
+\[
+\max \; f_3 - F_0 - \sum_{m\in M} r\,c_m .
+\]
+
+\section*{Constraints}
+
+For month 1:
+\[
+s_1 = S_0 - x_1 + b^R_1 + b^F_1,
+\]
+\[
+x_1 \le S_0,
+\]
+\[
+f_1 + c_1 = F_0 + q_1 x_1 - p_1 b^R_1 - p_1(1+\alpha)b^F_1 - r c_1.
+\]
+
+For months $m=2,3$:
+\[
+s_m = s_{m-1} - x_m + b^R_m + b^F_m,
+\]
+\[
+x_m \le s_{m-1},
+\]
+\[
+f_m + c_m = f_{m-1} + q_m x_m - p_m b^R_m - p_m(1+\alpha)b^F_m - r c_m.
+\]
+
+For each $m\in M$:
+\[
+s_m \le W,
+\]
+\[
+s_m \ge I^{\min}_m,
+\]
+\[
+b^F_m \le B^{\text{fast}},
+\]
+\[
+c_m \le L,
+\]
+\[
+b^R_m,\; b^F_m,\; x_m,\; s_m,\; f_m,\; c_m \ge 0.
+\]
+
+End-of-quarter requirement:
+\[
+s_3 \ge E.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a linear program and solved with \texttt{GUROBI\_CMD} through a PuLP-compatible interface.
+    \item The sales restriction is enforced exactly as in code: month-$m$ sales can only use stock available at the end of the previous month, via $x_m \le S_0$ for $m=1$ and $x_m \le s_{m-1}$ for $m=2,3$. Current-month purchases cannot be sold in the same month.
+    \item The financing balance is modeled exactly as
+    \[
+    f_m + c_m = \text{previous funds} + \text{sales revenue} - \text{purchase costs} - r c_m,
+    \]
+    so the monthly interest charge appears both in the balance equation and again in the objective through $-\sum_m r c_m$.
+    \item The separate end-of-quarter inventory constraint $s_3 \ge E$ is kept in addition to the monthly minimum inventory constraint $s_3 \ge I^{\min}_3$, exactly matching the implementation.
+    \item No integrality restrictions are imposed; all decision variables are continuous.
+\end{itemize}

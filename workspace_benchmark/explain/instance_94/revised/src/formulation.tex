@@ -1,0 +1,155 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $g \in G = \{\mathrm{I}, \mathrm{II}\}$: gasoline types.
+    \item $k \in K = \{1,2,3\}$: staged crude A purchase blocks.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter names below correspond to the data packet fields.
+
+\begin{itemize}
+    \item $\alpha_{\mathrm{I}}$ (\texttt{min\_proportion\_crude\_A\_type\_I}/100): minimum crude A share in gasoline type I.
+    \item $\alpha_{\mathrm{II}}$ (\texttt{min\_proportion\_crude\_A\_type\_II}/100): minimum crude A share in gasoline type II.
+    \item $s_{\mathrm{I}}$ (\texttt{selling\_price\_type\_I}): selling price of type I gasoline.
+    \item $s_{\mathrm{II}}$ (\texttt{selling\_price\_type\_II}): base selling price of type II gasoline.
+    \item $I_A$ (\texttt{inventory\_crude\_A}): available inventory of crude A.
+    \item $I_B$ (\texttt{inventory\_crude\_B}): available inventory of crude B.
+    \item $\bar P$ (\texttt{max\_purchase\_crude\_A}): maximum total market purchase of crude A.
+    \item $c_k$ for $k\in K$: block purchase prices of crude A, corresponding to
+    \texttt{market\_price\_crude\_A\_tier\_1},
+    \texttt{market\_price\_crude\_A\_tier\_2},
+    \texttt{market\_price\_crude\_A\_tier\_3}.
+    \item $\bar q = 500$: upper bound of each purchase block, as implemented in the code.
+    \item $\bar T$ (\texttt{processing\_capacity}): maximum total gasoline output.
+    \item $\underline T$ (\texttt{min\_total\_gasoline\_output}): minimum total gasoline output.
+    \item $c^{\mathrm{proc}}$ (\texttt{processing\_cost\_per\_ton}): processing cost per ton of total output.
+    \item $\theta$ (\texttt{type\_II\_contract\_threshold}): type II output threshold for the uplift.
+    \item $\Delta^{\mathrm{II}}$ (\texttt{type\_II\_price\_lift}): per-ton price lift applied to type II output when the contract threshold is activated.
+    \item $\beta$ (\texttt{bulk\_purchase\_rebate\_threshold}): total crude A purchase threshold for the bulk rebate logic.
+    \item $R$ (\texttt{bulk\_purchase\_rebate}): fixed rebate amount.
+    \item $M=\bar T$: big-$M$ constant used in the implemented linearization.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $a_{\mathrm{I}}$ (code: \texttt{a1}): crude A allocated to gasoline type I.
+    \item $a_{\mathrm{II}}$ (code: \texttt{a2}): crude A allocated to gasoline type II.
+    \item $b_{\mathrm{I}}$ (code: \texttt{b1}): crude B allocated to gasoline type I.
+    \item $b_{\mathrm{II}}$ (code: \texttt{b2}): crude B allocated to gasoline type II.
+    \item $p_k$ (code: \texttt{p1}, \texttt{p2}, \texttt{p3}): crude A purchased in block $k$, for $k\in K$.
+    \item $y_2$ (code: \texttt{y2}): binary indicator opening purchase block 2.
+    \item $y_3$ (code: \texttt{y3}): binary indicator opening purchase block 3.
+    \item $u$ (code: \texttt{premium}): binary indicator for activating the type II uplift logic.
+    \item $z$ (code: \texttt{prem\_out}): linearization variable for uplift-eligible type II output.
+    \item $r$ (code: \texttt{rebate}): binary indicator for receiving the bulk purchase rebate.
+\end{itemize}
+
+Define
+\[
+x_{\mathrm{I}} = a_{\mathrm{I}} + b_{\mathrm{I}}, \qquad
+x_{\mathrm{II}} = a_{\mathrm{II}} + b_{\mathrm{II}}, \qquad
+P = p_1+p_2+p_3.
+\]
+
+\section*{Objective}
+
+The implemented model maximizes
+\[
+\max \;
+s_{\mathrm{I}} x_{\mathrm{I}}
++ s_{\mathrm{II}} x_{\mathrm{II}}
++ \Delta^{\mathrm{II}} z
+- \sum_{k\in K} c_k p_k
+- c^{\mathrm{proc}}(x_{\mathrm{I}}+x_{\mathrm{II}})
++ R r.
+\]
+
+\section*{Constraints}
+
+\paragraph{Purchase block logic.}
+\[
+0 \le p_1 \le \bar q,
+\qquad
+0 \le p_2 \le \bar q\, y_2,
+\qquad
+p_1 \ge \bar q\, y_2,
+\]
+\[
+0 \le p_3 \le \bar q\, y_3,
+\qquad
+p_2 \ge \bar q\, y_3.
+\]
+These constraints enforce the staged structure implemented in the code: block 2 can be used only if block 1 is filled to 500, and block 3 can be used only if block 2 is filled to 500.
+
+\paragraph{Total crude A purchase bound.}
+\[
+P \le \bar P.
+\]
+
+\paragraph{Material availability.}
+\[
+a_{\mathrm{I}} + a_{\mathrm{II}} \le I_A + P,
+\]
+\[
+b_{\mathrm{I}} + b_{\mathrm{II}} \le I_B.
+\]
+
+\paragraph{Blend quality requirements.}
+\[
+a_{\mathrm{I}} \ge \alpha_{\mathrm{I}} x_{\mathrm{I}},
+\]
+\[
+a_{\mathrm{II}} \ge \alpha_{\mathrm{II}} x_{\mathrm{II}}.
+\]
+
+\paragraph{Throughput window.}
+\[
+x_{\mathrm{I}} + x_{\mathrm{II}} \le \bar T,
+\]
+\[
+x_{\mathrm{I}} + x_{\mathrm{II}} \ge \underline T.
+\]
+
+\paragraph{Type II uplift activation and linearization.}
+\[
+x_{\mathrm{II}} \ge \theta\, u,
+\]
+\[
+z \le x_{\mathrm{II}},
+\]
+\[
+z \le M u,
+\]
+\[
+z \ge x_{\mathrm{II}} - M(1-u).
+\]
+Because $z \ge 0$ by variable definition, these constraints imply $z=x_{\mathrm{II}}$ when $u=1$ and $z=0$ when $u=0$.
+
+\paragraph{Bulk rebate logic.}
+\[
+P \le \beta + \bar P\, r.
+\]
+
+\paragraph{Variable domains.}
+\[
+a_{\mathrm{I}},a_{\mathrm{II}},b_{\mathrm{I}},b_{\mathrm{II}},p_1,p_2,p_3,z \ge 0,
+\]
+\[
+y_2,y_3,u,r \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The formulation above matches \texttt{current\_heuristic.py} exactly, including the specific binary logic used for the two commercial thresholds.
+    \item The type II commercial rule is implemented as an optional activation: if $u=1$, then $x_{\mathrm{II}}$ must meet the threshold and the uplift applies to all type II output through $z=x_{\mathrm{II}}$; if $u=0$, no uplift is paid. Since the uplift coefficient is positive in the objective, the optimizer will choose $u=1$ whenever feasible and profitable, but this is a consequence of optimization, not an explicit equivalence constraint.
+    \item The bulk rebate rule is also implemented exactly as coded: the constraint
+    \[
+    P \le \beta + \bar P r
+    \]
+    forbids purchases above $\beta$ when $r=0$, while allowing larger purchases when $r=1$ and adding the fixed rebate $R$ to the objective. There is no reverse implication enforcing $r=1$ whenever $P>\beta$ except through feasibility.
+    \item The staged purchase blocks are represented by continuous quantities with binary opening variables only for blocks 2 and 3; block 1 has only the explicit upper bound of 500.
+    \item The model is solved in the code as a mixed-integer linear program via \texttt{GUROBI\_CMD}.

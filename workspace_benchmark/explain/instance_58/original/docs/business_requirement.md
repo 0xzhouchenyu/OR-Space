@@ -1,0 +1,1 @@
+Vicky and David have just bought a farm in the Yarra Valley, and they are considering using it to grow apples, pears, oranges, and lemons. They aim to achieve maximum profit by deciding how many acres of land to allocate for each type of fruit. Please refer to the corresponding CSV files in the data folder for specific parameter values.

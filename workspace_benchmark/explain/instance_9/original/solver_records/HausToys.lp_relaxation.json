@@ -1,0 +1,89 @@
+{
+  "solver": "gurobi",
+  "model_name": "HausToys_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 623.0,
+  "runtime": 0.0004401206970214844,
+  "variables": {
+    "x_airplane": {
+      "value": 0.0,
+      "reduced_cost": -4.0
+    },
+    "x_boat": {
+      "value": 0.0,
+      "reduced_cost": -2.5
+    },
+    "x_train": {
+      "value": 89.0,
+      "reduced_cost": 0.0
+    },
+    "x_truck": {
+      "value": 0.0,
+      "reduced_cost": -3.3999999999999986
+    },
+    "y_airplane": {
+      "value": 1.0,
+      "reduced_cost": -0.0
+    },
+    "y_boat": {
+      "value": 1.0,
+      "reduced_cost": -0.0
+    },
+    "y_train": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "y_truck": {
+      "value": 0.0,
+      "reduced_cost": -0.0
+    }
+  },
+  "constraints": {
+    "Wood_Constraint": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.7
+    },
+    "Steel_Constraint": {
+      "sense": "<",
+      "slack": 144.0,
+      "dual_value": 0.0
+    },
+    "Link_truck": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Link_airplane": {
+      "sense": "<",
+      "slack": 1000.0,
+      "dual_value": 0.0
+    },
+    "Link_boat": {
+      "sense": "<",
+      "slack": 1000.0,
+      "dual_value": 0.0
+    },
+    "Link_train": {
+      "sense": "<",
+      "slack": 911.0,
+      "dual_value": 0.0
+    },
+    "Truck_Train_Exclusion": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "Boat_Airplane_Dependency": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Boat_Train_Limit": {
+      "sense": "<",
+      "slack": 89.0,
+      "dual_value": 0.0
+    }
+  }
+}

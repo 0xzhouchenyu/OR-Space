@@ -1,0 +1,159 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinStaffCost",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 51.199999999999996,
+  "objective_bound": 51.199999999999996,
+  "mip_gap": 0.0,
+  "runtime": 0.0033311843872070312,
+  "node_count": 1.0,
+  "iteration_count": 7.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_xlfoe9ys/solver_records/MinStaffCost.gurobi.log",
+  "variables": {
+    "xFT_0": {
+      "value": 8.0,
+      "reduced_cost": null
+    },
+    "xFT_1": {
+      "value": 7.0,
+      "reduced_cost": null
+    },
+    "xFT_2": {
+      "value": 18.0,
+      "reduced_cost": null
+    },
+    "xFT_3": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "xFT_4": {
+      "value": 12.0,
+      "reduced_cost": null
+    },
+    "xFT_5": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "xPT_0": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "xPT_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "xPT_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "xPT_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "xPT_4": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "xPT_5": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "demand_0": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_5": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "pt_cap_0": {
+      "sense": "<=",
+      "slack": 4.0,
+      "dual_value": null
+    },
+    "pt_cap_1": {
+      "sense": "<=",
+      "slack": 6.0,
+      "dual_value": null
+    },
+    "pt_cap_2": {
+      "sense": "<=",
+      "slack": 6.0,
+      "dual_value": null
+    },
+    "pt_cap_3": {
+      "sense": "<=",
+      "slack": 6.0,
+      "dual_value": null
+    },
+    "pt_cap_4": {
+      "sense": "<=",
+      "slack": 2.0,
+      "dual_value": null
+    },
+    "pt_cap_5": {
+      "sense": "<=",
+      "slack": 6.0,
+      "dual_value": null
+    },
+    "ft_min_0": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "ft_min_1": {
+      "sense": ">=",
+      "slack": -7.0,
+      "dual_value": null
+    },
+    "ft_min_2": {
+      "sense": ">=",
+      "slack": -17.0,
+      "dual_value": null
+    },
+    "ft_min_3": {
+      "sense": ">=",
+      "slack": -12.0,
+      "dual_value": null
+    },
+    "ft_min_4": {
+      "sense": ">=",
+      "slack": -6.0,
+      "dual_value": null
+    },
+    "ft_min_5": {
+      "sense": ">=",
+      "slack": -4.0,
+      "dual_value": null
+    }
+  }
+}

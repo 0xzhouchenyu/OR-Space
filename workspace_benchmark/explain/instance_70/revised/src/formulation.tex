@@ -1,0 +1,117 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+\item $V$ : set of cities (code/data: \texttt{cities}), indexed by $i,j$.
+\item $A=\{(i,j)\in V\times V : i\neq j\}$ : set of directed arcs on which routing variables are created.
+\item $n = |V|$ : number of cities.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+\item $d_{ij}$ : travel distance from city $i$ to city $j$ for $(i,j)\in A$ (code/data: \texttt{dist[(i,j)]}, file \texttt{table\_1.csv}).
+\item $s$ : required start city (code/data: \texttt{start\_city}).
+\item $t$ : required end city (code/data: \texttt{end\_city}).
+\item $(p,q)$ : prohibited direct arc (code/data: \texttt{prohibited\_from}, \texttt{prohibited\_to}).
+\item $(h,k)$ : inspection arc (code/data: \texttt{inspection\_arc\_from}, \texttt{inspection\_arc\_to}).
+\item $\gamma$ : additional inspection cost incurred if arc $(h,k)$ is used (code/data: \texttt{inspection\_stop\_cost}).
+\item $c_{ij}$ : effective arc cost,
+\[
+c_{ij}=d_{ij}+\begin{cases}
+\gamma, & \text{if } (i,j)=(h,k),\\
+0, & \text{otherwise,}
+\end{cases}
+\qquad (i,j)\in A.
+\]
+\item $u_{ij}$ : upper bound used in the code for arc variable creation,
+\[
+u_{ij}=\begin{cases}
+0, & \text{if } (i,j)=(p,q),\\
+1, & \text{otherwise.}
+\end{cases}
+\]
+\end{itemize}
+
+For instance 70, the data give $s=1$, $t=4$, $(p,q)=(1,3)$, $(h,k)=(2,3)$, and $\gamma=4$.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+\item $x_{ij}$ (code: \texttt{x[(i,j)]}) for $(i,j)\in A$: binary arc-selection variable, equal to $1$ if the path uses directed arc $(i,j)$, and $0$ otherwise, with bounds $0 \le x_{ij} \le u_{ij}$.
+\item $\mathrm{pos}_i$ (code: \texttt{pos[i]}) for $i\in V$: continuous position variable intended to encode the visit order, with
+\[
+1 \le \mathrm{pos}_i \le n.
+\]
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total traveled distance plus the inspection surcharge on arc $(h,k)$:
+\[
+\min \sum_{(i,j)\in A} c_{ij}\,x_{ij}.
+\]
+
+Equivalently,
+\[
+\min \sum_{(i,j)\in A} \left(d_{ij}+\gamma \,\mathbf{1}\{(i,j)=(h,k)\}\right)x_{ij}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Start city degree conditions.}
+\[
+\sum_{j\in V:\, j\neq s} x_{sj} = 1,
+\qquad
+\sum_{j\in V:\, j\neq s} x_{js} = 0.
+\]
+
+\paragraph{End city degree conditions.}
+\[
+\sum_{j\in V:\, j\neq t} x_{tj} = 0,
+\qquad
+\sum_{j\in V:\, j\neq t} x_{jt} = 1.
+\]
+
+\paragraph{Intermediate city degree conditions.}
+For every $i\in V\setminus\{s,t\}$,
+\[
+\sum_{j\in V:\, j\neq i} x_{ij} = 1,
+\qquad
+\sum_{j\in V:\, j\neq i} x_{ji} = 1.
+\]
+
+\paragraph{Fixed positions for start and end.}
+\[
+\mathrm{pos}_s = 1,
+\qquad
+\mathrm{pos}_t = n.
+\]
+
+\paragraph{Order-propagation constraints.}
+For every $(i,j)\in A$,
+\[
+\mathrm{pos}_j \ge \mathrm{pos}_i + 1 - n(1-x_{ij}).
+\]
+
+\paragraph{Variable domains.}
+\[
+x_{ij}\in\{0,1\}\quad \forall (i,j)\in A,
+\]
+\[
+1 \le \mathrm{pos}_i \le n \quad \forall i\in V.
+\]
+
+Because $u_{pq}=0$, the prohibited arc is enforced through the variable bound:
+\[
+x_{pq}=0.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+\item The implemented model is an open-path TSP variant, not a return-to-origin tour: it starts at city $s$, ends at city $t$, and visits every other city exactly once.
+\item The prohibition of the direct arc from city $p$ to city $q$ is implemented by creating the binary variable with upper bound $0$ rather than by adding a separate constraint.
+\item The hazardous-material inspection is modeled exactly as an additive arc cost on $(h,k)$; for this instance, using arc $(2,3)$ adds $4$ to the objective.
+\item The ordering variables \texttt{pos[i]} are declared continuous in the code, with bounds $[1,n]$, and are linked by MTZ-style inequalities. The formulation above matches that implementation exactly.
+\item The code solves this optimization model with a MIP solver interface (\texttt{GUROBI\_CMD}) rather than by custom enumeration or dynamic programming.
+\end{itemize}

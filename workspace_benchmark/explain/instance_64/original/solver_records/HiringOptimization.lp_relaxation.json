@@ -1,0 +1,57 @@
+{
+  "solver": "gurobi",
+  "model_name": "HiringOptimization_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 38000.0,
+  "runtime": 0.0003750324249267578,
+  "variables": {
+    "x_F": {
+      "value": 0.0,
+      "reduced_cost": 2000.0
+    },
+    "x_G": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_H": {
+      "value": 1.0,
+      "reduced_cost": -2000.0
+    },
+    "x_I": {
+      "value": 1.0,
+      "reduced_cost": -0.0
+    },
+    "x_J": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Budget": {
+      "sense": "<",
+      "slack": 2000.0,
+      "dual_value": 0.0
+    },
+    "MaxEmployees": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "MinSkill": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 5000.0
+    },
+    "MinPMExp": {
+      "sense": ">",
+      "slack": -1.0,
+      "dual_value": 0.0
+    },
+    "MaxOneGJ": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0
+    }
+  }
+}

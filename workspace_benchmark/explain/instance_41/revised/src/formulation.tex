@@ -1,0 +1,142 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Years relevant to decision timing: $t \in \{1,2,3\}$.
+    \item Projects:
+    \begin{itemize}
+        \item Project $1$: short-cycle project available in each year $t=1,2,3$.
+        \item Project $2$: available only at the beginning of Year 1, matures at the end of Year 2.
+        \item Project $3$: available only at the beginning of Year 2, matures at the end of Year 2.
+        \item Project $4$: available only at the beginning of Year 3, matures at the end of Year 3.
+    \end{itemize}
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Initial capital $C_0 = 500000$ (code: \texttt{initial\_capital}).
+    \item Gross return factor of project $i$, denoted $r_i$ (code: \texttt{r1}, \texttt{r2}, \texttt{r3}, \texttt{r4}):
+    \[
+    r_1 = 1.20,\quad r_2 = 1.50,\quad r_3 = 1.60,\quad r_4 = 1.40.
+    \]
+    \item Capacity of projects with explicit upper bounds:
+    \[
+    U_2 = 120000,\quad U_3 = 150000,\quad U_4 = 100000
+    \]
+    (code: \texttt{cap2}, \texttt{cap3}, \texttt{cap4}).
+    Project 1 has no explicit upper bound in the code beyond yearly cash availability.
+    \item Desired liquidity reserve at the beginning of Year 3:
+    \[
+    R^{\min}=80000
+    \]
+    (code: \texttt{min\_year3\_reserve}).
+    \item Penalty per yuan of reserve shortfall:
+    \[
+    \pi = 0.5
+    \]
+    (code: \texttt{reserve\_shortfall\_penalty}).
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Amount invested in Project 1 at the beginning of Year $t$:
+    \[
+    x_{1,t} \ge 0
+    \]
+    with
+    \[
+    x_{1,1} \text{ (code: \texttt{x1\_1})},\quad
+    x_{1,2} \text{ (code: \texttt{x1\_2})},\quad
+    x_{1,3} \text{ (code: \texttt{x1\_3})}.
+    \]
+    \item Amount invested in Project 2:
+    \[
+    x_2 \in [0,U_2]
+    \]
+    (code: \texttt{x2}).
+    \item Amount invested in Project 3:
+    \[
+    x_3 \in [0,U_3]
+    \]
+    (code: \texttt{x3}).
+    \item Amount invested in Project 4:
+    \[
+    x_4 \in [0,U_4]
+    \]
+    (code: \texttt{x4}).
+    \item Cash deliberately left uninvested at the beginning of Year 3 and carried to the end of Year 3:
+    \[
+    y \ge 0
+    \]
+    (code: \texttt{reserve\_y3}).
+    \item Liquidity reserve shortfall:
+    \[
+    s \ge 0
+    \]
+    (code: \texttt{shortfall}).
+\end{itemize}
+
+\section*{Objective}
+
+Maximize end-of-Year-3 net value after applying the liquidity shortfall penalty:
+\[
+\max \; r_1 x_{1,3} + r_4 x_4 + y - \pi s.
+\]
+
+Using the data values,
+\[
+\max \; 1.20\,x_{1,3} + 1.40\,x_4 + y - 0.5\,s.
+\]
+
+\section*{Constraints}
+
+\paragraph{Year 1 cash availability.}
+Initial capital can be allocated only to Year-1 Project 1 and Project 2:
+\[
+x_{1,1} + x_2 \le C_0.
+\]
+
+\paragraph{Year 2 cash availability.}
+Only the proceeds from the Year-1 placement in Project 1 are available at the beginning of Year 2:
+\[
+x_{1,2} + x_3 \le r_1 x_{1,1}.
+\]
+
+\paragraph{Year 3 cash balance.}
+At the beginning of Year 3, available cash consists of the proceeds of Year-2 Project 1 and the projects maturing at the end of Year 2; this amount is exactly split among Year-3 Project 1, Project 4, and the uninvested reserve:
+\[
+x_{1,3} + x_4 + y = r_1 x_{1,2} + r_2 x_2 + r_3 x_3.
+\]
+
+\paragraph{Reserve shortfall definition.}
+The shortfall variable is constrained only to be at least the gap between the desired reserve and the actual carried reserve:
+\[
+s \ge R^{\min} - y.
+\]
+
+\paragraph{Variable bounds.}
+\[
+x_{1,1},x_{1,2},x_{1,3},y,s \ge 0,
+\]
+\[
+0 \le x_2 \le U_2,\qquad 0 \le x_3 \le U_3,\qquad 0 \le x_4 \le U_4.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program solved by \texttt{GUROBI\_CMD} through a PuLP-compatible interface; it is not an enumeration or dynamic-programming search.
+    \item The formulation follows the code exactly: Year 3 uses an equality cash-balance constraint,
+    \[
+    x_{1,3}+x_4+y = r_1x_{1,2}+r_2x_2+r_3x_3,
+    \]
+    so all cash available at the beginning of Year 3 is either invested in Year-3 opportunities or held as reserve.
+    \item The shortfall condition is implemented as a one-sided inequality, not as an explicit equality:
+    \[
+    s \ge R^{\min}-y,\quad s\ge 0.
+    \]
+    Because the objective penalizes $s$, optimal solutions set $s=\max\{0,R^{\min}-y\}$, but this is an implication of optimization, not a separate model constraint.
+    \item The objective counts only cash realized by the end of Year 3: returns from Project 1 placed in Year 3, returns from Project 4, and the reserved Year-3 cash carried unchanged to year-end, minus the reserve shortfall penalty.
+    \item Project 1 is represented by three separate variables (\texttt{x1\_1}, \texttt{x1\_2}, \texttt{x1\_3}) rather than a single indexed variable in the code; the mathematical notation above groups them as $x_{1,t}$ for compactness.
+\end{itemize}

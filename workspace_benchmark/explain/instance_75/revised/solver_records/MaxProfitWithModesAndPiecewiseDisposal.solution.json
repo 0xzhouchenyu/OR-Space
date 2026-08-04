@@ -1,0 +1,84 @@
+{
+  "solver": "gurobi",
+  "model_name": "MaxProfitWithModesAndPiecewiseDisposal",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 59.666666666666664,
+  "objective_bound": 59.666666666666664,
+  "mip_gap": 0.0,
+  "runtime": 0.003966808319091797,
+  "node_count": 1.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_cjgk8io1/solver_records/MaxProfitWithModesAndPiecewiseDisposal.gurobi.log",
+  "variables": {
+    "cDispHigh": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "cDispLow": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "cSold": {
+      "value": 5.0,
+      "reduced_cost": null
+    },
+    "xA": {
+      "value": 2.6666666666666665,
+      "reduced_cost": null
+    },
+    "xB": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "z1_high": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z2_high": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Process1TimeMode": {
+      "sense": "<=",
+      "slack": 2.666666666666668,
+      "dual_value": null
+    },
+    "Process2TimeMode": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MutualExclusionHighMode": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ByproductBalance": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MaxCSales": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LowDisposalCap": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "TotalDisposalCap": {
+      "sense": "<=",
+      "slack": 17.0,
+      "dual_value": null
+    }
+  }
+}

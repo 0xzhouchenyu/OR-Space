@@ -1,0 +1,11 @@
+Parameter_Name,Value,Unit,Context_Description
+workshop_a_available_hours,250,hours,Available production time per month in workshop A
+workshop_a_hourly_cost,80,yuan,Cost per hour of production in workshop A
+workshop_b_available_hours,150,hours,Available production time per month in workshop B
+workshop_b_hourly_cost,20,yuan,Cost per hour of production in workshop B
+microwave_monthly_sales_estimate,80,units,Estimated monthly sales of microwave ovens
+water_heater_monthly_sales_estimate,50,units,Estimated monthly sales of water heaters
+inspection_sales_cost_limit,5500,yuan,Maximum inspection and sales costs per month
+microwave_minimum_sales,80,units,Minimum monthly sales requirement for microwave ovens
+workshop_a_overtime_limit,20,hours,Maximum overtime hours allowed in workshop A
+water_heater_minimum_sales,50,units,Minimum monthly sales requirement for water heaters

@@ -1,0 +1,10 @@
+Parameter_Name,Value,Unit,Context_Description
+motorcycle_pollution,40,units,Pollution produced per motorcycle trip
+small_truck_pollution,70,units,Pollution produced per small truck trip
+large_truck_pollution,100,units,Pollution produced per large truck trip
+max_motorcycle_trips,8,trips,Maximum number of motorcycle trips due to road restrictions
+motorcycle_capacity,10,units,Transport capacity per motorcycle trip
+small_truck_capacity,20,units,Transport capacity per small truck trip
+large_truck_capacity,50,units,Transport capacity per large truck trip
+min_transport_requirement,300,units,Minimum total transport requirement
+max_total_trips,20,trips,Maximum total number of trips allowed

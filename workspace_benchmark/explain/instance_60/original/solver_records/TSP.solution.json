@@ -1,0 +1,433 @@
+{
+  "solver": "gurobi",
+  "model_name": "TSP",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 153.0,
+  "objective_bound": 153.0,
+  "mip_gap": 0.0,
+  "runtime": 0.008719205856323242,
+  "node_count": 1.0,
+  "iteration_count": 23.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_4988un1q/solver_records/TSP.gurobi.log",
+  "variables": {
+    "u_1": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "u_2": {
+      "value": 5.0,
+      "reduced_cost": null
+    },
+    "u_3": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "u_4": {
+      "value": 6.0,
+      "reduced_cost": null
+    },
+    "u_5": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "u_6": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "x_(0,_1)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(0,_2)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(0,_3)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(0,_4)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(0,_5)": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_(0,_6)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(1,_0)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(1,_2)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(1,_3)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(1,_4)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(1,_5)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(1,_6)": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_(2,_0)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(2,_1)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(2,_3)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(2,_4)": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_(2,_5)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(2,_6)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(3,_0)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(3,_1)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(3,_2)": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_(3,_4)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(3,_5)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(3,_6)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(4,_0)": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_(4,_1)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(4,_2)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(4,_3)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(4,_5)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(4,_6)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(5,_0)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(5,_1)": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_(5,_2)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(5,_3)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(5,_4)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(5,_6)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(6,_0)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(6,_1)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(6,_2)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(6,_3)": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_(6,_4)": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_(6,_5)": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": "<=",
+      "slack": 8.0,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": "<=",
+      "slack": 7.0,
+      "dual_value": null
+    },
+    "_C17": {
+      "sense": "<=",
+      "slack": 9.0,
+      "dual_value": null
+    },
+    "_C18": {
+      "sense": "<=",
+      "slack": 4.0,
+      "dual_value": null
+    },
+    "_C19": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C20": {
+      "sense": "<=",
+      "slack": 2.0,
+      "dual_value": null
+    },
+    "_C21": {
+      "sense": "<=",
+      "slack": 4.0,
+      "dual_value": null
+    },
+    "_C22": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C23": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C24": {
+      "sense": "<=",
+      "slack": 3.0,
+      "dual_value": null
+    },
+    "_C25": {
+      "sense": "<=",
+      "slack": 3.0,
+      "dual_value": null
+    },
+    "_C26": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C27": {
+      "sense": "<=",
+      "slack": 7.0,
+      "dual_value": null
+    },
+    "_C28": {
+      "sense": "<=",
+      "slack": 2.0,
+      "dual_value": null
+    },
+    "_C29": {
+      "sense": "<=",
+      "slack": 4.0,
+      "dual_value": null
+    },
+    "_C30": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C31": {
+      "sense": "<=",
+      "slack": 4.0,
+      "dual_value": null
+    },
+    "_C32": {
+      "sense": "<=",
+      "slack": 3.0,
+      "dual_value": null
+    },
+    "_C33": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C34": {
+      "sense": "<=",
+      "slack": 2.0,
+      "dual_value": null
+    },
+    "_C35": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C36": {
+      "sense": "<=",
+      "slack": 9.0,
+      "dual_value": null
+    },
+    "_C37": {
+      "sense": "<=",
+      "slack": 8.0,
+      "dual_value": null
+    },
+    "_C38": {
+      "sense": "<=",
+      "slack": 10.0,
+      "dual_value": null
+    },
+    "_C39": {
+      "sense": "<=",
+      "slack": 7.0,
+      "dual_value": null
+    },
+    "_C40": {
+      "sense": "<=",
+      "slack": 4.0,
+      "dual_value": null
+    },
+    "_C41": {
+      "sense": "<=",
+      "slack": 7.0,
+      "dual_value": null
+    },
+    "_C42": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C43": {
+      "sense": "<=",
+      "slack": 8.0,
+      "dual_value": null
+    },
+    "_C44": {
+      "sense": "<=",
+      "slack": 3.0,
+      "dual_value": null
+    }
+  }
+}

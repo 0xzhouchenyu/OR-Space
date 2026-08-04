@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_015",
+  "instance_number": 15,
+  "source_revise_instance": "IndustryOR_15_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "In the revised model, the optimal objective falls from 168.0 to 167.0 even though new carbon and repair-capacity restrictions were added. Explain exactly which added code variables and constraints make this possible, tracing them back to the business terms and the CSV fields they come from. Your answer must name the revised code variables `prebuy0`, `u[i]`, and `s[i]`, the capacity constraints on `y[i]` and `z[i]`, and the exact CSV columns/parameter names `tool_requirement`, `max_fast_stage`, `max_slow_stage`, `penalty_shortage`, and the emission-factor/carbon-budget fields; then, using the LP-relaxation diagnostics, identify at least one binding vs. nonbinding implication involving stage-demand satisfaction or end-of-horizon inventory, interpret the marginal value/shadow-price meaning in business terms, and explain why you cannot linearly extrapolate that marginal value to large changes once integrality and the new carbon/throughput caps start to switch the active regime."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Tool_Repair_Problem.gurobi.log",
+        "Tool_Repair_Problem.lp_relaxation.json",
+        "Tool_Repair_Problem.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Tool_Repair_Carbon.gurobi.log",
+        "Tool_Repair_Carbon.lp_relaxation.json",
+        "Tool_Repair_Carbon.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 66.625
+  }
+}

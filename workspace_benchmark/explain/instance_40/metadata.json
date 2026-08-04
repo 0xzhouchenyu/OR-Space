@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_040",
+  "instance_number": 40,
+  "source_revise_instance": "IndustryOR_40_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why `imp_electronics` and `imp_plastic` are positive while `L_ot = 0`, even though the business brief explicitly allows overtime labor. Your answer must trace the logic from the revised solver output back to the exact code variables/constraints (`imp[c]`, `L_ot`, `Labor_Balance`, and at least one `Domestic_Demand_*` constraint), then to the literal CSV field names `import_quota`, `import_premium_ratio`, `overtime_cap`, `overtime_wage`, `labor_force`, and the relevant `*_price` / `*_labor_requirement` / `*_requirement` fields described in `src/formulation.tex`. Also compare original vs revised: identify the exact code additions that changed the objective from 36288567.037 to 37617279.762, state which revised constraints are binding from their slack/dual values, interpret the business meaning of those shadow prices, and explain why using the `Labor_Balance` dual to linearly extrapolate the value of increasing labor would fail once overtime or import caps begin to switch status."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Maximize_GDP.gurobi.log",
+        "Maximize_GDP.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Maximize_GDP_Revised.gurobi.log",
+        "Maximize_GDP_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 77.692222
+  }
+}

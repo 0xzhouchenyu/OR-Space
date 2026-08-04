@@ -1,0 +1,103 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Workers $W$ (code data: \texttt{workers}), indexed by $w$. In this instance,
+    \[
+    W=\{\mathrm{I},\mathrm{II},\mathrm{III},\mathrm{IV},\mathrm{V}\}.
+    \]
+    \item Tasks $T$ (code data: \texttt{tasks}), indexed by $t$. In this instance,
+    \[
+    T=\{\mathrm{A},\mathrm{B},\mathrm{C},\mathrm{D}\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Assignment cost $c_{wt}$ (code: \texttt{cost[(w,t)]}): cost/time value for assigning worker $w$ to task $t$, taken from \texttt{table\_1.csv}.
+    \item Fixed worker-use cost $f_w$ (code: \texttt{fixed\_cost[w]}): fixed cost incurred if worker $w$ is used on any task, from the \texttt{Fixed\_Cost} column of \texttt{table\_1.csv}.
+    \item Shared handoff cost $H$ (code: \texttt{handoff\_cost}): one-time charge read from \texttt{shared\_temp\_handoff\_cost}.
+    \item Pair fee for Workers II and V $P$ (code: \texttt{pair\_ii\_v\_fee}): one-time charge read from \texttt{worker\_II\_V\_pair\_fee}.
+\end{itemize}
+
+For this instance, $|T|=4$ and $|W|=5$, so exactly four task assignments are made and at least one worker is unused.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{wt}$ (code: \texttt{x[w,t]}) $\in \{0,1\}$: equals 1 if worker $w$ is assigned to task $t$, and 0 otherwise.
+    \item $y_w$ (code: \texttt{y[w]}) $\in \{0,1\}$: equals 1 if worker $w$ is used on at least one task, and 0 otherwise.
+    \item $h$ (code: \texttt{h}, variable name \texttt{shared\_temp\_handoff}) $\in \{0,1\}$: equals 1 iff Workers III and V are both used.
+    \item $p$ (code: \texttt{pair\_ii\_v}, variable name \texttt{worker\_II\_V\_pair}) $\in \{0,1\}$: equals 1 iff Workers II and V are both used.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total assignment, worker-use, and pair-triggered costs:
+\[
+\min \;
+\sum_{w \in W}\sum_{t \in T} c_{wt} x_{wt}
++ \sum_{w \in W} f_w y_w
++ H h
++ P p.
+\]
+
+\section*{Constraints}
+
+Each task must be assigned to exactly one worker:
+\[
+\sum_{w \in W} x_{wt} = 1
+\qquad \forall t \in T.
+\]
+
+A worker is marked as used whenever assigned to any task:
+\[
+\sum_{t \in T} x_{wt} \le y_w
+\qquad \forall w \in W.
+\]
+
+Logical linearization for the one-time handoff cost on Workers III and V:
+\[
+h \ge y_{\mathrm{III}} + y_{\mathrm{V}} - 1,
+\]
+\[
+h \le y_{\mathrm{III}},
+\]
+\[
+h \le y_{\mathrm{V}}.
+\]
+
+Logical linearization for the one-time pair fee on Workers II and V:
+\[
+p \ge y_{\mathrm{II}} + y_{\mathrm{V}} - 1,
+\]
+\[
+p \le y_{\mathrm{II}},
+\]
+\[
+p \le y_{\mathrm{V}}.
+\]
+
+Binary restrictions:
+\[
+x_{wt} \in \{0,1\}
+\qquad \forall w \in W,\; t \in T,
+\]
+\[
+y_w \in \{0,1\}
+\qquad \forall w \in W,
+\]
+\[
+h,p \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a binary linear optimization model solved through \texttt{pulp} with \texttt{GUROBI\_CMD(msg=0)}.
+    \item The formulation does not explicitly impose ``exactly 4 of 5 workers are selected.'' Instead, this follows from assigning all four tasks exactly once together with the worker-use linking constraints and the positive cost structure.
+    \item The business revision is implemented as a binary gate, not a smooth surcharge: the fee \texttt{worker\_II\_V\_pair\_fee} is incurred once iff both Workers II and V are used anywhere in the four-task assignment.
+    \item The earlier Workers III--V one-time handoff charge \texttt{shared\_temp\_handoff\_cost} remains in force exactly as a second binary gate.
+    \item The field \texttt{worker\_II\_V\_pair\_limit} appears in the data but is not used anywhere in \texttt{current\_heuristic.py}; therefore it is not part of the optimization model.
+    \item Because the linking constraint is $\sum_{t} x_{wt} \le y_w$ and $y_w$ has a positive objective coefficient, optimal solutions will set $y_w=1$ exactly when worker $w$ is assigned at least one task.
+\end{itemize}

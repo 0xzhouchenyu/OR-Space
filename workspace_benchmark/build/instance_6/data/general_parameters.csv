@@ -1,0 +1,12 @@
+Parameter_Name,Value,Unit,Context_Description
+initial_inventory,0,units,Initial inventory for all products at the beginning of the first quarter
+end_inventory_requirement,150,units,Required inventory for each product by the end of the fourth quarter
+production_hours_per_quarter,15000,hours,Total production hours available per quarter
+product_I_hours_per_unit,2,hours,Production time required per unit of product I
+product_II_hours_per_unit,4,hours,Production time required per unit of product II
+product_III_hours_per_unit,3,hours,Production time required per unit of product III
+product_I_no_production_q2,0,units,Product I cannot be produced in the second quarter
+delay_penalty_product_I,20,yuan,Compensation per unit per quarter delay for product I
+delay_penalty_product_II,20,yuan,Compensation per unit per quarter delay for product II
+delay_penalty_product_III,10,yuan,Compensation per unit per quarter delay for product III
+inventory_cost_per_unit,5,yuan,Cost per unit per quarter for products produced but not delivered

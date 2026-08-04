@@ -1,0 +1,97 @@
+{
+  "solver": "gurobi",
+  "model_name": "CandyFactory",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 6160.0,
+  "objective_bound": 6160.0,
+  "mip_gap": null,
+  "runtime": 0.0006458759307861328,
+  "node_count": 0.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_c1acwvaj/solver_records/CandyFactory.gurobi.log",
+  "variables": {
+    "x_0_0": {
+      "value": 1526.6666666666667,
+      "reduced_cost": 0.0
+    },
+    "x_0_1": {
+      "value": 473.3333333333333,
+      "reduced_cost": 0.0
+    },
+    "x_0_2": {
+      "value": 0.0,
+      "reduced_cost": -1.3499999999999996
+    },
+    "x_1_0": {
+      "value": 1017.7777777777779,
+      "reduced_cost": 0.0
+    },
+    "x_1_1": {
+      "value": 1482.2222222222222,
+      "reduced_cost": 0.0
+    },
+    "x_1_2": {
+      "value": 0.0,
+      "reduced_cost": -0.35000000000000014
+    },
+    "x_2_0": {
+      "value": 0.0,
+      "reduced_cost": -1.1102230246251565e-16
+    },
+    "x_2_1": {
+      "value": 1200.0,
+      "reduced_cost": 0.0
+    },
+    "x_2_2": {
+      "value": 0.0,
+      "reduced_cost": -0.3500000000000003
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.2999999999999996
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.8000000000000002
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.3000000000000003
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -0.9999999999999997
+    },
+    "_C5": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -0.9999999999999996
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 508.88888888888897,
+      "dual_value": 0.0
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 693.3333333333333,
+      "dual_value": 0.0
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    }
+  }
+}

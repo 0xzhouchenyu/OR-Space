@@ -1,0 +1,80 @@
+{
+  "solver": "gurobi",
+  "model_name": "Furniture_Production_With_Modes",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 10450.0,
+  "objective_bound": 10450.0,
+  "mip_gap": 0.0,
+  "runtime": 0.003139019012451172,
+  "node_count": 1.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_c5vifwln/solver_records/Furniture_Production_With_Modes.gurobi.log",
+  "variables": {
+    "bookshelves_regular": {
+      "value": 120.0,
+      "reduced_cost": null
+    },
+    "bookshelves_rush": {
+      "value": 30.0,
+      "reduced_cost": null
+    },
+    "chairs_regular": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "chairs_rush": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "tables_regular": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "tables_rush": {
+      "value": 10.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Warehouse_Space": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Regular_Labor_Hours": {
+      "sense": "<=",
+      "slack": 40.0,
+      "dual_value": null
+    },
+    "Rush_Labor_Hours": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "Rush_Items_Cap": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Min_Tables_Total": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Min_Bookshelves_Total": {
+      "sense": ">=",
+      "slack": -130.0,
+      "dual_value": null
+    },
+    "Max_Total_Items_All_Modes": {
+      "sense": "<=",
+      "slack": 40.0,
+      "dual_value": null
+    }
+  }
+}

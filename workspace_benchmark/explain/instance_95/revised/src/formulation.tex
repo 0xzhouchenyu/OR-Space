@@ -1,0 +1,126 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Weeks $T=\{1,2,3,4\}$, indexed by $t$.
+\end{itemize}
+
+\section*{Parameters}
+
+All quantities are taken directly from the data files.
+
+\begin{itemize}
+    \item Weekly demand $d_t$ from \texttt{Demand\_1000\_boxes} (thousand boxes).
+    \item Weekly nominal production capacity $u_t$ from \texttt{Production\_Capacity\_1000\_boxes} (thousand boxes).
+    \item Unit production cost $c_t$ from \texttt{Cost\_per\_1000\_boxes\_1000\_yuan} (thousand yuan per thousand boxes).
+    \item Inventory holding cost $h$ from \texttt{storage\_cost\_per\_thousand\_boxes} (thousand yuan per week per thousand boxes).
+    \item Fixed setup cost $f$ from \texttt{fixed\_setup\_cost} (thousand yuan per producing week).
+    \item Week 2 push threshold $\theta^{\mathrm{push}}$ from \texttt{week2\_push\_threshold} (thousand boxes).
+    \item Week 3 capacity loss after a Week 2 push $\Delta^{\mathrm{rec}}$ from \texttt{week3\_capacity\_loss\_after\_week2\_push} (thousand boxes).
+    \item Week 2 micro-clean threshold $\theta^{\mathrm{mc}}$ from \texttt{week2\_microclean\_threshold} (thousand boxes).
+    \item Week 2 micro-clean fee $g^{\mathrm{mc}}$ from \texttt{week2\_microclean\_fee} (thousand yuan).
+\end{itemize}
+
+For this instance, $|T|=4$.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Production in week $t$: $x_t$ (code: \texttt{x[t]}) \(\ge 0\), in thousand boxes.
+    \item End-of-week inventory in week $t$: $s_t$ (code: \texttt{s[t]}) \(\ge 0\), in thousand boxes.
+    \item Setup indicator in week $t$: $y_t$ (code: \texttt{y[t]}) \(\in\{0,1\}\).
+    \item Week 2 push / Week 3 recovery-loss indicator: $r$ (code: \texttt{recovery}) \(\in\{0,1\}\).
+    \item Week 2 micro-clean indicator: $m$ (code: \texttt{week2\_microclean}) \(\in\{0,1\}\).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total production, setup, inventory, and Week 2 micro-clean cost:
+\[
+\min \;
+\sum_{t\in T} \left(c_t x_t + f y_t\right)
+\;+\;
+\sum_{t\in T} h s_t
+\;+\;
+g^{\mathrm{mc}} m .
+\]
+
+\section*{Constraints}
+
+\paragraph{Production capacity and setup linking.}
+
+For weeks $t\neq 3$,
+\[
+x_t \le u_t .
+\]
+
+For week $3$,
+\[
+x_3 \le u_3 - \Delta^{\mathrm{rec}} r .
+\]
+
+For all $t\in T$,
+\[
+x_t \le u_t y_t .
+\]
+
+\paragraph{Inventory balance.}
+
+Week 1:
+\[
+x_1 - s_1 = d_1 .
+\]
+
+Weeks $t=2,3,4$:
+\[
+s_{t-1} + x_t - s_t = d_t .
+\]
+
+\paragraph{Week 2 push trigger and Week 3 recovery rule.}
+
+\[
+x_2 \le \theta^{\mathrm{push}} + u_2 r .
+\]
+
+Because $r$ is binary, this enforces:
+\begin{itemize}
+    \item if $r=0$, then $x_2 \le \theta^{\mathrm{push}}$;
+    \item if $r=1$, then Week 2 production may exceed the threshold, and Week 3 capacity is reduced by $\Delta^{\mathrm{rec}}$ through the week-3 capacity constraint above.
+\end{itemize}
+
+\paragraph{Week 2 micro-clean trigger.}
+
+\[
+x_2 \le \theta^{\mathrm{mc}} + u_2 m .
+\]
+
+Because $m$ is binary, this enforces:
+\begin{itemize}
+    \item if $m=0$, then $x_2 \le \theta^{\mathrm{mc}}$;
+    \item if $m=1$, then Week 2 production may exceed the micro-clean threshold and the one-time fee $g^{\mathrm{mc}}$ is incurred.
+\end{itemize}
+
+\paragraph{Variable domains.}
+\[
+x_t \ge 0,\quad s_t \ge 0 \qquad \forall t\in T,
+\]
+\[
+y_t \in \{0,1\} \qquad \forall t\in T,
+\]
+\[
+r\in\{0,1\},\qquad m\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved by the PuLP interface with \texttt{GUROBI\_CMD(msg=0)}.
+    \item The code uses the exact week capacities $u_t$ for setup-linking constraints $x_t \le u_t y_t$, even in Week 3 when the effective capacity is additionally reduced by the recovery-loss constraint. Thus the model includes both
+    \[
+    x_3 \le u_3 - \Delta^{\mathrm{rec}} r
+    \quad\text{and}\quad
+    x_3 \le u_3 y_3.
+    \]
+    \item Inventory is modeled only as end-of-week stock $s_t$ with no initial inventory term; the Week 1 balance is exactly $x_1-s_1=d_1$.
+    \item No terminal inventory requirement is imposed beyond nonnegativity of $s_4$.
+    \item The revised timing logic is represented exactly as in code: exceeding the Week 2 push threshold activates the binary \texttt{recovery} option, which reduces Week 3 capacity; exceeding the lower Week 2 micro-clean threshold activates the binary \texttt{week2\_microclean} option and adds its one-time fee. These two triggers are modeled separately and simultaneously.
+\end{itemize}

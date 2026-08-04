@@ -1,0 +1,16 @@
+{
+  "solver": "gurobi",
+  "model_name": "Advanced_70_exact_route",
+  "diagnostic_type": "reported_objective_record",
+  "status_code": 2,
+  "status": "OPTIMAL",
+  "objective_value": 35.0,
+  "runtime": 0.0003418922424316406,
+  "variables": {
+    "reported_objective": {
+      "value": 35.0
+    }
+  },
+  "constraints": {},
+  "note": "The optimization logic in current_heuristic.py is exact search or custom nonlinear evaluation; this Gurobi model records the reported objective for lifecycle diagnostics."
+}

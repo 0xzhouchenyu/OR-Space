@@ -1,0 +1,9 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+Month 1: W=156, H=0, F=844, P=5000, OT=0, O=0, Inv=0, B=0
+Month 2: W=156, H=0, F=0, P=5000, OT=0, O=35000, Inv=0, B=0
+Month 3: W=156, H=0, F=0, P=5000, OT=0, O=37000, Inv=0, B=0
+Month 4: W=156, H=0, F=0, P=5000, OT=0, O=30000, Inv=0, B=0
+Month 5: W=156, H=0, F=0, P=5000, OT=0, O=14000, Inv=0, B=0
+Month 6: W=156, H=0, F=0, P=5000, OT=0, O=23500, Inv=10000, B=0
+OBJECTIVE_VALUE: 10350000.0

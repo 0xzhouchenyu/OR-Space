@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_059",
+  "instance_number": 59,
+  "source_revise_instance": "IndustryOR_59_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model’s LP-relaxation diagnostics and the final MIP solution, explain why the objective drops from 6160.0 to 5060.0 even though the production quantities `y_0` and `y_1` stay the same as in the original solution. You must trace the exact code additions `z[j]`, `shared_ab_wrapper`, the constraint `y[j] <= M * z[j]`, and the three wrapper-trigger constraints back to the business brief and to the exact CSV fields `SetupCost_A`, `SetupCost_B`, `BrandAB_SharedWrapper_Fee`, and `Monthly Limit (kg)`; also state the numeric value of `M`. Then identify which LP-relaxation constraints are binding with nonzero duals for this logic, interpret the shadow prices/business meaning of those marginal values, and explain why using those LP duals to linearly extrapolate the integer model’s profit impact is invalid here."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1_7.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "CandyFactory.gurobi.log",
+        "CandyFactory.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1_7.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "CandyFactory_Revised.gurobi.log",
+        "CandyFactory_Revised.lp_relaxation.json",
+        "CandyFactory_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 61.885556
+  }
+}

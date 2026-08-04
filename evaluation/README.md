@@ -1,19 +1,11 @@
-# OR-Space evaluation
+# Evaluation references
 
-This directory contains the public scoring protocol used by the released
-OR-Space task views.
+This directory contains evaluator-only references for all three tasks.
 
-- [`build_revise/`](build_revise/) scores solver-specific Build and Revise
-  programs from their reported status and objective value.
-- [`explain/`](explain/) prepares evidence-grounded judge inputs and combines
-  deterministic checklist checks with the five-dimensional Explain rubric.
+- `build_evaluation/`: 100 Build objective references.
+- `revise_evaluation/`: 100 Revise objective references.
+- `explain_evaluation/`: 100 Explain checklists, rubrics, and concise reference
+  answers.
 
-The evaluator is separate from model execution. Build and Revise submissions
-must be complete programs for the selected solver API (`gurobipy`, `coptpy`,
-PuLP/CBC, or `highspy`). The public scorer does not translate one solver API
-to another and does not mount a backend behind a common PuLP model.
-
-For paper comparisons, pin both the code commit and the Hugging Face dataset
-commit. Also report the model endpoint, prompt, solver version, timeout, and,
-for Explain, the independent judge model.
+Do not expose this directory to the model being evaluated.
 

@@ -1,0 +1,103 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $C$: set of available courses.
+    \item $K$: set of categories.
+    \item For each course $c \in C$, let $K(c) \subseteq K$ denote the set of categories to which course $c$ belongs.
+    \item For each category $k \in K$, let
+    \[
+    C_k = \{c \in C : k \in K(c)\}
+    \]
+    be the set of courses that count toward category $k$.
+    \item For each course $c \in C$, let $P(c) \subseteq C$ be the set of prerequisite courses for $c$.
+\end{itemize}
+
+For this instance,
+\[
+K=\{\text{Mathematics},\ \text{Operations Research},\ \text{Computer Science}\},
+\]
+and
+\[
+C=\{\text{Calculus},\ \text{Operations Research},\ \text{Data Structures},\ \text{Management Statistics},\ \text{Computer Simulation},\ \text{Computer Programming},\ \text{Forecasting}\}.
+\]
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $r$ (code: \texttt{min\_required}): minimum number of courses required in each category. For this instance, $r=2$.
+    \item Category membership from \texttt{table\_1.csv}:
+    \[
+    \begin{aligned}
+    K(\text{Calculus}) &= \{\text{Mathematics}\},\\
+    K(\text{Operations Research}) &= \{\text{Mathematics},\text{Operations Research}\},\\
+    K(\text{Data Structures}) &= \{\text{Mathematics},\text{Computer Science}\},\\
+    K(\text{Management Statistics}) &= \{\text{Mathematics},\text{Operations Research}\},\\
+    K(\text{Computer Simulation}) &= \{\text{Computer Science},\text{Operations Research}\},\\
+    K(\text{Computer Programming}) &= \{\text{Computer Science}\},\\
+    K(\text{Forecasting}) &= \{\text{Mathematics},\text{Operations Research}\}.
+    \end{aligned}
+    \]
+    \item Prerequisite sets constructed from \texttt{general\_parameters.csv}:
+    \[
+    \begin{aligned}
+    P(\text{Computer Simulation}) &= \{\text{Computer Programming}\},\\
+    P(\text{Data Structures}) &= \{\text{Computer Programming}\},\\
+    P(\text{Management Statistics}) &= \{\text{Calculus}\},\\
+    P(\text{Forecasting}) &= \{\text{Management Statistics}\},
+    \end{aligned}
+    \]
+    and for all other courses $c$, $P(c)=\emptyset$.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item For each course $c \in C$, let
+    \[
+    x_c \in \{0,1\}
+    \]
+    (code: \texttt{x[course]}) be 1 if course $c$ is selected, and 0 otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the total number of selected courses:
+\[
+\min \sum_{c \in C} x_c.
+\]
+
+\section*{Constraints}
+
+\begin{itemize}
+    \item Minimum courses in each category:
+    \[
+    \sum_{c \in C_k} x_c \ge r
+    \qquad \forall k \in K.
+    \]
+    Because a course may belong to multiple categories, the same selected course contributes simultaneously to every category in $K(c)$.
+
+    \item Prerequisite constraints:
+    \[
+    x_c \le x_p
+    \qquad \forall c \in C,\ \forall p \in P(c).
+    \]
+\end{itemize}
+
+Equivalently, for this instance the prerequisite constraints are
+\[
+\begin{aligned}
+x_{\text{Computer Simulation}} &\le x_{\text{Computer Programming}},\\
+x_{\text{Data Structures}} &\le x_{\text{Computer Programming}},\\
+x_{\text{Management Statistics}} &\le x_{\text{Calculus}},\\
+x_{\text{Forecasting}} &\le x_{\text{Management Statistics}}.
+\end{aligned}
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a binary linear program created with PuLP and solved via \texttt{GUROBI\_CMD}.
+    \item The category set $K$ is inferred directly from the category labels appearing in the course table.
+    \item Prerequisites are built by matching parameter names of the form \texttt{prerequisite\_<course>} to course names in the course list, then adding one binary implication constraint per prerequisite relation.
+    \item No constraints other than category minimums and prerequisite implications are enforced. In particular, there are no upper bounds on the number of courses, no mutual exclusivity restrictions, and no distinction between taking a course for one category versus another; a selected multi-category course counts in every category it belongs to, exactly as implemented by the sums over $C_k$.
+\end{itemize}

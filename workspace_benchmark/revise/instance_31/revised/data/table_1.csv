@@ -1,0 +1,8 @@
+Equipment,Product_I,Product_II,Product_III,Effective_Machine_Hours,Processing_Cost_per_Machine_Hour
+A1,5,10,-,6000,0.05
+A2,7,9,12,10000,0.03
+B1,6,8,-,4000,0.06
+B2,4,-,11,7000,0.11
+B3,7,-,-,4000,0.05
+Raw_Material_Cost,0.25,0.35,0.5,-,-
+Unit_Price,1.25,2,2.8,-,-

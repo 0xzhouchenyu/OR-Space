@@ -1,0 +1,221 @@
+{
+  "solver": "gurobi",
+  "model_name": "Two_Week_Production_Promotion_Planning",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 337.33333333333337,
+  "objective_bound": 337.33333333333337,
+  "mip_gap": 0.0,
+  "runtime": 0.006089925765991211,
+  "node_count": 1.0,
+  "iteration_count": 11.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_4eelwqxc/solver_records/Two_Week_Production_Promotion_Planning.gurobi.log",
+  "variables": {
+    "extra_rev_A_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "extra_rev_A_2": {
+      "value": 8.533333333333333,
+      "reduced_cost": null
+    },
+    "extra_rev_B_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "extra_rev_B_2": {
+      "value": 12.8,
+      "reduced_cost": null
+    },
+    "inv_A_1": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "inv_A_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "inv_B_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "inv_B_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "prod_A_1": {
+      "value": 5.066666666666666,
+      "reduced_cost": null
+    },
+    "prod_A_2": {
+      "value": 0.26666666666666666,
+      "reduced_cost": null
+    },
+    "prod_B_1": {
+      "value": 3.2,
+      "reduced_cost": null
+    },
+    "prod_B_2": {
+      "value": 12.8,
+      "reduced_cost": null
+    },
+    "promo_A_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "promo_A_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "promo_B_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "promo_B_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "sales_A_1": {
+      "value": 1.0666666666666667,
+      "reduced_cost": null
+    },
+    "sales_A_2": {
+      "value": 4.266666666666667,
+      "reduced_cost": null
+    },
+    "sales_B_1": {
+      "value": 3.2,
+      "reduced_cost": null
+    },
+    "sales_B_2": {
+      "value": 12.8,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Inv_Balance_A_1": {
+      "sense": "==",
+      "slack": 2.220446049250313e-16,
+      "dual_value": null
+    },
+    "Inv_Balance_B_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Inv_Balance_A_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Inv_Balance_B_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Prod_Hours_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Prod_Hours_2": {
+      "sense": "<=",
+      "slack": -7.105427357601002e-15,
+      "dual_value": null
+    },
+    "Market_Ratio_1": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Market_Ratio_2": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Storage_Cap_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Storage_Cap_2": {
+      "sense": "<=",
+      "slack": 16.0,
+      "dual_value": null
+    },
+    "Max_Promos_A": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Max_Promos_B": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ExtraRevA_le_sales_1": {
+      "sense": "<=",
+      "slack": 2.1333333333333333,
+      "dual_value": null
+    },
+    "ExtraRevA_le_MA_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ExtraRevA_ge_lb_1": {
+      "sense": ">=",
+      "slack": -24.533333333333335,
+      "dual_value": null
+    },
+    "ExtraRevB_le_sales_1": {
+      "sense": "<=",
+      "slack": 3.2,
+      "dual_value": null
+    },
+    "ExtraRevB_le_MB_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ExtraRevB_ge_lb_1": {
+      "sense": ">=",
+      "slack": -10.133333333333333,
+      "dual_value": null
+    },
+    "ExtraRevA_le_sales_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ExtraRevA_le_MA_2": {
+      "sense": "<=",
+      "slack": 18.133333333333333,
+      "dual_value": null
+    },
+    "ExtraRevA_ge_lb_2": {
+      "sense": ">=",
+      "slack": -3.552713678800501e-15,
+      "dual_value": null
+    },
+    "ExtraRevB_le_sales_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ExtraRevB_le_MB_2": {
+      "sense": "<=",
+      "slack": 0.5333333333333332,
+      "dual_value": null
+    },
+    "ExtraRevB_ge_lb_2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

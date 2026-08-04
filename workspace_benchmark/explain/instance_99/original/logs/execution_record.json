@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 0.6075,
+  "stdout": "Optimal spare parts allocation: Component 1: 4, Component 2: 1, Component 3: 1\nTotal cost: 150.0\nTotal weight: 18.0\nComponent reliabilities: 0.9, 0.75, 0.9\nOBJECTIVE_VALUE: 0.6075\nSet parameter LicenseID to value 2802670\n",
+  "stderr": "",
+  "error": null
+}

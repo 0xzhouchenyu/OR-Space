@@ -1,0 +1,5 @@
+Parameter_Name,Value,Unit,Context_Description
+min_weekly_profit,3000,Yuan,The total weekly profit should be at least 3000 yuan
+min_type_a_production,5,units,At least 5 units of Type A must be produced each week
+idle_time_minimization_weights,proportional_to_hourly_cost,None,Idle time of each process should be minimized with weights proportional to the corresponding hourly cost
+overtime_allowed,False,None,Overtime is not allowed

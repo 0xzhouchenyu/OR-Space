@@ -1,0 +1,221 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Weeks: $T = \{1,2\}$, index $t$.
+    \item Products: $P = \{A,B\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter names below follow the data fields in \texttt{general\_parameters.csv}.
+
+\begin{itemize}
+    \item Base contribution per kg sold:
+    \[
+    \pi_A = \texttt{profit\_per\_kg\_product\_A}, \qquad
+    \pi_B = \texttt{profit\_per\_kg\_product\_B}.
+    \]
+
+    \item Available production hours by week:
+    \[
+    H_1 = \texttt{max\_production\_hours\_week\_1}, \qquad
+    H_2 = \texttt{max\_production\_hours\_week\_2}.
+    \]
+
+    \item Production hours required per kg:
+    \[
+    h_A = \texttt{hours\_per\_kg\_product\_A}, \qquad
+    h_B = \texttt{hours\_per\_kg\_product\_B}.
+    \]
+
+    \item Minimum weekly sales ratio:
+    \[
+    \rho = \texttt{min\_output\_ratio\_product\_B\_to\_A}.
+    \]
+
+    \item Storage space conversion:
+    \[
+    s = \texttt{storage\_space\_ratio\_product\_A\_to\_B},
+    \]
+    where one kg of product $A$ uses $s$ units of storage space and one kg of product $B$ uses one unit.
+
+    \item Weekly storage capacities, as implemented:
+    \[
+    C_1 = s \cdot \texttt{max\_storage\_product\_A\_equiv\_week\_1}, \qquad
+    C_2 = s \cdot \texttt{max\_storage\_product\_A\_equiv\_week\_2}.
+    \]
+
+    \item Initial inventories:
+    \[
+    I_A^0 = \texttt{initial\_inventory\_A}, \qquad
+    I_B^0 = \texttt{initial\_inventory\_B}.
+    \]
+
+    \item Inventory holding cost from the end of week 1 to week 2:
+    \[
+    c_A = \texttt{storage\_cost\_per\_kg\_A}, \qquad
+    c_B = \texttt{storage\_cost\_per\_kg\_B}.
+    \]
+
+    \item Promotional profit bonus per kg sold in a promoted week:
+    \[
+    \delta_A = \texttt{promo\_profit\_bonus\_A}, \qquad
+    \delta_B = \texttt{promo\_profit\_bonus\_B}.
+    \]
+
+    \item Maximum number of promoted weeks by product:
+    \[
+    K_A = \texttt{max\_promotions\_product\_A}, \qquad
+    K_B = \texttt{max\_promotions\_product\_B}.
+    \]
+
+    \item Big-$M$ constants used in the code for promotion linearization:
+    \[
+    \overline{S} = \frac{H_1}{\min\{h_A,h_B\}}, \qquad
+    M_A = \overline{S}\,\delta_A, \qquad
+    M_B = \overline{S}\,\delta_B.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each week $t \in T$:
+
+\begin{itemize}
+    \item Production quantities:
+    \[
+    x_{A,t} \ge 0 \quad \text{(code: \texttt{prod\_A[t]})}, \qquad
+    x_{B,t} \ge 0 \quad \text{(code: \texttt{prod\_B[t]}).
+    }
+    \]
+
+    \item End-of-week inventories:
+    \[
+    I_{A,t} \ge 0 \quad \text{(code: \texttt{inv\_A[t]})}, \qquad
+    I_{B,t} \ge 0 \quad \text{(code: \texttt{inv\_B[t]}).
+    }
+    \]
+
+    \item Sales quantities:
+    \[
+    y_{A,t} \ge 0 \quad \text{(code: \texttt{sales\_A[t]})}, \qquad
+    y_{B,t} \ge 0 \quad \text{(code: \texttt{sales\_B[t]}).
+    }
+    \]
+
+    \item Promotion indicators:
+    \[
+    z_{A,t} \in \{0,1\} \quad \text{(code: \texttt{promo\_A[t]})}, \qquad
+    z_{B,t} \in \{0,1\} \quad \text{(code: \texttt{promo\_B[t]}).
+    }
+    \]
+
+    \item Auxiliary variables for promotional extra contribution:
+    \[
+    r_{A,t} \ge 0 \quad \text{(code: \texttt{extra\_rev\_A[t]})}, \qquad
+    r_{B,t} \ge 0 \quad \text{(code: \texttt{extra\_rev\_B[t]}).
+    }
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total two-week profit contribution, including promotional bonus contribution, minus storage cost on week-1 ending inventory:
+\[
+\max \sum_{t \in T} \left(\pi_A y_{A,t} + \pi_B y_{B,t} + r_{A,t} + r_{B,t}\right)
+ - c_A I_{A,1} - c_B I_{B,1}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Inventory balance and carry-over}
+\[
+I_A^0 + x_{A,1} = y_{A,1} + I_{A,1},
+\]
+\[
+I_B^0 + x_{B,1} = y_{B,1} + I_{B,1},
+\]
+\[
+I_{A,1} + x_{A,2} = y_{A,2} + I_{A,2},
+\]
+\[
+I_{B,1} + x_{B,2} = y_{B,2} + I_{B,2}.
+\]
+
+\paragraph{Weekly production-hour limits}
+\[
+h_A x_{A,1} + h_B x_{B,1} \le H_1,
+\]
+\[
+h_A x_{A,2} + h_B x_{B,2} \le H_2.
+\]
+
+\paragraph{Weekly market ratio on sales}
+\[
+y_{B,1} \ge \rho\, y_{A,1},
+\]
+\[
+y_{B,2} \ge \rho\, y_{A,2}.
+\]
+
+\paragraph{Weekly storage-capacity limits on ending inventory}
+\[
+s I_{A,1} + I_{B,1} \le C_1,
+\]
+\[
+s I_{A,2} + I_{B,2} \le C_2.
+\]
+
+\paragraph{Promotion-count limits}
+\[
+z_{A,1} + z_{A,2} \le K_A,
+\]
+\[
+z_{B,1} + z_{B,2} \le K_B.
+\]
+
+\paragraph{Promotion linearization for product A}
+For each $t \in T$,
+\[
+r_{A,t} \le \delta_A y_{A,t},
+\]
+\[
+r_{A,t} \le M_A z_{A,t},
+\]
+\[
+r_{A,t} \ge \delta_A y_{A,t} - M_A(1-z_{A,t}).
+\]
+
+\paragraph{Promotion linearization for product B}
+For each $t \in T$,
+\[
+r_{B,t} \le \delta_B y_{B,t},
+\]
+\[
+r_{B,t} \le M_B z_{B,t},
+\]
+\[
+r_{B,t} \ge \delta_B y_{B,t} - M_B(1-z_{B,t}).
+\]
+
+\paragraph{Domains}
+For all $t \in T$,
+\[
+x_{A,t},x_{B,t},I_{A,t},I_{B,t},y_{A,t},y_{B,t},r_{A,t},r_{B,t} \ge 0,
+\]
+\[
+z_{A,t},z_{B,t} \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a two-week MILP solved with a MIP solver interface (\texttt{GUROBI\_CMD} through a PuLP-compatible API), not an exact enumeration or dynamic program.
+    \item The code tracks production, sales, inventory, and promotion decisions separately by week for products $A$ and $B$, with week-1 ending inventory carried into week 2 through the inventory-balance equations.
+    \item The business rule ``what leaves one ledger position should only reappear when the business clock says it has cleared'' is represented by these interweek inventory-balance constraints; there is no other lag structure in the implementation.
+    \item The weekly promotion limit described in the revision brief as \texttt{max\_promotions\_per\_period} is not a field used by the current code. Instead, the implementation enforces product-level limits across the two weeks via \texttt{max\_promotions\_product\_A} and \texttt{max\_promotions\_product\_B}.
+    \item The promotional bonus is modeled through auxiliary variables $r_{A,t}$ and $r_{B,t}$ with big-$M$ linearization. There is no separate explicit constraint $r_{p,t} = \delta_p y_{p,t} z_{p,t}$; the three inequalities above are exactly what the code imposes.
+    \item The big-$M$ values are computed using only \texttt{max\_production\_hours\_week\_1}, even for week 2. This is part of the implemented logic and should not be altered in the formulation.
+    \item Storage cost is charged only on week-1 ending inventory, matching the implemented objective.
+    \item No explicit demand upper bounds are present in the implementation beyond the production, inventory, ratio, and storage constraints.
+\end{itemize}

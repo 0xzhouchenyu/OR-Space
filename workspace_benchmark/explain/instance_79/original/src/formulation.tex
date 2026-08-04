@@ -1,0 +1,97 @@
+\section*{Sets and Indices}
+
+Let
+\[
+I=\{\text{table},\text{chair},\text{bookshelf}\}
+\]
+denote the set of furniture item types. No additional indices are used in the implementation.
+
+\section*{Parameters}
+
+For each item type \(i \in I\):
+\begin{itemize}
+    \item \(s_i\): selling price per unit.
+    \item \(c_i\): manufacturing cost per unit.
+    \item \(w_i\): warehouse space required per unit.
+    \item \(p_i = s_i - c_i\): profit per unit.
+\end{itemize}
+
+Using the data in \texttt{general\_parameters.csv}, these are:
+\[
+p_{\text{table}} = 200-120 = 80,\qquad
+p_{\text{chair}} = 50-20 = 30,\qquad
+p_{\text{bookshelf}} = 150-90 = 60.
+\]
+
+Additional scalar parameters:
+\begin{itemize}
+    \item \(W = 500\): maximum warehouse space available (code: \texttt{max\_warehouse}).
+    \item \(L_{\text{table}} = 10\): minimum required production of tables (code: \texttt{min\_tables}).
+    \item \(L_{\text{bookshelf}} = 20\): minimum required production of bookshelves (code: \texttt{min\_bookshelves}).
+    \item \(U = 200\): maximum total number of items produced (code: \texttt{max\_total}).
+\end{itemize}
+
+The warehouse space coefficients are:
+\[
+w_{\text{table}}=5,\qquad w_{\text{chair}}=2,\qquad w_{\text{bookshelf}}=3.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_{\text{table}}\) (code: \texttt{x\_tables}): number of tables to produce.
+    \item \(x_{\text{chair}}\) (code: \texttt{x\_chairs}): number of chairs to produce.
+    \item \(x_{\text{bookshelf}}\) (code: \texttt{x\_bookshelves}): number of bookshelves to produce.
+\end{itemize}
+
+All decision variables are nonnegative integers:
+\[
+x_{\text{table}},x_{\text{chair}},x_{\text{bookshelf}} \in \mathbb{Z}_{\ge 0}.
+\]
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \; 80x_{\text{table}} + 30x_{\text{chair}} + 60x_{\text{bookshelf}}.
+\]
+
+Equivalently, in parameter form,
+\[
+\max \; \sum_{i\in I} p_i x_i.
+\]
+
+\section*{Constraints}
+
+Warehouse space limit:
+\[
+5x_{\text{table}} + 2x_{\text{chair}} + 3x_{\text{bookshelf}} \le 500.
+\]
+
+Minimum production requirements:
+\[
+x_{\text{table}} \ge 10,
+\]
+\[
+x_{\text{bookshelf}} \ge 20.
+\]
+
+Maximum total production:
+\[
+x_{\text{table}} + x_{\text{chair}} + x_{\text{bookshelf}} \le 200.
+\]
+
+Integrality and nonnegativity:
+\[
+x_{\text{table}},x_{\text{chair}},x_{\text{bookshelf}} \in \mathbb{Z}_{\ge 0}.
+\]
+
+\section*{Notes on Implementation}
+
+The code implements this model directly as an integer linear program using PuLP-compatible syntax and solves it with \texttt{GUROBI\_CMD(msg=0)}. The objective coefficients are computed explicitly as selling price minus manufacturing cost:
+\[
+\texttt{profit\_table}=\texttt{sell\_price\_table}-\texttt{cost\_table},\quad
+\texttt{profit\_chair}=\texttt{sell\_price\_chair}-\texttt{cost\_chair},\quad
+\texttt{profit\_bookshelf}=\texttt{sell\_price\_bookshelf}-\texttt{cost\_bookshelf}.
+\]
+No other constraints, fixed costs, or capacity relationships are included. The model has exactly three integer variables and the four functional constraints listed above.

@@ -1,0 +1,101 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Years $Y=\{1,2\}$.
+    \item Operational postures in each year: training-only, combat-only, and dual-use (mixed posture).
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter names below match the data fields.
+
+\begin{itemize}
+    \item $a_1$ (\texttt{a1}): fighter jets available in year 1.
+    \item $a_2$ (\texttt{a2}): new fighter jets produced in year 2.
+    \item $A_2 = a_1 + a_2$: total jets available in year 2, as implemented in the code.
+    \item $\kappa$ (\texttt{training\_capacity\_per\_jet}): pilots trained per training-only jet-year.
+    \item $\eta$ (\texttt{dual\_use\_training\_efficiency}): training-efficiency multiplier for a dual-use jet-year.
+    \item $\rho$ (\texttt{training\_intensity\_cap}): maximum fraction of the fleet allowed in training-only or dual-use posture in a year.
+    \item $\underline{M}_2$ (\texttt{combat\_jet\_min\_year2}): minimum required number of combat-capable jets in year 2.
+    \item $w^C$ (\texttt{combat\_weight}): objective weight on year-2 combat-capable jets.
+    \item $w^P$ (\texttt{training\_weight}): objective weight on trained pilots.
+    \item \texttt{training\_duration}: loaded by the code but not otherwise used in the optimization model.
+\end{itemize}
+
+\section*{Decision Variables}
+
+All decision variables are nonnegative integers.
+
+\begin{itemize}
+    \item $T_1$ (code: \texttt{T1}): number of year-1 jets assigned to training-only posture.
+    \item $C_1$ (code: \texttt{C1}): number of year-1 jets assigned to combat-only posture.
+    \item $D_1$ (code: \texttt{D1}): number of year-1 jets assigned to dual-use posture.
+    \item $T_2$ (code: \texttt{T2}): number of year-2 jets assigned to training-only posture.
+    \item $C_2$ (code: \texttt{C2}): number of year-2 jets assigned to combat-only posture.
+    \item $D_2$ (code: \texttt{D2}): number of year-2 jets assigned to dual-use posture.
+    \item $P_1$ (code: \texttt{P1}): pilots trained in year 1.
+    \item $P_2$ (code: \texttt{P2}): pilots trained in year 2.
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model maximizes a weighted readiness score:
+\[
+\max \; w^C(C_2 + D_2) + w^P(P_1 + P_2).
+\]
+
+\section*{Constraints}
+
+\paragraph{Jet balance by year.}
+Each available jet-year is committed to exactly one posture:
+\[
+T_1 + C_1 + D_1 = a_1,
+\]
+\[
+T_2 + C_2 + D_2 = A_2 = a_1 + a_2.
+\]
+
+\paragraph{Training output limits.}
+Training-only jets yield full pilot-training capacity, while dual-use jets yield discounted capacity:
+\[
+P_1 \le \kappa T_1 + \eta \kappa D_1,
+\]
+\[
+P_2 \le \kappa T_2 + \eta \kappa D_2.
+\]
+
+\paragraph{Pilot support for year-2 combat assignment.}
+Year-2 combat-capable jets, including dual-use jets, cannot exceed the number of pilots trained in year 1:
+\[
+C_2 + D_2 \le P_1.
+\]
+
+\paragraph{Training intensity limits.}
+The combined training-only and dual-use share of the fleet is capped in each year:
+\[
+T_1 + D_1 \le \rho a_1,
+\]
+\[
+T_2 + D_2 \le \rho A_2.
+\]
+
+\paragraph{Minimum year-2 combat requirement.}
+\[
+C_2 + D_2 \ge \underline{M}_2.
+\]
+
+\paragraph{Integrality and nonnegativity.}
+\[
+T_1,C_1,D_1,T_2,C_2,D_2,P_1,P_2 \in \mathbb{Z}_{\ge 0}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code implements a deterministic single-scenario MILP, despite the business brief's discussion of plans across multiple cases. No scenario index or nonanticipativity structure appears in \texttt{current\_heuristic.py}.
+    \item Year 2 jet availability is modeled as the full cumulative fleet $a_1+a_2$; there is no attrition or carryover decision.
+    \item Dual-use jets contribute to combat availability through $D_2$ and to training through the discounted factor $\eta$.
+    \item The variable $P_2$ enters the objective but is not linked to any later combat requirement; this matches the implemented model exactly.
+    \item \texttt{training\_duration} is read from data but does not affect any constraint or the objective.
+    \item The model is solved as an integer linear program using Gurobi through PuLP compatibility (\texttt{GUROBI\_CMD}); it is not evaluated by custom search or dynamic programming.
+\end{itemize}

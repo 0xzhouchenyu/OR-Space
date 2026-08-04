@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 43200.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nContainer type 1: produce 500, setup=Yes\nContainer type 3: produce 1250, setup=Yes\nContainer type 4: produce 900, setup=Yes\nContainer type 6: produce 700, setup=Yes\nOBJECTIVE_VALUE: 43200.0\n",
+  "stderr": "",
+  "error": null
+}

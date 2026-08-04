@@ -1,0 +1,195 @@
+{
+  "solver": "gurobi",
+  "model_name": "Hazmat_Fixed_End_Path_TSP",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 27.0,
+  "objective_bound": 27.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0006060600280761719,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ugy3a_2y/solver_records/Hazmat_Fixed_End_Path_TSP.gurobi.log",
+  "variables": {
+    "pos_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "pos_2": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "pos_3": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "pos_4": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "x_1_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_1_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_4": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_2_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_3_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_3_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_3_4": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_4_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_4_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_4_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": ">=",
+      "slack": -5.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": ">=",
+      "slack": -6.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": ">=",
+      "slack": -2.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": ">=",
+      "slack": -5.0,
+      "dual_value": null
+    },
+    "_C17": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "_C18": {
+      "sense": ">=",
+      "slack": -2.0,
+      "dual_value": null
+    },
+    "_C19": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C20": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C21": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "_C22": {
+      "sense": ">=",
+      "slack": -2.0,
+      "dual_value": null
+    }
+  }
+}

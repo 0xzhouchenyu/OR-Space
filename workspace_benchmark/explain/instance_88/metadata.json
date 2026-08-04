@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_088",
+  "instance_number": 88,
+  "source_revise_instance": "IndustryOR_88_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the optimal LP relaxation picks `machine1_extended = 1`, `machine2_extended = 0`, `liquid_prod = 52.8`, and `solid_prod = 15.0`, even though the original model had only `x_liquid` and `x_solid`. Your answer must identify the exact CSV fields and parameter values that drive this result, connect them to the code constraints `prob += p['machine_1_time_per_liquid_lot']*xl + ... <= ... + p['extended_extra_minutes']*y1`, `prob += p['labor_hours_per_machine_extended']*(y1+y2) <= p['labor_budget_hours']`, and the objective terms involving `priority_liquid`, `priority_solid`, `excess_liquid`, `excess_solid`, and `extended_mode_penalty`. Also, using the solver output, name which constraints are binding or slack, report the relevant slack/dual values, and explain the business meaning of the positive dual on the binding machine-time constraint and why it cannot be linearly extrapolated to large changes in `extended_extra_minutes` or `priority_reserve_lots`."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Fertilizer_Production.gurobi.log",
+        "Fertilizer_Production.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "FertilizerReserveScore.gurobi.log",
+        "FertilizerReserveScore.lp_relaxation.json",
+        "FertilizerReserveScore.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 59.067222
+  }
+}

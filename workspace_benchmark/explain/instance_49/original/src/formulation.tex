@@ -1,0 +1,82 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $M = \{1,2,3,4\}$: set of months, indexed by $m$.
+    \item $L = \{1,2,3,4\}$: set of available contract lengths in months, indexed by $j$.
+    \item $A = \{(i,j) \in M \times L : i+j-1 \le 4\}$: feasible start-month/contract-length pairs, indexed by $(i,j)$, where a contract starting in month $i$ and lasting $j$ months remains within the planning horizon.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_m$: warehouse demand in month $m$, measured in units of $100\,\text{m}^2$ (code source: \texttt{demands[m]}). From the data,
+    \[
+    d_1=15,\quad d_2=10,\quad d_3=20,\quad d_4=12.
+    \]
+    \item $c_j$: rental fee per contract of length $j$ for one unit of $100\,\text{m}^2$ (code source: \texttt{costs[j]}). From the data,
+    \[
+    c_1=4000,\quad c_2=7500,\quad c_3=10500,\quad c_4=13000.
+    \]
+    \item $K^{\min}=2$: minimum number of contract lengths that must be used (code: \texttt{min\_contract\_types}).
+    \item $K^{\max}=3$: maximum number of contract lengths that may be used (code: \texttt{max\_contract\_types}).
+    \item $\mu=1$: indicator that 1-month and 4-month contract lengths are mutually exclusive (code: \texttt{mutual\_exclusion} is true for this instance).
+    \item $U=\sum_{m\in M} d_m = 57$: big-$M$ linking constant used in the implementation (code: \texttt{M = sum(demands.values())}).
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ij}$ (code: \texttt{x[i, j]}) $\in \mathbb{Z}_{\ge 0}$ for $(i,j)\in A$: number of rented warehouse units of size $100\,\text{m}^2$ under contracts that start in month $i$ and last for $j$ consecutive months.
+    \item $y_j$ (code: \texttt{y[j]}) $\in \{0,1\}$ for $j\in L$: equals 1 if any contract of length $j$ is used, and 0 otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total rental cost:
+\[
+\min \sum_{(i,j)\in A} c_j\,x_{ij}.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Monthly demand fulfillment.} For each month $m\in M$, the total active rented area must equal demand:
+    \[
+    \sum_{\substack{(i,j)\in A:\\ i \le m \le i+j-1}} x_{ij} = d_m
+    \qquad \forall m\in M.
+    \]
+
+    \item \textbf{Linking contract usage to contract-length indicator.} For each contract length $j\in L$,
+    \[
+    \sum_{\substack{i\in M:\\ (i,j)\in A}} x_{ij} \le U\,y_j,
+    \]
+    \[
+    \sum_{\substack{i\in M:\\ (i,j)\in A}} x_{ij} \ge y_j.
+    \]
+    These enforce $y_j=1$ if any contracts of length $j$ are rented, and $y_j=0$ otherwise.
+
+    \item \textbf{Minimum and maximum number of contract lengths used.}
+    \[
+    \sum_{j\in L} y_j \ge K^{\min},
+    \]
+    \[
+    \sum_{j\in L} y_j \le K^{\max}.
+    \]
+
+    \item \textbf{Mutual exclusion of 1-month and 4-month contract lengths.}
+    Since $\mu=1$ in this instance, the model includes
+    \[
+    y_1 + y_4 \le 1.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implementation converts required area from square meters to units of $100\,\text{m}^2$, so all $x_{ij}$ and $d_m$ are expressed in those units.
+    \item The model allows contracts to start in any month $i$ such that the full duration $j$ stays within the 4-month horizon; thus $x_{ij}$ is defined only for $(i,j)\in A$.
+    \item Demand is enforced with equality in every month, so the implemented model permits neither shortage nor excess rented area in any month.
+    \item Although the business description says contracts ``start from the beginning of the period,'' the implemented model does \emph{not} impose that restriction; it permits starts in later months as long as the contract ends by month 4.
+    \item The linking constraints use the single big-$M$ value $U=\sum_m d_m=57$, exactly as in the code.
+    \item The model is solved as an integer linear program using PuLP with the Gurobi command-line solver interface (code: \texttt{pulp.GUROBI\_CMD}).
+\end{itemize}

@@ -1,0 +1,7 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+Restaurant_A: Do not buy (x=0)
+Restaurant_B: Buy (x=1)
+Restaurant_C: Do not buy (x=0)
+Restaurant_D: Buy (x=1)
+OBJECTIVE_VALUE: 90000.0

@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_065",
+  "instance_number": 65,
+  "source_revise_instance": "IndustryOR_65_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model, explain why the LP relaxation reports objective 40167.8571 while the actual MIP optimum is 37200. Trace the binding constraints in the LP relaxation by naming the exact solver rows (_C1, _C3, _C7), their slack and dual values, then map each one to the exact code constraint and the business rule term in the brief; you must also name the CSV field names and code variable names involved (`x_m`, `x_w`, `z_m`, `z_w`, plus parameter keys like `setup_hours_A`, `green_bonus_m`, `bigM`). Finally, compare against the original model and identify the exact code additions/modifications that create the +6700 objective change, including which part is a genuine business bonus versus a relaxation artifact, and why the LP shadow prices cannot be linearly extrapolated to the integer model after changing the activation state."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "production.gurobi.log",
+        "production.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "production_revised.gurobi.log",
+        "production_revised.lp_relaxation.json",
+        "production_revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 83.325
+  }
+}

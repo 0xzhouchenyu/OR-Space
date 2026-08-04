@@ -1,0 +1,132 @@
+\section*{Sets and Indices}
+
+\[
+I=\{\text{A},\text{B},\text{C},\text{D}\}
+\]
+set of devices.
+
+\[
+P=\{\text{peak},\text{offpeak}\}
+\]
+set of production periods in the day.
+
+Indices:
+\[
+i \in I, \qquad p \in P.
+\]
+
+\section*{Parameters}
+
+All numerical values are read from the CSV files.
+
+\begin{itemize}
+    \item \(R\) (code data field: \texttt{required\_units}): required total production.
+    \item \(K_i\) (code: \texttt{max\_cap[i]}): maximum daily processing capacity of device \(i\).
+    \item \(F_i\) (code: \texttt{prep\_cost[i]}): preparation completion cost for device \(i\), incurred if the device is used at all during the day.
+    \item \(c_i\) (code: \texttt{unit\_cost[i]}): unit production cost on device \(i\).
+    \item \(a_i\) (code: \texttt{energy\_per\_unit[i]}): electricity consumed per produced unit on device \(i\).
+    \item \(s_i\) (code: \texttt{startup\_energy[i]}): startup energy consumed when device \(i\) is brought into service in a period.
+    \item \(g\) (code data field: \texttt{startup\_cost}): monetary startup cost per device-period startup.
+    \item \(B_p\) (code: \texttt{energy\_budget[p]} with source fields \texttt{energy\_budget\_peak}, \texttt{energy\_budget\_offpeak}): energy budget in period \(p\).
+    \item \(H\) (code data field: \texttt{startup\_budget}): total daily startup-cost budget.
+    \item \(\pi_p\) (code: \texttt{energy\_price[p]} with source fields \texttt{energy\_price\_peak}, \texttt{energy\_price\_offpeak}): electricity price in period \(p\).
+    \item \(\varepsilon=10^{-3}\) (code: \texttt{epsilon}): small positive constant used in linking constraints.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_{ip}\) (code: \texttt{x[(i,p)]}) \(\ge 0\): units produced on device \(i\) in period \(p\).
+    \item \(z_{ip}\) (code: \texttt{z[(i,p)]}) \(\in \{0,1\}\): equals 1 if device \(i\) is started/active in period \(p\).
+    \item \(y_i\) (code: \texttt{y[i]}) \(\in \{0,1\}\): equals 1 if device \(i\) is used at all during the day.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total production, preparation, startup, and electricity cost:
+\[
+\min \;
+\sum_{i\in I} F_i y_i
+\;+\;
+\sum_{i\in I}\sum_{p\in P} c_i x_{ip}
+\;+\;
+\sum_{i\in I}\sum_{p\in P} g z_{ip}
+\;+\;
+\sum_{p\in P}\pi_p
+\left(
+\sum_{i\in I} \bigl(a_i x_{ip}+s_i z_{ip}\bigr)
+\right).
+\]
+
+\section*{Constraints}
+
+\paragraph{Demand satisfaction}
+\[
+\sum_{i\in I}\sum_{p\in P} x_{ip} = R.
+\]
+
+\paragraph{Daily device capacity}
+\[
+\sum_{p\in P} x_{ip} \le K_i
+\qquad \forall i\in I.
+\]
+
+\paragraph{Linking day-use variable \(y_i\) to production}
+For each device and period,
+\[
+x_{ip} \le K_i y_i
+\qquad \forall i\in I,\; p\in P,
+\]
+and over the full day,
+\[
+\sum_{p\in P} x_{ip} \ge \varepsilon y_i
+\qquad \forall i\in I.
+\]
+
+\paragraph{Linking period startup/activity variable \(z_{ip}\) to production}
+\[
+x_{ip} \le K_i z_{ip}
+\qquad \forall i\in I,\; p\in P,
+\]
+\[
+x_{ip} \ge \varepsilon z_{ip}
+\qquad \forall i\in I,\; p\in P.
+\]
+
+\paragraph{Consistency between day-use and period-use indicators}
+\[
+z_{ip} \le y_i
+\qquad \forall i\in I,\; p\in P.
+\]
+
+\paragraph{Period energy budgets}
+For each period, unit-production energy plus startup energy must respect the corresponding budget:
+\[
+\sum_{i\in I}\left(a_i x_{ip}+s_i z_{ip}\right) \le B_p
+\qquad \forall p\in P.
+\]
+
+\paragraph{Daily startup-cost budget}
+\[
+\sum_{i\in I}\sum_{p\in P} g z_{ip} \le H.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program solved by \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+
+The binary variables act as gates rather than smooth surcharges:
+\begin{itemize}
+    \item \(y_i=1\) iff device \(i\) is used somewhere in the day, enforced by the pair of inequalities with \(\varepsilon\).
+    \item \(z_{ip}=1\) iff device \(i\) is brought into service in period \(p\), again enforced by the pair of inequalities with \(\varepsilon\).
+\end{itemize}
+
+The formulation matches the code exactly, including:
+\begin{itemize}
+    \item separate peak/off-peak energy budgets using the exact data fields \texttt{energy\_budget\_peak} and \texttt{energy\_budget\_offpeak};
+    \item startup energy consumption \(s_i\) charged inside each period energy budget whenever \(z_{ip}=1\);
+    \item a separate daily startup-cost budget using the exact data field \texttt{startup\_budget};
+    \item electricity cost computed period-by-period using \(\pi_p\) applied to both production energy and startup energy.
+\end{itemize}
+
+No additional strengthening, reformulation, or simplification beyond the current implementation should be inferred.

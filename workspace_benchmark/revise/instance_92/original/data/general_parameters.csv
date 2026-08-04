@@ -1,0 +1,9 @@
+Parameter_Name,Value,Unit,Context_Description
+num_students,400,students,Total number of students going on the trip
+num_buses,10,vehicles,Total number of buses available
+bus_capacity,50,seats,Seating capacity of each bus
+num_minibuses,8,vehicles,Total number of minibuses available
+minibus_capacity,40,seats,Seating capacity of each minibus
+num_drivers,9,drivers,Total number of drivers available
+bus_rental_cost,800,GBP,Rental cost for each bus
+minibus_rental_cost,600,GBP,Rental cost for each minibus

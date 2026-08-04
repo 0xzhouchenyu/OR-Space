@@ -1,0 +1,118 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $G$: set of goods types, here $G=\{A,B,C,D,E\}$.
+    \item $J$: set of candidate container positions, indexed by $j$. In the implementation, $J=\{0,1,\dots,14\}$ (at most 15 containers).
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $Q_g$: available quantity of goods type $g \in G$ to be assigned to containers (code source: \texttt{quantities[g]}).
+    \item $w_g$: weight per unit of goods type $g \in G$ in tons (code source: \texttt{weights[g]}).
+    \item $C^{\max}$: standard maximum container weight capacity in tons (code: \texttt{max\_cap}).
+    \item $L^{\min}$: minimum load for any used container in tons (code: \texttt{min\_load}).
+    \item $D^{\min}$: minimum number of goods $D$ required in any used container (code: \texttt{min\_d\_per\_container}).
+    \item $C/A^{\min}$: minimum number of goods $C$ required whenever a container carries any goods $A$ (code: \texttt{min\_c\_per\_a}).
+    \item $M^E = Q_E$: big-$M$ constant used to link presence of goods $E$ to a binary indicator (code: \texttt{M\_E}).
+    \item $M^A = Q_A$: big-$M$ constant used to link presence of goods $A$ to a binary indicator (code: \texttt{M\_A}).
+\end{itemize}
+
+For this instance, the data imply:
+\[
+C^{\max}=60,\quad L^{\min}=18,\quad D^{\min}=10,\quad C/A^{\min}=1.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{g,j}$ (code: \texttt{x[g][j]}): nonnegative integer number of units of goods type $g \in G$ assigned to container $j \in J$.
+    \item $y_j$ (code: \texttt{y[j]}): binary variable equal to 1 if container $j$ is used, 0 otherwise.
+    \item $h_j$ (code: \texttt{has\_E[j]}): binary variable intended to indicate whether container $j$ carries any goods $E$.
+    \item $z_j$ (code: \texttt{z[j]}): binary variable intended to indicate whether container $j$ carries any goods $A$.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the number of used containers:
+\[
+\min \sum_{j \in J} y_j .
+\]
+
+\section*{Constraints}
+
+\paragraph{Inventory allocation.}
+All available units of each goods type must be assigned:
+\[
+\sum_{j \in J} x_{g,j} = Q_g \qquad \forall g \in G.
+\]
+
+\paragraph{Goods \(E\) indicator linking.}
+\[
+x_{E,j} \le M^E h_j \qquad \forall j \in J.
+\]
+
+\paragraph{Container weight capacity with fragile \(E\) handling rule.}
+The implemented model reduces the effective capacity by 15 tons when $h_j=1$, giving a 45-ton limit whenever goods $E$ are present:
+\[
+\sum_{g \in G} w_g x_{g,j} \le C^{\max} y_j - 15 h_j
+\qquad \forall j \in J.
+\]
+
+\paragraph{Minimum load for used containers.}
+\[
+\sum_{g \in G} w_g x_{g,j} \ge L^{\min} y_j
+\qquad \forall j \in J.
+\]
+
+\paragraph{Minimum number of goods \(D\) in each used container.}
+\[
+x_{D,j} \ge D^{\min} y_j
+\qquad \forall j \in J.
+\]
+
+\paragraph{Goods \(A\) indicator linking.}
+\[
+x_{A,j} \le M^A z_j
+\qquad \forall j \in J.
+\]
+
+\paragraph{Minimum goods \(C\) whenever goods \(A\) are loaded.}
+\[
+x_{C,j} \ge C/A^{\min}\, z_j
+\qquad \forall j \in J.
+\]
+
+\paragraph{Symmetry-breaking on container usage.}
+\[
+y_j \ge y_{j+1}
+\qquad \forall j=0,1,\dots,13.
+\]
+
+\paragraph{Variable domains.}
+\[
+x_{g,j} \in \mathbb{Z}_{\ge 0}
+\qquad \forall g \in G,\ \forall j \in J,
+\]
+\[
+y_j \in \{0,1\},\quad h_j \in \{0,1\},\quad z_j \in \{0,1\}
+\qquad \forall j \in J.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a mixed-integer linear program and solved with \texttt{GUROBI\_CMD} with a 120-second time limit.
+    \item The container index set is fixed to 15 candidate containers, not optimized endogenously.
+    \item The fragile handling rule for goods $E$ is encoded exactly as
+    \[
+    \sum_g w_g x_{g,j} \le 60\, y_j - 15\, h_j,
+    \]
+    which yields a 45-ton capacity when $h_j=1$ and the standard 60-ton capacity when $h_j=0$.
+    \item The indicator variables $h_j$ and $z_j$ are only linked in one direction:
+    \[
+    x_{E,j} \le M^E h_j,\qquad x_{A,j} \le M^A z_j.
+    \]
+    Thus, the code permits $h_j=1$ even when $x_{E,j}=0$, and $z_j=1$ even when $x_{A,j}=0$. The formulation above matches that implementation exactly.
+    \item There is no explicit constraint of the form $x_{g,j} \le Q_g y_j$. Unused containers are nevertheless forced to have zero load by the capacity constraint together with nonnegativity.
+\end{itemize}

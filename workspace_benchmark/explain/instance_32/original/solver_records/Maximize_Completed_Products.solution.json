@@ -1,0 +1,108 @@
+{
+  "solver": "gurobi",
+  "model_name": "Maximize_Completed_Products",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 2924.1379310344823,
+  "objective_bound": 2924.1379310344823,
+  "mip_gap": null,
+  "runtime": 0.0006189346313476562,
+  "node_count": 0.0,
+  "iteration_count": 9.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_uml_a9pt/solver_records/Maximize_Completed_Products.gurobi.log",
+  "variables": {
+    "x_A_1": {
+      "value": 0.0,
+      "reduced_cost": -3.448275862068966
+    },
+    "x_A_2": {
+      "value": 100.0,
+      "reduced_cost": 0.0
+    },
+    "x_A_3": {
+      "value": 0.0,
+      "reduced_cost": -4.655172413793104
+    },
+    "x_B_1": {
+      "value": 88.2758620689655,
+      "reduced_cost": 0.0
+    },
+    "x_B_2": {
+      "value": 61.724137931034505,
+      "reduced_cost": 0.0
+    },
+    "x_B_3": {
+      "value": 0.0,
+      "reduced_cost": -2.586206896551724
+    },
+    "x_C_1": {
+      "value": 80.0,
+      "reduced_cost": 0.0
+    },
+    "x_C_2": {
+      "value": 0.0,
+      "reduced_cost": -3.4482758620689657
+    },
+    "x_C_3": {
+      "value": 0.0,
+      "reduced_cost": -2.413793103448276
+    },
+    "x_D_1": {
+      "value": 0.0,
+      "reduced_cost": -3.448275862068966
+    },
+    "x_D_2": {
+      "value": 53.79310344827584,
+      "reduced_cost": 0.0
+    },
+    "x_D_3": {
+      "value": 146.20689655172416,
+      "reduced_cost": 0.0
+    },
+    "z": {
+      "value": 2924.1379310344823,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Capacity_A": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 6.206896551724139
+    },
+    "Capacity_B": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 4.137931034482759
+    },
+    "Capacity_C": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 5.517241379310345
+    },
+    "Capacity_D": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 6.206896551724139
+    },
+    "Min_component_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.27586206896551724
+    },
+    "Min_component_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.4137931034482759
+    },
+    "Min_component_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.31034482758620696
+    }
+  }
+}

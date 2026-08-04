@@ -1,0 +1,168 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Weeks: $T=\{1,\dots,8\}$, indexed by $t$.
+    \item Training start weeks: $S=\{1,\dots,7\}$, indexed by $s$.
+    \item Products: $P=\{I,II\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Initial number of skilled workers: $S_0=50$ (\texttt{S0}).
+    \item Demand in week $t$ for product $p$: $d_{t,p}$ (\texttt{demand[t]['I']}, \texttt{demand[t]['II']}), with values from \texttt{table\_1.csv}.
+    \item Production rate per labor hour:
+    \[
+    r_I=10,\qquad r_{II}=6
+    \]
+    (\texttt{rate\_I}, \texttt{rate\_II}).
+    \item Normal weekly hours per worker: $H^N=40$ (\texttt{normal\_hours}).
+    \item Overtime weekly hours for a skilled worker assigned to overtime: $H^{OT}=60$ (\texttt{overtime\_hours}).
+    \item Training capacity per trainer per training start: $q=3$ (\texttt{train\_cap}).
+    \item Training duration in weeks: $\tau=2$ (\texttt{train\_period}).
+    \item Weekly wage of a skilled worker on normal schedule: $c^S=360$ (\texttt{wage\_skilled}).
+    \item Weekly wage of a trainee during training: $c^{TR}=120$ (\texttt{wage\_trainee\_during}).
+    \item Weekly wage of a graduated trainee: $c^G=240$ (\texttt{wage\_trainee\_after}).
+    \item Weekly wage of a skilled worker assigned to overtime schedule: $c^{OT}=540$ (\texttt{wage\_overtime}).
+    \item Backlog compensation fee per kg per week:
+    \[
+    \gamma_I=0.5,\qquad \gamma_{II}=0.6
+    \]
+    (\texttt{comp\_I}, \texttt{comp\_II}).
+    \item Minimum number of new workers whose training must be completed by the end of week 8:
+    \[
+    G=50
+    \]
+    (\texttt{new\_worker\_goal}).
+\end{itemize}
+
+For compactness, define the following code-implied expressions:
+\[
+B_t=\sum_{\substack{s\in S:\\ s\le t\le s+\tau-1}} n_s
+\]
+as the number of skilled workers busy training in week $t$ (\texttt{trainers\_busy(t)}), and
+\[
+A_t=\sum_{\substack{s\in S:\\ s+\tau\le t}} q\,n_s
+\]
+as the number of graduated trainees available in week $t$ (\texttt{graduates\_available(t)}).
+
+Also define the number of trainees still in training in week $t$:
+\[
+R_t=\sum_{\substack{s\in S:\\ s\le t\le s+\tau-1}} q\,n_s.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Number of skilled workers assigned to start training in week $s$:
+    \[
+    n_s \in \mathbb{Z}_{\ge 0}
+    \]
+    (code: \texttt{n\_train[s]}), for $s\in S$.
+    \item Number of available skilled workers assigned to overtime schedule in week $t$:
+    \[
+    o_t \in \mathbb{Z}_{\ge 0}
+    \]
+    (code: \texttt{n\_overtime[t]}), for $t\in T$.
+    \item Skilled-worker normal-time hours allocated in week $t$:
+    \[
+    h^S_{t,I}\ge 0,\qquad h^S_{t,II}\ge 0
+    \]
+    (code: \texttt{h\_I\_s[t]}, \texttt{h\_II\_s[t]}).
+    \item Skilled-worker overtime hours allocated in week $t$:
+    \[
+    h^{OT}_{t,I}\ge 0,\qquad h^{OT}_{t,II}\ge 0
+    \]
+    (code: \texttt{h\_I\_ot[t]}, \texttt{h\_II\_ot[t]}).
+    \item Graduated-trainee hours allocated in week $t$:
+    \[
+    h^G_{t,I}\ge 0,\qquad h^G_{t,II}\ge 0
+    \]
+    (code: \texttt{h\_I\_g[t]}, \texttt{h\_II\_g[t]}).
+    \item End-of-week backlog for each product:
+    \[
+    b_{t,I}\ge 0,\qquad b_{t,II}\ge 0
+    \]
+    (code: \texttt{backlog\_I[t]}, \texttt{backlog\_II[t]}), for $t\in T$.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total labor and backlog compensation cost over the 8-week horizon:
+\[
+\min \sum_{t\in T}
+\Big[
+(A_t-o_t^0)0
+\Big]
+\]
+More explicitly, matching the code:
+\[
+\min \sum_{t\in T}
+\Big[
+(S_0-B_t-o_t)c^S + o_t c^{OT} + B_t c^S + R_t c^{TR} + A_t c^G + \gamma_I b_{t,I} + \gamma_{II} b_{t,II}
+\Big].
+\]
+Since
+\[
+(S_0-B_t-o_t)c^S + B_t c^S = (S_0-o_t)c^S,
+\]
+the code effectively pays all skilled workers each week, with overtime workers paid at $c^{OT}$ instead of $c^S$, but the formulation above is written in the same decomposed form used in the implementation.
+
+\section*{Constraints}
+
+For each week $t\in T$:
+
+\begin{align}
+o_t &\le S_0 - B_t
+&& \text{(overtime workers cannot exceed available skilled workers)} \\
+h^S_{t,I}+h^S_{t,II} &\le (S_0-B_t-o_t)\,H^N
+&& \text{(normal skilled-worker hours)} \\
+h^{OT}_{t,I}+h^{OT}_{t,II} &\le o_t\,H^{OT}
+&& \text{(overtime skilled-worker hours)} \\
+h^G_{t,I}+h^G_{t,II} &\le A_t\,H^N
+&& \text{(graduated-trainee hours)} \\
+S_0-B_t &\ge 0
+&& \text{(enough skilled workers for training assignments)}.
+\end{align}
+
+Weekly production is
+\[
+x_{t,I}=r_I\big(h^S_{t,I}+h^{OT}_{t,I}+h^G_{t,I}\big),
+\qquad
+x_{t,II}=r_{II}\big(h^S_{t,II}+h^{OT}_{t,II}+h^G_{t,II}\big).
+\]
+
+Backlog balance is imposed as inequalities exactly as in the code:
+\begin{align}
+b_{1,I} &\ge d_{1,I} - x_{1,I}, \\
+b_{1,II} &\ge d_{1,II} - x_{1,II}, \\
+b_{t,I} &\ge b_{t-1,I} + d_{t,I} - x_{t,I}
+&& \forall t=2,\dots,8, \\
+b_{t,II} &\ge b_{t-1,II} + d_{t,II} - x_{t,II}
+&& \forall t=2,\dots,8.
+\end{align}
+
+Training completion requirement:
+\[
+\sum_{\substack{s\in S:\\ s+\tau-1\le 8}} q\,n_s \ge G.
+\]
+With $\tau=2$ and $S=\{1,\dots,7\}$, this includes all training starts $s=1,\dots,7$.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item Training starts are allowed only in weeks $1$ through $7$ because the code creates \texttt{n\_train[t]} only for those weeks.
+    \item A trainer starting in week $s$ is unavailable for production in weeks $s$ and $s+1$. The corresponding trainees complete training by the end of week $s+1$ and become available for work from week $s+2$ onward.
+    \item The code distinguishes three labor pools for production hours in each week: skilled workers on normal schedule, skilled workers on overtime schedule, and graduated trainees.
+    \item Overtime is modeled as an alternative weekly schedule: an overtime-skilled worker is counted in \texttt{n\_overtime[t]} and contributes up to $60$ hours, while a non-overtime skilled worker contributes up to $40$ hours.
+    \item The objective charges:
+    \begin{itemize}
+        \item all skilled workers their weekly wage, including trainers;
+        \item overtime-skilled workers at the overtime weekly wage instead of the normal skilled wage;
+        \item trainees still in training every week of training;
+        \item graduated trainees every week after graduation in which they are available;
+        \item compensation on end-of-week backlog levels.
+    \end{itemize}
+    \item The backlog equations are modeled with ``$\ge$'' rather than equality. Because backlog variables have positive cost in the objective, the optimizer will drive them to the smallest feasible values, reproducing the implemented logic.
+    \item The model is a mixed-integer linear program and is solved in the code with \texttt{GUROBI\_CMD}.
+\end{itemize}

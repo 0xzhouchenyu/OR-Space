@@ -1,0 +1,124 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $i \in I$: toy types, where $I=\{\text{High-End},\text{Mid-Range},\text{Low-End}\}$.
+    \item $t \in T$: production periods, where $T=\{1,2\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $L_i$: manufacturing labor hours required per unit of toy $i$.
+    \item $K_i$: inspection hours required per unit of toy $i$.
+    \item $P_i$: profit per unit of toy $i$.
+    \item $D_{it}$: maximum demand for toy $i$ in period $t$.
+    \item $A^{\text{lab}}_1$ (\texttt{available\_labor\_hours\_period1}): regular labor hours available in period 1.
+    \item $A^{\text{lab}}_2$ (\texttt{available\_labor\_hours\_period2}): regular labor hours available in period 2.
+    \item $A^{\text{ins}}_1$ (\texttt{available\_inspection\_hours\_period1}): inspection hours available in period 1.
+    \item $A^{\text{ins}}_2$ (\texttt{available\_inspection\_hours\_period2}): inspection hours available in period 2.
+    \item $\bar O$ (\texttt{overtime\_labor\_cap}): cap on total overtime across both periods.
+    \item $c^{\text{ot}}$ (\texttt{overtime\_labor\_cost}): cost per overtime labor hour.
+    \item $\theta^{\text{fat}}$ (\texttt{period1\_overtime\_fatigue\_threshold}): period-1 overtime threshold that can trigger fatigue carryover.
+    \item $\Delta^{\text{rec}}$ (\texttt{period2\_labor\_recovery\_loss}): reduction in regular period-2 labor if fatigue is triggered.
+    \item $\theta^{\text{rev}}$ (\texttt{overtime\_review\_threshold}): total overtime threshold that can trigger the seasonal safety review.
+    \item $F^{\text{rev}}$ (\texttt{seasonal\_safety\_review\_fee}): fixed seasonal safety review fee.
+\end{itemize}
+
+All numerical values are read from \texttt{table\_1.csv} and \texttt{general\_parameters.csv}. In particular,
+\[
+D_{it}=
+\begin{cases}
+\texttt{max\_demand\_high\_end\_period}t,& i=\text{High-End},\\
+\texttt{max\_demand\_mid\_range\_period}t,& i=\text{Mid-Range},\\
+\texttt{max\_demand\_low\_end\_period}t,& i=\text{Low-End}.
+\end{cases}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{it}$ (code: \texttt{x[i][t]}): units of toy $i$ produced in period $t$, with $x_{it}\ge 0$.
+    \item $o_t$ (code: \texttt{ot[t]}): overtime labor hours used in period $t$, with $o_t\ge 0$.
+    \item $y^{\text{fat}}$ (code: \texttt{fatigue}): binary variable indicating whether period-1 overtime is high enough to allow the fatigue carryover to activate.
+    \item $y^{\text{rev}}$ (code: \texttt{review}): binary variable indicating whether enough total overtime is used to allow the seasonal safety review fee to activate.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize seasonal profit net of overtime cost and any review fee:
+\[
+\max \quad
+\sum_{i\in I}\sum_{t\in T} P_i x_{it}
+\;-\;
+c^{\text{ot}}\sum_{t\in T} o_t
+\;-\;
+F^{\text{rev}} y^{\text{rev}}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Period-1 labor capacity}
+\[
+\sum_{i\in I} L_i x_{i1} \le A^{\text{lab}}_1 + o_1.
+\]
+
+\paragraph{Period-2 labor capacity with fatigue carryover}
+\[
+\sum_{i\in I} L_i x_{i2} \le A^{\text{lab}}_2 - \Delta^{\text{rec}} y^{\text{fat}} + o_2.
+\]
+
+\paragraph{Inspection capacities}
+\[
+\sum_{i\in I} K_i x_{it} \le A^{\text{ins}}_t
+\qquad \forall t\in T.
+\]
+
+\paragraph{Period-specific demand limits}
+\[
+x_{it} \le D_{it}
+\qquad \forall i\in I,\; t\in T.
+\]
+
+\paragraph{Total overtime cap}
+\[
+o_1 + o_2 \le \bar O.
+\]
+
+\paragraph{Fatigue-trigger logic}
+\[
+o_1 \le \theta^{\text{fat}} + \bar O\, y^{\text{fat}}.
+\]
+
+\paragraph{Safety-review trigger logic}
+\[
+o_1 + o_2 \le \theta^{\text{rev}} + \bar O\, y^{\text{rev}}.
+\]
+
+\paragraph{Domains}
+\[
+x_{it}\ge 0 \quad \forall i\in I,\; t\in T,
+\qquad
+o_t\ge 0 \quad \forall t\in T,
+\qquad
+y^{\text{fat}},y^{\text{rev}}\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented exactly as a mixed-integer linear program in \texttt{current\_heuristic.py} and solved with \texttt{GUROBI\_CMD}.
+    \item The timing promise from the revision is represented only through the period-2 labor reduction term
+    $
+    -\Delta^{\text{rec}} y^{\text{fat}}
+    $
+    in the second-period labor constraint; there are no inventory, backlog, or cash carryover variables in the implemented model.
+    \item The binary trigger constraints are one-sided exactly as coded. They enforce:
+    \begin{itemize}
+        \item if $y^{\text{fat}}=0$, then $o_1 \le \theta^{\text{fat}}$;
+        \item if $y^{\text{rev}}=0$, then $o_1+o_2 \le \theta^{\text{rev}}$.
+    \end{itemize}
+    With $y^{\text{fat}}=1$ or $y^{\text{rev}}=1$, the corresponding bound is relaxed using the big-$M$ value $\bar O$.
+    \item Because $y^{\text{fat}}$ reduces available labor in period 2 and does not appear with a direct reward in the objective, the optimizer will set $y^{\text{fat}}=0$ whenever feasible; thus fatigue is incurred only when period-1 overtime must exceed \texttt{period1\_overtime\_fatigue\_threshold}. This is the exact implemented logic.
+    \item Similarly, because $y^{\text{rev}}$ carries the fixed cost $F^{\text{rev}}$ in the objective, the optimizer will set $y^{\text{rev}}=1$ only when total overtime must exceed \texttt{overtime\_review\_threshold}. This matches the implemented search logic.
+    \item Production variables are continuous in the code (\texttt{lowBound=0} with no integrality restriction), so the formulation does not impose integer production quantities.
+\end{itemize}

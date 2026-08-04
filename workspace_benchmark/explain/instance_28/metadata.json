@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_028",
+  "instance_number": 28,
+  "source_revise_instance": "IndustryOR_28_revise_business",
+  "domain": "Investment_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Investment_Planning",
+    "question": "In the revised model, explain precisely why the optimal plan drops the year-1 special investment while still using the year-2 and year-3 special channels, and why you cannot infer the same conclusion by linearly extrapolating LP shadow prices to the integer-fee model. Your answer must trace the year-1 channel from the business term “fixed management fee” to the exact CSV parameter names and values, then to the code variables `b1` and `y_b1`, the unnamed big-M constraint `b1 <= inv_limit_y1 * y_b1` (reported as `_C1`), and the objective term `- fee_y1 * y_b1`; compare this with the original model’s use of `b1` and quantify how these exact code additions produce the objective drop from 580000.0 to 553400.0. Also use the LP-relaxation diagnostics to identify which constraints are binding and state the economic meaning of the dual values for `Year1_budget` and `_C1`, including why the fractional `y_b1 = 0.8888888888888887` makes naive marginal-value extrapolation invalid for the final MIP solution."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Investment_Optimization.gurobi.log",
+        "Investment_Optimization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Investment_Optimization_With_Fees.gurobi.log",
+        "Investment_Optimization_With_Fees.lp_relaxation.json",
+        "Investment_Optimization_With_Fees.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 76.506667
+  }
+}

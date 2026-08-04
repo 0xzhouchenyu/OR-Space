@@ -1,0 +1,9 @@
+Optimal spare parts allocation (shared across scenarios): Component 1: 2, Component 2: 2, Component 3: 1
+Total cost (both scenarios share this configuration): 140.0
+Total weight (both scenarios share this configuration): 18.0
+Component reliabilities (scenario-independent): 0.7, 0.95, 0.9
+Scenario A system reliability: 0.5984999999999999
+Scenario B system reliability: 0.5984999999999999
+Expected system reliability (two equally likely scenarios): 0.5984999999999999
+OBJECTIVE_VALUE: 0.5984999999999999
+Set parameter LicenseID to value 2802670

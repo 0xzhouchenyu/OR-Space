@@ -1,0 +1,106 @@
+{
+  "solver": "gurobi",
+  "model_name": "Factory_Production_Revised_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 580.6152173913043,
+  "runtime": 0.0004208087921142578,
+  "variables": {
+    "x_A1_Product_I": {
+      "value": 641.304347826087,
+      "reduced_cost": 0.0
+    },
+    "x_A1_Product_II": {
+      "value": 0.0,
+      "reduced_cost": -0.287404347826087
+    },
+    "x_A2_Product_I": {
+      "value": 0.0,
+      "reduced_cost": -0.0001347826086956494
+    },
+    "x_A2_Product_II": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "x_A2_Product_III": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_B1_Product_I": {
+      "value": 0.0,
+      "reduced_cost": -0.25174891304347824
+    },
+    "x_B1_Product_II": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "x_B2_Product_I": {
+      "value": 641.304347826087,
+      "reduced_cost": 0.0
+    },
+    "x_B2_Product_III": {
+      "value": 0.0,
+      "reduced_cost": -0.033243478260869846
+    },
+    "x_B3_Product_I": {
+      "value": 0.0,
+      "reduced_cost": -0.037478260869565294
+    },
+    "z_B2": {
+      "value": 0.36645962732919257,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "capacity_A1": {
+      "sense": "<",
+      "slack": 2793.478260869565,
+      "dual_value": 0.0
+    },
+    "capacity_A2": {
+      "sense": "<",
+      "slack": 5500.0,
+      "dual_value": 0.0
+    },
+    "capacity_B1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.043414673913043475
+    },
+    "capacity_B2": {
+      "sense": "<",
+      "slack": 4434.782608695652,
+      "dual_value": 0.0
+    },
+    "capacity_B3": {
+      "sense": "<",
+      "slack": 4000.0,
+      "dual_value": 0.0
+    },
+    "b2_activation_link": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.017142857142857144
+    },
+    "balance_Product_I": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.5973913043478261
+    },
+    "balance_Product_II": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.132186956521739
+    },
+    "balance_Product_III": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.609582608695652
+    },
+    "shared_labor_pool": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.050869565217391305
+    }
+  }
+}

@@ -1,0 +1,94 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $Q = \{0,1,2,3\}$: quarters in chronological order, where
+    \[
+    0=\text{Winter},\quad 1=\text{Spring},\quad 2=\text{Summer},\quad 3=\text{Autumn}.
+    \]
+    \item $(i,j) \in A := \{(i,j)\in Q\times Q : i \le j\}$: feasible purchase--sale quarter pairs. Timber bought in quarter $i$ is sold in quarter $j$.
+    \item $t \in \{0,1,2\}$: end-of-quarter inventory checkpoints for storage-capacity enforcement.
+\end{itemize}
+
+\section*{Parameters}
+
+All volumes are modeled in units of $10^4\text{ m}^3$ and all monetary quantities in units of $10^4$ yuan, matching the code.
+
+\begin{itemize}
+    \item $p_i$: purchase price in quarter $i$ (code data: \texttt{purchase\_price[quarters[i]]}).
+    \item $r_j$: sale price in quarter $j$ (code data: \texttt{sale\_price[quarters[j]]}).
+    \item $d_j$: estimated maximum sales volume in quarter $j$ (code data: \texttt{max\_sales[quarters[j]]}).
+    \item $C$: maximum storage capacity (code: \texttt{max\_storage\_wm3}).
+    \item $a$: base storage cost per stored unit (code: \texttt{storage\_cost\_a\_w}).
+    \item $b$: additional storage cost per stored unit per quarter of storage (code: \texttt{storage\_cost\_b\_w}).
+    \item For each $(i,j)\in A$, let
+    \[
+    u_{ij} := j-i
+    \]
+    denote the number of quarters timber is stored before sale.
+    \item For each $(i,j)\in A$, define the per-unit storage cost used in the code:
+    \[
+    s_{ij} :=
+    \begin{cases}
+    0, & j=i,\\
+    a + b(j-i), & j>i.
+    \end{cases}
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ij} \ge 0$ for $(i,j)\in A$: amount of timber purchased in quarter $i$ and sold in quarter $j$ (code: \texttt{x[i,j]}).
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \sum_{(i,j)\in A} \bigl(r_j - p_i - s_{ij}\bigr)x_{ij}.
+\]
+
+Equivalently, using the code's piecewise storage-cost logic,
+\[
+\max \left[
+\sum_{i\in Q} (r_i-p_i)x_{ii}
++
+\sum_{\substack{(i,j)\in A\\ j>i}}
+\bigl(r_j-p_i-a-b(j-i)\bigr)x_{ij}
+\right].
+\]
+
+\section*{Constraints}
+
+\begin{itemize}
+    \item \textbf{Quarterly sales limits.} For each sale quarter $j\in Q$,
+    \[
+    \sum_{i=0}^{j} x_{ij} \le d_j.
+    \]
+    
+    \item \textbf{End-of-quarter storage capacity.} For each $t\in\{0,1,2\}$, the amount purchased by or before quarter $t$ and sold after quarter $t$ cannot exceed capacity:
+    \[
+    \sum_{i=0}^{t}\sum_{j=t+1}^{3} x_{ij} \le C.
+    \]
+    
+    \item \textbf{Nonnegativity.}
+    \[
+    x_{ij} \ge 0 \qquad \forall (i,j)\in A.
+    \]
+\end{itemize}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a linear program and solved with \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+    \item There are no purchase-supply limits in the code. Procurement is restricted only indirectly through sales limits and storage-capacity constraints.
+    \item The model enforces that all timber must be sold no later than Autumn by defining variables only for pairs with $j\le 3$.
+    \item Storage cost is charged only when $j>i$. Same-quarter purchase and sale ($j=i$) incur no storage cost.
+    \item The code converts the warehouse capacity from $\text{m}^3$ to $10^4\text{ m}^3$ via \texttt{max\_storage\_wm3 = max\_storage / 10000}.
+    \item The code comments indicate a unit conversion of storage costs, but the implemented coefficients used in optimization are numerically
+    \[
+    a = 70,\qquad b = 100,
+    \]
+    in units of $10^4$ yuan per $10^4\text{ m}^3$ and per quarter, respectively, because
+    \texttt{storage\_cost\_a\_w = storage\_cost\_a * 10000 / 10000} and similarly for \texttt{storage\_cost\_b\_w}. The formulation above matches these implemented coefficients exactly.
+\end{itemize}

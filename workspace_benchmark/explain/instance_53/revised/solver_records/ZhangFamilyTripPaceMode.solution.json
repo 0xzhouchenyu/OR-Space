@@ -1,0 +1,294 @@
+{
+  "solver": "gurobi",
+  "model_name": "ZhangFamilyTripPaceMode",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 2520.0,
+  "objective_bound": 2520.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004454135894775391,
+  "node_count": 1.0,
+  "iteration_count": 7.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_urg9vmmv/solver_records/ZhangFamilyTripPaceMode.gurobi.log",
+  "variables": {
+    "max_child_cost": {
+      "value": 1300.0,
+      "reduced_cost": null
+    },
+    "min_child_cost": {
+      "value": 600.0,
+      "reduced_cost": null
+    },
+    "x_Fred": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_George": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_Ginny": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_Harry": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_Hermione": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_Ron": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_Fred": {
+      "value": 650.0,
+      "reduced_cost": null
+    },
+    "y_George": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_Ginny": {
+      "value": 1200.0,
+      "reduced_cost": null
+    },
+    "y_Harry": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_Hermione": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_Ron": {
+      "value": 600.0,
+      "reduced_cost": null
+    },
+    "z_balanced": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "z_budget": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z_premium": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "y_le_Mx_Harry": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "y_le_costplus_Harry": {
+      "sense": "<=",
+      "slack": 2400.0,
+      "dual_value": null
+    },
+    "y_ge_costminus_Harry": {
+      "sense": ">=",
+      "slack": -600.0,
+      "dual_value": null
+    },
+    "y_le_Mx_Hermione": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "y_le_costplus_Hermione": {
+      "sense": "<=",
+      "slack": 3200.0,
+      "dual_value": null
+    },
+    "y_ge_costminus_Hermione": {
+      "sense": ">=",
+      "slack": -600.0,
+      "dual_value": null
+    },
+    "y_le_Mx_Ron": {
+      "sense": "<=",
+      "slack": 300.0,
+      "dual_value": null
+    },
+    "y_le_costplus_Ron": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "y_ge_costminus_Ron": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "y_le_Mx_Fred": {
+      "sense": "<=",
+      "slack": 300.0,
+      "dual_value": null
+    },
+    "y_le_costplus_Fred": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "y_ge_costminus_Fred": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "y_le_Mx_George": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "y_le_costplus_George": {
+      "sense": "<=",
+      "slack": 1600.0,
+      "dual_value": null
+    },
+    "y_ge_costminus_George": {
+      "sense": ">=",
+      "slack": -300.0,
+      "dual_value": null
+    },
+    "y_le_Mx_Ginny": {
+      "sense": "<=",
+      "slack": 600.0,
+      "dual_value": null
+    },
+    "y_le_costplus_Ginny": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "y_ge_costminus_Ginny": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Ginny_must_go": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Max_children": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "Min_children": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Harry_no_Fred": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Harry_no_George": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "George_requires_Fred": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "George_requires_Hermione": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Exactly_one_mode": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Min_children_balanced_mode": {
+      "sense": ">=",
+      "slack": -3.0,
+      "dual_value": null
+    },
+    "Min_children_premium_mode": {
+      "sense": ">=",
+      "slack": -3.0,
+      "dual_value": null
+    },
+    "Budget_constraint": {
+      "sense": "<=",
+      "slack": 2550.0,
+      "dual_value": null
+    },
+    "Max_cost_ge_Harry": {
+      "sense": ">=",
+      "slack": -400.0,
+      "dual_value": null
+    },
+    "Min_cost_le_Harry": {
+      "sense": "<=",
+      "slack": 300.0,
+      "dual_value": null
+    },
+    "Max_cost_ge_Hermione": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Min_cost_le_Hermione": {
+      "sense": "<=",
+      "slack": 700.0,
+      "dual_value": null
+    },
+    "Max_cost_ge_Ron": {
+      "sense": ">=",
+      "slack": -700.0,
+      "dual_value": null
+    },
+    "Min_cost_le_Ron": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Max_cost_ge_Fred": {
+      "sense": ">=",
+      "slack": -650.0,
+      "dual_value": null
+    },
+    "Min_cost_le_Fred": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": null
+    },
+    "Max_cost_ge_George": {
+      "sense": ">=",
+      "slack": -650.0,
+      "dual_value": null
+    },
+    "Min_cost_le_George": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": null
+    },
+    "Max_cost_ge_Ginny": {
+      "sense": ">=",
+      "slack": -100.0,
+      "dual_value": null
+    },
+    "Min_cost_le_Ginny": {
+      "sense": "<=",
+      "slack": 600.0,
+      "dual_value": null
+    }
+  }
+}

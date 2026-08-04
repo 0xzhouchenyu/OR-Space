@@ -1,0 +1,111 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $W$: set of warehouses, indexed by $w$.
+    \item $P$: set of ports, indexed by $p$.
+    \item $A \subseteq P$: Adriatic ports subject to the pooled recovery rule,
+    \[
+    A=\{\text{Venice},\text{Ancona},\text{Bari}\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $s_w$: available empty containers at warehouse $w$ (data from \texttt{table\_1.csv}, field \texttt{Empty\_Containers}).
+    \item $d_p$: demand for empty containers at port $p$ (data from \texttt{table\_2.csv}, field \texttt{Container\_Demand}).
+    \item $\delta_{wp}$: distance from warehouse $w$ to port $p$ in km (data from \texttt{table\_3.csv}).
+    \item $c^{\mathrm{km}}$: transport cost per container-km (code/data field: \texttt{cost\_per\_km}).
+    \item $q$: truck capacity (code/data field: \texttt{truck\_capacity}). This parameter is present in the data but is not used in the implemented model.
+    \item $\pi_p$: shortage charge per uncovered container at port $p$ (data from \texttt{shortage\_penalty.csv}, field \texttt{Shortage\_Charge}).
+    \item $g_p$: local shortage grace band at port $p$ (data field \texttt{Grace\_Containers}).
+    \item $f_p$: fixed local recovery fee at port $p$ (data field \texttt{Recovery\_Fee}).
+    \item $\tau$: Adriatic pooled shortage trigger (code/data field: \texttt{adriatic\_pool\_shortage\_trigger}).
+    \item $F^A$: Adriatic pooled recovery fee (code/data field: \texttt{adriatic\_pool\_recovery\_fee}).
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{wp}$ (code: \texttt{x[w][p]}): quantity shipped from warehouse $w$ to port $p$, with $x_{wp} \ge 0$.
+    \item $u_p$ (code: \texttt{short[p]}): shortage at port $p$, with $u_p \ge 0$.
+    \item $r_p$ (code: \texttt{rec[p]}): binary variable indicating whether the local recovery desk is opened for port $p$,
+    \[
+    r_p \in \{0,1\}.
+    \]
+    \item $z$ (code: \texttt{pool}): binary variable indicating whether the Adriatic pooled recovery desk is opened,
+    \[
+    z \in \{0,1\}.
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total transport cost plus shortage charges plus fixed recovery fees:
+\[
+\min \;
+\sum_{w \in W}\sum_{p \in P} c^{\mathrm{km}} \,\delta_{wp}\, x_{wp}
+\;+\;
+\sum_{p \in P}\left(\pi_p\,u_p + f_p\,r_p\right)
+\;+\;
+F^A z.
+\]
+
+\section*{Constraints}
+
+\paragraph{Warehouse supply limits}
+\[
+\sum_{p \in P} x_{wp} \le s_w
+\qquad \forall w \in W.
+\]
+
+\paragraph{Port demand balance with shortage}
+\[
+\sum_{w \in W} x_{wp} + u_p = d_p
+\qquad \forall p \in P.
+\]
+
+\paragraph{Local recovery activation after grace band}
+\[
+u_p \le g_p + d_p\, r_p
+\qquad \forall p \in P.
+\]
+This enforces that if $u_p > g_p$, then necessarily $r_p=1$.
+
+\paragraph{Adriatic pooled recovery activation}
+\[
+\sum_{p \in A} u_p \le \tau + \left(\sum_{p \in A} d_p\right) z.
+\]
+This enforces that if the combined Adriatic shortage exceeds $\tau$, then necessarily $z=1$.
+
+\paragraph{Domains}
+\[
+x_{wp} \ge 0 \qquad \forall w \in W,\; p \in P,
+\]
+\[
+u_p \ge 0 \qquad \forall p \in P,
+\]
+\[
+r_p \in \{0,1\} \qquad \forall p \in P,
+\]
+\[
+z \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved with \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+    \item Shipment variables $x_{wp}$ are continuous, not integer. Therefore the code allows fractional containers.
+    \item The parameter \texttt{truck\_capacity} is read from the data but is not used anywhere in the optimization model.
+    \item The local recovery constraint uses the exact big-$M$ form from the code,
+    \[
+    u_p \le g_p + d_p r_p,
+    \]
+    where $d_p$ is used as the big-$M$ value.
+    \item The Adriatic pooled recovery constraint uses the exact big-$M$ form from the code,
+    \[
+    \sum_{p \in A} u_p \le \tau + \Bigl(\sum_{p \in A} d_p\Bigr) z.
+    \]
+    \item There is no explicit constraint forcing full use of supply, and no explicit upper bound on shipments to a port beyond the balance equation with shortage.
+\end{itemize}

@@ -1,0 +1,13 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+SP1 Day 1 - Truck: 5, Van: 0, Moto: 0, EV: 3, Mode: 1
+SP1 Day 2 - Truck: 0, Van: 0, Moto: 0, EV: 0, Mode: 0
+SP1 Day 3 - Truck: 0, Van: 0, Moto: 0, EV: 8, Mode: 1
+SP2 Day 1 - Truck: 2, Van: 0, Moto: 0, EV: 8, Mode: 1
+SP2 Day 2 - Truck: 0, Van: 0, Moto: 0, EV: 0, Mode: 0
+SP2 Day 3 - Truck: 0, Van: 0, Moto: 0, EV: 0, Mode: 1
+SP3 Day 1 - Truck: 0, Van: 0, Moto: 0, EV: 0, Mode: 0
+SP3 Day 2 - Truck: 0, Van: 0, Moto: 0, EV: 0, Mode: 1
+SP3 Day 3 - Truck: 1, Van: 0, Moto: 0, EV: 6, Mode: 1
+Total capacity delivered: 2300.0
+OBJECTIVE_VALUE: 800.0

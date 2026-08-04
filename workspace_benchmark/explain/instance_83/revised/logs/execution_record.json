@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 102.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStart period 2-6, pattern 0: 8 waiters\nStart period 10-14, pattern 0: 10 waiters\nStart period 14-18, pattern 0: 0 waiters\nStart period 18-22, pattern 0: 12 waiters\nWaiters in period 2-6: 8\nWaiters in period 6-10: 8\nWaiters in period 10-14: 10\nWaiters in period 14-18: 10\nWaiters in period 18-22: 12\nWaiters in period 22-2: 12\nOBJECTIVE_VALUE: 102.0\n",
+  "stderr": "",
+  "error": null
+}

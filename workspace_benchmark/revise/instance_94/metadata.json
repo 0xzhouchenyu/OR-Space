@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_94_revise_business",
+  "original_instance_id": "IndustryOR_94",
+  "revise_description": "In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. At the latest operating review, the business owner rejected treating this as a cosmetic rerun. The plan has to follow the commercial interpretation below, with the data-pack labels read literally. The refinery now has two commercial thresholds layered onto the blending run. Type II receives `type_II_price_lift` only when its output reaches `type_II_contract_threshold`, and crude A purchases receive `bulk_purchase_rebate` only when total market purchase clears `bulk_purchase_rebate_threshold`. The staged crude A blocks, quality shares, throughput window, and per-ton processing cost remain part of the period plan. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+2constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 0,
+        "-variable": 0,
+        "+constraint": 2,
+        "-constraint": 0,
+        "modify_constraint": 0,
+        "modify_data": 1
+      },
+      "op_count": 3,
+      "distinct_ops": 3,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 72.222222
+  }
+}

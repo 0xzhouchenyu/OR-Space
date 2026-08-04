@@ -1,0 +1,54 @@
+{
+  "instance_id": "OR_explain_025",
+  "instance_number": 25,
+  "source_revise_instance": "IndustryOR_25_revise_business",
+  "domain": "investment_planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "investment_planning",
+    "question": "In the revised model, explain precisely why the original objective 510000 drops to 472200 by tracing the year-0 two-year product through the business brief, `general_parameters.csv`, `src/current_heuristic.py`, and `src/formulation.tex`. Your answer must name the exact code variables and CSV fields that implement the statement that the year-0 two-year investment settles after the year-2 reinvestment cut-off, identify which revised solver constraints are binding versus slack (including `_C3` and `_C5`), interpret their dual values in business terms, and quantify the objective impact relative to the original model with specific coefficients/amounts. Also explain why using the dual/shadow price of `_C5` or `_C3` to linearly extrapolate a large policy change in `max_option2_start` or the late-settlement rule would be invalid here."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Investment.gurobi.log",
+        "Investment.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "InvestmentLateSettlement.gurobi.log",
+        "InvestmentLateSettlement.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 79.826667
+  }
+}

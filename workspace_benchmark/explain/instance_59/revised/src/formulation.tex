@@ -1,0 +1,128 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $R$: set of raw materials, indexed by $i \in R$. Here $R=\{A,B,C\}$.
+    \item $J$: set of candy brands, indexed by $j \in J$. Here $J=\{A,B,C\}$.
+    \item $K^{\ge} \subseteq R \times J$: set of composition entries whose data cell is of the form ``$\ge$ percentage''.
+    \item $K^{\le} \subseteq R \times J$: set of composition entries whose data cell is of the form ``$\le$ percentage''.
+\end{itemize}
+
+The sets $K^{\ge}$ and $K^{\le}$ are read directly from \texttt{table\_1\_7.csv}. For this instance:
+\[
+K^{\ge}=\{(A,A),(A,B)\}, \qquad
+K^{\le}=\{(C,A),(C,B),(C,C)\}.
+\]
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $c_i^{\rm raw}$: unit cost of raw material $i$ (from column \texttt{Raw Material Cost (Yuan/kg)}).
+    \item $L_i$: monthly availability limit of raw material $i$ (from column \texttt{Monthly Limit (kg)}).
+    \item $f_j$: unit processing fee for brand $j$ (from row \texttt{Processing Fee (Yuan/kg)}).
+    \item $p_j$: selling price per kg of brand $j$ (from row \texttt{Selling Price (Yuan/kg)}).
+    \item $\alpha_{ij}$: percentage bound appearing in \texttt{table\_1\_7.csv} for pair $(i,j)$.
+    \begin{itemize}
+        \item If $(i,j)\in K^{\ge}$, then raw material $i$ must satisfy a lower bound $\alpha_{ij}$ in brand $j$.
+        \item If $(i,j)\in K^{\le}$, then raw material $i$ must satisfy an upper bound $\alpha_{ij}$ in brand $j$.
+    \end{itemize}
+    \item $s_j$: fixed setup cost for producing brand $j$ (fields \texttt{SetupCost\_A}, \texttt{SetupCost\_B}, \texttt{SetupCost\_C}).
+    \item $w^{AB}$: one-time shared wrapper coordination cost when both brands A and B are produced (field \texttt{BrandAB\_SharedWrapper\_Fee}).
+    \item $M$: big-$M$ constant used in the implementation,
+    \[
+    M=\sum_{i\in R} L_i.
+    \]
+\end{itemize}
+
+For this instance, the nonempty composition bounds are:
+\[
+\alpha_{A,A}=0.60,\quad \alpha_{A,B}=0.15,\quad
+\alpha_{C,A}=0.20,\quad \alpha_{C,B}=0.60,\quad \alpha_{C,C}=0.50.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ij} \ge 0$ (code: \texttt{x[(i, j)]}): kilograms of raw material $i$ assigned to production of brand $j$.
+    \item $y_j \ge 0$ (code: \texttt{y[j]}): total kilograms of brand $j$ produced.
+    \item $z_j \in \{0,1\}$ (code: \texttt{z[j]}): 1 if brand $j$ is produced, 0 otherwise.
+    \item $u_{AB} \in \{0,1\}$ (code: \texttt{shared\_ab\_wrapper}): 1 if both brands A and B are produced, activating the shared wrapper coordination fee.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize monthly profit:
+\[
+\max \;
+\sum_{j\in J} p_j y_j
+-\sum_{i\in R}\sum_{j\in J} c_i^{\rm raw} x_{ij}
+-\sum_{j\in J} f_j y_j
+-\sum_{j\in J} s_j z_j
+-w^{AB} u_{AB}.
+\]
+
+\section*{Constraints}
+
+Production accounting:
+\[
+y_j=\sum_{i\in R} x_{ij}
+\qquad \forall j\in J.
+\]
+
+Activation of brand-level setup binary:
+\[
+y_j \le M z_j
+\qquad \forall j\in J.
+\]
+
+Shared wrapper coordination trigger for brands A and B:
+\[
+u_{AB} \ge z_A+z_B-1,
+\]
+\[
+u_{AB} \le z_A,
+\]
+\[
+u_{AB} \le z_B.
+\]
+
+Raw material availability:
+\[
+\sum_{j\in J} x_{ij} \le L_i
+\qquad \forall i\in R.
+\]
+
+Composition lower bounds read from the table:
+\[
+x_{ij} \ge \alpha_{ij} y_j
+\qquad \forall (i,j)\in K^{\ge}.
+\]
+
+Composition upper bounds read from the table:
+\[
+x_{ij} \le \alpha_{ij} y_j
+\qquad \forall (i,j)\in K^{\le}.
+\]
+
+Variable domains:
+\[
+x_{ij}\ge 0 \qquad \forall i\in R,\; j\in J,
+\]
+\[
+y_j\ge 0 \qquad \forall j\in J,
+\]
+\[
+z_j\in\{0,1\} \qquad \forall j\in J,
+\]
+\[
+u_{AB}\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a mixed-integer linear program in \texttt{current\_heuristic.py} and solved with \texttt{pulp.GUROBI\_CMD}.
+    \item The composition constraints are created only for cells in \texttt{table\_1\_7.csv} that contain an explicit \texttt{>=... \%} or \texttt{<=... \%} entry. Blank cells generate no constraint.
+    \item The business revision is implemented as a binary gate, not as a proportional surcharge: if both brands A and B are produced, the model incurs the one-time fee \texttt{BrandAB\_SharedWrapper\_Fee} through $u_{AB}$; otherwise it does not.
+    \item The field \texttt{BrandAB\_SharedWrapper\_Trigger} appears in the data packet, but the current implementation does not use it in any constraint or objective term.
+    \item The big-$M$ constant is exactly the sum of raw-material monthly limits, matching the code; it is not tightened further in the formulation.
+\end{itemize}

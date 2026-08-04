@@ -1,0 +1,148 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$: set of food items from \texttt{table\_1.csv}, indexed by $i$.
+    \item $V \subseteq I$: subset of vegetable items, i.e., items with \texttt{Type = Vegetable}.
+\end{itemize}
+
+\section*{Parameters}
+
+For each item $i \in I$:
+\begin{itemize}
+    \item $p_i$: protein content per 100g (\texttt{Protein\_Content\_per\_100g}).
+    \item $c_i$: cost per 100g in USD (\texttt{Cost\_per\_100g}).
+    \item $k_i$: calories per 100g in kcal (\texttt{Calories\_per\_100g}).
+    \item $s_i$: sodium per 100g in mg (\texttt{Sodium\_mg\_per\_100g}).
+\end{itemize}
+
+Global parameters from \texttt{general\_parameters.csv}:
+\begin{itemize}
+    \item $B$: maximum daily budget (\texttt{max\_budget}).
+    \item $W$: total daily purchase weight limit in grams (\texttt{total\_weight\_limit}).
+    \item $m^{\mathrm{veg}}$: minimum number of vegetable types required in each meal (\texttt{min\_vegetable\_types}).
+    \item $K^{\min}$: minimum daily calories from consumed food (\texttt{min\_daily\_calories}).
+    \item $K^{\max}$: maximum daily calories from consumed food (\texttt{max\_daily\_calories}).
+    \item $S^{\max}$: maximum daily sodium from consumed food (\texttt{max\_daily\_sodium}).
+\end{itemize}
+
+Derived constants used exactly as in code:
+\begin{itemize}
+    \item $U = \left\lfloor \dfrac{W}{100} \right\rfloor$ (\texttt{max\_units}): item-wise upper bound on daily purchased 100g units.
+    \item $M = 3$ (\texttt{max\_meal\_units}): item-wise upper bound on lunch or dinner 100g units.
+\end{itemize}
+
+All unit variables below are measured in 100g units.
+
+\section*{Decision Variables}
+
+For each item $i \in I$:
+\begin{itemize}
+    \item $q_i$ (code: \texttt{purchase\_units[i]}) $\in \mathbb{Z}_{\ge 0}$: total purchased units of item $i$ for the day.
+    \item $\ell_i$ (code: \texttt{lunch\_units[i]}) $\in \mathbb{Z}_{\ge 0}$: units of item $i$ assigned to lunch.
+    \item $d_i$ (code: \texttt{dinner\_units[i]}) $\in \mathbb{Z}_{\ge 0}$: units of item $i$ assigned to dinner.
+    \item $z_i$ (code: \texttt{select\_item[i]}) $\in \{0,1\}$: equals 1 if item $i$ is selected for purchase.
+\end{itemize}
+
+For each vegetable item $i \in V$:
+\begin{itemize}
+    \item $y_i^L$ (code: \texttt{lunch\_veg\_selected[i]}) $\in \{0,1\}$: equals 1 if vegetable $i$ appears in lunch.
+    \item $y_i^D$ (code: \texttt{dinner\_veg\_selected[i]}) $\in \{0,1\}$: equals 1 if vegetable $i$ appears in dinner.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total consumed protein over lunch and dinner:
+\[
+\max \sum_{i \in I} p_i(\ell_i + d_i).
+\]
+
+\section*{Constraints}
+
+Daily budget:
+\[
+\sum_{i \in I} c_i q_i \le B.
+\]
+
+Daily purchase weight limit:
+\[
+100 \sum_{i \in I} q_i \le W.
+\]
+
+Purchase/use linking for each item $i \in I$:
+\[
+q_i \ge \ell_i + d_i,
+\]
+\[
+q_i \le U z_i,
+\]
+\[
+\ell_i \le M z_i,
+\]
+\[
+d_i \le M z_i.
+\]
+
+Exact meal sizes:
+\[
+\sum_{i \in I} \ell_i = 3,
+\]
+\[
+\sum_{i \in I} d_i = 3.
+\]
+
+Daily calorie bounds, computed from consumed units only:
+\[
+\sum_{i \in I} k_i(\ell_i + d_i) \ge K^{\min},
+\]
+\[
+\sum_{i \in I} k_i(\ell_i + d_i) \le K^{\max}.
+\]
+
+Daily sodium bound, computed from consumed units only:
+\[
+\sum_{i \in I} s_i(\ell_i + d_i) \le S^{\max}.
+\]
+
+Vegetable-selection linking for each $i \in V$:
+\[
+\ell_i \ge y_i^L,
+\]
+\[
+\ell_i \le M y_i^L,
+\]
+\[
+d_i \ge y_i^D,
+\]
+\[
+d_i \le M y_i^D.
+\]
+
+Minimum number of vegetable types in each meal:
+\[
+\sum_{i \in V} y_i^L \ge m^{\mathrm{veg}},
+\]
+\[
+\sum_{i \in V} y_i^D \ge m^{\mathrm{veg}}.
+\]
+
+Integrality and binary restrictions:
+\[
+q_i,\ell_i,d_i \in \mathbb{Z}_{\ge 0} \qquad \forall i \in I,
+\]
+\[
+z_i \in \{0,1\} \qquad \forall i \in I,
+\]
+\[
+y_i^L,y_i^D \in \{0,1\} \qquad \forall i \in V.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code formulates a mixed-integer linear program and solves it with \texttt{GUROBI\_CMD(msg=0)} through the PuLP-compatible interface.
+    \item Meal portions are enforced in 100g units as $\sum_i \ell_i = 3$ and $\sum_i d_i = 3$, which corresponds to exactly 300g for lunch and 300g for dinner.
+    \item The variable $q_i$ may exceed $\ell_i+d_i$, so the implementation allows purchased-but-unused food.
+    \item The binary purchase variable $z_i$ is linked by upper bounds only; together with nonnegativity and $q_i \ge \ell_i+d_i$, this ensures that if $z_i=0$ then $q_i=\ell_i=d_i=0$.
+    \item For vegetable items, the binaries $y_i^L$ and $y_i^D$ are linked both above and below to meal usage, so for integer $\ell_i,d_i$ they indicate whether the corresponding vegetable is used positively in lunch or dinner.
+    \item The model has no explicit requirement that a meal contain any protein item; it only enforces meal size, vegetable-count minima, daily nutrition bounds, budget, and purchase-linking constraints exactly as implemented.
+\end{itemize}

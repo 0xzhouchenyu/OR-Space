@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_046",
+  "instance_number": 46,
+  "source_revise_instance": "IndustryOR_46_revise_business",
+  "domain": "Scheduling",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Scheduling",
+    "question": "In the revised model, explain precisely why the objective increases from 715.7 to 859.7 by tracing the new business policies into the code and data. Your answer must name the exact new code variable(s) and constraint(s) (`z[i,d]`, `y[i,d]`, and the graduate-coverage constraint on `x[i,d]`), the exact CSV parameter names and values (`daily_open_fee_cny = 12`, `min_grad_weekly_coverage_hours = 16`), and the business terms they implement in `docs/business_requirement.md`/`src/formulation.tex`. Then, using the solver records, state which of these new constraints is binding in the integer solution versus what is visible in the LP relaxation, interpret the shadow-price/slack business meaning for the 16-hour graduate-coverage rule, and explain why you cannot linearly extrapolate that marginal value to predict the full 144 CNY objective jump in the MIP."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Lab_Scheduling.gurobi.log",
+        "Lab_Scheduling.lp_relaxation.json",
+        "Lab_Scheduling.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Lab_Scheduling_Revised.gurobi.log",
+        "Lab_Scheduling_Revised.lp_relaxation.json",
+        "Lab_Scheduling_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 80.113889
+  }
+}

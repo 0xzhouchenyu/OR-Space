@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_067",
+  "instance_number": 67,
+  "source_revise_instance": "IndustryOR_67_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why September carries `own_wh=30000`, `grid_power=70000`, and `gen_power=155000`, and trace each of those numbers back through the exact code variables/constraints, the exact CSV field names, and the business brief language. Then compare this with the original September plan that used `ext_wh=3000`: identify the exact revised code additions/removals that changed the objective from 3160500.0 to 4159500.0, and use the solver state to discuss which September/October constraints are binding, what the associated shadow-price business meaning would be, and why you cannot safely linearly extrapolate that marginal value to a large quota increase."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Production_Planning.gurobi.log",
+        "Production_Planning.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Production_Planning_With_Electricity_Quota_OwnWarehouseOnly.gurobi.log",
+        "Production_Planning_With_Electricity_Quota_OwnWarehouseOnly.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 65.314444
+  }
+}

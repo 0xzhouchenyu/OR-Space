@@ -1,0 +1,164 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Product set: $P = \{\text{table},\text{chair},\text{bookshelf}\}$.
+    \item Production-mode set: $M = \{\text{regular},\text{rush}\}$.
+    \item Index $p \in P$ denotes a product.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter values are read from \texttt{general\_parameters.csv}.
+
+\begin{itemize}
+    \item Selling price per unit of product $p$: $s_p$.
+    \begin{itemize}
+        \item $s_{\text{table}}$ from \texttt{sell\_price\_table}
+        \item $s_{\text{chair}}$ from \texttt{sell\_price\_chair}
+        \item $s_{\text{bookshelf}}$ from \texttt{sell\_price\_bookshelf}
+    \end{itemize}
+
+    \item Manufacturing cost per unit of product $p$: $c_p$.
+    \begin{itemize}
+        \item $c_{\text{table}}$ from \texttt{manufacturing\_cost\_table}
+        \item $c_{\text{chair}}$ from \texttt{manufacturing\_cost\_chair}
+        \item $c_{\text{bookshelf}}$ from \texttt{manufacturing\_cost\_bookshelf}
+    \end{itemize}
+
+    \item Warehouse space used per unit of product $p$: $w_p$.
+    \begin{itemize}
+        \item $w_{\text{table}}$ from \texttt{warehouse\_space\_table}
+        \item $w_{\text{chair}}$ from \texttt{warehouse\_space\_chair}
+        \item $w_{\text{bookshelf}}$ from \texttt{warehouse\_space\_bookshelf}
+    \end{itemize}
+
+    \item Labor hours required per unit of product $p$: $\ell_p$.
+    \begin{itemize}
+        \item $\ell_{\text{table}}$ from \texttt{labor\_hours\_table}
+        \item $\ell_{\text{chair}}$ from \texttt{labor\_hours\_chair}
+        \item $\ell_{\text{bookshelf}}$ from \texttt{labor\_hours\_bookshelf}
+    \end{itemize}
+
+    \item Regular profit per unit:
+    \[
+    \pi_p^{\mathrm{reg}} = s_p - c_p.
+    \]
+
+    \item Rush profit bonus per unit of product $p$: $b_p$.
+    \begin{itemize}
+        \item $b_{\text{table}}$ from \texttt{rush\_profit\_bonus\_table}
+        \item $b_{\text{chair}}$ from \texttt{rush\_profit\_bonus\_chair}
+        \item $b_{\text{bookshelf}}$ from \texttt{rush\_profit\_bonus\_bookshelf}
+    \end{itemize}
+
+    \item Rush profit per unit:
+    \[
+    \pi_p^{\mathrm{rush}} = \pi_p^{\mathrm{reg}} + b_p.
+    \]
+
+    \item Shared warehouse capacity: $W^{\max}$ from \texttt{max\_warehouse\_space}.
+    \item Minimum total table production: $L_{\text{table}}$ from \texttt{min\_tables}.
+    \item Minimum total bookshelf production: $L_{\text{bookshelf}}$ from \texttt{min\_bookshelves}.
+    \item Maximum total items across all products and modes: $Q^{\max}$ from \texttt{max\_total\_items}.
+    \item Maximum regular labor hours: $H^{\max,\mathrm{reg}}$ from \texttt{max\_labor\_hours\_month\_regular}.
+    \item Maximum rush labor hours: $H^{\max,\mathrm{rush}}$ from \texttt{max\_labor\_hours\_month\_rush}.
+    \item Maximum total rush items: $R^{\max}$ from \texttt{max\_rush\_items\_month}.
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each product $p \in P$:
+
+\begin{itemize}
+    \item Regular-mode production quantity:
+    \[
+    x_p^{\mathrm{reg}} \in \mathbb{Z}_{\ge 0}
+    \]
+    with code variables
+    \begin{itemize}
+        \item $x_{\text{table}}^{\mathrm{reg}}$ (code: \texttt{x\_tables\_reg})
+        \item $x_{\text{chair}}^{\mathrm{reg}}$ (code: \texttt{x\_chairs\_reg})
+        \item $x_{\text{bookshelf}}^{\mathrm{reg}}$ (code: \texttt{x\_bookshelves\_reg})
+    \end{itemize}
+
+    \item Rush-mode production quantity:
+    \[
+    x_p^{\mathrm{rush}} \in \mathbb{Z}_{\ge 0}
+    \]
+    with code variables
+    \begin{itemize}
+        \item $x_{\text{table}}^{\mathrm{rush}}$ (code: \texttt{x\_tables\_rush})
+        \item $x_{\text{chair}}^{\mathrm{rush}}$ (code: \texttt{x\_chairs\_rush})
+        \item $x_{\text{bookshelf}}^{\mathrm{rush}}$ (code: \texttt{x\_bookshelves\_rush})
+    \end{itemize}
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit from regular and rush production:
+\[
+\max \;
+\sum_{p \in P} \pi_p^{\mathrm{reg}} x_p^{\mathrm{reg}}
++
+\sum_{p \in P} \pi_p^{\mathrm{rush}} x_p^{\mathrm{rush}}.
+\]
+
+Written by product, this is
+\[
+\max \;
+\pi_{\text{table}}^{\mathrm{reg}} x_{\text{table}}^{\mathrm{reg}}
++\pi_{\text{chair}}^{\mathrm{reg}} x_{\text{chair}}^{\mathrm{reg}}
++\pi_{\text{bookshelf}}^{\mathrm{reg}} x_{\text{bookshelf}}^{\mathrm{reg}}
++\pi_{\text{table}}^{\mathrm{rush}} x_{\text{table}}^{\mathrm{rush}}
++\pi_{\text{chair}}^{\mathrm{rush}} x_{\text{chair}}^{\mathrm{rush}}
++\pi_{\text{bookshelf}}^{\mathrm{rush}} x_{\text{bookshelf}}^{\mathrm{rush}}.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item Shared warehouse capacity across regular and rush units:
+    \[
+    \sum_{p \in P} w_p \left(x_p^{\mathrm{reg}} + x_p^{\mathrm{rush}}\right) \le W^{\max}.
+    \]
+
+    \item Regular labor-hour limit:
+    \[
+    \sum_{p \in P} \ell_p x_p^{\mathrm{reg}} \le H^{\max,\mathrm{reg}}.
+    \]
+
+    \item Rush labor-hour limit:
+    \[
+    \sum_{p \in P} \ell_p x_p^{\mathrm{rush}} \le H^{\max,\mathrm{rush}}.
+    \]
+
+    \item Rush-item capacity:
+    \[
+    \sum_{p \in P} x_p^{\mathrm{rush}} \le R^{\max}.
+    \]
+
+    \item Minimum total table production across both modes:
+    \[
+    x_{\text{table}}^{\mathrm{reg}} + x_{\text{table}}^{\mathrm{rush}} \ge L_{\text{table}}.
+    \]
+
+    \item Minimum total bookshelf production across both modes:
+    \[
+    x_{\text{bookshelf}}^{\mathrm{reg}} + x_{\text{bookshelf}}^{\mathrm{rush}} \ge L_{\text{bookshelf}}.
+    \]
+
+    \item Maximum total production across all products and modes:
+    \[
+    \sum_{p \in P} \left(x_p^{\mathrm{reg}} + x_p^{\mathrm{rush}}\right) \le Q^{\max}.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program with six nonnegative integer decision variables, one regular and one rush quantity for each product.
+    \item Rush production is modeled as using the same per-unit warehouse space as regular production, while consuming rush labor capacity and counting against the monthly rush-item cap.
+    \item The rush profit terms are implemented additively: for each product, rush profit equals regular unit profit plus the corresponding \texttt{rush\_profit\_bonus\_*} value.
+    \item Minimum-production constraints apply to total production across both modes only for tables and bookshelves; there is no minimum-production requirement for chairs.
+    \item The code solves the formulation with \texttt{pulp.GUROBI\_CMD(msg=0)}.
+\end{itemize}

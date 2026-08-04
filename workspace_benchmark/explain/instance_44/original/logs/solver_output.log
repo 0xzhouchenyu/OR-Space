@@ -1,0 +1,9 @@
+Set parameter LicenseID to value 2802670
+Station 1 used: 1
+Station 2 used: 1
+x[1,1] = 100.0
+x[2,2] = 100.0
+y[1,2] = 100.0
+y[2,1] = 80.0
+y[2,2] = 20.0
+OBJECTIVE_VALUE: 685.0

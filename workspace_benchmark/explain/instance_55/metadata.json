@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_055",
+  "instance_number": 55,
+  "source_revise_instance": "IndustryOR_55_revise_business",
+  "domain": "Course_Selection",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Course_Selection",
+    "question": "In the revised model, explain exactly why the optimal objective increases from 4.0 to 6.0 by tracing the computer-science foundation rule and the “distinct counted courses / no double-counting of cross-listed courses” policy across files. Your answer must name the exact code variables and constraint names involved (including the revised binary variables beyond `x[course]`), the exact CSV field names and parameter values that instantiate the rule, and identify at least two revised selected/assigned courses from the solver solution that demonstrate the new logic. Also use the LP-relaxation diagnostics to state which category-minimum constraints are binding, report at least one shadow price and one slack value by exact constraint name, interpret the business meaning of that marginal value, and explain why you cannot linearly extrapolate that dual value to predict the full integer objective change from 4 to 6."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "CourseSelection.gurobi.log",
+        "CourseSelection.lp_relaxation.json",
+        "CourseSelection.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "CourseSelectionDistinctAssignments.gurobi.log",
+        "CourseSelectionDistinctAssignments.lp_relaxation.json",
+        "CourseSelectionDistinctAssignments.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 72.212778
+  }
+}

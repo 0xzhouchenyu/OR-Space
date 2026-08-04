@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 1.25,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nLiquid produced: 45.0000 lots\nSolid produced: 6.2500 lots\nEnding liquid inventory: 0.0000\nEnding solid inventory: 1.2500\nOBJECTIVE_VALUE: 1.25\n",
+  "stderr": "",
+  "error": null
+}

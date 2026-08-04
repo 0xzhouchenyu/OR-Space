@@ -1,0 +1,8 @@
+Set parameter LicenseID to value 2802670
+Month 7: Buy=300.0 @ 28.0, Sell=500.0 @ 29.0, Stock=0.0
+Month 8: Buy=500.0 @ 24.0, Sell=0.0 @ 24.0, Stock=500.0
+Month 9: Buy=0.0 @ 25.0, Sell=0.0 @ 26.0, Stock=500.0
+Month 10: Buy=0.0 @ 27.0, Sell=500.0 @ 28.0, Stock=0.0
+Month 11: Buy=0.0 @ 23.0, Sell=0.0 @ 22.0, Stock=0.0
+Month 12: Buy=500.0 @ 23.0, Sell=500.0 @ 25.0, Stock=0.0
+OBJECTIVE_VALUE: 9100.0

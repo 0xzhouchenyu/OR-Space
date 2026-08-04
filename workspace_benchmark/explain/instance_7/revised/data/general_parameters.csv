@@ -1,0 +1,5 @@
+Parameter_Name,Value,Unit,Context_Description
+cost_per_km,30,euros,Cost to transport each container per kilometer traveled
+truck_capacity,2,containers,Maximum capacity of each truck
+adriatic_pool_shortage_trigger,8,containers,Combined Venice/Ancona/Bari shortage level that opens the regional desk
+adriatic_pool_recovery_fee,25000,euros,Fixed cost for the Adriatic regional recovery desk

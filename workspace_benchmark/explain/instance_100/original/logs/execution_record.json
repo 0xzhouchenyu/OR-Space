@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 84.0,
+  "stdout": "Nodes: ['A', 'B', 'C', 'D', 'E']\nBandwidth matrix loaded: 25 entries\nPaths A->C: 8\n  A -> E -> D -> C, min_bw = 25\n  A -> E -> D -> B -> C, min_bw = 30\n  A -> E -> B -> D -> C, min_bw = 25\n  A -> E -> B -> C, min_bw = 51\n  A -> C, min_bw = 85\n  A -> B -> E -> D -> C, min_bw = 25\n  A -> B -> D -> C, min_bw = 25\n  A -> B -> C, min_bw = 70\nPaths C->E: 9\n  C -> E, min_bw = 80\n  C -> D -> E, min_bw = 84\n  C -> D -> B -> E, min_bw = 30\n  C -> D -> B -> A -> E, min_bw = 30\n  C -> D -> A -> E, min_bw = 65\n  C -> D -> A -> B -> E, min_bw = 34\n  C -> A -> E, min_bw = 60\n  C -> A -> B -> E, min_bw = 34\n  C -> A -> B -> D -> E, min_bw = 60\n\nBest path: A -> C -> D -> E\nMaximum bandwidth: 84\n\nOBJECTIVE_VALUE: 84\nSet parameter LicenseID to value 2802670\n",
+  "stderr": "",
+  "error": null
+}

@@ -1,0 +1,99 @@
+{
+  "solver": "gurobi",
+  "model_name": "Promo_With_Display_Review_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 4440.833333333334,
+  "runtime": 0.00037097930908203125,
+  "variables": {
+    "package_b_review": {
+      "value": 0.016666666666666666,
+      "reduced_cost": 0.0
+    },
+    "package_c_review": {
+      "value": 0.0,
+      "reduced_cost": -30.0
+    },
+    "x_a": {
+      "value": -0.0,
+      "reduced_cost": -44.79166666666667
+    },
+    "x_b": {
+      "value": 50.0,
+      "reduced_cost": 0.0
+    },
+    "x_c": {
+      "value": 25.000000000000004,
+      "reduced_cost": 0.0
+    },
+    "y_a": {
+      "value": 0.0,
+      "reduced_cost": -150.0
+    },
+    "y_b": {
+      "value": 0.16666666666666666,
+      "reduced_cost": 0.0
+    },
+    "y_c": {
+      "value": 0.08333333333333334,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 4.375
+    },
+    "_C2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 35.208333333333336
+    },
+    "_C3": {
+      "sense": "<",
+      "slack": 20.0,
+      "dual_value": 0.0
+    },
+    "_C4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C5": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C6": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.6666666666666666
+    },
+    "_C7": {
+      "sense": ">",
+      "slack": -48.333333333333336,
+      "dual_value": 0.0
+    },
+    "_C8": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.8333333333333334
+    },
+    "_C9": {
+      "sense": ">",
+      "slack": -24.583333333333336,
+      "dual_value": 0.0
+    },
+    "_C10": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "_C11": {
+      "sense": "<",
+      "slack": 1.9999999999999964,
+      "dual_value": 0.0
+    }
+  }
+}

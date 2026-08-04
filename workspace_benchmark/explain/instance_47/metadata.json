@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_047",
+  "instance_number": 47,
+  "source_revise_instance": "IndustryOR_47_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model’s `FarmBiosecurity.lp_relaxation.json`, identify which constraints are binding and interpret their shadow prices in business terms by tracing `_C3` and `_C4` back to the exact code lines and the exact `general_parameters.csv` / `table_1.csv` field names they use. Then explain why opening poultry is unattractive at the margin by connecting the reduced cost of `coop_open` to the business brief’s “gate” language and to the exact code variables/parameters `coop_open`, `large_flock_review`, `biosecurity_training_aw_days`, `biosecurity_training_ss_days`, `fixed_cost_chicken_setup`, and `min_chickens_if_coop_open`. Finally, compare original vs revised and pinpoint the exact added binary-variable logic that changes the model class but not the optimum here, and explain why a linear extrapolation from the LP shadow prices would fail if management asked for the value of allowing a tiny positive amount of chickens."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Farm_Optimization.gurobi.log",
+        "Farm_Optimization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "FarmBiosecurity.gurobi.log",
+        "FarmBiosecurity.lp_relaxation.json",
+        "FarmBiosecurity.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 78.877778
+  }
+}

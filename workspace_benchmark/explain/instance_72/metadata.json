@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_072",
+  "instance_number": 72,
+  "source_revise_instance": "IndustryOR_72_revise_business",
+  "domain": "Real_Estate_Investment",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Real_Estate_Investment",
+    "question": "In the revised model, explain precisely why the objective increases from 135000.0 to 137800.0 by tracing the added risky-leasing logic from the business brief’s “gate” language through the code and data: identify the exact new variables (`r[name]`, `y[name]`, `s[name]`), the revised objective construction (`objective_terms` and `risk_coeff`), and the CSV fields/values that make `Property_2` the only property with positive risky allocation in the optimal integer solution. Then use the LP-relaxation diagnostics to name at least two binding revised constraints and their dual values/slacks, interpret their business meaning, and explain why you cannot linearly extrapolate those shadow prices to claim the family would gain the same marginal value from increasing `total_risky_budget` or relaxing the risky gate further in the integer model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "RealEstateInvestment.gurobi.log",
+        "RealEstateInvestment.lp_relaxation.json",
+        "RealEstateInvestment.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "RealEstateInvestment_RiskyStable.gurobi.log",
+        "RealEstateInvestment_RiskyStable.lp_relaxation.json",
+        "RealEstateInvestment_RiskyStable.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 54.076111
+  }
+}

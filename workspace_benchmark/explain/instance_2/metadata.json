@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_002",
+  "instance_number": 2,
+  "source_revise_instance": "IndustryOR_2_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "In the revised MILP, explain why the LP relaxation reports `TrainCapacity_Y1`, `TrainCapacity_Y2`, `TrainIntensity_Y1`, and `TrainIntensity_Y2` as binding with dual values 1.0, 1.0, 5.0, and 3.0, respectively, while `PilotMatch_Y2` has slack 15.0 and `MinCombat_Y2` is nonbinding. Use the exact code variable names `T1`, `D1`, `P1`, `C2`, and `D2`, the CSV parameters `dual_use_training_efficiency=0.6`, `training_intensity_cap=0.8`, `combat_jet_min_year2`, and `training_capacity_per_jet=5`, and connect them to the readiness-program language in the business brief. Then compare the original objective `125.0` to the revised `150.0` by identifying the exact code additions/changes that created the increase and quantifying which constraint/variable set made the extra 25 points possible. Finally, explain why a naive linear extrapolation from the dual prices would not reliably predict the objective if `training_intensity_cap` or `dual_use_training_efficiency` were increased."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Advanced_2.gurobi.log",
+        "Advanced_2.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Jet_Training_Combat_Planning.gurobi.log",
+        "Jet_Training_Combat_Planning.lp_relaxation.json",
+        "Jet_Training_Combat_Planning.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 67.872222
+  }
+}

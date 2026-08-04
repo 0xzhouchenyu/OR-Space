@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_37_revise_business",
+  "original_instance_id": "IndustryOR_37",
+  "revise_description": "In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. The operations lead described this revision as a timing promise, not a quantity tweak. Work, inventory, cash, or capacity that leaves one ledger position should only reappear when the business clock says it has cleared. The two-week microcomputer plan now has to respect the shop floor’s recovery rule. Overtime in week 1 is available, but once it rises above the process-specific comfort band, the same process starts week 2 with fewer normal hours because maintenance and crew recovery take priority. Weekly delivery promises also have to be met in their own week rather than only in the fortnight total, and the business result is the two-week profit after overtime spending. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+4var, +10constr, mod_4constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 4,
+        "-variable": 0,
+        "+constraint": 10,
+        "-constraint": 0,
+        "modify_constraint": 4,
+        "modify_data": 1
+      },
+      "op_count": 19,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 72.222222
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "solver": "gurobi",
+  "model_name": "DriverCrewStaffingWithOvertime_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 300.0,
+  "runtime": 0.0003039836883544922,
+  "variables": {
+    "x_crew_1": {
+      "value": 60.0,
+      "reduced_cost": 0.0
+    },
+    "x_crew_2": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    },
+    "x_crew_3": {
+      "value": 50.0,
+      "reduced_cost": 0.0
+    },
+    "x_crew_4": {
+      "value": -0.0,
+      "reduced_cost": 0.0
+    },
+    "x_crew_5": {
+      "value": 30.0,
+      "reduced_cost": 0.0
+    },
+    "x_crew_6": {
+      "value": -0.0,
+      "reduced_cost": 0.0
+    },
+    "x_driver_1": {
+      "value": 60.0,
+      "reduced_cost": 0.0
+    },
+    "x_driver_2": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    },
+    "x_driver_3": {
+      "value": 50.0,
+      "reduced_cost": 0.0
+    },
+    "x_driver_4": {
+      "value": -0.0,
+      "reduced_cost": 0.0
+    },
+    "x_driver_5": {
+      "value": 30.0,
+      "reduced_cost": 0.0
+    },
+    "x_driver_6": {
+      "value": -0.0,
+      "reduced_cost": 0.0
+    },
+    "y_crew_1": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_crew_2": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_crew_3": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_crew_4": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_crew_5": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_crew_6": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_driver_1": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_driver_2": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_driver_3": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_driver_4": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_driver_5": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    },
+    "y_driver_6": {
+      "value": -0.0,
+      "reduced_cost": 0.5
+    }
+  },
+  "constraints": {
+    "DriverDemand_period_1": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "CrewDemand_period_1": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "DriverDemand_period_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "CrewDemand_period_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "DriverDemand_period_3": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "CrewDemand_period_3": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "DriverDemand_period_4": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "CrewDemand_period_4": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "DriverDemand_period_5": {
+      "sense": ">",
+      "slack": -10.0,
+      "dual_value": 0.0
+    },
+    "CrewDemand_period_5": {
+      "sense": ">",
+      "slack": -10.0,
+      "dual_value": 0.0
+    },
+    "DriverDemand_period_6": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "CrewDemand_period_6": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "MaxNightDriverFraction": {
+      "sense": "<",
+      "slack": 30.0,
+      "dual_value": 0.0
+    },
+    "MaxNightCrewFraction": {
+      "sense": "<",
+      "slack": 45.0,
+      "dual_value": 0.0
+    },
+    "MaxOvertimeShifts": {
+      "sense": "<",
+      "slack": 20.0,
+      "dual_value": 0.0
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_054",
+  "instance_number": 54,
+  "source_revise_instance": "IndustryOR_54_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the objective drops from 135.26666666666668 in the original maximization model to 31.7 in the revised minimization model by pinpointing the exact code changes and data fields that caused the shift. Your answer must name the revised variables `x_reg[p]` and `x_ot[p]`, the new constraints `Global_Overtime_Hours_Cap` and `Min_Production_I/II/III`, and trace them to `general_parameters.csv` (`overtime_hours_cap=350`, `overtime_cost_multiplier=1.4`, `min_prod_I=5`, `min_prod_II=4`, `min_prod_III=3`) and `table_1.csv` (`Unit_Product_Profit_per_thousand_yuan`). Using the revised solver output, identify which constraints are binding and which are slack, interpret the dual values 3.0, 2.0, and 2.9 business-wise, and explain why those shadow prices cannot be linearly extrapolated if management raises all three minimums enough to start activating shared equipment capacity or overtime."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Factory_Production_Optimization.gurobi.log",
+        "Factory_Production_Optimization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Factory_Production_Optimization_With_Overtime.gurobi.log",
+        "Factory_Production_Optimization_With_Overtime.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 84.749444
+  }
+}

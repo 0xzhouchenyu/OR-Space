@@ -1,0 +1,7 @@
+Parameter_Name,Value,Unit,Context_Description
+storage_cost_per_thousand_boxes,0.2,thousand_yuan_per_week,Storage cost per week per thousand boxes of beverages
+fixed_setup_cost,20.0,thousand_yuan_per_week,Fixed setup cost incurred if production occurs in a week
+week2_push_threshold,35,thousand_boxes,Week 2 production level that can be handled without reducing week 3 recovery capacity
+week3_capacity_loss_after_week2_push,20,thousand_boxes,Week 3 capacity loss if week 2 production exceeds the push threshold
+week2_microclean_threshold,30,thousand_boxes,Week 2 volume that can pass without the midweek micro-clean
+week2_microclean_fee,1,thousand_yuan,One-time midweek micro-clean cost if Week 2 production exceeds the threshold

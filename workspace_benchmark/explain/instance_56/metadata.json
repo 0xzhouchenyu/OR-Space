@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_056",
+  "instance_number": 56,
+  "source_revise_instance": "IndustryOR_56_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model only, explain why the objective drops from -700.0 in the original run to -850.0 in the revised run, and identify the exact new code elements that force this change. Your answer must trace the month-2 inventory carry from the solver solution (`stock_2 = 1500`, `sell_3 = 1500`) back to the business rule and the exact `general_parameters.csv` field that causes it, and also interpret at least two dual/slack pairs from `Grain_Trading_TwoChannel_Credit.solution.json`—one binding and one nonbinding—using the exact constraint names and variable names from code/formulation (for example `min_inventory_2`, `warehouse_1`, `buy_fast[m]`, `credit_used[m]`). Finally, explain the business meaning of the shadow price on the binding inventory-related constraint and why you cannot linearly extrapolate that marginal value for a large RHS change once the active basis would switch."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Grain_Trading.gurobi.log",
+        "Grain_Trading.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Grain_Trading_TwoChannel_Credit.gurobi.log",
+        "Grain_Trading_TwoChannel_Credit.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 52.995556
+  }
+}

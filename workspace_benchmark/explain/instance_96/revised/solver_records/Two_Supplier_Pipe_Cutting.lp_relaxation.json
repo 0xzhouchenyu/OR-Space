@@ -1,0 +1,440 @@
+{
+  "solver": "gurobi",
+  "model_name": "Two_Supplier_Pipe_Cutting_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 14.875,
+  "runtime": 0.0005540847778320312,
+  "variables": {
+    "t1_high": {
+      "value": 0.789,
+      "reduced_cost": 0.0
+    },
+    "t1_low": {
+      "value": 0.21099999999999997,
+      "reduced_cost": 0.0
+    },
+    "total_pipes_s1": {
+      "value": 18.8,
+      "reduced_cost": 0.0
+    },
+    "total_pipes_s2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "u1_1": {
+      "value": 0.19999999999999998,
+      "reduced_cost": 0.0
+    },
+    "u1_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "u1_3": {
+      "value": 0.0,
+      "reduced_cost": 0.3
+    },
+    "u2_1": {
+      "value": 0.0,
+      "reduced_cost": 0.05
+    },
+    "u2_2": {
+      "value": 0.0,
+      "reduced_cost": 0.1
+    },
+    "y1_0": {
+      "value": -0.0,
+      "reduced_cost": 0.194148936170213
+    },
+    "y1_1": {
+      "value": 2.8,
+      "reduced_cost": 0.0
+    },
+    "y1_10": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y1_2": {
+      "value": 2.0,
+      "reduced_cost": 0.0
+    },
+    "y1_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y1_4": {
+      "value": -0.0,
+      "reduced_cost": -1.1102230246251565e-16
+    },
+    "y1_5": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y1_6": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y1_7": {
+      "value": 13.0,
+      "reduced_cost": 0.0
+    },
+    "y1_8": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "y1_9": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y2_0": {
+      "value": -0.0,
+      "reduced_cost": 0.26914893617021307
+    },
+    "y2_1": {
+      "value": -0.0,
+      "reduced_cost": 0.0739361702127661
+    },
+    "y2_10": {
+      "value": -0.0,
+      "reduced_cost": 0.0739361702127661
+    },
+    "y2_11": {
+      "value": -0.0,
+      "reduced_cost": 0.073936170212766
+    },
+    "y2_12": {
+      "value": -0.0,
+      "reduced_cost": 0.073936170212766
+    },
+    "y2_2": {
+      "value": -0.0,
+      "reduced_cost": 0.073936170212766
+    },
+    "y2_3": {
+      "value": -0.0,
+      "reduced_cost": 0.0739361702127661
+    },
+    "y2_4": {
+      "value": -0.0,
+      "reduced_cost": 0.073936170212766
+    },
+    "y2_5": {
+      "value": -0.0,
+      "reduced_cost": 0.073936170212766
+    },
+    "y2_6": {
+      "value": -0.0,
+      "reduced_cost": 0.0739361702127661
+    },
+    "y2_7": {
+      "value": -0.0,
+      "reduced_cost": 0.073936170212766
+    },
+    "y2_8": {
+      "value": -0.0,
+      "reduced_cost": 0.0739361702127661
+    },
+    "y2_9": {
+      "value": -0.0,
+      "reduced_cost": 0.073936170212766
+    },
+    "z1_0": {
+      "value": 0.0,
+      "reduced_cost": 0.1
+    },
+    "z1_1": {
+      "value": 0.02978723404255319,
+      "reduced_cost": 0.0
+    },
+    "z1_10": {
+      "value": 0.0,
+      "reduced_cost": -2.7478019859472624e-15
+    },
+    "z1_2": {
+      "value": 0.02127659574468085,
+      "reduced_cost": 0.0
+    },
+    "z1_3": {
+      "value": 0.0,
+      "reduced_cost": -2.7478019859472624e-15
+    },
+    "z1_4": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z1_5": {
+      "value": 0.0,
+      "reduced_cost": -2.7478019859472624e-15
+    },
+    "z1_6": {
+      "value": 0.0,
+      "reduced_cost": -2.7478019859472624e-15
+    },
+    "z1_7": {
+      "value": 0.13829787234042554,
+      "reduced_cost": 0.0
+    },
+    "z1_8": {
+      "value": 0.010638297872340425,
+      "reduced_cost": 0.0
+    },
+    "z1_9": {
+      "value": 0.0,
+      "reduced_cost": -2.7478019859472624e-15
+    },
+    "z2_0": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_10": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_11": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_12": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_4": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_5": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_6": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_7": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_8": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z2_9": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "demand_item_0": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.19521276595744685
+    },
+    "demand_item_1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.19521276595744685
+    },
+    "demand_item_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.1952127659574468
+    },
+    "demand_item_3": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.19521276595744674
+    },
+    "link_y1_z1_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y1_z1_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340426
+    },
+    "link_y1_z1_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340426
+    },
+    "link_y1_z1_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340718
+    },
+    "link_y1_z1_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340426
+    },
+    "link_y1_z1_5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340718
+    },
+    "link_y1_z1_6": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340718
+    },
+    "link_y1_z1_7": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340426
+    },
+    "link_y1_z1_8": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340426
+    },
+    "link_y1_z1_9": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340718
+    },
+    "link_y1_z1_10": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340718
+    },
+    "link_y2_z2_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_6": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_7": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_8": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_9": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_10": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_11": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_y2_z2_12": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "s1_pattern_rank_match": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": -0.1
+    },
+    "s2_pattern_rank_match": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "s1_rank_monotone_1": {
+      "sense": ">",
+      "slack": -0.19999999999999998,
+      "dual_value": 0.0
+    },
+    "s1_rank_monotone_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.1
+    },
+    "s2_rank_monotone_1": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "s1_max_patterns": {
+      "sense": "<",
+      "slack": 2.8000000000000003,
+      "dual_value": 0.0
+    },
+    "s2_max_patterns": {
+      "sense": "<",
+      "slack": 2.0,
+      "dual_value": 0.0
+    },
+    "s1_total_pipes_def": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.975
+    },
+    "s2_total_pipes_def": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.05
+    },
+    "s1_tier_exclusivity": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "s1_tier1_upper": {
+      "sense": "<",
+      "slack": 199.0,
+      "dual_value": 0.0
+    },
+    "s1_tier2_lower": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.025
+    }
+  }
+}

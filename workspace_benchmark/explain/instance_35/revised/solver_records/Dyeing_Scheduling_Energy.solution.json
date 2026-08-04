@@ -1,0 +1,19 @@
+{
+  "solver": "gurobi",
+  "model_name": "Dyeing_Scheduling_Energy",
+  "status_code": 3,
+  "status": "3",
+  "pulp_status_code": -1,
+  "pulp_status": "Infeasible",
+  "is_mip": true,
+  "objective_value": null,
+  "objective_bound": null,
+  "mip_gap": null,
+  "runtime": 0.009133100509643555,
+  "node_count": 1.0,
+  "iteration_count": 142.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_s5ifj88x/solver_records/Dyeing_Scheduling_Energy.gurobi.log",
+  "variables": {},
+  "constraints": {}
+}

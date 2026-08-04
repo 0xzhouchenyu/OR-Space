@@ -1,0 +1,95 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $C = \{0,1,\dots,n-1\}$: set of cities, indexed by $i,j$ in the code after loading the CSV.
+    \item City labels in the input file are given by the set of names $\{\text{``1''},\text{``2''},\text{``3''},\text{``4''}\}$, but the implementation works on the corresponding zero-based index set $C$.
+    \item For the exact-search case implemented for this instance, city $0$ is fixed as the starting city, and the remaining cities are $C \setminus \{0\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $n$: number of cities.
+    \item $d_{ij}$ (code: \texttt{dist[i][j]}): distance from city $i$ to city $j$, read from \texttt{table\_1.csv}.
+    \item For this instance,
+    \[
+    d=\begin{bmatrix}
+    0 & 10 & 20 & 12\\
+    10 & 0 & 5 & 10\\
+    20 & 5 & 0 & 8\\
+    15 & 12 & 8 & 0
+    \end{bmatrix}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+For the implemented exact enumeration when $n \le 12$, the route is represented directly as an ordered permutation rather than by LP/MIP variables:
+
+\begin{itemize}
+    \item $\pi = (\pi_0,\pi_1,\dots,\pi_{n-1})$: ordered route, where
+    \[
+    \pi_0 = 0,
+    \qquad
+    (\pi_1,\dots,\pi_{n-1}) \text{ is a permutation of } C\setminus\{0\}.
+    \]
+    In code, this corresponds to \texttt{route = [0] + list(perm)}.
+\end{itemize}
+
+For completeness, the source code also contains an alternative formulation used only when $n>12$:
+
+\begin{itemize}
+    \item $x_{ij}$ (code: \texttt{x[i,j]}), binary, equals $1$ if the tour uses arc $(i,j)$, for $i,j\in C$, $i\ne j$.
+    \item $u_i$ (code: \texttt{u[i]}), continuous MTZ ordering variable, for $i\in C\setminus\{0\}$ with bounds $1 \le u_i \le n-1$.
+\end{itemize}
+
+\section*{Objective}
+
+For the exact-search case actually used for this instance, the optimization problem is
+\[
+\min_{\pi} \quad \sum_{k=0}^{n-1} d_{\pi_k,\pi_{(k+1)\bmod n}}
+\]
+subject to
+\[
+\pi_0 = 0,
+\qquad
+(\pi_1,\dots,\pi_{n-1}) \text{ is a permutation of } C\setminus\{0\}.
+\]
+
+This objective matches the code:
+\[
+\texttt{cost} = \sum_{i=0}^{n-1} \texttt{dist[route[i]][route[(i+1)\%n]]}.
+\]
+
+\section*{Constraints}
+
+The exact-search implementation enforces feasibility implicitly through enumeration:
+
+\begin{align*}
+&\pi_0 = 0,\\
+&\{\pi_1,\dots,\pi_{n-1}\} = C\setminus\{0\},\\
+&\pi_k \ne \pi_\ell \qquad \forall k\ne \ell,\\
+&\text{the tour returns to the start through the term } d_{\pi_{n-1},\pi_0}.
+\end{align*}
+
+The alternative MTZ mixed-integer model present in the code for $n>12$ is:
+
+\begin{align*}
+\min \quad & \sum_{i\in C}\sum_{\substack{j\in C\\j\ne i}} d_{ij} x_{ij}\\
+\text{s.t.}\quad
+&\sum_{\substack{j\in C\\j\ne i}} x_{ij} = 1 && \forall i\in C,\\
+&\sum_{\substack{i\in C\\i\ne j}} x_{ij} = 1 && \forall j\in C,\\
+&u_i - u_j + n x_{ij} \le n-1 && \forall i,j\in C\setminus\{0\},\ i\ne j,\\
+&1 \le u_i \le n-1 && \forall i\in C\setminus\{0\},\\
+&x_{ij}\in\{0,1\} && \forall i,j\in C,\ i\ne j.
+\end{align*}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item For this instance, $n=4\le 12$, so the code does \emph{not} solve the MTZ model. It solves the TSP exactly by finite enumeration of all permutations of the cities other than city $0$.
+    \item Fixing city $0$ as the first city removes rotational symmetry only; the code still evaluates every Hamiltonian cycle consistent with that fixed start.
+    \item The search computes the tour cost including the closing arc from the last visited city back to the first via the modulo index \texttt{(i + 1) \% n}.
+    \item Because the distances are read as floating-point values from the CSV, $d_{ij}$ is treated numerically as a real-valued parameter even when the data are integer-valued.
+    \item The exact-search formulation above is the operative model for this instance and is evaluated by exhaustive search rather than by an LP/MIP solver.
+\end{itemize}

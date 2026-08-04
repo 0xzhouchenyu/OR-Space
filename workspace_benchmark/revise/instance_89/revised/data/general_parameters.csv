@@ -1,0 +1,19 @@
+Parameter_Name,Value,Unit,Context_Description
+profit_per_kg_product_A,30,GBP,Profit generated per kilogram of product A sold
+profit_per_kg_product_B,10,GBP,Profit generated per kilogram of product B sold
+max_production_hours_week_1,40,hours,Maximum production hours allocated in week 1
+max_production_hours_week_2,40,hours,Maximum production hours allocated in week 2
+hours_per_kg_product_A,6,hours,Production hours required per kilogram of product A
+hours_per_kg_product_B,3,hours,Production hours required per kilogram of product B
+min_output_ratio_product_B_to_A,3,ratio,Market demand requires output of product B to be at least three times the output of product A in each week
+storage_space_ratio_product_A_to_B,4,ratio,Storage space required for product A is four times that of product B per kg
+max_storage_product_A_equiv_week_1,4,kg,Maximum storage capacity for week 1 expressed as equivalent kg of product A per week
+max_storage_product_A_equiv_week_2,4,kg,Maximum storage capacity for week 2 expressed as equivalent kg of product A per week
+initial_inventory_A,0,kg,Initial inventory for product A at the beginning of week 1
+initial_inventory_B,0,kg,Initial inventory for product B at the beginning of week 1
+storage_cost_per_kg_A,1,GBP per kg per week,Inventory holding cost for product A from end of week 1 to week 2
+storage_cost_per_kg_B,1,GBP per kg per week,Inventory holding cost for product B from end of week 1 to week 2
+promo_profit_bonus_A,2,GBP per kg,Additional profit per kg of A sold in a week where product A is promoted
+promo_profit_bonus_B,1,GBP per kg,Additional profit per kg of B sold in a week where product B is promoted
+max_promotions_product_A,1,count,Maximum number of weeks in which product A can be promoted
+max_promotions_product_B,1,count,Maximum number of weeks in which product B can be promoted

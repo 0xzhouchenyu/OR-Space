@@ -1,0 +1,114 @@
+\section*{Sets and Indices}
+
+\[
+T=\{1,2,3\}
+\]
+set of months, indexed by \(t\).
+
+\section*{Parameters}
+
+For each month \(t\in T\):
+\begin{itemize}
+  \item \(c_t\): purchasing price in month \(t\) (from \texttt{Purchasing\_Price\_Yuan}).
+  \item \(r_t\): selling price in month \(t\) (from \texttt{Selling\_Price\_Yuan}).
+\end{itemize}
+
+Global parameters:
+\begin{itemize}
+  \item \(W\): warehouse capacity (data field \texttt{warehouse\_capacity}).
+  \item \(I_0\): initial stock before month 1 (data field \texttt{initial\_stock}).
+  \item \(F\): fixed ordering cost charged in any month with positive purchase (data field \texttt{fixed\_ordering\_cost}).
+  \item \(\theta\): February ordinary receiving limit (data field \texttt{month2\_bulk\_receiving\_threshold}).
+  \item \(B\): one-time February bulk receiving fee (data field \texttt{month2\_bulk\_receiving\_fee}).
+\end{itemize}
+
+For this instance, \(W=500\), \(I_0=200\), \(F=400\), \(\theta=300\), and \(B=600\).
+
+\section*{Decision Variables}
+
+For each month \(t\in T\):
+\begin{itemize}
+  \item \(x_t\) (code: \texttt{x[t]}) \(\ge 0\): units purchased at the beginning of month \(t\).
+  \item \(s_t\) (code: \texttt{s[t]}) \(\ge 0\): units sold in month \(t\).
+  \item \(y_t\) (code: \texttt{y[t]}) \(\in \{0,1\}\): 1 if purchasing is activated in month \(t\), 0 otherwise.
+  \item \(I_t\) (code: \texttt{inv[t]}) \(\ge 0\): inventory at the end of month \(t\).
+\end{itemize}
+
+Additional binary variable:
+\begin{itemize}
+  \item \(z\) (code: \texttt{month2\_bulk}) \(\in \{0,1\}\): February bulk-receiving gate; if month-2 purchases exceed the ordinary receiving threshold, this variable must be 1.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \sum_{t\in T} \left(r_t s_t - c_t x_t - F y_t\right) - B z.
+\]
+
+\section*{Constraints}
+
+Inventory balance:
+\[
+I_1 = I_0 + x_1 - s_1,
+\]
+\[
+I_t = I_{t-1} + x_t - s_t \qquad \forall t\in T\setminus\{1\}.
+\]
+
+Warehouse capacity immediately after purchase:
+\[
+I_0 + x_1 \le W,
+\]
+\[
+I_{t-1} + x_t \le W \qquad \forall t\in T\setminus\{1\}.
+\]
+
+End-of-month warehouse capacity:
+\[
+I_t \le W \qquad \forall t\in T.
+\]
+
+Sales cannot exceed stock available during the month:
+\[
+s_1 \le I_0 + x_1,
+\]
+\[
+s_t \le I_{t-1} + x_t \qquad \forall t\in T\setminus\{1\}.
+\]
+
+Fixed-ordering-cost activation:
+\[
+x_t \le W\, y_t \qquad \forall t\in T.
+\]
+
+February bulk receiving gate:
+\[
+x_2 \le \theta + W z.
+\]
+
+Variable domains:
+\[
+x_t \ge 0,\quad s_t \ge 0,\quad I_t \ge 0 \qquad \forall t\in T,
+\]
+\[
+y_t \in \{0,1\} \qquad \forall t\in T,\qquad z\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program solved by the code with Gurobi through PuLP compatibility bindings.
+
+The February receiving rule is modeled exactly as a binary gate, not as a proportional surcharge: the constraint
+\[
+x_2 \le \theta + W z
+\]
+together with the objective penalty \(-Bz\) means that purchases up to \(\theta\) in month 2 can occur with \(z=0\), while any larger feasible month-2 purchase forces \(z=1\) and incurs the one-time fee \(B\). Since \(x_2 \le W\) already holds from the warehouse-after-purchase constraint, the same \(W\) is used as the big-\(M\) constant in the implementation.
+
+The binary purchasing indicators \(y_t\) are linked only through
+\[
+x_t \le W y_t,
+\]
+so a positive purchase forces \(y_t=1\), while \(y_t=1\) with \(x_t=0\) is still mathematically feasible but suboptimal because it adds cost \(F\). This matches the source code exactly.
+
+No terminal value or terminal inventory requirement is imposed for month 3 beyond the stated inventory balance and capacity constraints.

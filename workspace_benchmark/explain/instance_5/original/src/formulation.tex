@@ -1,0 +1,103 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $F$: set of all foods, indexed by $f$.
+    \item $V \subseteq F$: set of vegetables.
+    \item $P \subseteq F$: set of proteins.
+\end{itemize}
+
+For this instance,
+\[
+V=\{\text{okra},\text{carrots},\text{celery},\text{cabbage}\},\qquad
+P=\{\text{salmon},\text{beef},\text{pork}\},
+\]
+and
+\[
+F = V \cup P.
+\]
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $b$: meal budget in dollars (code: \texttt{budget}); here $b=15$.
+    \item $T$: required total food intake in grams (code: \texttt{food\_intake}); here $T=600$.
+    \item $\phi_f$: fiber content per 100g of food $f$ (code: \texttt{fiber[f]}). Missing values in the data are filled with $0$, so the protein items have $\phi_f=0$.
+    \item $c_f$: price per 100g of food $f$ in dollars (code: \texttt{price[f]}).
+    \item $M$: big-$M$ constant used in the linking constraints (code: \texttt{M}), defined as
+    \[
+    M = T/100.
+    \]
+\end{itemize}
+
+Numerically for this instance,
+\[
+T/100 = 6,
+\]
+and
+\[
+\begin{aligned}
+&\phi_{\text{okra}}=3.2,\ \phi_{\text{carrots}}=2.7,\ \phi_{\text{celery}}=1.6,\ \phi_{\text{cabbage}}=2.0,\\
+&\phi_{\text{salmon}}=0,\ \phi_{\text{beef}}=0,\ \phi_{\text{pork}}=0,
+\end{aligned}
+\]
+\[
+\begin{aligned}
+&c_{\text{okra}}=2.6,\ c_{\text{carrots}}=1.2,\ c_{\text{celery}}=1.6,\ c_{\text{cabbage}}=2.3,\\
+&c_{\text{salmon}}=4.0,\ c_{\text{beef}}=3.6,\ c_{\text{pork}}=1.8.
+\end{aligned}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_f \ge 0$ (code: \texttt{x[f]}): amount of food $f$ selected, measured in units of 100g.
+    \item $y_f \in \{0,1\}$ (code: \texttt{y[f]}): selection indicator for food $f$.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total fiber intake:
+\[
+\max \sum_{f \in F} \phi_f x_f.
+\]
+
+\section*{Constraints}
+
+Total intake must equal the required food amount:
+\[
+\sum_{f \in F} x_f = T/100.
+\]
+
+Budget limit:
+\[
+\sum_{f \in F} c_f x_f \le b.
+\]
+
+Exactly one protein source must be selected:
+\[
+\sum_{f \in P} y_f = 1.
+\]
+
+At least two vegetable types must be selected:
+\[
+\sum_{f \in V} y_f \ge 2.
+\]
+
+Linking constraints with minimum inclusion amount:
+\[
+x_f \ge 0.1\, y_f \qquad \forall f \in F,
+\]
+\[
+x_f \le M\, y_f \qquad \forall f \in F.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a mixed-integer linear program and solved with Gurobi through PuLP's compatible interface (\texttt{pulp.GUROBI\_CMD}).
+    \item The quantity variables are measured in 100g units, so the 600g intake requirement becomes $6$ in the model.
+    \item The lower linking bound $x_f \ge 0.1\,y_f$ enforces that any selected food must appear in an amount of at least $0.1$ units, i.e., 10g.
+    \item The upper linking bound uses $M=T/100=6$, which is exactly the value used in the code.
+    \item Fiber values missing in the CSV are replaced by zero before optimization; thus all protein items contribute zero fiber in the objective.
+    \item The binary variables are defined for all foods, not only for proteins and vegetables, and the cardinality constraints are applied separately to the subsets $P$ and $V$.
+\end{itemize}

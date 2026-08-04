@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_098",
+  "instance_number": 98,
+  "source_revise_instance": "IndustryOR_98_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "In the revised model, the optimal integer solution is x_A=29, x_B=0, overtime=19, with OBJECTIVE_VALUE=128100.0, while the LP relaxation shows x_B=13.75, overtime=30, overtime_review=0.3333, and dual_value 458.25 on the labor constraint. Using the exact code variable names and the CSV parameter names, explain which constraints are binding at the MIP optimum versus the LP relaxation, what the shadow price/slack pattern means economically, and why the LP marginal values cannot be used to linearly extrapolate the integer optimum if Product A is pushed above 29 units. Then compare the original and revised formulations by naming the exact code additions that caused the objective to drop from 137500.0 to 128100.0, and quantify how the new Product A line-audit gate changes cost relative to the original model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Production_Optimization.gurobi.log",
+        "Production_Optimization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Production_Overtime_Review.gurobi.log",
+        "Production_Overtime_Review.lp_relaxation.json",
+        "Production_Overtime_Review.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 81.696111
+  }
+}

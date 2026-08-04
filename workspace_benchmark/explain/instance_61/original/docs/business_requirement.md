@@ -1,0 +1,1 @@
+A product can be processed on any one of four devices: A, B, C, or D. The preparation completion costs, unit production costs, and maximum processing capacities for each device are provided in the corresponding CSV files in the data folder. If 2000 units of the product need to be produced, how can the total cost be minimized? Please establish a mathematical model.

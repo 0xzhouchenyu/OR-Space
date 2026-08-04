@@ -1,0 +1,1 @@
+A company produces liquid product A and liquid product B. The company aims to maximize profit while adhering to constraints related to production time, market demand, and storage capacity. Please refer to the corresponding CSV files in the data folder for specific parameter values.

@@ -1,0 +1,7 @@
+Changjiang Comprehensive Shopping Mall has a total space available for lease and plans to attract several types of stores as tenants. The specific details regarding the area occupied by each type of store, the minimum and maximum number of shops for each type, and the expected annual profit per store are provided in the corresponding CSV files in the data folder. Each store pays a percentage of its annual profit as rent to the mall. The question is to determine the optimal number of each type of store to lease in order to maximize total rental income.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the risk reviewer framed the change in business terms rather than as a spreadsheet checklist. The sponsor was careful about direction. A companion, prerequisite, approval, or follow-on condition runs only the way the business sentence says it runs; the reverse direction is not part of the deal unless it is stated. Food-court operations added a security tier for Catering. One or two Catering stores use the ordinary mall support plan; keeping a third Catering store requires an extra security arrangement costing 0.7 rent-income units. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

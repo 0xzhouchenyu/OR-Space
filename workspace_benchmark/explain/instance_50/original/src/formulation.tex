@@ -1,0 +1,82 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Months in the planning horizon: $M = \{7,8,9,10,11,12\}$, indexed by $m$.
+    \item For each month $m \in M$, let $\operatorname{prev}(m)$ denote the immediately preceding month in the ordered list $(7,8,9,10,11,12)$. For the first month, the predecessor stock is the given initial stock.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Warehouse capacity $C$ (code: \texttt{warehouse\_capacity}); here $C=500$.
+    \item Initial stock at the end of June $I_0$ (code: \texttt{initial\_stock}); here $I_0=200$.
+    \item Unit purchase price in month $m$, $c_m^{\text{buy}}$ (code: \texttt{buy\_price[m]}$)$.
+    \item Unit selling price in month $m$, $c_m^{\text{sell}}$ (code: \texttt{sell\_price[m]}$)$.
+\end{itemize}
+
+Using the CSV data,
+\[
+(c_m^{\text{buy}})_{m\in M} = (28,24,25,27,23,23),
+\qquad
+(c_m^{\text{sell}})_{m\in M} = (29,24,26,28,22,25),
+\]
+for months $m=7,8,9,10,11,12$, respectively.
+
+\section*{Decision Variables}
+
+For each month $m \in M$:
+\begin{itemize}
+    \item Quantity purchased at the beginning of month $m$, $b_m$ (code: \texttt{buy[m]}), with $b_m \ge 0$.
+    \item Quantity sold in month $m$, $s_m$ (code: \texttt{sell[m]}), with $s_m \ge 0$.
+    \item End-of-month stock after sales in month $m$, $x_m$ (code: \texttt{stock[m]}), with $0 \le x_m \le C$.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total net revenue over the planning horizon:
+\[
+\max \sum_{m \in M} \left(c_m^{\text{sell}} s_m - c_m^{\text{buy}} b_m\right).
+\]
+
+\section*{Constraints}
+
+\paragraph{1. Stock balance}
+For the first month $m=7$:
+\[
+x_7 = I_0 + b_7 - s_7.
+\]
+
+For each subsequent month $m \in \{8,9,10,11,12\}$:
+\[
+x_m = x_{\operatorname{prev}(m)} + b_m - s_m.
+\]
+
+\paragraph{2. Warehouse capacity immediately after purchasing}
+For the first month $m=7$:
+\[
+I_0 + b_7 \le C.
+\]
+
+For each subsequent month $m \in \{8,9,10,11,12\}$:
+\[
+x_{\operatorname{prev}(m)} + b_m \le C.
+\]
+
+\paragraph{3. Variable bounds}
+For all $m \in M$:
+\[
+b_m \ge 0,\qquad s_m \ge 0,\qquad 0 \le x_m \le C.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program solved with Gurobi through PuLP.
+    \item The warehouse restriction is enforced twice in effect: explicitly through
+    \[
+    \text{previous stock} + b_m \le C,
+    \]
+    and implicitly through the bound $x_m \le C$ on end-of-month stock. This matches the code and should not be simplified away.
+    \item Purchases occur before sales within each month, which is why the capacity constraint is applied to previous stock plus current purchases, rather than to end-of-month stock only.
+    \item There is no demand limit, sales cap, terminal stock requirement, or integrality restriction in the implementation; all decision variables are continuous and nonnegative.
+\end{itemize}

@@ -1,0 +1,81 @@
+{
+  "solver": "gurobi",
+  "model_name": "Restaurant_Tables",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 15000.0,
+  "objective_bound": 15000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0018742084503173828,
+  "node_count": 1.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_bbhkfa6x/solver_records/Restaurant_Tables.gurobi.log",
+  "variables": {
+    "orders_a": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "orders_b": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "orders_c": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "y_a": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_b": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 450.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": ">=",
+      "slack": -10.0,
+      "dual_value": null
+    }
+  }
+}

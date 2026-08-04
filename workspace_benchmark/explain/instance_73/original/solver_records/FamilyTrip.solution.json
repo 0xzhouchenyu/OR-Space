@@ -1,0 +1,76 @@
+{
+  "solver": "gurobi",
+  "model_name": "FamilyTrip",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 1600.0,
+  "objective_bound": 1600.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0006830692291259766,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_kzefz69z/solver_records/FamilyTrip.gurobi.log",
+  "variables": {
+    "x_Alice": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Bob": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_Charlie": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Diana": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Ella": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "MinChildren": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "MaxChildren": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "BobMustGo": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "AliceDianaConflict": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "BobCharlieConflict": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "CharlieRequiresDiana": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "DianaRequiresElla": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    }
+  }
+}

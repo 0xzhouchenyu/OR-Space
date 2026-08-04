@@ -1,0 +1,144 @@
+\section*{Sets and Indices}
+
+\[
+T=\{\text{Task\_1},\text{Task\_2},\text{Task\_3}\}
+\]
+set of tasks, indexed by \(t\).
+
+\[
+M=\{\text{Method\_A},\text{Method\_B}\}
+\]
+set of candidate methods for each task, indexed by \(m\).
+
+\section*{Parameters}
+
+For each \((t,m)\in T\times M\):
+\begin{itemize}
+    \item \(H_{tm}\): effective hours required if task \(t\) is executed with method \(m\) (code/data: \texttt{tm\_data[t,m]['Effective\_Hours']}).
+    \item \(F_{tm}\): fixed cost of choosing method \(m\) for task \(t\) (code/data: \texttt{tm\_data[t,m]['Fixed\_Cost']}).
+\end{itemize}
+
+Global parameters:
+\begin{itemize}
+    \item \(c^S=100\): weekly wage per skilled worker (code: \texttt{skilled\_wage}).
+    \item \(c^L=80\): weekly wage per laborer (code: \texttt{laborer\_wage}).
+    \item \(a^S=42\): effective weekly hours per skilled worker (code: \texttt{skilled\_hours}).
+    \item \(a^L=36\): effective weekly hours per laborer (code: \texttt{laborer\_hours}).
+    \item \(\overline S=400\): maximum total skilled workers (code: \texttt{max\_skilled}).
+    \item \(\overline L=800\): maximum total laborers (code: \texttt{max\_laborers}).
+    \item \(\rho=0.6\): maximum skilled-worker hiring ratio relative to laborers (code: \texttt{skilled\_hiring\_ratio}).
+    \item \(\underline S^{3B}=20\): minimum skilled workers on \((\text{Task\_3},\text{Method\_B})\) if that method is chosen (code: \texttt{min\_skilled\_task3\_B}).
+    \item \(M^{\text{big}}=10000\): big-\(M\) linking constant (code: \texttt{M\_big}).
+\end{itemize}
+
+The data used in instance 80 are:
+\[
+\begin{aligned}
+&H_{\text{Task\_1},A}=8400,\quad H_{\text{Task\_1},B}=8400,\\
+&H_{\text{Task\_2},A}=10800,\quad H_{\text{Task\_2},B}=10800,\\
+&H_{\text{Task\_3},A}=18000,\quad H_{\text{Task\_3},B}=18000,
+\end{aligned}
+\]
+and
+\[
+F_{\text{Task\_1},A}=0,\;
+F_{\text{Task\_1},B}=500,\;
+F_{\text{Task\_2},A}=0,\;
+F_{\text{Task\_2},B}=0,\;
+F_{\text{Task\_3},A}=0,\;
+F_{\text{Task\_3},B}=0.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(y_{tm}\in\{0,1\}\) (code: \texttt{y[t,m]}): equals 1 if method \(m\) is selected for task \(t\).
+    \item \(s_{tm}\ge 0\) (code: \texttt{s[t,m]}): skilled workers assigned to task-method pair \((t,m)\).
+    \item \(l_{tm}\ge 0\) (code: \texttt{l[t,m]}): laborers assigned to task-method pair \((t,m)\).
+    \item \(S^{\text{tot}}\ge 0\) (code: \texttt{total\_skilled}): total skilled workers hired.
+    \item \(L^{\text{tot}}\ge 0\) (code: \texttt{total\_laborers}): total laborers hired.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total weekly cost:
+\[
+\min \;
+c^S S^{\text{tot}} + c^L L^{\text{tot}} + \sum_{t\in T}\sum_{m\in M} F_{tm} y_{tm}.
+\]
+
+\section*{Constraints}
+
+Total workforce definitions:
+\[
+S^{\text{tot}}=\sum_{t\in T}\sum_{m\in M} s_{tm},
+\]
+\[
+L^{\text{tot}}=\sum_{t\in T}\sum_{m\in M} l_{tm}.
+\]
+
+Exactly one method must be selected for each task:
+\[
+\sum_{m\in M} y_{tm}=1
+\qquad \forall t\in T.
+\]
+
+If method \(m\) is selected for task \(t\), the assigned workers must provide at least the required effective hours:
+\[
+a^S s_{tm} + a^L l_{tm} \ge H_{tm} y_{tm}
+\qquad \forall (t,m)\in T\times M.
+\]
+
+Linking constraints:
+\[
+s_{tm}\le M^{\text{big}} y_{tm}
+\qquad \forall (t,m)\in T\times M,
+\]
+\[
+l_{tm}\le M^{\text{big}} y_{tm}
+\qquad \forall (t,m)\in T\times M.
+\]
+
+Workforce upper bounds:
+\[
+S^{\text{tot}}\le \overline S,
+\]
+\[
+L^{\text{tot}}\le \overline L.
+\]
+
+Skilled-worker hiring ratio:
+\[
+S^{\text{tot}}\le \rho\, L^{\text{tot}}.
+\]
+
+Exclusion rule between Task 1 Method B and Task 3 Method A:
+\[
+y_{\text{Task\_1},\text{Method\_B}} + y_{\text{Task\_3},\text{Method\_A}} \le 1.
+\]
+
+Minimum skilled workers if Task 3 uses Method B:
+\[
+s_{\text{Task\_3},\text{Method\_B}} \ge \underline S^{3B}\, y_{\text{Task\_3},\text{Method\_B}}.
+\]
+
+Variable domains:
+\[
+y_{tm}\in\{0,1\}
+\qquad \forall (t,m)\in T\times M,
+\]
+\[
+s_{tm}\ge 0,\quad l_{tm}\ge 0
+\qquad \forall (t,m)\in T\times M,
+\]
+\[
+S^{\text{tot}}\ge 0,\quad L^{\text{tot}}\ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program solved with \texttt{GUROBI\_CMD} through a PuLP-compatible interface.
+
+Although comments in the source discuss possible worker-type restrictions by method, those restrictions are \emph{not} enforced in the actual model. In the implemented formulation, any selected task-method pair may use both skilled workers and laborers, subject only to the hour requirement, the big-\(M\) activation constraints, the global hiring limits, the hiring-ratio constraint, the exclusion rule, and the minimum-skilled requirement for \((\text{Task\_3},\text{Method\_B})\).
+
+The variables \(S^{\text{tot}}\) and \(L^{\text{tot}}\) are modeled explicitly and tied to the task-method assignment variables by equality constraints, rather than substituted out.

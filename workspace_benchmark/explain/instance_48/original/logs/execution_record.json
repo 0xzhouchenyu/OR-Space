@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 11250.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nxA_regular = 10.0\nxA_overtime = 0.0\nxB_regular = 18.333333333333332\nxB_overtime = 0.0\nTotal A = 10.0\nTotal B = 18.333333333333332\nProcess II regular hours = 66.66666666666666\nProcess II overtime hours = 0.0\nOBJECTIVE_VALUE: 11250.0\n",
+  "stderr": "",
+  "error": null
+}

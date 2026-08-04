@@ -1,0 +1,52 @@
+{
+  "solver": "gurobi",
+  "model_name": "Transportation_Pollution_Minimization",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 1000.0,
+  "objective_bound": 1000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0004999637603759766,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ty66knmd/solver_records/Transportation_Pollution_Minimization.gurobi.log",
+  "variables": {
+    "ev_trips": {
+      "value": 14.0,
+      "reduced_cost": null
+    },
+    "motorcycle_trips": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "truck_trips": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "van_trips": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Demand": {
+      "sense": ">=",
+      "slack": -40.0,
+      "dual_value": null
+    },
+    "Max_Pollution": {
+      "sense": "<=",
+      "slack": 1000.0,
+      "dual_value": null
+    },
+    "Min_Truck_Trips": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

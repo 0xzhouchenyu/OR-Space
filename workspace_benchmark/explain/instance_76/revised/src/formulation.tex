@@ -1,0 +1,123 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $Q=\{1,\dots,n\}$: ordered set of quarters (code data: \texttt{quarters}), with the order
+    \[
+    1=\text{Winter},\;2=\text{Spring},\;3=\text{Summer},\;4=\text{Autumn}.
+    \]
+    \item Indices $i,j \in Q$:
+    \begin{itemize}
+        \item $i$: purchase quarter,
+        \item $j$: sales quarter.
+    \end{itemize}
+    Only pairs with $i \le j$ are allowed.
+    \item Let $a=n$ denote the Autumn index (code: \texttt{autumn\_idx}).
+\end{itemize}
+
+\section*{Parameters}
+
+All volumes are in $10$k m$^3$, and all monetary quantities are in $10$k yuan.
+
+\begin{itemize}
+    \item $p_i$ (code: \texttt{purchase\_price[q]}): purchase price in quarter $i$.
+    \item $r_j$ (code: \texttt{sale\_price[q]}): sale price in quarter $j$.
+    \item $d_j$ (code: \texttt{max\_sales[q]}): maximum sales volume in quarter $j$.
+    \item $M_i$ (code: \texttt{max\_purchase[q]} / business name: \texttt{max\_purchase\_10k\_m3}): maximum purchase volume at the beginning of quarter $i$.
+    \item $C$ (code: \texttt{max\_storage\_wm3}): warehouse capacity between quarters, converted from \texttt{max\_storage\_capacity} to $10$k m$^3$.
+    \item $a_s$ (code: \texttt{storage\_cost\_a\_w}): base storage cost per stored unit.
+    \item $b_s$ (code: \texttt{storage\_cost\_b\_w}): additional storage cost per stored unit per quarter.
+    \item $S$ (code: \texttt{safety\_inventory\_level} / business name: \texttt{safety\_inventory\_level\_10k\_m3}): required minimum end-of-autumn safety inventory.
+    \item $V$ (code: \texttt{terminal\_inventory\_value} / business name: \texttt{terminal\_inventory\_value\_per\_10k\_m3}): terminal value credited to end-of-autumn inventory.
+    \item $P$ (code: \texttt{over\_purchase\_penalty\_cost} / business name: \texttt{over\_purchase\_penalty\_cost\_per\_10k\_m3}): penalty for end-of-autumn inventory above the safety level.
+\end{itemize}
+
+For each feasible pair $(i,j)$ with $i \le j$, define the implemented per-unit storage cost
+\[
+h_{ij}=
+\begin{cases}
+0, & j=i,\\
+a_s + b_s (j-i), & j>i.
+\end{cases}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ij} \ge 0$ for $i \le j$ (code: \texttt{x[i,j]}): volume purchased in quarter $i$ and sold in quarter $j$.
+    \item $e \ge 0$ (code: \texttt{end\_inventory}): end-of-autumn reserve inventory carried beyond the modeled selling horizon.
+    \item $o \ge 0$ (code: \texttt{over\_stock}): inventory above the safety level used for over-purchase penalty accounting.
+\end{itemize}
+
+\section*{Objective}
+
+The model maximizes total trading profit, minus storage cost, plus terminal value of end-of-autumn inventory, minus the over-purchase penalty:
+\[
+\max \;
+\sum_{i \in Q}\sum_{j \in Q:\, j \ge i}
+\left(r_j - p_i - h_{ij}\right)x_{ij}
+\;+\;
+\left(V - p_a\right)e
+\;-\;
+P\,o .
+\]
+
+Note that the code values terminal inventory as if it is purchased in Autumn, via the term $(V-p_a)e$.
+
+\section*{Constraints}
+
+\paragraph{Quarterly sales caps}
+For each quarter $j \in Q$,
+\[
+\sum_{i=1}^{j} x_{ij} \le d_j.
+\]
+
+\paragraph{Between-quarter storage capacity}
+For each quarter $t=1,\dots,n-1$,
+\[
+\sum_{i=1}^{t}\sum_{j=t+1}^{n} x_{ij} \le C.
+\]
+This is exactly the inventory that remains in storage after quarter $t$ and before quarter $t+1$.
+
+\paragraph{Quarter-specific purchase caps}
+For each non-autumn quarter $i=1,\dots,n-1$,
+\[
+\sum_{j=i}^{n} x_{ij} \le M_i.
+\]
+For Autumn,
+\[
+\sum_{j=a}^{n} x_{aj} + e \le M_a.
+\]
+Since $j \ge a$ implies only $j=a$, this is the implemented Autumn intake cap including same-quarter Autumn sales and terminal inventory.
+
+\paragraph{Minimum safety inventory at end of Autumn}
+\[
+e \ge S.
+\]
+
+\paragraph{End-of-autumn inventory storage cap}
+\[
+e \le C.
+\]
+
+\paragraph{Definition of penalized over-stock}
+\[
+o \ge e - S.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program solved with \texttt{GUROBI\_CMD}.
+    \item The storage cost applied to $x_{ij}$ is exactly
+    \[
+    0 \text{ if } j=i,\qquad a_s+b_s(j-i) \text{ if } j>i,
+    \]
+    matching the code and not any alternative interpretation.
+    \item End-of-autumn reserve inventory is modeled only through $e$ and is treated in the objective as Autumn purchase cost plus terminal value: $(V-p_a)e$.
+    \item The over-purchase penalty is implemented through $o \ge e-S$ and $o \ge 0$. Because the coefficient of $o$ in the maximization objective is negative, optimality drives
+    \[
+    o = \max\{0,\,e-S\}.
+    \]
+    \item There is no explicit inventory balance by quarter beyond the path-based variables $x_{ij}$ and the storage-capacity sums above. This path formulation is the exact structure used in \texttt{current\_heuristic.py}.
+    \item Sales are allowed only within the modeled quarters Winter through Autumn. Inventory carried beyond Autumn appears only as $e$ and is not assigned to any later sales quarter.
+\end{itemize}

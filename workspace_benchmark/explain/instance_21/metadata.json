@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_021",
+  "instance_number": 21,
+  "source_revise_instance": "IndustryOR_21_revise_business",
+  "domain": "Procurement_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Procurement_Planning",
+    "question": "In the revised model, explain exactly why the objective increases from 15000 to 16750 by tracing the new business rule through the implementation and the data. You must identify the precise added code variables and constraints responsible for the increase, name the exact `general_parameters.csv` fields and values they use, and connect them to the business brief terms “shared receiving desk,” “Supplier C's comfort band,” and the existing B-to-C dependency; then use the LP-relaxation shadow prices/slacks to state which revised constraints are binding and what their marginal values mean in business terms. Finally, explain why you cannot linearly extrapolate the LP dual information to claim the next 15 tables would cost exactly the same marginal amount in the integer revised model, citing the relevant binary/integer variables and the fixed-fee trigger."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Restaurant_Tables.gurobi.log",
+        "Restaurant_Tables.lp_relaxation.json",
+        "Restaurant_Tables.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Restaurant_Tables.gurobi.log",
+        "Restaurant_Tables.lp_relaxation.json",
+        "Restaurant_Tables.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 53.036667
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_018",
+  "instance_number": 18,
+  "source_revise_instance": "IndustryOR_18_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "Explain precisely why the objective increases from 5.0 in the original model to 6.0 in the revised model by tracing the modeling changes from business language to code and data. Your answer must name the exact revised decision variables and constraints that replaced the original `overtime`/`Production_Time_Balance` structure, cite the exact CSV field names and the implied parameter values visible from the solution (including the day/night regular-hour split and overtime penalties), and use the revised solver duals/slacks to identify which constraints are binding and what their shadow prices mean in business terms. Also explain why you cannot linearly extrapolate the original model’s `Production_Time_Balance` dual value of -1.0 to predict the revised objective, even though total overtime remains 5 hours."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Textile_Factory_Overtime_Minimization.gurobi.log",
+        "Textile_Factory_Overtime_Minimization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Textile_Factory_Two_Shift_Overtime_Minimization.gurobi.log",
+        "Textile_Factory_Two_Shift_Overtime_Minimization.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 78.387222
+  }
+}

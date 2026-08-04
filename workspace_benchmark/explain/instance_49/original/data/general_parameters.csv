@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+min_contract_types,2,None,Minimum number of different contract lengths required over the 4 months
+max_contract_types,3,None,Maximum number of distinct warehouse contracts allowed
+mutual_exclusion_1_and_4,True,None,Mutual exclusion between 1-month and 4-month contracts
+warehouse_capacity,Unlimited,None,Available capacity of each warehouse
+monthly_demand_fulfillment,True,None,Demand for each month must be fully satisfied without shortage or excess

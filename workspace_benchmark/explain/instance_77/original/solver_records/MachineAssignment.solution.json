@@ -1,0 +1,378 @@
+{
+  "solver": "gurobi",
+  "model_name": "MachineAssignment",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 1005.0,
+  "objective_bound": 1005.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0006489753723144531,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_pqf4_q2y/solver_records/MachineAssignment.gurobi.log",
+  "variables": {
+    "x_A_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_A_10": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_A_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_A_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_A_4": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_A_5": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_A_6": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_A_7": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_A_8": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_A_9": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_B_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_B_10": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B_4": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_B_5": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B_6": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B_7": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B_8": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B_9": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C_10": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C_4": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C_5": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_C_6": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C_7": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C_8": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C_9": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_A": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_B": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_C": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C17": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C18": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C19": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C20": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C21": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C22": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C23": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C24": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C25": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C26": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C27": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C28": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C29": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C30": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C31": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C32": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C33": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C34": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C35": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C36": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C37": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C38": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C39": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C40": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C41": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C42": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C43": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C44": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C45": {
+      "sense": "<=",
+      "slack": 2.0,
+      "dual_value": null
+    }
+  }
+}

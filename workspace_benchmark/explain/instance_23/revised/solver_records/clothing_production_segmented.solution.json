@@ -1,0 +1,122 @@
+{
+  "solver": "gurobi",
+  "model_name": "clothing_production_segmented",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 24000.0,
+  "objective_bound": 24000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.007433176040649414,
+  "node_count": 1.0,
+  "iteration_count": 4.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ngf3qdrc/solver_records/clothing_production_segmented.gurobi.log",
+  "variables": {
+    "q_0_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "q_0_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "q_1_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "q_1_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "q_2_0": {
+      "value": 250.0,
+      "reduced_cost": null
+    },
+    "q_2_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "labor_capacity": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "material_capacity": {
+      "sense": "<=",
+      "slack": 100.0,
+      "dual_value": null
+    },
+    "promo_labor_capacity": {
+      "sense": "<=",
+      "slack": 600.0,
+      "dual_value": null
+    },
+    "promo_material_capacity": {
+      "sense": "<=",
+      "slack": 600.0,
+      "dual_value": null
+    },
+    "max_reg_prod_link_0": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_pro_prod_link_0": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_batch_0": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_reg_prod_link_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_pro_prod_link_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_batch_1": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_reg_prod_link_2": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": null
+    },
+    "max_pro_prod_link_2": {
+      "sense": "<=",
+      "slack": 300.0,
+      "dual_value": null
+    },
+    "min_batch_2": {
+      "sense": ">=",
+      "slack": -220.0,
+      "dual_value": null
+    }
+  }
+}

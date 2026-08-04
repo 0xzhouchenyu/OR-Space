@@ -1,0 +1,16 @@
+Parameter_Name,Value,Unit,Context_Description
+weekly_production_time,110,hours,Weekly production time set for the factory shared across day and night shifts
+fabric_production_rate,1000,meters_per_hour,Production rate for both types of fabrics
+min_curtain_fabric_sales,70000,meters,Minimum weekly sales requirement for curtain fabric
+curtain_fabric_profit,2.5,yuan_per_meter,Profit per meter of curtain fabric
+min_clothing_fabric_sales,45000,meters,Minimum weekly sales requirement for clothing fabric
+clothing_fabric_profit,1.5,yuan_per_meter,Profit per meter of clothing fabric
+max_overtime,10,hours,Legacy maximum allowable overtime per week (not used in revised model)
+day_shift_regular_capacity,60,hours,Maximum regular production hours in the day shift per week
+night_shift_regular_capacity,60,hours,Maximum regular production hours in the night shift per week
+day_overtime_limit,3,hours,Maximum overtime hours allowed in the day shift per week
+night_overtime_limit,3,hours,Maximum overtime hours allowed in the night shift per week
+day_overtime_penalty,1.0,yuan_per_hour,Penalty cost per hour of overtime in the day shift
+night_overtime_penalty,1.5,yuan_per_hour,Penalty cost per hour of overtime in the night shift
+day_min_utilization_ratio,0.45,ratio,Minimum fraction of total regular hours that must be assigned to the day shift
+night_min_utilization_ratio,0.45,ratio,Minimum fraction of total regular hours that must be assigned to the night shift

@@ -1,0 +1,29 @@
+Parameter_Name,Value,Unit,Context_Description
+max_children,4,,Maximum number of children the Zhang family can take on the trip
+min_children,3,,Minimum number of children the Zhang family has decided to take
+cost_harry_budget,900,USD,Cost of taking Harry in budget mode
+cost_harry_balanced,1200,USD,Cost of taking Harry in balanced mode
+cost_harry_premium,1500,USD,Cost of taking Harry in premium mode
+cost_hermione_budget,1300,USD,Cost of taking Hermione in budget mode
+cost_hermione_balanced,1650,USD,Cost of taking Hermione in balanced mode
+cost_hermione_premium,1900,USD,Cost of taking Hermione in premium mode
+cost_ron_budget,600,USD,Cost of taking Ron in budget mode
+cost_ron_balanced,750,USD,Cost of taking Ron in balanced mode
+cost_ron_premium,900,USD,Cost of taking Ron in premium mode
+cost_fred_budget,650,USD,Cost of taking Fred in budget mode
+cost_fred_balanced,800,USD,Cost of taking Fred in balanced mode
+cost_fred_premium,950,USD,Cost of taking Fred in premium mode
+cost_george_budget,650,USD,Cost of taking George in budget mode
+cost_george_balanced,800,USD,Cost of taking George in balanced mode
+cost_george_premium,950,USD,Cost of taking George in premium mode
+cost_ginny_budget,1200,USD,Cost of taking Ginny in budget mode
+cost_ginny_balanced,1500,USD,Cost of taking Ginny in balanced mode
+cost_ginny_premium,1800,USD,Cost of taking Ginny in premium mode
+mandatory_ginny,1,,Ginny is the youngest and will definitely join the trip
+harry_no_fred,1,,If Harry is taken, Fred cannot be taken
+harry_no_george,1,,If Harry is taken, George cannot be taken
+george_requires_fred,1,,If George is taken, Fred must also be taken
+george_requires_hermione,1,,If George is taken, Hermione must also be taken
+fairness_penalty,0.1,USD_per_cost_spread,Penalty weight applied to the spread between maximum and minimum child costs
+max_total_cost,5000,USD,Maximum allowed total monetary cost of all selected children under the chosen mode
+min_children_per_mode,3,,Minimum number of children required when balanced or premium mode is selected

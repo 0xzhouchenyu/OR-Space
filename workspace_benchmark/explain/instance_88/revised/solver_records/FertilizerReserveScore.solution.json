@@ -1,0 +1,88 @@
+{
+  "solver": "gurobi",
+  "model_name": "FertilizerReserveScore",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 17.3,
+  "objective_bound": 17.3,
+  "mip_gap": 0.0,
+  "runtime": 0.00209808349609375,
+  "node_count": 1.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_fhnh0lg3/solver_records/FertilizerReserveScore.gurobi.log",
+  "variables": {
+    "excess_liquid": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "excess_solid": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "liquid_prod": {
+      "value": 52.8,
+      "reduced_cost": null
+    },
+    "machine1_extended": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "machine2_extended": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "priority_liquid": {
+      "value": 7.8,
+      "reduced_cost": null
+    },
+    "priority_solid": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "solid_prod": {
+      "value": 15.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 21.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 2.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": -7.799999999999997,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": ">=",
+      "slack": -10.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

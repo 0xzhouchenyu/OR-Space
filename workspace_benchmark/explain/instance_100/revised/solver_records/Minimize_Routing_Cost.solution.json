@@ -1,0 +1,249 @@
+{
+  "solver": "gurobi",
+  "model_name": "Minimize_Routing_Cost",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 35.0,
+  "objective_bound": 35.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0007448196411132812,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_1wi5i75_/solver_records/Minimize_Routing_Cost.gurobi.log",
+  "variables": {
+    "x1_('A',_'B')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('A',_'C')": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x1_('A',_'E')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('B',_'A')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('B',_'C')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('B',_'D')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('B',_'E')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('C',_'A')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('C',_'D')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('C',_'E')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('D',_'A')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('D',_'B')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('D',_'C')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('D',_'E')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('E',_'B')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x1_('E',_'D')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('A',_'B')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('A',_'C')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('A',_'E')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('B',_'A')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('B',_'C')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('B',_'D')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('B',_'E')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('C',_'A')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('C',_'D')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('C',_'E')": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x2_('D',_'A')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('D',_'B')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('D',_'C')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('D',_'E')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('E',_'B')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x2_('E',_'D')": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C17": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C18": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C19": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C20": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

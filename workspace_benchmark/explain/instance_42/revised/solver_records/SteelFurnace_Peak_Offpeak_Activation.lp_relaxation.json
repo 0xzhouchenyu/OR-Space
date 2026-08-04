@@ -1,0 +1,133 @@
+{
+  "solver": "gurobi",
+  "model_name": "SteelFurnace_Peak_Offpeak_Activation_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 151.25,
+  "runtime": 0.00041413307189941406,
+  "variables": {
+    "cooldown_1_off": {
+      "value": 0.0,
+      "reduced_cost": 20.0
+    },
+    "cooldown_2_off": {
+      "value": 0.0,
+      "reduced_cost": 20.0
+    },
+    "x_1_1_off": {
+      "value": 2.0,
+      "reduced_cost": 0.0
+    },
+    "x_1_1_peak": {
+      "value": 0.0,
+      "reduced_cost": 9.583333333333329
+    },
+    "x_1_2_off": {
+      "value": 0.0,
+      "reduced_cost": 20.0
+    },
+    "x_1_2_peak": {
+      "value": 0.0,
+      "reduced_cost": 29.58333333333333
+    },
+    "x_2_1_off": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_2_1_peak": {
+      "value": 0.0,
+      "reduced_cost": 9.583333333333329
+    },
+    "x_2_2_off": {
+      "value": 0.0,
+      "reduced_cost": 20.0
+    },
+    "x_2_2_peak": {
+      "value": 0.0,
+      "reduced_cost": 29.58333333333333
+    },
+    "y_1_off": {
+      "value": 0.16666666666666666,
+      "reduced_cost": 0.0
+    },
+    "y_1_peak": {
+      "value": 0.0,
+      "reduced_cost": 10.0
+    },
+    "y_2_off": {
+      "value": 0.08333333333333333,
+      "reduced_cost": 0.0
+    },
+    "y_2_peak": {
+      "value": 0.0,
+      "reduced_cost": 10.0
+    }
+  },
+  "constraints": {
+    "Furnace_1_Offpeak_Time": {
+      "sense": "<",
+      "slack": 8.0,
+      "dual_value": 0.0
+    },
+    "Furnace_1_Peak_Time": {
+      "sense": "<",
+      "slack": 8.0,
+      "dual_value": 0.0
+    },
+    "Furnace_2_Offpeak_Time": {
+      "sense": "<",
+      "slack": 10.0,
+      "dual_value": 0.0
+    },
+    "Furnace_2_Peak_Time": {
+      "sense": "<",
+      "slack": 8.0,
+      "dual_value": 0.0
+    },
+    "Plant_Offpeak_Time": {
+      "sense": "<",
+      "slack": 18.0,
+      "dual_value": 0.0
+    },
+    "Plant_Peak_Time": {
+      "sense": "<",
+      "slack": 16.0,
+      "dual_value": 0.0
+    },
+    "Offpeak_Activation_Link_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.4166666666666667
+    },
+    "Peak_Activation_Link_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Offpeak_Cooldown_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "Offpeak_Activation_Link_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.4166666666666667
+    },
+    "Peak_Activation_Link_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Offpeak_Cooldown_2": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "Min_Production": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 5.041666666666667
+    }
+  }
+}

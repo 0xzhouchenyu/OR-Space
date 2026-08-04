@@ -1,0 +1,72 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $W$: set of workers (code: \texttt{workers}), indexed by $w$.
+    \item $T$: set of tasks (code: \texttt{tasks}), indexed by $t$.
+\end{itemize}
+
+For this instance,
+\[
+W=\{\mathrm{I},\mathrm{II},\mathrm{III},\mathrm{IV},\mathrm{V}\}, 
+\qquad
+T=\{\mathrm{A},\mathrm{B},\mathrm{C},\mathrm{D}\}.
+\]
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $c_{wt}$: time required if worker $w$ performs task $t$ (code: \texttt{cost[(w,t)]}).
+\end{itemize}
+
+The values of $c_{wt}$ are taken from \texttt{data/table\_1.csv}:
+
+\[
+\begin{array}{c|cccc}
+ & \mathrm{A} & \mathrm{B} & \mathrm{C} & \mathrm{D} \\
+\hline
+\mathrm{I}   & 9  & 4 & 3 & 7 \\
+\mathrm{II}  & 4  & 6 & 5 & 6 \\
+\mathrm{III} & 5  & 4 & 7 & 5 \\
+\mathrm{IV}  & 7  & 5 & 2 & 3 \\
+\mathrm{V}   & 10 & 6 & 7 & 4 \\
+\end{array}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{wt} \in \{0,1\}$ (code: \texttt{x[(w,t)]}): equals 1 if worker $w$ is assigned to task $t$, and 0 otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total completion time:
+\[
+\min \sum_{w \in W}\sum_{t \in T} c_{wt} x_{wt}.
+\]
+
+\section*{Constraints}
+
+Each task must be assigned to exactly one worker:
+\[
+\sum_{w \in W} x_{wt} = 1
+\qquad \forall t \in T.
+\]
+
+Each worker can be assigned to at most one task:
+\[
+\sum_{t \in T} x_{wt} \le 1
+\qquad \forall w \in W.
+\]
+
+Binary assignment restrictions:
+\[
+x_{wt} \in \{0,1\}
+\qquad \forall w \in W,\ \forall t \in T.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a binary linear assignment model with more workers than tasks. The code does not introduce a separate worker-selection variable; instead, selecting exactly 4 of the 5 workers is implied by the four task-assignment equalities together with the at-most-one-task constraints for workers.
+
+The model is built in PuLP-compatible syntax and solved with the Gurobi command-line solver via \texttt{pulp.GUROBI\_CMD(msg=0)}. No additional cuts, preprocessing constraints, or symmetry-breaking constraints are added in the code.

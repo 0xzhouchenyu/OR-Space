@@ -1,0 +1,353 @@
+{
+  "solver": "gurobi",
+  "model_name": "PlasticContainers_EnergyModes_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 40426.0,
+  "runtime": 0.0003509521484375,
+  "variables": {
+    "x_eco_0_0": {
+      "value": 300.0,
+      "reduced_cost": 0.0
+    },
+    "x_eco_1_0": {
+      "value": -0.0,
+      "reduced_cost": 2.999999999999999
+    },
+    "x_eco_1_1": {
+      "value": 330.0,
+      "reduced_cost": 0.0
+    },
+    "x_eco_2_0": {
+      "value": -0.0,
+      "reduced_cost": 4.999999999999999
+    },
+    "x_eco_2_1": {
+      "value": -0.0,
+      "reduced_cost": 1.9999999999999984
+    },
+    "x_eco_2_2": {
+      "value": 420.0,
+      "reduced_cost": 0.0
+    },
+    "x_eco_3_0": {
+      "value": -0.0,
+      "reduced_cost": 6.999999999999999
+    },
+    "x_eco_3_1": {
+      "value": -0.0,
+      "reduced_cost": 3.9999999999999982
+    },
+    "x_eco_3_2": {
+      "value": -0.0,
+      "reduced_cost": 1.9999999999999984
+    },
+    "x_eco_3_3": {
+      "value": 540.0,
+      "reduced_cost": 0.0
+    },
+    "x_eco_4_0": {
+      "value": -0.0,
+      "reduced_cost": 11.000000000000002
+    },
+    "x_eco_4_1": {
+      "value": -0.0,
+      "reduced_cost": 7.999999999999999
+    },
+    "x_eco_4_2": {
+      "value": -0.0,
+      "reduced_cost": 5.999999999999999
+    },
+    "x_eco_4_3": {
+      "value": -0.0,
+      "reduced_cost": 3.9999999999999996
+    },
+    "x_eco_4_4": {
+      "value": 240.0,
+      "reduced_cost": 0.0
+    },
+    "x_eco_5_0": {
+      "value": -0.0,
+      "reduced_cost": 13.000000000000002
+    },
+    "x_eco_5_1": {
+      "value": -0.0,
+      "reduced_cost": 10.0
+    },
+    "x_eco_5_2": {
+      "value": -0.0,
+      "reduced_cost": 7.999999999999999
+    },
+    "x_eco_5_3": {
+      "value": -0.0,
+      "reduced_cost": 5.999999999999999
+    },
+    "x_eco_5_4": {
+      "value": -0.0,
+      "reduced_cost": 1.9999999999999978
+    },
+    "x_eco_5_5": {
+      "value": 180.0,
+      "reduced_cost": 0.0
+    },
+    "x_regular_0_0": {
+      "value": 200.0,
+      "reduced_cost": 0.0
+    },
+    "x_regular_1_0": {
+      "value": -0.0,
+      "reduced_cost": 3.000000000000001
+    },
+    "x_regular_1_1": {
+      "value": 220.0,
+      "reduced_cost": 0.0
+    },
+    "x_regular_2_0": {
+      "value": -0.0,
+      "reduced_cost": 5.000000000000001
+    },
+    "x_regular_2_1": {
+      "value": -0.0,
+      "reduced_cost": 2.0
+    },
+    "x_regular_2_2": {
+      "value": 280.0,
+      "reduced_cost": 0.0
+    },
+    "x_regular_3_0": {
+      "value": -0.0,
+      "reduced_cost": 7.000000000000001
+    },
+    "x_regular_3_1": {
+      "value": -0.0,
+      "reduced_cost": 4.0
+    },
+    "x_regular_3_2": {
+      "value": -0.0,
+      "reduced_cost": 2.0
+    },
+    "x_regular_3_3": {
+      "value": 360.0,
+      "reduced_cost": 0.0
+    },
+    "x_regular_4_0": {
+      "value": -0.0,
+      "reduced_cost": 11.000000000000002
+    },
+    "x_regular_4_1": {
+      "value": -0.0,
+      "reduced_cost": 8.0
+    },
+    "x_regular_4_2": {
+      "value": -0.0,
+      "reduced_cost": 6.000000000000001
+    },
+    "x_regular_4_3": {
+      "value": -0.0,
+      "reduced_cost": 4.000000000000001
+    },
+    "x_regular_4_4": {
+      "value": 160.0,
+      "reduced_cost": 0.0
+    },
+    "x_regular_5_0": {
+      "value": -0.0,
+      "reduced_cost": 13.000000000000002
+    },
+    "x_regular_5_1": {
+      "value": -0.0,
+      "reduced_cost": 10.0
+    },
+    "x_regular_5_2": {
+      "value": -0.0,
+      "reduced_cost": 8.0
+    },
+    "x_regular_5_3": {
+      "value": -0.0,
+      "reduced_cost": 6.000000000000001
+    },
+    "x_regular_5_4": {
+      "value": -0.0,
+      "reduced_cost": 1.9999999999999996
+    },
+    "x_regular_5_5": {
+      "value": 120.0,
+      "reduced_cost": 0.0
+    },
+    "y_eco_0": {
+      "value": 0.08955223880597014,
+      "reduced_cost": 0.0
+    },
+    "y_eco_1": {
+      "value": 0.09850746268656717,
+      "reduced_cost": 0.0
+    },
+    "y_eco_2": {
+      "value": 0.1253731343283582,
+      "reduced_cost": 0.0
+    },
+    "y_eco_3": {
+      "value": 0.16119402985074627,
+      "reduced_cost": 0.0
+    },
+    "y_eco_4": {
+      "value": 0.07164179104477612,
+      "reduced_cost": 0.0
+    },
+    "y_eco_5": {
+      "value": 0.05373134328358209,
+      "reduced_cost": 0.0
+    },
+    "y_regular_0": {
+      "value": 0.05970149253731343,
+      "reduced_cost": 0.0
+    },
+    "y_regular_1": {
+      "value": 0.06567164179104477,
+      "reduced_cost": 0.0
+    },
+    "y_regular_2": {
+      "value": 0.08358208955223881,
+      "reduced_cost": 0.0
+    },
+    "y_regular_3": {
+      "value": 0.10746268656716418,
+      "reduced_cost": 0.0
+    },
+    "y_regular_4": {
+      "value": 0.04776119402985075,
+      "reduced_cost": 0.0
+    },
+    "y_regular_5": {
+      "value": 0.03582089552238806,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "demand_0": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 6.1719402985074625
+    },
+    "demand_1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 9.171940298507463
+    },
+    "demand_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 11.171940298507463
+    },
+    "demand_3": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 13.171940298507463
+    },
+    "demand_4": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 17.171940298507465
+    },
+    "demand_5": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 19.171940298507465
+    },
+    "setup_regular_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.3582089552238806
+    },
+    "setup_eco_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.44776119402985076
+    },
+    "setup_regular_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.3582089552238806
+    },
+    "setup_eco_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.44776119402985076
+    },
+    "setup_regular_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.3582089552238806
+    },
+    "setup_eco_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.44776119402985076
+    },
+    "setup_regular_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.3582089552238806
+    },
+    "setup_eco_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.44776119402985076
+    },
+    "setup_regular_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.3582089552238806
+    },
+    "setup_eco_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.44776119402985076
+    },
+    "setup_regular_5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.3582089552238806
+    },
+    "setup_eco_5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.44776119402985076
+    },
+    "eco_share_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.3104477611940304
+    },
+    "eco_share_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.3104477611940286
+    },
+    "eco_share_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.3104477611940286
+    },
+    "eco_share_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.3104477611940286
+    },
+    "eco_share_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.31044776119402684
+    },
+    "eco_share_5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.31044776119402684
+    },
+    "energy_cap": {
+      "sense": "<",
+      "slack": 4908.0,
+      "dual_value": 0.0
+    }
+  }
+}

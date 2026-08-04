@@ -1,0 +1,144 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products: \(P=\{A,B,C\}\), corresponding in code to \(\{\texttt{Product\_A},\texttt{Product\_B},\texttt{Product\_C}\}\).
+    \item For each product \(p\in P\), let \(S_p\) be the ordered set of sales-volume segments read from \texttt{table\_1.csv}:
+    \[
+    \begin{aligned}
+    S_A &= \{1,2,3,4\},\\
+    S_B &= \{1,2,3\},\\
+    S_C &= \{1,2\}.
+    \end{aligned}
+    \]
+    \item Resource types: \(R=\{\text{tech},\text{labor},\text{mat}\}\).
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Resource consumption per unit of product \(p\):
+    \[
+    a^{\text{tech}}_A=1,\quad a^{\text{tech}}_B=2,\quad a^{\text{tech}}_C=1,
+    \]
+    \[
+    a^{\text{labor}}_A=10,\quad a^{\text{labor}}_B=4,\quad a^{\text{labor}}_C=5,
+    \]
+    \[
+    a^{\text{mat}}_A=3,\quad a^{\text{mat}}_B=2,\quad a^{\text{mat}}_C=1.
+    \]
+    These come from \texttt{technical\_prep\_time\_\{A,B,C\}}, \texttt{labor\_time\_\{A,B,C\}}, and \texttt{materials\_\{A,B,C\}}.
+    \item Available resources:
+    \[
+    b^{\text{tech}}=100,\qquad b^{\text{labor}}=700,\qquad b^{\text{mat}}=400,
+    \]
+    from \texttt{available\_technical\_prep\_time}, \texttt{available\_labor\_time}, and \texttt{available\_materials}.
+    \item Segment lower bounds \(L_{ps}\), upper bounds \(U_{ps}\), and per-unit profit coefficients \(c_{ps}\), taken directly from \texttt{table\_1.csv} and interpreted exactly as in the code:
+    \[
+    \begin{array}{c|ccc}
+    (p,s) & L_{ps} & U_{ps} & c_{ps}\\ \hline
+    (A,1) & 0 & 40 & 10\\
+    (A,2) & 40 & 100 & 9\\
+    (A,3) & 100 & 150 & 8\\
+    (A,4) & 150 & \text{none} & 7\\
+    (B,1) & 0 & 50 & 6\\
+    (B,2) & 50 & 100 & 4\\
+    (B,3) & 100 & \text{none} & 3\\
+    (C,1) & 0 & 100 & 5\\
+    (C,2) & 100 & \text{none} & 4
+    \end{array}
+    \]
+    \item Big-\(M\) constant: \(M=10000\).
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Production quantity of product \(p\): \(x_p\) (code: \texttt{x[prod]}), integer, \(x_p\ge 0\).
+    \item Profit contribution variable of product \(p\): \(q_p\) (code: \texttt{p\_var[prod]}), continuous, \(q_p\ge 0\).
+    \item Segment-activation indicator for product \(p\) and segment \(s\): \(y_{ps}\) (code: \texttt{y[prod][i]}), binary.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \sum_{p\in P} q_p.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{At most one sales segment active per product}
+    \[
+    \sum_{s\in S_p} y_{ps} \le 1
+    \qquad \forall p\in P.
+    \]
+
+    \item \textbf{Segment-dependent lower bound on production}
+
+    For every \(p\in P\) and \(s\in S_p\),
+    \[
+    x_p \ge 1 - M(1-y_{ps})
+    \qquad \text{if } L_{ps}=0,
+    \]
+    \[
+    x_p \ge (L_{ps}+1) - M(1-y_{ps})
+    \qquad \text{if } L_{ps}>0.
+    \]
+    Thus, if segment \(s\) is active, the code enforces \(x_p\in [L_{ps}+1,\cdot]\), not \(x_p\ge L_{ps}\).
+
+    \item \textbf{Segment-dependent upper bound on production}
+
+    For every \(p\in P\) and segment \(s\in S_p\) with finite \(U_{ps}\),
+    \[
+    x_p \le U_{ps} + M(1-y_{ps}).
+    \]
+    No upper bound is added for the ``Above'' segments.
+
+    \item \textbf{Profit upper bound linked to active segment}
+
+    For every \(p\in P\) and \(s\in S_p\),
+    \[
+    q_p \le c_{ps}\,x_p + M(1-y_{ps}).
+    \]
+
+    \item \textbf{Zero production and zero profit when no segment is active}
+
+    For every \(p\in P\),
+    \[
+    x_p \le M\sum_{s\in S_p} y_{ps},
+    \]
+    \[
+    q_p \le M\sum_{s\in S_p} y_{ps}.
+    \]
+    Since \(x_p,q_p\ge 0\), these imply \(x_p=q_p=0\) whenever \(\sum_s y_{ps}=0\).
+
+    \item \textbf{Resource capacity constraints}
+    \[
+    \sum_{p\in P} a^{\text{tech}}_p x_p \le b^{\text{tech}},
+    \]
+    \[
+    \sum_{p\in P} a^{\text{labor}}_p x_p \le b^{\text{labor}},
+    \]
+    \[
+    \sum_{p\in P} a^{\text{mat}}_p x_p \le b^{\text{mat}}.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved with Gurobi through PuLP.
+    \item The variable \(q_p\) represents product-level profit and is only \emph{upper bounded} by the active segment expression \(c_{ps}x_p\). Because the objective maximizes \(\sum_p q_p\), \(q_p\) is driven to the largest value allowed by the chosen segment and other constraints.
+    \item The code enforces \emph{at most one} segment per product, not exactly one. Combined with
+    \(
+    x_p \le M\sum_s y_{ps}
+    \)
+    and
+    \(
+    q_p \le M\sum_s y_{ps},
+    \)
+    this means a product is either not produced at all or assigned to exactly one segment.
+    \item The segment ranges are implemented with a strict transition between bands: a segment labeled \(0\_40\) permits \(x_p=1,\dots,40\); a segment labeled \(40\_100\) permits \(x_p=41,\dots,100\); similarly for the ``Above\_\(\cdot\)'' ranges. Hence zero production is handled separately by choosing no active segment.
+    \item The business description suggests profits may vary by sales volume; the code models this by assigning a single per-unit profit coefficient to the unique active segment for the \emph{entire} quantity of that product. It does not accumulate profit piecewise across segments.
+\end{itemize}

@@ -1,0 +1,106 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Students: $I=\{1,\dots,6\}$, indexed by $i$.
+    \item Days: $D=\{\text{Monday},\text{Tuesday},\text{Wednesday},\text{Thursday},\text{Friday}\}$, indexed by $d$.
+    \item Undergraduate students: $U=\{1,2,3,4\}$.
+    \item Graduate students: $G=\{5,6\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Hourly wage of student $i$: $w_i$.
+    \item Daily availability (maximum workable hours) of student $i$ on day $d$: $a_{id}$.
+    \item Required total coverage per day: $H = 14$ hours.
+    \item Minimum weekly hours for each undergraduate: $L^{U} = 8$.
+    \item Minimum weekly hours for each graduate student: $L^{G} = 7$.
+    \item Maximum number of worked days (shifts) per student per week: $S^{\max} = 2$.
+    \item Maximum number of distinct students used on any day: $M^{\max} = 3$.
+    \item Minimum total weekly graduate coverage: $C^{G,\min} = 16$ hours.
+    \item Fixed daily opening/setup fee per worked student-day: $f = 12$ CNY.
+\end{itemize}
+
+All numerical values of $w_i$ and $a_{id}$ are taken from \texttt{table\_1.csv}; the remaining parameters are taken from \texttt{general\_parameters.csv}.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Hours assigned to student $i$ on day $d$: $x_{id}$ (code: \texttt{x[i,d]}), with $x_{id}\ge 0$.
+    \item Binary indicator equal to 1 if student $i$ works on day $d$: $y_{id}$ (code: \texttt{y[i,d]}).
+    \item Binary indicator used for the fixed daily fee: $z_{id}$ (code: \texttt{z[i,d]}).
+\end{itemize}
+
+In the implementation, $x_{id}$ also has upper bound $a_{id}$ directly from variable creation.
+
+\section*{Objective}
+
+Minimize total weekly labor cost plus the fixed fee for each worked student-day:
+\[
+\min \;
+\sum_{i\in I}\sum_{d\in D} w_i x_{id}
+\;+\;
+f \sum_{i\in I}\sum_{d\in D} z_{id}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Daily coverage}
+Each day must receive exactly 14 hours of staffing:
+\[
+\sum_{i\in I} x_{id} = H
+\qquad \forall d\in D.
+\]
+
+\paragraph{Availability and activation}
+Assigned hours can be positive only if the student is scheduled that day, and cannot exceed daily availability:
+\[
+x_{id} \le a_{id}\, y_{id}
+\qquad \forall i\in I,\; d\in D.
+\]
+
+\paragraph{Open-fee tracking}
+The fee indicator is exactly the same as the day-work indicator:
+\[
+z_{id} = y_{id}
+\qquad \forall i\in I,\; d\in D.
+\]
+
+\paragraph{Weekly limit on worked days per student}
+\[
+\sum_{d\in D} y_{id} \le S^{\max}
+\qquad \forall i\in I.
+\]
+
+\paragraph{Daily limit on number of students used}
+\[
+\sum_{i\in I} y_{id} \le M^{\max}
+\qquad \forall d\in D.
+\]
+
+\paragraph{Minimum weekly hours per student}
+For undergraduates:
+\[
+\sum_{d\in D} x_{id} \ge L^{U}
+\qquad \forall i\in U.
+\]
+For graduate students:
+\[
+\sum_{d\in D} x_{id} \ge L^{G}
+\qquad \forall i\in G.
+\]
+
+\paragraph{Minimum collective weekly graduate coverage}
+\[
+\sum_{i\in G}\sum_{d\in D} x_{id} \ge C^{G,\min}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved with \texttt{GUROBI\_CMD}.
+    \item The code creates $x_{id}$ with bounds $0 \le x_{id} \le a_{id}$, and also imposes $x_{id}\le a_{id}y_{id}$; both are part of the implemented formulation.
+    \item Variable $z_{id}$ is redundant mathematically because the code enforces $z_{id}=y_{id}$ exactly, but it is kept explicitly because the objective charges the fixed per-(student,day) fee through \texttt{z[i,d]}.
+    \item There is no separate constraint enforcing “exactly one student at any moment” in time-indexed form; the implemented model only enforces exactly 14 total staffed hours per day, together with the limit of at most 3 students used on that day.
+    \item The model does not require $y_{id}=1$ whenever $x_{id}>0$ via a lower-bound linking constraint; instead this is implied for positive $x_{id}$ by $x_{id}\le a_{id}y_{id}$ when $a_{id}\ge 0$.
+\end{itemize}

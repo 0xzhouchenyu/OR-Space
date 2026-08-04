@@ -1,0 +1,1 @@
+A project consists of several activities with specified durations and precedence relationships. Additionally, there are costs associated with daily work and the rental of a special machine. Please refer to the corresponding CSV files in the data folder for specific parameter values.

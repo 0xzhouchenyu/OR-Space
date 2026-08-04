@@ -1,0 +1,108 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products \(P = \{\text{Meaties}, \text{Yummies}\}\), indexed by \(p\).
+    \item Let \(m\) denote product Meaties and \(y\) denote product Yummies, matching the code aliases \texttt{m} and \texttt{y}.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Selling price per pack of product \(p\): \(s_p\).
+    \item Grains required per pack of product \(p\): \(g_p\).
+    \item Meat required per pack of product \(p\): \(r_p\).
+    \item Variable production cost per pack of product \(p\): \(v_p\).
+    \item Production capacity for product \(p\): \(u_p\), when provided in the data; if blank, no capacity constraint is added in the code.
+    \item Maximum available grains: \(G\) (code source: \texttt{max\_grains}).
+    \item Cost per pound of grains: \(c^g\) (code source: \texttt{price\_grains}).
+    \item Maximum available meat: \(M\) (code source: \texttt{max\_meat}).
+    \item Cost per pound of meat: \(c^r\) (code source: \texttt{price\_meat}).
+\end{itemize}
+
+For this instance, the data are:
+\[
+G = 400000,\qquad c^g = 0.20,\qquad M = 300000,\qquad c^r = 0.50.
+\]
+
+Product-specific values:
+\[
+\begin{array}{c|ccccc}
+p & s_p & g_p & r_p & v_p & u_p \\
+\hline
+m\;(\text{Meaties}) & 2.80 & 2.0 & 3.0 & 0.25 & 90000 \\
+y\;(\text{Yummies}) & 2.00 & 3.0 & 1.5 & 0.20 & \text{none}
+\end{array}
+\]
+
+The code computes per-pack profit coefficients as
+\[
+\pi_p = s_p - v_p - (g_p c^g + r_p c^r).
+\]
+Hence
+\[
+\pi_m = 2.80 - 0.25 - (2.0\cdot 0.20 + 3.0\cdot 0.50) = 0.65,
+\]
+\[
+\pi_y = 2.00 - 0.20 - (3.0\cdot 0.20 + 1.5\cdot 0.50) = 0.45.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Number of Meaties packs produced: \(x_m\) (code: \texttt{x\_meaties}).
+    \item Number of Yummies packs produced: \(x_y\) (code: \texttt{x\_yummies}).
+\end{itemize}
+
+Both variables are continuous and nonnegative:
+\[
+x_m \ge 0,\qquad x_y \ge 0.
+\]
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \; \pi_m x_m + \pi_y x_y.
+\]
+
+Substituting the coefficients used by the code:
+\[
+\max \; 0.65\,x_m + 0.45\,x_y.
+\]
+
+\section*{Constraints}
+
+Raw material availability:
+\[
+g_m x_m + g_y x_y \le G,
+\]
+\[
+r_m x_m + r_y x_y \le M.
+\]
+
+For this instance:
+\[
+2.0\,x_m + 3.0\,x_y \le 400000,
+\]
+\[
+3.0\,x_m + 1.5\,x_y \le 300000.
+\]
+
+Production capacity constraints are added only when the corresponding CSV field is nonempty. Therefore:
+\[
+x_m \le u_m = 90000.
+\]
+
+No production-capacity constraint is added for Yummies because its \texttt{Production\_capacity} field is blank in the data.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implementation builds a linear program in PuLP-compatible syntax and solves it with \texttt{GUROBI\_CMD(msg=0)}.
+    \item The objective coefficients are not read directly from a profit column; instead, the code explicitly computes profit per pack as selling price minus variable cost minus raw material costs:
+    \[
+    \pi_p = s_p - v_p - (g_p c^g + r_p c^r).
+    \]
+    \item Decision variables are continuous nonnegative variables; no integrality restrictions are imposed on pack counts.
+    \item Capacity constraints are conditional in the code. A product receives an upper-bound constraint only if its \texttt{Production\_capacity} entry is present and nonblank in the CSV input.
+\end{itemize}

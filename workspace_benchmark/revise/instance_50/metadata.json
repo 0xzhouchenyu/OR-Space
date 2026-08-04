@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_50_revise_business",
+  "original_instance_id": "IndustryOR_50",
+  "revise_description": "In the stakeholder handoff for this case, the finance partner framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The August supplier window has a receiving limit. Up to 300 units can be handled through the normal dock; buying more than 300 units in August opens a special receiving slot costing 1000 dollars once. Other months keep the existing fixed order charge and warehouse logic. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R4",
+  "revise_type_name": "Penalty / Fixed Cost Addition",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+1var, +1constr, mod_1constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 1,
+        "-variable": 0,
+        "+constraint": 1,
+        "-constraint": 0,
+        "modify_constraint": 1,
+        "modify_data": 1
+      },
+      "op_count": 5,
+      "distinct_ops": 4,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 72.222222
+  }
+}

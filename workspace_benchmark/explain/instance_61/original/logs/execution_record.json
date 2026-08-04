@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 37000.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nDevice A: used=1, units=800.0\nDevice B: used=0, units=0.0\nDevice C: used=1, units=1200.0\nDevice D: used=0, units=0.0\nOBJECTIVE_VALUE: 37000.0\n",
+  "stderr": "",
+  "error": null
+}

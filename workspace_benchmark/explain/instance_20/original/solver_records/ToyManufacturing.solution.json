@@ -1,0 +1,113 @@
+{
+  "solver": "gurobi",
+  "model_name": "ToyManufacturing",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 956.0,
+  "objective_bound": 956.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0025777816772460938,
+  "node_count": 1.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_0dsvi4nm/solver_records/ToyManufacturing.gurobi.log",
+  "variables": {
+    "building_blocks": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "dolls": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "model_cars": {
+      "value": 118.0,
+      "reduced_cost": null
+    },
+    "robots": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_blocks": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_car": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_doll": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_robot": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Plastic": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Link_robot": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Link_doll": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Link_car": {
+      "sense": "<=",
+      "slack": 9882.0,
+      "dual_value": null
+    },
+    "Link_blocks": {
+      "sense": "<=",
+      "slack": 9999.0,
+      "dual_value": null
+    },
+    "Robot_Doll_Exclusion": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "Car_Blocks_Dependency": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Dolls_leq_Cars": {
+      "sense": "<=",
+      "slack": 118.0,
+      "dual_value": null
+    },
+    "Binary_Link_Robot": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Binary_Link_Doll": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Binary_Link_Car": {
+      "sense": "<=",
+      "slack": 117.0,
+      "dual_value": null
+    },
+    "Binary_Link_Blocks": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

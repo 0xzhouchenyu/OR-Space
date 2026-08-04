@@ -1,0 +1,75 @@
+{
+  "solver": "gurobi",
+  "model_name": "Restaurant_Waiters",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 26.0,
+  "objective_bound": 26.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0018749237060546875,
+  "node_count": 1.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_kbpeyepn/solver_records/Restaurant_Waiters.gurobi.log",
+  "variables": {
+    "x_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1": {
+      "value": 8.0,
+      "reduced_cost": null
+    },
+    "x_2": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "x_3": {
+      "value": 5.0,
+      "reduced_cost": null
+    },
+    "x_4": {
+      "value": 7.0,
+      "reduced_cost": null
+    },
+    "x_5": {
+      "value": 4.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Period_0_2-6": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Period_1_6-10": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Period_2_10-14": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Period_3_14-18": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Period_4_18-22": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Period_5_22-2": {
+      "sense": ">=",
+      "slack": -7.0,
+      "dual_value": null
+    }
+  }
+}

@@ -1,0 +1,7 @@
+A wealthy noble passed away, leaving an inheritance consisting of various valuable items. The inheritance must be shared between two sons. The goal is to formulate a mathematical program and solve it using COPTPY to minimize the difference in value between the two parts. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the risk reviewer framed the change in business terms rather than as a spreadsheet checklist. At the latest operating review, the business owner rejected treating this as a cosmetic rerun. The plan has to follow the commercial interpretation below, with the data-pack labels read literally. The inheritance plan now separates immediate transfers from deferred transfers. The sons' current shares must satisfy `son1_min_share`, high-value items cannot be concentrated beyond `max_high_value_items_per_son`, and deferred diamonds are limited by `deferred_diamonds_per_son`. The family wants the estate split to remain fair when immediate tax-weighted value and total value are both considered. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

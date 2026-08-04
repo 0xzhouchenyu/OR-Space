@@ -1,0 +1,1 @@
+A farm is planning its operations to maximize annual net income. The farm has constraints on land, funds, labor availability, and facility capacities. It cultivates crops and raises animals, each with specific requirements for land, labor, and investment. Please refer to the corresponding CSV files in the data folder for specific parameter values.

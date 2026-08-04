@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_068",
+  "instance_number": 68,
+  "source_revise_instance": "IndustryOR_68_revise_business",
+  "domain": "Transportation",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Transportation",
+    "question": "Using the revised solver record together with `src/current_heuristic.py` and `src/formulation.tex`, explain why the objective fell from 1030.0 to 925.0 even though the model added the extra-cost mechanism on the A→3 lane. Your answer must name the exact new code variable `area3_excess`, the exact revised constraints `area3_min_share_from_A` and `area3_A_staging_excess`, and the exact CSV parameter fields `min_coal_yard_B_adjusted`, `min_share_area3_from_A`, `area3_A_staging_threshold`, and `area3_A_excess_staging_cost`; then interpret which revised constraints are binding from their reported slack/dual values and give the business meaning of the `3.0` shadow price on `area3_A_staging_excess`. Finally, reconcile the directional business brief with the missing route in `table_1.csv`, and explain why you cannot linearly extrapolate the current marginal value if the staging threshold were increased far beyond the current level."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Coal_Distribution.gurobi.log",
+        "Coal_Distribution.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Coal_Distribution_Revised.gurobi.log",
+        "Coal_Distribution_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 82.075
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_027",
+  "instance_number": 27,
+  "source_revise_instance": "IndustryOR_27_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the optimal objective drops from 1146.5665 to 568.4220 by tracing the exact code changes that implement the business brief’s “gate” and “shared skilled-operator desk.” Your answer must name the new decision variable `z_B2`, the new constraints `b2_activation_link` and `shared_labor_pool`, and connect them to the exact `general_parameters.csv` fields `b2_activation_fee`, `shared_labor_hours`, and at least one `labor_coeff_*`, plus the `table_1.csv` columns used in the B2 linkage and labor accounting. Then use the revised LP-relaxation duals/slacks to identify which constraints are binding, interpret the shadow price of `shared_labor_pool` and `b2_activation_link` in business terms, and explain why that marginal interpretation cannot be linearly extrapolated to predict the full MIP objective change once B2 is switched off in the integer optimum."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Factory_Production.gurobi.log",
+        "Factory_Production.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Factory_Production_Revised.gurobi.log",
+        "Factory_Production_Revised.lp_relaxation.json",
+        "Factory_Production_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 68.978333
+  }
+}

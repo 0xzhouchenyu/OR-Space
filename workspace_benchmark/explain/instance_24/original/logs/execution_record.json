@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 1000.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nTruck trips: 10\nVan trips: 0\nMotorcycle trips: 0\nEV trips: 14\nTotal capacity delivered: 1840.0\nOBJECTIVE_VALUE: 1000.0\n",
+  "stderr": "",
+  "error": null
+}

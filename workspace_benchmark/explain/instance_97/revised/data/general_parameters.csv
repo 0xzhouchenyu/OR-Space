@@ -1,0 +1,16 @@
+Parameter_Name, Value, Unit, Context_Description
+max_sulfur_content_A_premium, 2.0, %, Maximum sulfur content allowed for premium product A
+max_sulfur_content_A_standard, 2.5, %, Maximum sulfur content allowed for standard product A
+max_sulfur_content_B_premium, 1.2, %, Maximum sulfur content allowed for premium product B
+max_sulfur_content_B_standard, 1.5, %, Maximum sulfur content allowed for standard product B
+selling_price_A_premium, 11.0, thousand yuan per ton, Selling price for premium product A
+selling_price_A_standard, 9.0, thousand yuan per ton, Selling price for standard product A
+selling_price_B_premium, 12.0, thousand yuan per ton, Selling price for premium product B
+selling_price_B_standard, 9.0, thousand yuan per ton, Selling price for standard product B
+max_supply_D, 50, tons, Maximum supply limit for raw material D
+market_demand_A, 100, tons, Market demand for A-type products (premium + standard)
+market_demand_B, 200, tons, Market demand for B-type products (premium + standard)
+min_premium_share_A, 10, tons, Minimum premium volume for A-type products
+max_premium_share_A, 60, tons, Maximum premium volume for A-type products
+min_premium_share_B, 20, tons, Minimum premium volume for B-type products
+max_premium_share_B, 150, tons, Maximum premium volume for B-type products

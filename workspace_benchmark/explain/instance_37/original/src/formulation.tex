@@ -1,0 +1,83 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $M$: set of microcomputer models, with $M=\{A,B\}$.
+    \item $P$: set of production processes, with $P=\{I,II\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $h_{pm}$: processing time (hours per unit) required by model $m \in M$ on process $p \in P$.
+    \item $C_p$: maximum weekly processing capacity (hours) available for process $p \in P$.
+    \item $\pi_m$: profit per unit produced of model $m \in M$.
+    \item $L_m$: minimum weekly production requirement (units) for model $m \in M$.
+    \item $\Pi^{\min}$: minimum required weekly total profit.
+\end{itemize}
+
+Using the provided data, these values are:
+\[
+h_{IA}=4,\quad h_{IB}=6,\quad h_{II,A}=3,\quad h_{II,B}=2,
+\]
+\[
+C_I=150,\quad C_{II}=70,
+\]
+\[
+\pi_A=300,\quad \pi_B=450,
+\]
+\[
+L_A=10,\quad L_B=15,\quad \Pi^{\min}=10000.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_A \ge 0$ (code: \texttt{x\_A}): quantity of model A produced in the week.
+    \item $x_B \ge 0$ (code: \texttt{x\_B}): quantity of model B produced in the week.
+\end{itemize}
+
+The implementation treats both variables as continuous, so fractional production quantities are allowed.
+
+\section*{Objective}
+
+Maximize total weekly profit:
+\[
+\max \; 300x_A + 450x_B.
+\]
+
+Equivalently, in indexed form:
+\[
+\max \; \sum_{m \in M} \pi_m x_m.
+\]
+
+\section*{Constraints}
+
+Process capacity limits:
+\[
+4x_A + 6x_B \le 150 \qquad \text{(Process I)}
+\]
+\[
+3x_A + 2x_B \le 70 \qquad \text{(Process II)}
+\]
+
+Minimum production requirements:
+\[
+x_A \ge 10
+\]
+\[
+x_B \ge 15
+\]
+
+Minimum profit requirement:
+\[
+300x_A + 450x_B \ge 10000
+\]
+
+Nonnegativity:
+\[
+x_A \ge 0,\qquad x_B \ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+The code formulates and solves a linear program with objective sense ``maximize.'' The minimum profit target is imposed explicitly as a constraint in addition to maximizing profit. No integrality restrictions are used: \texttt{x\_A} and \texttt{x\_B} are continuous \texttt{LpVariable}s with lower bound $0$. The model is solved through PuLP using \texttt{GUROBI\_CMD(msg=0)}. No overtime decision, penalty term, or multiobjective/goal-programming structure is implemented; the capacities are enforced exactly as upper bounds read from the CSV data.

@@ -1,0 +1,1 @@
+A restaurant needs to order dining tables from three different suppliers, A, B, and C. The goal is to minimize the total cost of the order while adhering to various constraints regarding the number of tables ordered and supplier relationships. Please refer to the corresponding CSV files in the data folder for specific parameter values.

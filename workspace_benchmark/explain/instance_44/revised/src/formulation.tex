@@ -1,0 +1,144 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+\item Production points: $I=\{1,\dots,m\}$.
+\item Demand points: $J=\{1,\dots,n\}$.
+\item Marshaling stations: $K=\{1,\dots,p\}$.
+\item Modes: regular and express, represented explicitly by separate variables rather than an additional index.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+\item $m$, $n$, $p$: numbers of production points, demand points, and marshaling stations (\texttt{m}, \texttt{n}, \texttt{p}).
+\item $a_i$: available supply at production point $i$ (\texttt{a\_i}).
+\item $b_j$: demand requirement at demand point $j$ (\texttt{b\_j}).
+\item $f_k$: fixed cost of using marshaling station $k$ (\texttt{f\_k}).
+\item $q_k$: total throughput capacity of station $k$ across both modes (\texttt{q\_k}).
+\item $q^{E}_k$: express throughput capacity of station $k$ (\texttt{qexp\_k}).
+\item $\alpha_j$: minimum express fraction required for demand point $j$ (\texttt{alpha\_j}).
+\item $\varepsilon$: minimum strictly positive express flow used in the source-indicator logic (\texttt{eps}).
+\item $M$: big-$M$ upper bound for express flow on a station--demand arc (\texttt{M}).
+\item $c^{R}_{ik}$, $c^{E}_{ik}$: unit transportation costs from production point $i$ to station $k$ in regular and express service (\texttt{cR\_ik}, \texttt{cE\_ik}).
+\item $c^{R}_{kj}$, $c^{E}_{kj}$: unit transportation costs from station $k$ to demand point $j$ in regular and express service (\texttt{cR\_kj}, \texttt{cE\_kj}).
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+\item $x^{R}_{ik} \ge 0$ (code: \texttt{xR[(i,k)]}): regular flow from production point $i$ to station $k$.
+\item $x^{E}_{ik} \ge 0$ (code: \texttt{xE[(i,k)]}): express flow from production point $i$ to station $k$.
+\item $y^{R}_{kj} \ge 0$ (code: \texttt{yR[(k,j)]}): regular flow from station $k$ to demand point $j$.
+\item $y^{E}_{kj} \ge 0$ (code: \texttt{yE[(k,j)]}): express flow from station $k$ to demand point $j$.
+\item $z_k \in \{0,1\}$ (code: \texttt{z[k]}): equals $1$ if station $k$ is used/open.
+\item $u_{jk} \in \{0,1\}$ (code: \texttt{u[(j,k)]}): indicator intended to mark positive express flow from station $k$ to demand point $j$.
+\item $w_{kj} \in \{0,1\}$ (code: \texttt{w[(k,j)]}): indicator counted toward diversification for demand point $j$ through station $k$.
+\item $v \in \{0,1\}$ (code: \texttt{v}): indicator for whether at least two stations are open, as implemented for this instance.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total transportation and fixed station-opening cost:
+\[
+\min \;
+\sum_{i\in I}\sum_{k\in K}
+\left(c^{R}_{ik}x^{R}_{ik}+c^{E}_{ik}x^{E}_{ik}\right)
++
+\sum_{k\in K}\sum_{j\in J}
+\left(c^{R}_{kj}y^{R}_{kj}+c^{E}_{kj}y^{E}_{kj}\right)
++
+\sum_{k\in K} f_k z_k .
+\]
+
+\section*{Constraints}
+
+\paragraph{Supply limits}
+\[
+\sum_{k\in K}\left(x^{R}_{ik}+x^{E}_{ik}\right)\le a_i
+\qquad \forall i\in I .
+\]
+
+\paragraph{Demand satisfaction}
+\[
+\sum_{k\in K}\left(y^{R}_{kj}+y^{E}_{kj}\right)= b_j
+\qquad \forall j\in J .
+\]
+
+\paragraph{Station flow balance by mode}
+\[
+\sum_{i\in I} x^{R}_{ik} = \sum_{j\in J} y^{R}_{kj}
+\qquad \forall k\in K ,
+\]
+\[
+\sum_{i\in I} x^{E}_{ik} = \sum_{j\in J} y^{E}_{kj}
+\qquad \forall k\in K .
+\]
+
+\paragraph{Station total throughput capacity}
+\[
+\sum_{i\in I}\left(x^{R}_{ik}+x^{E}_{ik}\right)\le q_k z_k
+\qquad \forall k\in K .
+\]
+
+\paragraph{Station express throughput capacity}
+\[
+\sum_{i\in I} x^{E}_{ik}\le q^{E}_k z_k
+\qquad \forall k\in K .
+\]
+
+\paragraph{Minimum express share at each demand}
+\[
+\sum_{k\in K} y^{E}_{kj}\ge \alpha_j b_j
+\qquad \forall j\in J .
+\]
+
+\paragraph{Express-source indicator consistency}
+For each station--demand pair,
+\[
+y^{E}_{kj}\ge \varepsilon\, u_{jk}
+\qquad \forall j\in J,\; k\in K ,
+\]
+\[
+y^{E}_{kj}\le M\, u_{jk}
+\qquad \forall j\in J,\; k\in K .
+\]
+
+\paragraph{Linking diversification counter to express use and station opening}
+\[
+w_{kj}\le u_{jk}
+\qquad \forall j\in J,\; k\in K ,
+\]
+\[
+w_{kj}\le z_k
+\qquad \forall j\in J,\; k\in K .
+\]
+
+\paragraph{Open-coverage indicator}
+Let
+\[
+S=\sum_{k\in K} z_k .
+\]
+The implemented logic is
+\[
+v \le S-1,
+\]
+\[
+S-v \ge 1.
+\]
+For this instance, with $p=2$, these constraints make $v=1$ when both stations are open and force $v=0$ otherwise.
+
+\paragraph{Diversification requirement}
+\[
+\sum_{k\in K} w_{kj}\ge 2v
+\qquad \forall j\in J .
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+\item The model is solved as a mixed-integer linear program using the solver call in \texttt{current\_heuristic.py}; it is not an exact enumeration or dynamic program.
+\item The formulation is deterministic and uses one common set of first-stage decisions for the single data instance provided. Although the business brief refers to multiple cases, the implemented code does not include a scenario index or scenario-dependent recourse variables.
+\item The diversification logic is implemented exactly as coded: $u_{jk}$ is tied to positive express flow by the pair of big-$M$ constraints, and $w_{kj}$ is only upper-bounded by both $u_{jk}$ and $z_k$. There is no lower bound forcing $w_{kj}=1$ when both $u_{jk}=1$ and $z_k=1$.
+\item Likewise, the diversification requirement is activated only through $v$. With $p=2$, the constraints on $v$ encode whether both stations are open.
+\item Station capacities are imposed on inbound flow. Because mode-wise flow conservation holds at each station, the same limits also apply to outbound throughput in aggregate.
+\end{itemize}

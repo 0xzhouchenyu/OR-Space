@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 4100.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nMonth 1: Purchase = 300.0, Sell = 500.0, End Inventory = 0.0\nMonth 2: Purchase = 500.0, Sell = 0.0, End Inventory = 500.0\nMonth 3: Purchase = 0.0, Sell = 500.0, End Inventory = 0.0\nOBJECTIVE_VALUE: 4100.0\n",
+  "stderr": "",
+  "error": null
+}

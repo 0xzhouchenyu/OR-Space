@@ -1,0 +1,153 @@
+{
+  "solver": "gurobi",
+  "model_name": "MaxRevenue",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 9100.0,
+  "objective_bound": 9100.0,
+  "mip_gap": null,
+  "runtime": 0.000598907470703125,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_5ruhjr02/solver_records/MaxRevenue.gurobi.log",
+  "variables": {
+    "buy_10": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "buy_11": {
+      "value": 0.0,
+      "reduced_cost": -0.0
+    },
+    "buy_12": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "buy_7": {
+      "value": 300.0,
+      "reduced_cost": 0.0
+    },
+    "buy_8": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "buy_9": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "sell_10": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "sell_11": {
+      "value": 0.0,
+      "reduced_cost": -1.0
+    },
+    "sell_12": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "sell_7": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "sell_8": {
+      "value": 0.0,
+      "reduced_cost": -1.0
+    },
+    "sell_9": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "stock_10": {
+      "value": 0.0,
+      "reduced_cost": -5.0
+    },
+    "stock_11": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "stock_12": {
+      "value": 0.0,
+      "reduced_cost": -25.0
+    },
+    "stock_7": {
+      "value": 0.0,
+      "reduced_cost": -5.0
+    },
+    "stock_8": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "stock_9": {
+      "value": 500.0,
+      "reduced_cost": 1.0
+    }
+  },
+  "constraints": {
+    "balance_7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 29.0
+    },
+    "warehouse_after_buy_7": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "balance_8": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 25.0
+    },
+    "warehouse_after_buy_8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "balance_9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 26.0
+    },
+    "warehouse_after_buy_9": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "balance_10": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 28.0
+    },
+    "warehouse_after_buy_10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "balance_11": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 23.0
+    },
+    "warehouse_after_buy_11": {
+      "sense": "<=",
+      "slack": 500.0,
+      "dual_value": 0.0
+    },
+    "balance_12": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 25.0
+    },
+    "warehouse_after_buy_12": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 2.0
+    }
+  }
+}

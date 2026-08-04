@@ -1,0 +1,90 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $C$: set of courses appearing in \texttt{table\_1.csv} (field \texttt{Course}).
+    \item $K$: set of categories appearing in \texttt{table\_1.csv} (parsed from field \texttt{Category}).
+    \item For each course $c \in C$, let $K(c) \subseteq K$ be the set of categories listed for course $c$.
+    \item For each category $k \in K$, let
+    \[
+    C(k) = \{c \in C : k \in K(c)\}
+    \]
+    be the set of courses eligible to be assigned to category $k$.
+    \item $P \subseteq C \times C$: prerequisite relation, where $(c,p) \in P$ means course $p$ is a prerequisite of course $c$, derived from rows in \texttt{general\_parameters.csv} whose \texttt{Parameter\_Name} starts with \texttt{prerequisite\_}.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $m \in \mathbb{Z}_{+}$: minimum number of distinct counted courses required in each category (code/data: \texttt{min\_courses\_required}).
+    \item $k^{\text{cs}} \in K$: name of the computer-science category that triggers the foundation rule (code/data: \texttt{cs\_category\_name}).
+    \item $f^{\text{cs}} \in C$: mandatory foundation course for computer-science coverage (code/data: \texttt{mandatory\_foundation\_for\_cs\_counting}).
+    \item $|C(k)|$: number of courses eligible for category $k$.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_c \in \{0,1\}$ for each $c \in C$ (code: \texttt{x[course]}): equals 1 if course $c$ is taken.
+    \item $y_{ck} \in \{0,1\}$ for each $c \in C$, $k \in K(c)$ (code: \texttt{y[(course, cat)]}): equals 1 if taken course $c$ is assigned to satisfy category $k$.
+    \item $z_k \in \{0,1\}$ for each $k \in K$ (code: \texttt{z[cat]}): activation indicator for category $k$.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the number of taken courses:
+\[
+\min \sum_{c \in C} x_c.
+\]
+
+\section*{Constraints}
+
+\paragraph{Assignment only if the course is taken.}
+For every course $c \in C$,
+\[
+\sum_{k \in K(c)} y_{ck} \le x_c.
+\]
+Because the sum is over all eligible categories of a course, this also enforces that a cross-listed course can be assigned to at most one category.
+
+\paragraph{Minimum distinct counted courses in each category.}
+For every category $k \in K$,
+\[
+\sum_{c \in C(k)} y_{ck} \ge m.
+\]
+
+\paragraph{Category activation linkage.}
+For every category $k \in K$,
+\[
+\sum_{c \in C(k)} y_{ck} \ge z_k,
+\]
+\[
+\sum_{c \in C(k)} y_{ck} \le |C(k)|\, z_k.
+\]
+Together with the category minimum above, these imply $z_k=1$ in any feasible solution.
+
+\paragraph{Prerequisites.}
+For every prerequisite pair $(c,p) \in P$,
+\[
+x_c \le x_p.
+\]
+
+\paragraph{Mandatory foundation for computer-science coverage.}
+\[
+x_{f^{\text{cs}}} \ge z_{k^{\text{cs}}}.
+\]
+Since the computer-science category is forced active by the category minimum constraints, this requires the foundation course to be taken whenever computer-science coverage is present.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a binary linear optimization problem in \texttt{current\_heuristic.py} and solved with \texttt{GUROBI\_CMD}.
+    \item Category membership is read from \texttt{table\_1.csv}; multiple categories for a course are obtained by splitting the \texttt{Category} field on semicolons.
+    \item Prerequisites are constructed by matching normalized course names from \texttt{general\_parameters.csv} rows whose \texttt{Parameter\_Name} begins with \texttt{prerequisite\_}.
+    \item The implemented logic counts category fulfillment through assignment variables $y_{ck}$, not directly through $x_c$. Hence category requirements are met by distinct assigned courses.
+    \item The revised curriculum rule that a cross-listed course cannot satisfy multiple category minima simultaneously is captured exactly by
+    \[
+    \sum_{k \in K(c)} y_{ck} \le x_c,
+    \]
+    with binary variables.
+    \item The programming-foundation rule is implemented exactly as the single constraint $x_{f^{\text{cs}}} \ge z_{k^{\text{cs}}}$. Because every category must satisfy the minimum-count constraint, the model necessarily activates every category, including computer science.
+    \item The activation variables $z_k$ are retained because they are present in the code, even though they are redundant once $\sum_{c \in C(k)} y_{ck} \ge m$ with $m \ge 1$ is imposed for every category.
+\end{itemize}

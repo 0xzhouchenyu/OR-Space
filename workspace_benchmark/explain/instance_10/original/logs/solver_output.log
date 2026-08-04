@@ -1,0 +1,53 @@
+Areas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+Distance limit: 800m
+Coverage:
+  Store at A covers: ['A', 'C', 'E', 'G', 'H', 'I']
+  Store at B covers: ['B', 'H', 'I']
+  Store at C covers: ['A', 'C', 'G', 'H', 'I']
+  Store at D covers: ['D', 'J']
+  Store at E covers: ['A', 'E', 'G']
+  Store at F covers: ['F', 'J', 'K']
+  Store at G covers: ['A', 'C', 'E', 'G']
+  Store at H covers: ['A', 'B', 'C', 'H', 'I']
+  Store at I covers: ['A', 'B', 'C', 'H', 'I']
+  Store at J covers: ['D', 'F', 'J', 'K', 'L']
+  Store at K covers: ['F', 'J', 'K', 'L']
+  Store at L covers: ['J', 'K', 'L']
+Set parameter LicenseID to value 2802670
+Set parameter OutputFlag to value 1
+Set parameter LogFile to value "/tmp/or_space_gurobi_stage_5zx9jcyg/solver_records/MinChainStores.gurobi.log"
+Gurobi Optimizer version 13.0.1 build v13.0.1rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+
+CPU model: Intel(R) Xeon(R) Platinum 8468, instruction set [SSE2|AVX|AVX2|AVX512]
+Thread count: 96 physical cores, 192 logical processors, using up to 32 threads
+
+Optimize a model with 12 rows, 12 columns and 48 nonzeros (Min)
+Model fingerprint: 0xdfc91d6f
+Model has 12 linear objective coefficients
+Variable types: 0 continuous, 12 integer (12 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 1e+00]
+
+Found heuristic solution: objective 3.0000000
+Presolve removed 12 rows and 12 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 1 (of 192 available processors)
+
+Solution count 1: 3 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0000%
+
+Status: Optimal
+Optimal number of stores: 3.0
+Store locations: ['A', 'I', 'J']
+All areas covered: True
+Covered areas: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+
+OBJECTIVE_VALUE: 3.0

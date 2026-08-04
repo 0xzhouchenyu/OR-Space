@@ -1,0 +1,109 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I=\{1,\dots,n\}$: set of key target parts, indexed by $i$. In this instance, $n=4$.
+    \item $J=\{0,\dots,n\}$: auxiliary index for the number of destroyed parts in the exact probability calculation.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_i$: distance from the airport to part $i$.
+    \item $p_i^H$: probability that one heavy bomb destroys part $i$.
+    \item $p_i^L$: probability that one light bomb destroys part $i$.
+    \item $\bar H$: maximum number of heavy bombs available (\texttt{max\_heavy\_bombs}).
+    \item $\bar L$: maximum number of light bombs available (\texttt{max\_light\_bombs}).
+    \item $F$: total fuel limit (\texttt{fuel\_limit}).
+    \item $k$: minimum number of parts that must be destroyed (\texttt{min\_parts\_destroyed}).
+    \item $e^H$: fuel efficiency when carrying a heavy bomb (\texttt{fuel\_efficiency\_heavy\_bomb}).
+    \item $e^L$: fuel efficiency when carrying a light bomb (\texttt{fuel\_efficiency\_light\_bomb}).
+    \item $e^E$: fuel efficiency when empty (\texttt{fuel\_efficiency\_empty}).
+    \item $f^{TL}$: fuel required for takeoff and landing per trip (\texttt{fuel\_takeoff\_landing}).
+    \item $f_i^H$: fuel consumed by one heavy-bomb trip assigned to part $i$:
+    \[
+    f_i^H=\frac{d_i}{e^H}+\frac{d_i}{e^E}+f^{TL}.
+    \]
+    \item $f_i^L$: fuel consumed by one light-bomb trip assigned to part $i$:
+    \[
+    f_i^L=\frac{d_i}{e^L}+\frac{d_i}{e^E}+f^{TL}.
+    \]
+\end{itemize}
+
+For a bomb allocation, define the induced destruction probability of part $i$ as
+\[
+q_i(x_i^H,x_i^L)=1-(1-p_i^H)^{x_i^H}(1-p_i^L)^{x_i^L}.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_i^H$ (code: \texttt{candidate[i][0]} / \texttt{xh}): nonnegative integer number of heavy bombs assigned to part $i$.
+    \item $x_i^L$ (code: \texttt{candidate[i][1]} / \texttt{xl}): nonnegative integer number of light bombs assigned to part $i$.
+\end{itemize}
+
+Thus,
+\[
+x_i^H,x_i^L \in \mathbb{Z}_{\ge 0}\qquad \forall i\in I.
+\]
+
+\section*{Objective}
+
+Maximize the probability that at least $k$ of the $n$ parts are destroyed:
+\[
+\max \; \mathbb{P}\!\left(\sum_{i\in I} Y_i \ge k\right),
+\]
+where the Bernoulli random variables $Y_i$ are assumed independent across parts and satisfy
+\[
+\mathbb{P}(Y_i=1)=q_i(x_i^H,x_i^L)
+=1-(1-p_i^H)^{x_i^H}(1-p_i^L)^{x_i^L}.
+\]
+
+Equivalently, the implemented objective is
+\[
+\max \; \sum_{S\subseteq I:\; |S|\ge k}
+\prod_{i\in S} q_i(x_i^H,x_i^L)
+\prod_{i\in I\setminus S} \left(1-q_i(x_i^H,x_i^L)\right).
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{i\in I} x_i^H &\le \bar H, \\
+\sum_{i\in I} x_i^L &\le \bar L, \\
+\sum_{i\in I} \left(f_i^H x_i^H + f_i^L x_i^L\right) &\le F, \\
+x_i^H,x_i^L &\in \mathbb{Z}_{\ge 0} \qquad \forall i\in I.
+\end{align}
+
+\section*{Notes on Implementation}
+
+The code does not formulate or solve a linear, mixed-integer linear, or conic model. Instead, it performs an exact recursive enumeration over all feasible integer allocations $(x_i^H,x_i^L)_{i\in I}$ satisfying the stockpile and fuel limits.
+
+For any enumerated allocation, the part-level destruction probabilities
+\[
+q_i=1-(1-p_i^H)^{x_i^H}(1-p_i^L)^{x_i^L}
+\]
+are computed first. Then the probability of destroying at least $k$ parts is evaluated exactly by dynamic programming over the number of successful part destructions. Specifically, if $\mathrm{dp}^{(r)}_j$ denotes the probability of exactly $j$ destroyed parts after processing the first $r$ parts, then
+\[
+\mathrm{dp}^{(0)}_0=1,\qquad \mathrm{dp}^{(0)}_j=0 \; (j>0),
+\]
+and for $r=1,\dots,n$,
+\[
+\mathrm{dp}^{(r)}_j
+=
+\mathrm{dp}^{(r-1)}_j(1-q_r)
++
+\mathbf{1}_{\{j>0\}}\mathrm{dp}^{(r-1)}_{j-1}q_r
+\qquad j=0,\dots,r.
+\]
+The objective value of that allocation is then
+\[
+\sum_{j=k}^{n} \mathrm{dp}^{(n)}_j.
+\]
+
+The recursive search uses remaining-resource bounds at each part to cap enumeration:
+\[
+x_i^H \le \min\!\left\{\text{remaining heavy bombs},\left\lfloor \frac{\text{remaining fuel}}{f_i^H}\right\rfloor\right\},
+\quad
+x_i^L \le \min\!\left\{\text{remaining light bombs},\left\lfloor \frac{\text{remaining fuel}}{f_i^L}\right\rfloor\right\},
+\]
+and accepts any allocation with unused bombs and/or unused fuel. No additional per-part capacity or exactly-$k$-parts-destroyed constraints are imposed.

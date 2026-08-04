@@ -1,0 +1,270 @@
+{
+  "solver": "gurobi",
+  "model_name": "Minimize_Waste",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 5680.0,
+  "objective_bound": 5680.0,
+  "mip_gap": 0.0,
+  "runtime": 0.005758047103881836,
+  "node_count": 1.0,
+  "iteration_count": 8.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_mixrkt30/solver_records/Minimize_Waste.gurobi.log",
+  "variables": {
+    "x_0_0": {
+      "value": 2000.0,
+      "reduced_cost": null
+    },
+    "x_0_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_0_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_0_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_10": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_11": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_12": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_13": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_4": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_5": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_6": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_7": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_8": {
+      "value": 1500.0,
+      "reduced_cost": null
+    },
+    "x_1_9": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_0_0": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_0_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_0_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_0_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_1_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_1_10": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_11": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_12": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_13": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_5": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_6": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_7": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_8": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_1_9": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 98000.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": "<=",
+      "slack": 98500.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C17": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C18": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C19": {
+      "sense": ">=",
+      "slack": -500.0,
+      "dual_value": null
+    },
+    "_C20": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C21": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

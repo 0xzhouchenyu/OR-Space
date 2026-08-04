@@ -1,0 +1,52 @@
+\section*{Sets and Indices}
+Let $I=\{1,2,3\}$ denote the set of components, indexed by $i$.
+Let $K=\{0,1,\dots,\bar{k}\}$ denote the admissible spare-part counts, where $\bar{k}=5$ is the largest value appearing in the reliability table.
+
+\section*{Parameters}
+For each component $i\in I$:
+\begin{itemize}
+  \item $c_i$ (code: \texttt{unit\_price[i]}) = unit cost of one spare part for component $i$;
+  \item $w_i$ (code: \texttt{unit\_weight[i]}) = unit weight of one spare part for component $i$.
+\end{itemize}
+Global limits:
+\begin{itemize}
+  \item $B$ (code: \texttt{total\_budget}) = total budget;
+  \item $W$ (code: \texttt{weight\_limit}) = total weight limit.
+\end{itemize}
+Reliability table:
+\[
+r_{ik} \quad \text{(code: \texttt{reliability[k][i-1]})}
+\]
+is the reliability of component $i$ when exactly $k$ spares are installed.
+
+\section*{Decision Variables}
+Let
+\[
+x_i \in K \qquad \text{for all } i\in I
+\]
+where $x_i$ (code: \texttt{s1, s2, s3} / spare-count selection) is the number of spares installed for component $i$.
+
+\section*{Objective}
+Maximize the system operational reliability:
+\[
+\max \; \prod_{i\in I} r_{i,x_i}.
+\]
+
+\section*{Constraints}
+Budget:
+\[
+\sum_{i\in I} c_i x_i \le B.
+\]
+
+Weight:
+\[
+\sum_{i\in I} w_i x_i \le W.
+\]
+
+Domain:
+\[
+x_i \in K \qquad \forall i\in I.
+\]
+
+\section*{Notes on Implementation}
+The source code does not solve a continuous relaxation or a MILP. It performs exact enumeration over all triples $(x_1,x_2,x_3)\in K^3$ and evaluates the objective only for combinations satisfying the budget and weight constraints. The reliability values are taken directly from the CSV table, and only spare counts appearing in that table are considered feasible.

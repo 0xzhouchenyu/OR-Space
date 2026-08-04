@@ -1,0 +1,90 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $W$: set of workshops, indexed by $w$. In this instance,
+    \[
+    W=\{A,B,C,D\}.
+    \]
+    \item $C$: set of components, indexed by $c$. In this instance,
+    \[
+    C=\{1,2,3\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $H_w$: available production capacity of workshop $w$ in hours (code: \texttt{capacities[w]}).
+    \[
+    H_A=100,\quad H_B=150,\quad H_C=80,\quad H_D=200.
+    \]
+    \item $r_{wc}$: production rate of component $c$ at workshop $w$ in units per hour (code: \texttt{rates[(w, c)]}).
+    
+    For this instance,
+    \[
+    \begin{array}{c|ccc}
+    w & r_{w1} & r_{w2} & r_{w3} \\
+    \hline
+    A & 10 & 15 & 5 \\
+    B & 15 & 10 & 5 \\
+    C & 20 & 5 & 10 \\
+    D & 10 & 15 & 20
+    \end{array}
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{wc} \ge 0$: hours allocated by workshop $w$ to production of component $c$ (code: \texttt{x[(w, c)]}).
+    \item $z \ge 0$: number of completed products (code: \texttt{z}).
+\end{itemize}
+
+\section*{Objective}
+
+Maximize the number of completed products:
+\[
+\max \; z.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{c \in C} x_{wc} &\le H_w
+&& \forall w \in W
+\label{cap}\\
+z &\le \sum_{w \in W} r_{wc}\, x_{wc}
+&& \forall c \in C
+\label{mincomp}\\
+x_{wc} &\ge 0
+&& \forall w \in W,\; c \in C
+\label{nonnegx}\\
+z &\ge 0.
+\label{nonnegz}
+\end{align}
+
+Constraint \eqref{cap} enforces each workshop's available hours.  
+Constraint \eqref{mincomp} models completed products as the minimum of total units produced across the three components, by requiring $z$ to be no larger than the total production of each component.
+
+\section*{Notes on Implementation}
+
+The implemented model in \texttt{current\_heuristic.py} is a linear program solved with PuLP using the Gurobi command-line solver interface (\texttt{GUROBI\_CMD}). The code does \emph{not} impose integrality on either the hour-allocation variables $x_{wc}$ or the completed-product variable $z$; all are continuous and nonnegative.
+
+The model does not include separate component-balance equations beyond the inequalities $z \le \sum_{w \in W} r_{wc}x_{wc}$. Thus, exactly as implemented, the objective maximizes a continuous variable $z$ representing the minimum available component quantity across components.
+
+For this specific instance, the LP is therefore:
+\[
+\max z
+\]
+subject to
+\begin{align*}
+x_{A1}+x_{A2}+x_{A3} &\le 100,\\
+x_{B1}+x_{B2}+x_{B3} &\le 150,\\
+x_{C1}+x_{C2}+x_{C3} &\le 80,\\
+x_{D1}+x_{D2}+x_{D3} &\le 200,\\
+z &\le 10x_{A1}+15x_{B1}+20x_{C1}+10x_{D1},\\
+z &\le 15x_{A2}+10x_{B2}+5x_{C2}+15x_{D2},\\
+z &\le 5x_{A3}+5x_{B3}+10x_{C3}+20x_{D3},\\
+x_{wc} &\ge 0 \qquad \forall w\in W,\; c\in C,\\
+z &\ge 0.
+\end{align*}

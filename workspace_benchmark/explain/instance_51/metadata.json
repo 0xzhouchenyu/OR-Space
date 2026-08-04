@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_051",
+  "instance_number": 51,
+  "source_revise_instance": "IndustryOR_51_revise_business",
+  "domain": "Scheduling",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Scheduling",
+    "question": "The revised objective increased from 4240.0 to 4400.0. Trace exactly which code changes caused that increase by naming the dropped/forbidden variable(s) and the added constraint family, and tie each one back to the precise `general_parameters.csv` field names/values and the business-brief phrases they implement. Then, using the revised LP relaxation output, identify which revised constraints are binding versus slack (cite at least `demand_2`, one `min_regular_daytime_*`, and `contract_cap` with their slack/dual values), explain the business meaning of the nonzero shadow prices and `y_2 = 4.0`, and state why you cannot linearly extrapolate those dual values to predict the effect of further tightening the daytime regular-coverage rule."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "NurseScheduling.gurobi.log",
+        "NurseScheduling.lp_relaxation.json",
+        "NurseScheduling.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "NurseScheduling_Revised.gurobi.log",
+        "NurseScheduling_Revised.lp_relaxation.json",
+        "NurseScheduling_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 67.401667
+  }
+}

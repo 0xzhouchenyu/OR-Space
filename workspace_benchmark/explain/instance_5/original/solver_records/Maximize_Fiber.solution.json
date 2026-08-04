@@ -1,0 +1,167 @@
+{
+  "solver": "gurobi",
+  "model_name": "Maximize_Fiber",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 18.694285714285712,
+  "objective_bound": 18.694285714285712,
+  "mip_gap": 0.0,
+  "runtime": 0.004608869552612305,
+  "node_count": 1.0,
+  "iteration_count": 9.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_1ynuc4_m/solver_records/Maximize_Fiber.gurobi.log",
+  "variables": {
+    "x_beef": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_cabbage": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_carrots": {
+      "value": 0.37142857142857144,
+      "reduced_cost": null
+    },
+    "x_celery": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_okra": {
+      "value": 5.5285714285714285,
+      "reduced_cost": null
+    },
+    "x_pork": {
+      "value": 0.1,
+      "reduced_cost": null
+    },
+    "x_salmon": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_beef": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_cabbage": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_carrots": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_celery": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_okra": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_pork": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_salmon": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": ">=",
+      "slack": -5.428571428571429,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 0.47142857142857153,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": -0.27142857142857146,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 5.628571428571428,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C17": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C18": {
+      "sense": "<=",
+      "slack": 5.9,
+      "dual_value": null
+    }
+  }
+}

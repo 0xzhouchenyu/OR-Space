@@ -1,0 +1,70 @@
+{
+  "solver": "gurobi",
+  "model_name": "Coal_Distribution",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 1030.0,
+  "objective_bound": 1030.0,
+  "mip_gap": null,
+  "runtime": 0.0006089210510253906,
+  "node_count": 0.0,
+  "iteration_count": 1.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_btm1l8ok/solver_records/Coal_Distribution.gurobi.log",
+  "variables": {
+    "x_A_1": {
+      "value": 0.0,
+      "reduced_cost": 9.0
+    },
+    "x_A_2": {
+      "value": 30.0,
+      "reduced_cost": 0.0
+    },
+    "x_A_3": {
+      "value": 50.0,
+      "reduced_cost": 0.0
+    },
+    "x_B_1": {
+      "value": 55.0,
+      "reduced_cost": 0.0
+    },
+    "x_B_2": {
+      "value": 45.0,
+      "reduced_cost": 0.0
+    },
+    "x_B_3": {
+      "value": 0.0,
+      "reduced_cost": 6.0
+    }
+  },
+  "constraints": {
+    "Min_Supply_A": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Min_Supply_B": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 3.0
+    },
+    "Demand_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "Demand_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 5.0
+    },
+    "Demand_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 6.0
+    }
+  }
+}

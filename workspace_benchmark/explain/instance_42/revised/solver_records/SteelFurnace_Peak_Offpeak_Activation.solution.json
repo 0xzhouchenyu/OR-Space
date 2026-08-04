@@ -1,0 +1,142 @@
+{
+  "solver": "gurobi",
+  "model_name": "SteelFurnace_Peak_Offpeak_Activation",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 160.0,
+  "objective_bound": 160.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004130125045776367,
+  "node_count": 1.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_kzft63m1/solver_records/SteelFurnace_Peak_Offpeak_Activation.gurobi.log",
+  "variables": {
+    "cooldown_1_off": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "cooldown_2_off": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_1_1_off": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_1_1_peak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_2_off": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_2_peak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_1_off": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "x_2_1_peak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_2_off": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_2_peak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_1_off": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_1_peak": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_2_off": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_2_peak": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Furnace_1_Offpeak_Time": {
+      "sense": "<=",
+      "slack": 10.0,
+      "dual_value": null
+    },
+    "Furnace_1_Peak_Time": {
+      "sense": "<=",
+      "slack": 8.0,
+      "dual_value": null
+    },
+    "Furnace_2_Offpeak_Time": {
+      "sense": "<=",
+      "slack": 8.0,
+      "dual_value": null
+    },
+    "Furnace_2_Peak_Time": {
+      "sense": "<=",
+      "slack": 8.0,
+      "dual_value": null
+    },
+    "Plant_Offpeak_Time": {
+      "sense": "<=",
+      "slack": 18.0,
+      "dual_value": null
+    },
+    "Plant_Peak_Time": {
+      "sense": "<=",
+      "slack": 16.0,
+      "dual_value": null
+    },
+    "Offpeak_Activation_Link_1": {
+      "sense": "<=",
+      "slack": 11.0,
+      "dual_value": null
+    },
+    "Peak_Activation_Link_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Offpeak_Cooldown_1": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "Offpeak_Activation_Link_2": {
+      "sense": "<=",
+      "slack": 10.0,
+      "dual_value": null
+    },
+    "Peak_Activation_Link_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Offpeak_Cooldown_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Min_Production": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

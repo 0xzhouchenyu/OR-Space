@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_033",
+  "instance_number": 33,
+  "source_revise_instance": "IndustryOR_33_revise_business",
+  "domain": "Inheritance_Split / Binary Allocation",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Inheritance_Split / Binary Allocation",
+    "question": "In the revised model, explain why the objective drops from 1000.0 in the original run to 200.0 even though the final total-ownership imbalance is still `diff_total = 1000.0`. Your answer must name the exact new code variables and constraint families that make this possible—especially the immediate/deferred split (`x_immediate_s1[i]`, `x_immediate_s2[i]`, `x_deferred[i]`), the weighted objective variable `tax_weighted_diff`, and at least one of the new business-rule constraints tied to `son1_min_share`, `max_high_value_items_per_son`, or `deferred_diamonds_per_son`—and trace each back to the exact `general_parameters.csv` field names and the `table_1.csv` columns used to instantiate them. Also use the solver diagnostics to identify which imbalance component is binding in the revised optimum, interpret the marginal meaning of the LP-relaxation reduced costs/duals for `diff_immediate` and `diff_total`, and explain why you cannot linearly extrapolate those marginal values to predict the MIP objective change under tighter share or diamond limits."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Inheritance_Split.gurobi.log",
+        "Inheritance_Split.lp_relaxation.json",
+        "Inheritance_Split.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Inheritance_Split_Restructured.gurobi.log",
+        "Inheritance_Split_Restructured.lp_relaxation.json",
+        "Inheritance_Split_Restructured.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 84.875
+  }
+}

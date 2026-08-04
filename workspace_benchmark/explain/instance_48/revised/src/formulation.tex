@@ -1,0 +1,114 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $M$ : set of microcomputer models, with $M=\{A,B\}$.
+    \item $S$ : set of production time categories in Process II, with $S=\{r,o\}$, where $r$ denotes regular time and $o$ denotes overtime.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $a^{I}_m$ : Process I hours required per unit of model $m$.
+    \item $a^{II}_m$ : Process II hours required per unit of model $m$.
+    \item $p_m$ : base profit per unit of model $m$.
+    \item $d_m$ : profit reduction per unit of model $m$ produced in Process II overtime.
+    \item $H^{I}$ : required total weekly hours used in Process I.
+    \item $C^{II}$ : regular-time weekly capacity in Process II.
+    \item $O^{II}$ : maximum overtime hours allowed in Process II.
+    \item $L_m$ : minimum required weekly production of model $m$.
+    \item $\Pi^{\min}$ : minimum total weekly profit.
+\end{itemize}
+
+Using the provided data, these correspond to:
+\[
+a^{I}_A=4,\quad a^{I}_B=6,\quad
+a^{II}_A=3,\quad a^{II}_B=2,
+\]
+\[
+p_A=300,\quad p_B=450,\quad
+d_A=20,\quad d_B=25,
+\]
+\[
+H^{I}=150,\quad C^{II}=70,\quad O^{II}=30,
+\]
+\[
+L_A=10,\quad L_B=15,\quad \Pi^{\min}=10000.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{A,r}$ (code: \texttt{xA\_r}) : units of model A assigned to regular Process II time.
+    \item $x_{A,o}$ (code: \texttt{xA\_o}) : units of model A assigned to Process II overtime.
+    \item $x_{B,r}$ (code: \texttt{xB\_r}) : units of model B assigned to regular Process II time.
+    \item $x_{B,o}$ (code: \texttt{xB\_o}) : units of model B assigned to Process II overtime.
+\end{itemize}
+
+All variables are continuous and nonnegative:
+\[
+x_{m,s}\ge 0 \qquad \forall m\in M,\ s\in S.
+\]
+
+Define total production by model as in the code:
+\[
+\text{total}_A = x_{A,r}+x_{A,o},\qquad
+\text{total}_B = x_{B,r}+x_{B,o}.
+\]
+
+\section*{Objective}
+
+Maximize total units produced:
+\[
+\max \; (\text{total}_A+\text{total}_B)
+\]
+i.e.,
+\[
+\max \; x_{A,r}+x_{A,o}+x_{B,r}+x_{B,o}.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+a^{I}_A(\text{total}_A) + a^{I}_B(\text{total}_B) &= H^{I}
+\label{eq:proc1}
+\\
+a^{II}_A x_{A,r} + a^{II}_B x_{B,r} &\le C^{II}
+\label{eq:proc2_regular}
+\\
+a^{II}_A x_{A,o} + a^{II}_B x_{B,o} &\le O^{II}
+\label{eq:proc2_overtime}
+\\
+\text{total}_A &\ge L_A
+\label{eq:minA}
+\\
+\text{total}_B &\ge L_B
+\label{eq:minB}
+\\
+p_A x_{A,r} + p_B x_{B,r} + (p_A-d_A)x_{A,o} + (p_B-d_B)x_{B,o} &\ge \Pi^{\min}
+\label{eq:profit_floor}
+\end{align}
+
+Substituting the given values, the implemented model is:
+\begin{align}
+4(x_{A,r}+x_{A,o}) + 6(x_{B,r}+x_{B,o}) &= 150
+\\
+3x_{A,r} + 2x_{B,r} &\le 70
+\\
+3x_{A,o} + 2x_{B,o} &\le 30
+\\
+x_{A,r}+x_{A,o} &\ge 10
+\\
+x_{B,r}+x_{B,o} &\ge 15
+\\
+300x_{A,r} + 450x_{B,r} + 280x_{A,o} + 425x_{B,o} &\ge 10000.
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The source code formulates this as a linear program and solves it with Gurobi through the PuLP-compatible interface (\texttt{pulp.GUROBI\_CMD}).
+    \item The split into regular and overtime variables is explicit only for Process II. Process I uses the total production quantities and is enforced as an equality, not an upper bound.
+    \item Overtime reduces per-unit profit only for the units assigned to overtime variables $x_{A,o}$ and $x_{B,o}$, exactly as represented in constraint \eqref{eq:profit_floor}.
+    \item The decision variables are created without integrality restrictions, so the implemented model allows fractional production quantities.
+    \item Although \texttt{cap\_I} is read from \texttt{table\_1.csv}, the implemented model uses \texttt{process\_I\_hours} from \texttt{general\_parameters.csv} as the right-hand side of the Process I equality constraint.
+\end{itemize}

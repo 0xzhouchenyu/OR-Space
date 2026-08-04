@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_19_revise_business",
+  "original_instance_id": "IndustryOR_19",
+  "revise_description": "In the stakeholder handoff for this case, the risk reviewer framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The chair purchase now has to follow the supplier reliability policy. For each manufacturer used this period, procurement must choose either the regular channel or the express channel, never both for the same supplier. The chosen channel brings its own fixed fee from the `fixed_fee_*` parameters, and all orders together must respect `weekly_order_budget` while meeting the required chair quantity. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+6var, +10constr, mod_2constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 6,
+        "-variable": 0,
+        "+constraint": 10,
+        "-constraint": 0,
+        "modify_constraint": 2,
+        "modify_data": 1
+      },
+      "op_count": 19,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 77.777778
+  }
+}

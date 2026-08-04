@@ -1,0 +1,10 @@
+Parameter_Name,Value,Unit,Context_Description
+profit_per_acre_apples,2000,USD,Profit for growing one acre of apples
+profit_per_acre_pears,1800,USD,Profit for growing one acre of pears
+profit_per_acre_oranges,2200,USD,Profit for growing one acre of oranges
+profit_per_acre_lemons,3000,USD,Profit for growing one acre of lemons
+total_farm_area,120,acres,Total area of the farm in the Yarra Valley
+min_apples_to_pears_ratio,2,,The land used to grow apples should be at least twice the land used to grow pears
+min_apples_to_lemons_ratio,3,,The land used to grow apples should be at least three times the land used to grow lemons
+oranges_to_lemons_ratio,2,,The land used to grow oranges must be twice the land used to grow lemons
+max_fruit_types,2,,Vicky and David are unwilling to grow more than two types of fruit

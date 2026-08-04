@@ -1,0 +1,129 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinChainStores",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 3.0,
+  "objective_bound": 3.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0008020401000976562,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_5zx9jcyg/solver_records/MinChainStores.gurobi.log",
+  "variables": {
+    "x_A": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_B": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_D": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_E": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_F": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_G": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_H": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_I": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_J": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_K": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_L": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Cover_A": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "Cover_B": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Cover_C": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "Cover_D": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Cover_E": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Cover_F": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Cover_G": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Cover_H": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "Cover_I": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "Cover_J": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Cover_K": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Cover_L": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

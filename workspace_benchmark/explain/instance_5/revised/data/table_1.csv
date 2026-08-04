@@ -1,0 +1,8 @@
+Food,Type,Fiber_Content_per_100g,Price_per_100g,prep_time_per_100g
+okra,vegetable,3.2,2.6,5
+carrots,vegetable,2.7,1.2,4
+celery,vegetable,1.6,1.6,3
+cabbage,vegetable,2.0,2.3,6
+salmon,protein,,4.0,15
+beef,protein,,3.6,20
+pork,protein,,1.8,12

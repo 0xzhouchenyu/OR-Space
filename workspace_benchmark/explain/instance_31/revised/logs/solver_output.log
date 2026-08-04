@@ -1,0 +1,17 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+A2_B2_joint_calibration = 1
+x_A1_I = 1200.0
+x_A2_I = 230.0492610837439
+x_A2_II = 500.0
+x_A2_III = 324.13793103448273
+x_B1_II = 500.0
+x_B2_I = 858.6206896551724
+x_B2_III = 324.13793103448273
+x_B3_I = 571.4285714285714
+y_A1 = 1
+y_A2 = 1
+y_B1 = 1
+y_B2 = 1
+y_B3 = 1
+OBJECTIVE_VALUE: 670.57

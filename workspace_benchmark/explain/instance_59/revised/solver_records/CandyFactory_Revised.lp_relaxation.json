@@ -1,0 +1,161 @@
+{
+  "solver": "gurobi",
+  "model_name": "CandyFactory_Revised_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 5749.278752436649,
+  "runtime": 0.00032901763916015625,
+  "variables": {
+    "shared_ab_wrapper": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_0_0": {
+      "value": 1526.6666666666667,
+      "reduced_cost": 0.0
+    },
+    "x_0_1": {
+      "value": 473.33333333333326,
+      "reduced_cost": 0.0
+    },
+    "x_0_2": {
+      "value": 0.0,
+      "reduced_cost": -1.3110136452241719
+    },
+    "x_1_0": {
+      "value": 508.8888888888883,
+      "reduced_cost": 0.0
+    },
+    "x_1_1": {
+      "value": 1991.1111111111118,
+      "reduced_cost": 0.0
+    },
+    "x_1_2": {
+      "value": 0.0,
+      "reduced_cost": -0.23304093567251494
+    },
+    "x_2_0": {
+      "value": 508.8888888888891,
+      "reduced_cost": 0.0
+    },
+    "x_2_1": {
+      "value": 691.1111111111109,
+      "reduced_cost": 0.0
+    },
+    "x_2_2": {
+      "value": 0.0,
+      "reduced_cost": -0.23304093567251494
+    },
+    "y_0": {
+      "value": 2544.4444444444453,
+      "reduced_cost": 0.0
+    },
+    "y_1": {
+      "value": 3155.555555555555,
+      "reduced_cost": 0.0
+    },
+    "y_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z_0": {
+      "value": 0.446393762183236,
+      "reduced_cost": 0.0
+    },
+    "z_1": {
+      "value": 0.5536062378167641,
+      "reduced_cost": 0.0
+    },
+    "z_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.1479532163742694
+    },
+    "_C2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.10526315789473684
+    },
+    "_C3": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.1479532163742694
+    },
+    "_C4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.14035087719298245
+    },
+    "_C5": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.9149122807017545
+    },
+    "_C6": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.03508771929824561
+    },
+    "_C7": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -300.0
+    },
+    "_C8": {
+      "sense": "<",
+      "slack": 0.446393762183236,
+      "dual_value": 0.0
+    },
+    "_C9": {
+      "sense": "<",
+      "slack": 0.5536062378167641,
+      "dual_value": 0.0
+    },
+    "_C10": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 1.2259259259259263
+    },
+    "_C11": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.6479532163742694
+    },
+    "_C12": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 1.1479532163742694
+    },
+    "_C13": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -1.0779727095516562
+    },
+    "_C14": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -1.0779727095516556
+    },
+    "_C15": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "_C16": {
+      "sense": "<",
+      "slack": 1202.2222222222222,
+      "dual_value": 0.0
+    },
+    "_C17": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    }
+  }
+}

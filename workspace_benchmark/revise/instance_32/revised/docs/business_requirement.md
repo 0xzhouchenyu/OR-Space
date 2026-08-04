@@ -1,0 +1,7 @@
+A product consists of three components produced by four workshops, each with a limited number of production hours. The production rates of the three components and the production capacities of the workshops are provided in the corresponding CSV files in the data folder. The objective is to determine the number of hours each workshop should allocate to each component to maximize the number of completed products. Formulate this problem as a linear programming problem.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the service manager framed the change in business terms rather than as a spreadsheet checklist. At the latest operating review, the business owner rejected treating this as a cosmetic rerun. The plan has to follow the commercial interpretation below, with the data-pack labels read literally. The workshop plan now follows a day/night staffing calendar with limited overtime. Each workshop has regular-hour bands and overtime room by shift, and no more than two workshops should be active in the same shift because supervision is limited. Night work and overtime each carry their listed drawbacks, so the schedule should meet requirements while keeping those burdens small. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

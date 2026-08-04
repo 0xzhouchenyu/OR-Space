@@ -1,0 +1,111 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item \(T=\{0,1,2,3,4,5\}\): set of 4-hour time periods over the 24-hour day.
+    \item \(J=\{0,1,2,3,4,5\}\): set of shift start batches.
+\end{itemize}
+
+Using the CSV data, the periods and corresponding shift starts are ordered as:
+\[
+0:\text{ 2:00--6:00},\quad
+1:\text{ 6:00--10:00},\quad
+2:\text{ 10:00--14:00},\quad
+3:\text{ 14:00--18:00},\quad
+4:\text{ 18:00--22:00},\quad
+5:\text{ 22:00--2:00}.
+\]
+
+Each shift starts at the beginning of one period and lasts for 8 hours, i.e., exactly 2 consecutive periods. Hence shift \(j\) covers periods
+\[
+j \quad \text{and} \quad (j+1)\bmod 6.
+\]
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item \(d_i\): required number of nurses in period \(i\) (code source: \texttt{demand[i]}). From the data:
+    \[
+    (d_0,d_1,d_2,d_3,d_4,d_5)=(10,15,25,20,18,12).
+    \]
+    \item \(H\): shift duration in hours (code: \texttt{shift\_duration}), with
+    \[
+    H=8.
+    \]
+    \item \(c^R\): hourly pay of a regular nurse (code: \texttt{regular\_pay}), with
+    \[
+    c^R=10.
+    \]
+    \item \(c^C\): hourly pay of a contract nurse (code: \texttt{contract\_pay}), with
+    \[
+    c^C=15.
+    \]
+    \item \(a_{ij}\in\{0,1\}\): coverage indicator, equal to 1 if shift \(j\) covers period \(i\), and 0 otherwise. As implemented,
+    \[
+    a_{ij}=1 \iff i\in\{j,(j+1)\bmod 6\}.
+    \]
+\end{itemize}
+
+Equivalently, for each period \(i\), the covering shifts are \(i\) and \((i-1)\bmod 6\).
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_j\) (code: \texttt{x[j]}): number of regular nurses starting shift \(j\), integer and nonnegative.
+    \item \(y_j\) (code: \texttt{y[j]}): number of contract nurses starting shift \(j\), integer and nonnegative.
+\end{itemize}
+
+Thus,
+\[
+x_j \in \mathbb{Z}_{\ge 0}, \qquad y_j \in \mathbb{Z}_{\ge 0} \qquad \forall j\in J.
+\]
+
+\section*{Objective}
+
+Minimize total wage cost over all nurses started in the six batches:
+\[
+\min \sum_{j\in J} \left( c^R H\, x_j + c^C H\, y_j \right).
+\]
+
+With the given parameter values, this is
+\[
+\min \sum_{j\in J} \left(80\,x_j + 120\,y_j\right).
+\]
+
+\section*{Constraints}
+
+Coverage must meet or exceed demand in every period:
+\[
+\sum_{j\in J} a_{ij}(x_j+y_j) \ge d_i \qquad \forall i\in T.
+\]
+
+Given the implemented 2-period cyclic coverage logic, these constraints are equivalently
+\[
+x_i+y_i+x_{(i-1)\bmod 6}+y_{(i-1)\bmod 6} \ge d_i
+\qquad \forall i\in T.
+\]
+
+Written out explicitly:
+\begin{align*}
+x_0+y_0+x_5+y_5 &\ge 10,\\
+x_1+y_1+x_0+y_0 &\ge 15,\\
+x_2+y_2+x_1+y_1 &\ge 25,\\
+x_3+y_3+x_2+y_2 &\ge 20,\\
+x_4+y_4+x_3+y_3 &\ge 18,\\
+x_5+y_5+x_4+y_4 &\ge 12.
+\end{align*}
+
+Integrality and nonnegativity:
+\[
+x_j \in \mathbb{Z}_{\ge 0},\qquad y_j \in \mathbb{Z}_{\ge 0}\qquad \forall j\in J.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code builds this model as an integer linear program using PuLP-compatible syntax and solves it with Gurobi via \texttt{GUROBI\_CMD(msg=0)}.
+    \item There are exactly 6 shift-start batches, one aligned with each 4-hour period listed in the CSV.
+    \item The implementation does not impose any upper bounds on \(x_j\) or \(y_j\).
+    \item Regular and contract nurses have identical coverage patterns; they differ only in cost.
+    \item Coverage is modeled cyclically across midnight through the modulo operation \((j+1)\bmod 6\). In particular, the shift starting at 22:00 covers periods \(5\) and \(0\).
+    \item The objective uses full-shift cost \( (\text{hourly pay}) \times 8 \) for each nurse started, exactly as in the source code.
+\end{itemize}

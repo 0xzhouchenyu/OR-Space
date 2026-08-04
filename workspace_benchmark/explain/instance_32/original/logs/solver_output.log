@@ -1,0 +1,13 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+Workshop A, Component 2: 100.00 hours -> 1500.00 units
+Workshop B, Component 1: 88.28 hours -> 1324.14 units
+Workshop B, Component 2: 61.72 hours -> 617.24 units
+Workshop C, Component 1: 80.00 hours -> 1600.00 units
+Workshop D, Component 2: 53.79 hours -> 806.90 units
+Workshop D, Component 3: 146.21 hours -> 2924.14 units
+Total Component 1: 2924.14 units
+Total Component 2: 2924.14 units
+Total Component 3: 2924.14 units
+
+OBJECTIVE_VALUE: 2924.1

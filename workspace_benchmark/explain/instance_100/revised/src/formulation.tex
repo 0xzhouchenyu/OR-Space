@@ -1,0 +1,89 @@
+\section*{Sets and Indices}
+Let $N$ be the set of communication nodes, with $N=\{A,B,C,D,E\}$.
+Let $K=\{1,2\}$ index the two directed path layers used in the implementation: layer $1$ for the route from $A$ to $C$, and layer $2$ for the route from $C$ to $E$.
+Let
+\[
+E=\{(u,v)\in N\times N:\ \text{bandwidth}_{uv}>0\}
+\]
+be the set of admissible directed links extracted from \texttt{table\_1.csv}.
+
+\section*{Parameters}
+For each admissible arc $(u,v)\in E$, let $b_{uv}$ denote its bandwidth and define its routing cost
+\[
+c_{uv}=100-b_{uv}.
+\]
+The CSV data gives the nonzero bandwidths:
+\[
+\begin{aligned}
+&b_{AB}=90,\ b_{AC}=85,\ b_{AE}=65,\\
+&b_{BA}=95,\ b_{BC}=70,\ b_{BD}=65,\ b_{BE}=34,\\
+&b_{CA}=60,\ b_{CD}=88,\ b_{CE}=80,\\
+&b_{DA}=67,\ b_{DB}=30,\ b_{DC}=25,\ b_{DE}=84,\\
+&b_{EB}=51,\ b_{ED}=56.
+\end{aligned}
+\]
+All other ordered pairs have bandwidth $0$ and are excluded from $E$.
+
+\section*{Decision Variables}
+For each $(u,v)\in E$, let
+\[
+x^{1}_{uv}\in\{0,1\} \quad \text{(code: \texttt{x1[(u,v)]})}
+\]
+indicate whether arc $(u,v)$ is used in the $A\to C$ path, and
+\[
+x^{2}_{uv}\in\{0,1\} \quad \text{(code: \texttt{x2[(u,v)]})}
+\]
+indicate whether arc $(u,v)$ is used in the $C\to E$ path.
+
+\section*{Objective}
+Minimize the total routing cost of the selected links:
+\[
+\min \sum_{(u,v)\in E} c_{uv}\bigl(x^{1}_{uv}+x^{2}_{uv}\bigr).
+\]
+
+\section*{Constraints}
+\paragraph{Flow balance for the $A\to C$ layer.}
+For every $n\in N$,
+\[
+\sum_{(u,n)\in E} x^{1}_{un}-\sum_{(n,v)\in E} x^{1}_{nv}=
+\begin{cases}
+-1, & n=A,\\
+1, & n=C,\\
+0, & \text{otherwise}.
+\end{cases}
+\]
+
+\paragraph{Flow balance for the $C\to E$ layer.}
+For every $n\in N$,
+\[
+\sum_{(u,n)\in E} x^{2}_{un}-\sum_{(n,v)\in E} x^{2}_{nv}=
+\begin{cases}
+-1, & n=C,\\
+1, & n=E,\\
+0, & \text{otherwise}.
+\end{cases}
+\]
+
+\paragraph{Combined path-structure constraints.}
+For every $n\in N$ let
+\[
+f_n^{\text{in}}=\sum_{(u,n)\in E}\bigl(x^{1}_{un}+x^{2}_{un}\bigr),\qquad
+f_n^{\text{out}}=\sum_{(n,v)\in E}\bigl(x^{1}_{nv}+x^{2}_{nv}\bigr).
+\]
+Then:
+\[
+f_A^{\text{in}}=0,\quad f_A^{\text{out}}=1,
+\]
+\[
+f_E^{\text{in}}=1,\quad f_E^{\text{out}}=0,
+\]
+\[
+f_C^{\text{in}}=1,\quad f_C^{\text{out}}=1,
+\]
+and for each $n\in N\setminus\{A,C,E\}$,
+\[
+f_n^{\text{in}}\le 1,\qquad f_n^{\text{out}}\le 1.
+\]
+
+\section*{Notes on Implementation}
+The model is a binary optimization problem solved exactly by Gurobi through PuLP in \texttt{current\_heuristic.py}. The two-layer construction enforces a simple route from $A$ to $C$ and a simple route from $C$ to $E$, with the combined constraints ensuring that the overall link from $A$ to $E$ passes through $C$ and does not split into multiple visits at intermediate nodes. Nodes with zero bandwidth are omitted from $E$ rather than modeled with binary variables.

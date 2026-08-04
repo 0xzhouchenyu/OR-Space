@@ -1,0 +1,51 @@
+Set parameter LicenseID to value 2802670
+Set parameter OutputFlag to value 1
+Set parameter TimeLimit to value 120
+Set parameter LogFile to value "/tmp/or_space_gurobi_stage_qjagmta_/solver_records/ContainerMinimization.gurobi.log"
+Gurobi Optimizer version 13.0.1 build v13.0.1rc0 (linux64 - "Ubuntu 22.04.5 LTS")
+
+CPU model: Intel(R) Xeon(R) Platinum 8468, instruction set [SSE2|AVX|AVX2|AVX512]
+Thread count: 96 physical cores, 192 logical processors, using up to 32 threads
+
+Non-default parameters:
+TimeLimit  120
+
+Optimize a model with 94 rows, 105 columns and 373 nonzeros (Min)
+Model fingerprint: 0x85472320
+Model has 15 linear objective coefficients
+Variable types: 0 continuous, 105 integer (30 binary)
+Coefficient statistics:
+  Matrix range     [4e-01, 1e+02]
+  Objective range  [1e+00, 1e+00]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [9e+01, 3e+02]
+
+Presolve removed 56 rows and 60 columns
+Presolve time: 0.00s
+Presolved: 38 rows, 45 columns, 149 nonzeros
+Variable types: 0 continuous, 45 integer (10 binary)
+Found heuristic solution: objective 7.0000000
+
+Root relaxation: cutoff, 36 iterations, 0.00 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0     cutoff    0         7.00000    7.00000  0.00%     -    0s
+
+Explored 1 nodes (36 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 32 (of 192 available processors)
+
+Solution count 1: 7 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 7.000000000000e+00, best bound 7.000000000000e+00, gap 0.0000%
+Status: Optimal
+  Container 0: {'C': 132, 'D': 12}, weight=60.0
+  Container 1: {'C': 132, 'D': 12}, weight=60.0
+  Container 2: {'D': 12, 'E': 54}, weight=42.3
+  Container 3: {'C': 15, 'D': 18, 'E': 66}, weight=59.7
+  Container 4: {'B': 46, 'C': 17, 'D': 12}, weight=60.0
+  Container 5: {'A': 16, 'B': 44, 'C': 2, 'D': 12}, weight=60.0
+  Container 6: {'A': 104, 'C': 2, 'D': 12}, weight=60.0
+OBJECTIVE_VALUE: 7.0

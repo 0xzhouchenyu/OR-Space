@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_32_revise_business",
+  "original_instance_id": "IndustryOR_32",
+  "revise_description": "In the stakeholder handoff for this case, the service manager framed the change in business terms rather than as a spreadsheet checklist. At the latest operating review, the business owner rejected treating this as a cosmetic rerun. The plan has to follow the commercial interpretation below, with the data-pack labels read literally. The workshop plan now follows a day/night staffing calendar with limited overtime. Each workshop has regular-hour bands and overtime room by shift, and no more than two workshops should be active in the same shift because supervision is limited. Night work and overtime each carry their listed drawbacks, so the schedule should meet requirements while keeping those burdens small. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+32var, +18constr, mod_7constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 32,
+        "-variable": 0,
+        "+constraint": 18,
+        "-constraint": 0,
+        "modify_constraint": 7,
+        "modify_data": 1
+      },
+      "op_count": 58,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 11.111111
+  }
+}

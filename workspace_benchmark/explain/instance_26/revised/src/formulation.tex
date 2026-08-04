@@ -1,0 +1,66 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $J = \{0,1,2,3,4,5\}$: set of 4-hour periods in the day, indexed in cyclic order.
+    \item For each period $j \in J$, index $(j-1) \bmod 6$ denotes the immediately preceding period, with wrap-around from period $0$ to period $5$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $r_j$ (code data: \texttt{req\_values[j]}): required number of salespeople physically present in period $j$; from \texttt{Required\_Salespeople} in \texttt{table\_1.csv}.
+    \item $c^{FT}$ (code: \texttt{full\_time\_cost}): cost of one full-time 8-hour shift.
+    \item $c^{PT}$ (code: \texttt{part\_time\_cost}): cost of one part-time 4-hour shift.
+    \item $U^{PT}$ (code: \texttt{part\_time\_cap}): maximum number of part-time workers allowed in any single period.
+    \item $L^{FT}$ (code: \texttt{min\_ft\_per\_period}): minimum number of full-time workers that must be present in each period.
+\end{itemize}
+
+The full-time shift duration is 8 hours, so a full-time worker starting in period $j$ covers periods $j$ and $(j+1)\bmod 6$. Equivalently, the full-time workers present in period $j$ are those who started in periods $j$ and $(j-1)\bmod 6$.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x^{FT}_j$ (code: \texttt{x\_FT[j]}): integer number of full-time workers starting their 8-hour shift in period $j$.
+    \item $x^{PT}_j$ (code: \texttt{x\_PT[j]}): integer number of part-time workers assigned to work only period $j$.
+\end{itemize}
+
+All decision variables are constrained to be nonnegative integers.
+
+\section*{Objective}
+
+Minimize total daily labor cost:
+\[
+\min \; c^{FT}\sum_{j \in J} x^{FT}_j \;+\; c^{PT}\sum_{j \in J} x^{PT}_j.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Staffing coverage in each period}
+    \[
+    x^{FT}_j + x^{FT}_{(j-1)\bmod 6} + x^{PT}_j \;\ge\; r_j
+    \qquad \forall j \in J.
+    \]
+
+    \item \textbf{Part-time cap in each period}
+    \[
+    x^{PT}_j \;\le\; U^{PT}
+    \qquad \forall j \in J.
+    \]
+
+    \item \textbf{Minimum full-time presence in each period}
+    \[
+    x^{FT}_j + x^{FT}_{(j-1)\bmod 6} \;\ge\; L^{FT}
+    \qquad \forall j \in J.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model in \texttt{current\_heuristic.py} is exactly the integer linear program above, created with PuLP-compatible syntax and solved using \texttt{GUROBI\_CMD}.
+    \item The period set is inferred from the rows of \texttt{table\_1.csv}; in this instance there are six periods corresponding to the listed time blocks.
+    \item The code uses the cyclic coverage logic explicitly: in period $j$, full-time coverage comes from starts in period $j$ and in the previous period $(j-1)\bmod 6$.
+    \item No upper bound is imposed on full-time starts other than nonnegativity and integrality.
+    \item The objective value printed by the code is the optimal value of this ILP.
+\end{itemize}

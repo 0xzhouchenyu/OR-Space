@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_060",
+  "instance_number": 60,
+  "source_revise_instance": "IndustryOR_60_revise_business",
+  "domain": "Routing / Multi-Day TSP",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Routing / Multi-Day TSP",
+    "question": "In the revised model, explain precisely why the optimal objective increases from 153.0 to 173.0 even though the business now allows two service days. Your answer must trace the added objective term and the activation logic through the exact code variable names `z[d]`, `y[i,d]`, and `x[i,j,d]`, the exact CSV columns `Parameter_Name` and `Value` for `route_cost_day = 20` and `max_route_length_day = 1000`, and the depot/day wording in `docs/business_requirement.md` and `src/formulation.tex`. Then, using the LP-relaxation/solution outputs, identify which revised constraints are effectively binding versus slack for the chosen plan (especially the per-day route-length limit and depot activation equalities), interpret the business meaning of the marginal value/shadow-price logic behind paying for `z[d]`, and explain why you cannot linearly extrapolate from the observed +20 objective change to predict the effect of lowering `max_route_length_day` or increasing `route_cost_day` further."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "TSP.gurobi.log",
+        "TSP.lp_relaxation.json",
+        "TSP.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "TwoDay_TSP_Assignment.gurobi.log",
+        "TwoDay_TSP_Assignment.lp_relaxation.json",
+        "TwoDay_TSP_Assignment.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 71.72
+  }
+}

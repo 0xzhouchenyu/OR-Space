@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_076",
+  "instance_number": 76,
+  "source_revise_instance": "IndustryOR_76_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain exactly why the objective increases from 4700.0 to 4800.0 even though all `x[i,j]` shipment decisions remain identical to the original solution. Your answer must trace the new 100.0 gain through the code term(s) added to the objective, identify the exact CSV/general-parameter fields and values that produce it, and connect them to the business terms “safety inventory,” “terminal inventory value,” and “over-purchase penalty.” Then use the revised `solution.json` to state which of `MinSafetyInventory`, `PurchaseCap_Autumn`, and `OverStockDef` are binding/slack, interpret their dual/slack/reduced-cost information for `end_inventory_10k_m3` and `over_stock_10k_m3`, and explain why the shadow price on the safety requirement cannot be linearly extrapolated if the safety target were raised far above 20."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Timber_Profit_Maximization.gurobi.log",
+        "Timber_Profit_Maximization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Timber_Profit_Maximization_With_Inventory_Policy.gurobi.log",
+        "Timber_Profit_Maximization_With_Inventory_Policy.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 84.668889
+  }
+}

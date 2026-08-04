@@ -1,0 +1,102 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Feed types \(F = \{1,2,3,4,5\}\), indexed by \(f\).
+    \item Nutrients \(N = \{\text{protein}, \text{minerals}, \text{vitamins}\}\). The code writes these constraints separately rather than indexing over \(N\).
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item \(c_f\): price of feed \(f\) in Y per kg (from \texttt{Price\_Y\_per\_kg}).
+    \item \(p_f\): protein contribution of feed \(f\) in g per kg (from \texttt{Protein\_g}).
+    \item \(m_f\): minerals contribution of feed \(f\) in g per kg (from \texttt{Minerals\_g}).
+    \item \(v_f\): vitamins contribution of feed \(f\) in mg per kg (from \texttt{Vitamins\_mg}).
+    \item \(P^{\min}=700\): minimum daily protein requirement (code data: \texttt{min\_protein}).
+    \item \(M^{\min}=30\): minimum daily minerals requirement (code data: \texttt{min\_minerals}).
+    \item \(V^{\min}=100\): minimum daily vitamins requirement (code data: \texttt{min\_vitamins}).
+    \item \(\bar M = 100000\): big-\(M\) constant used in the mutual exclusion logic (code: \texttt{M}).
+\end{itemize}
+
+Using the CSV data,
+\[
+(c_1,c_2,c_3,c_4,c_5)=(0.2,0.7,0.4,0.3,0.8),
+\]
+\[
+(p_1,p_2,p_3,p_4,p_5)=(3,2,1,6,18),
+\]
+\[
+(m_1,m_2,m_3,m_4,m_5)=(1,0.5,0.2,2,0.5),
+\]
+\[
+(v_1,v_2,v_3,v_4,v_5)=(0.5,1,0.2,2,0.8).
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_f\) (code: \texttt{x[f]}) for \(f \in F\): nonnegative continuous amount of feed \(f\) selected.
+    \item \(y_4\) (code: \texttt{y4}): binary indicator used to allow positive use of Feed 4.
+    \item \(y_5\) (code: \texttt{y5}): binary indicator used to allow positive use of Feed 5.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total feed cost:
+\[
+\min \sum_{f \in F} c_f x_f.
+\]
+
+Explicitly,
+\[
+\min\; 0.2x_1 + 0.7x_2 + 0.4x_3 + 0.3x_4 + 0.8x_5.
+\]
+
+\section*{Constraints}
+
+Nutrient requirements:
+\[
+\sum_{f \in F} p_f x_f \ge P^{\min},
+\]
+\[
+\sum_{f \in F} m_f x_f \ge M^{\min},
+\]
+\[
+\sum_{f \in F} v_f x_f \ge V^{\min}.
+\]
+
+Explicitly,
+\[
+3x_1 + 2x_2 + x_3 + 6x_4 + 18x_5 \ge 700,
+\]
+\[
+x_1 + 0.5x_2 + 0.2x_3 + 2x_4 + 0.5x_5 \ge 30,
+\]
+\[
+0.5x_1 + x_2 + 0.2x_3 + 2x_4 + 0.8x_5 \ge 100.
+\]
+
+Mutual exclusion between Feed 4 and Feed 5:
+\[
+x_4 \le \bar M\, y_4,
+\]
+\[
+x_5 \le \bar M\, y_5,
+\]
+\[
+y_4 + y_5 \le 1.
+\]
+
+Variable domains:
+\[
+x_f \ge 0 \qquad \forall f \in F,
+\]
+\[
+y_4,y_5 \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model in \texttt{current\_heuristic.py} is a mixed-integer linear program solved with \texttt{GUROBI\_CMD}. Feed amounts \(x_f\) are continuous and nonnegative. The incompatibility between Feed 4 and Feed 5 is modeled exactly as in the code through two binary variables and a big-\(M\) construction with \(\bar M=100000\); this formulation permits Feed 4 alone, Feed 5 alone, or neither, but not both simultaneously.
+
+No upper bounds are imposed on feed amounts other than nonnegativity and the big-\(M\) links for Feeds 4 and 5. The nutrient constraints are modeled as lower bounds only, so oversupply is allowed if it reduces total cost.

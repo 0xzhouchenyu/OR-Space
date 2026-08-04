@@ -1,0 +1,187 @@
+{
+  "solver": "gurobi",
+  "model_name": "Container_Transportation_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 904590.0,
+  "runtime": 0.0003390312194824219,
+  "variables": {
+    "x_Lamezia_Ancona": {
+      "value": -0.0,
+      "reduced_cost": 9300.0
+    },
+    "x_Lamezia_Bari": {
+      "value": 3.0,
+      "reduced_cost": 0.0
+    },
+    "x_Lamezia_Genoa": {
+      "value": -0.0,
+      "reduced_cost": 12450.0
+    },
+    "x_Lamezia_Naples": {
+      "value": 27.0,
+      "reduced_cost": 0.0
+    },
+    "x_Lamezia_Venice": {
+      "value": -0.0,
+      "reduced_cost": 14400.0
+    },
+    "x_Perugia_Ancona": {
+      "value": -0.0,
+      "reduced_cost": 150.0
+    },
+    "x_Perugia_Bari": {
+      "value": -0.0,
+      "reduced_cost": 16620.0
+    },
+    "x_Perugia_Genoa": {
+      "value": 7.0,
+      "reduced_cost": 0.0
+    },
+    "x_Perugia_Naples": {
+      "value": -0.0,
+      "reduced_cost": 8550.0
+    },
+    "x_Perugia_Venice": {
+      "value": 5.0,
+      "reduced_cost": 0.0
+    },
+    "x_Pescara_Ancona": {
+      "value": 24.0,
+      "reduced_cost": 0.0
+    },
+    "x_Pescara_Bari": {
+      "value": -0.0,
+      "reduced_cost": 7920.0
+    },
+    "x_Pescara_Genoa": {
+      "value": -0.0,
+      "reduced_cost": 8400.0
+    },
+    "x_Pescara_Naples": {
+      "value": -0.0,
+      "reduced_cost": 4500.0
+    },
+    "x_Pescara_Venice": {
+      "value": -0.0,
+      "reduced_cost": 3450.0
+    },
+    "x_Rome_Ancona": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_Rome_Bari": {
+      "value": -0.0,
+      "reduced_cost": 8070.0
+    },
+    "x_Rome_Genoa": {
+      "value": 13.0,
+      "reduced_cost": 0.0
+    },
+    "x_Rome_Naples": {
+      "value": 6.0,
+      "reduced_cost": 0.0
+    },
+    "x_Rome_Venice": {
+      "value": -0.0,
+      "reduced_cost": 1950.0
+    },
+    "x_Taranto_Ancona": {
+      "value": -0.0,
+      "reduced_cost": 10530.0
+    },
+    "x_Taranto_Bari": {
+      "value": 18.0,
+      "reduced_cost": 0.0
+    },
+    "x_Taranto_Genoa": {
+      "value": -0.0,
+      "reduced_cost": 17730.0
+    },
+    "x_Taranto_Naples": {
+      "value": -0.0,
+      "reduced_cost": 5130.0
+    },
+    "x_Taranto_Venice": {
+      "value": -0.0,
+      "reduced_cost": 13830.0
+    },
+    "x_Verona_Ancona": {
+      "value": -0.0,
+      "reduced_cost": 12600.0
+    },
+    "x_Verona_Bari": {
+      "value": -0.0,
+      "reduced_cost": 29370.0
+    },
+    "x_Verona_Genoa": {
+      "value": -0.0,
+      "reduced_cost": 4050.0
+    },
+    "x_Verona_Naples": {
+      "value": -0.0,
+      "reduced_cost": 25350.0
+    },
+    "x_Verona_Venice": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -15060.0
+    },
+    "_C2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -8310.0
+    },
+    "_C3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -4560.0
+    },
+    "_C4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -8460.0
+    },
+    "_C5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7140.0
+    },
+    "_C6": {
+      "sense": "<",
+      "slack": 10.0,
+      "dual_value": 0.0
+    },
+    "_C7": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 19710.0
+    },
+    "_C8": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 18510.0
+    },
+    "_C9": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 13110.0
+    },
+    "_C10": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 11160.0
+    },
+    "_C11": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 9990.0
+    }
+  }
+}

@@ -1,0 +1,181 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+\item $I$ : applicant types, indexed by $i$.
+\[
+I=\{1,2,3,4,5,6\}.
+\]
+
+\item $J$ : branch cities, indexed by $j$.
+\[
+J=\{\text{Donghai},\text{Nanjiang}\}.
+\]
+
+\item $K$ : specialties, indexed by $k$.
+\[
+K=\{1,2,3\}.
+\]
+
+\item $S_i \subseteq K$ : specialties suitable for applicant type $i$ (code: \texttt{supply[i]['suit']}).
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+\item $N_i$ : number of available applicants of type $i$ (code: \texttt{supply[i]['num']}).
+
+From Table 4.4,
+\[
+N_i=1500 \qquad \forall i\in I.
+\]
+
+\item $D_{jk}$ : demand for specialty $k$ in city $j$ (code: \texttt{demand[(j,k)]}).
+
+From Table 4.3,
+\[
+\begin{aligned}
+&D_{\text{Donghai},1}=1000,\quad D_{\text{Donghai},2}=2000,\quad D_{\text{Donghai},3}=1500,\\
+&D_{\text{Nanjiang},1}=2000,\quad D_{\text{Nanjiang},2}=1000,\quad D_{\text{Nanjiang},3}=1000.
+\end{aligned}
+\]
+
+\item $a_i$ : preferred specialty of applicant type $i$ (code: \texttt{supply[i]['pref\_spec']}).
+
+\item $b_i$ : preferred city of applicant type $i$ (code: \texttt{supply[i]['pref\_city']}).
+
+\item $T_2$ : target number meeting preferred specialty (code: \texttt{p2\_target}).
+\[
+T_2=8000.
+\]
+
+\item $T_3$ : target number meeting preferred city (code: \texttt{p3\_target}).
+\[
+T_3=8000.
+\]
+
+\item $\delta_{ik}$ : suitability indicator, equal to $1$ if $k\in S_i$, and $0$ otherwise.
+This is implemented through zero-fixing constraints rather than explicit coefficients.
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each solve, the model uses integer assignment variables and deviational variables.
+
+\begin{itemize}
+\item $x_{ijk}$ (code: \texttt{x1[i,j,k]} in Phase 1, \texttt{x2[i,j,k]} in Phase 2): number of applicants of type $i$ assigned to city $j$ and specialty $k$.
+\[
+x_{ijk}\in \mathbb{Z}_{\ge 0}.
+\]
+
+\item $d_2^-$, $d_2^+$ (code: \texttt{d2\_minus1}, \texttt{d2\_plus1} in Phase 1; \texttt{d2\_minus2}, \texttt{d2\_plus2} in Phase 2): negative and positive deviations for Priority 2.
+\[
+d_2^-,d_2^+\in \mathbb{Z}_{\ge 0}.
+\]
+
+\item $d_3^-$, $d_3^+$ (code: \texttt{d3\_minus2}, \texttt{d3\_plus2} in Phase 2): negative and positive deviations for Priority 3.
+\[
+d_3^-,d_3^+\in \mathbb{Z}_{\ge 0}.
+\]
+\end{itemize}
+
+\section*{Objective}
+
+The code implements a two-phase lexicographic goal program.
+
+\paragraph{Phase 1.}
+Minimize the shortfall from the Priority 2 target:
+\[
+\min d_2^- .
+\]
+
+\paragraph{Phase 2.}
+Let $z_2^\star$ be the optimal value of $d_2^-$ from Phase 1 (code: \texttt{min\_d2}). Then minimize the shortfall from the Priority 3 target subject to not worsening Phase 1:
+\[
+\min d_3^- .
+\]
+
+\section*{Constraints}
+
+\paragraph{Phase 1 model.}
+\[
+\min \ d_2^-
+\]
+subject to
+\[
+\sum_{j\in J}\sum_{k\in K} x_{ijk} \le N_i \qquad \forall i\in I,
+\]
+\[
+\sum_{i\in I} x_{ijk} \ge D_{jk} \qquad \forall j\in J,\ \forall k\in K,
+\]
+\[
+x_{ijk}=0 \qquad \forall i\in I,\ \forall j\in J,\ \forall k\in K\setminus S_i,
+\]
+\[
+\sum_{i\in I}\sum_{j\in J} x_{ij,a_i} + d_2^- - d_2^+ = T_2,
+\]
+\[
+x_{ijk}\in \mathbb{Z}_{\ge 0},\qquad d_2^-,d_2^+\in \mathbb{Z}_{\ge 0}.
+\]
+
+\paragraph{Phase 2 model.}
+\[
+\min \ d_3^-
+\]
+subject to
+\[
+\sum_{j\in J}\sum_{k\in K} x_{ijk} \le N_i \qquad \forall i\in I,
+\]
+\[
+\sum_{i\in I} x_{ijk} \ge D_{jk} \qquad \forall j\in J,\ \forall k\in K,
+\]
+\[
+x_{ijk}=0 \qquad \forall i\in I,\ \forall j\in J,\ \forall k\in K\setminus S_i,
+\]
+\[
+\sum_{i\in I}\sum_{j\in J} x_{ij,a_i} + d_2^- - d_2^+ = T_2,
+\]
+\[
+d_2^- \le z_2^\star,
+\]
+\[
+\sum_{i\in I}\sum_{k\in K} x_{i,b_i,k} + d_3^- - d_3^+ = T_3,
+\]
+\[
+x_{ijk}\in \mathbb{Z}_{\ge 0},\qquad d_2^-,d_2^+,d_3^-,d_3^+\in \mathbb{Z}_{\ge 0}.
+\]
+
+Here,
+\[
+\sum_{i\in I}\sum_{j\in J} x_{ij,a_i}
+\]
+counts recruits assigned to their preferred specialty, and
+\[
+\sum_{i\in I}\sum_{k\in K} x_{i,b_i,k}
+\]
+counts recruits assigned to their preferred city.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+\item The implementation does \emph{not} encode Priority 1 as an objective. Instead, it enforces branch-specialty requirements by the hard constraints
+\[
+\sum_i x_{ijk} \ge D_{jk}.
+\]
+Thus all stated demands must be satisfied in every feasible solution.
+
+\item Demand constraints are inequalities ``$\ge$'', not equalities. Hence the model permits over-assignment to a city-specialty pair if useful for later priorities.
+
+\item Supply constraints are inequalities ``$\le$'', so some applicants may remain unassigned.
+
+\item Suitability is enforced exactly as in code by fixing $x_{ijk}=0$ whenever specialty $k$ is not in the suitable-specialty list of type $i$.
+
+\item The goal-programming logic is sequential. Phase 1 minimizes only the negative deviation for Priority 2. Phase 2 then minimizes only the negative deviation for Priority 3 while imposing
+\[
+d_2^- \le z_2^\star.
+\]
+Because Phase 1 already minimizes $d_2^-$, this reproduces the implemented lexicographic priority order.
+
+\item The code does not penalize positive deviations $d_2^+$ or $d_3^+$. Therefore exceeding either target is allowed at no direct objective cost.
+
+\item All variables are declared integer and the models are solved as MIPs with Gurobi through PuLP compatibility. The reported answer is the Phase 2 optimum $d_3^-$, interpreted as the minimum number of recruited people that cannot meet Priority 3 while respecting the earlier priority structure implemented in the code.
+\end{itemize}

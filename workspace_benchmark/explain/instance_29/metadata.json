@@ -1,0 +1,63 @@
+{
+  "instance_id": "OR_explain_029",
+  "instance_number": 29,
+  "source_revise_instance": "IndustryOR_29_revise_business",
+  "domain": "Workforce_Placement",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Workforce_Placement",
+    "question": "In the revised model, use `src/current_heuristic.py`, `src/formulation.tex`, and the revised LP-relaxation output to diagnose which business rule is actually limiting the maximum `dual_match_count = 5500`. Identify one binding demand or supply relation and one nonbinding relation by naming the exact code expression/variable(s), the exact CSV columns and parameter value(s) they come from, and the corresponding business term in `docs/business_requirement.md`; then explain the business meaning of the marginal value using at least one reported reduced cost or zero-slack assignment pattern from the LP relaxation. Finally, compare original vs revised and pinpoint the exact code additions/deletions that changed the objective from minimizing `d3_minus2` to maximizing `dual_match_count`, and explain why you cannot linearly extrapolate that a +1 change in `priority_2_target` or a single-demand-cell `Demand` value would change the 5500 objective by a constant amount."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_4_3.csv",
+        "table_4_4.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "P1.gurobi.log",
+        "P1.lp_relaxation.json",
+        "P1.solution.json",
+        "P2.gurobi.log",
+        "P2.lp_relaxation.json",
+        "P2.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_4_3.csv",
+        "table_4_4.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Revised_HR_Placement.gurobi.log",
+        "Revised_HR_Placement.lp_relaxation.json",
+        "Revised_HR_Placement.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 42.975
+  }
+}

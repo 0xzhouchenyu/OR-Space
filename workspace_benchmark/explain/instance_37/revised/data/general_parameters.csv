@@ -1,0 +1,20 @@
+Parameter_Name,Value,Unit,Context_Description
+min_weekly_profit,10000,dollars,The net total profit over both weeks must not be less than this value
+min_model_A_units,10,units,Minimum total production requirement for Model A over both weeks
+min_model_B_units,15,units,Minimum total production requirement for Model B over both weeks
+week1_min_model_A_units,5,units,Named Week 1 delivery for Model A
+week1_min_model_B_units,6,units,Named Week 1 delivery for Model B
+week2_min_model_A_units,5,units,Named Week 2 delivery for Model A
+week2_min_model_B_units,9,units,Named Week 2 delivery for Model B
+process_I_hours,150,hours,Normal weekly production time for Process I
+process_II_hours,70,hours,Normal weekly production time for Process II
+max_overtime_I_per_week,30,hours,Maximum overtime hours allowed for Process I in any single week
+max_overtime_II_per_week,20,hours,Maximum overtime hours allowed for Process II in any single week
+overtime_premium_I,50,dollars/hour,Overtime spending per hour for Process I
+overtime_premium_II,40,dollars/hour,Overtime spending per hour for Process II
+min_avg_utilization_I,0.6,fraction,Minimum average use of regular Process I hours over two weeks
+min_avg_utilization_II,0.5,fraction,Minimum average use of regular Process II hours over two weeks
+week1_overtime_fatigue_threshold_I,10,hours,Week-1 Process I overtime level that starts week-2 recovery loss
+week1_overtime_fatigue_threshold_II,8,hours,Week-1 Process II overtime level that starts week-2 recovery loss
+week2_recovery_loss_I,15,hours,Regular Process I hours unavailable in week 2 after recovery rule
+week2_recovery_loss_II,10,hours,Regular Process II hours unavailable in week 2 after recovery rule

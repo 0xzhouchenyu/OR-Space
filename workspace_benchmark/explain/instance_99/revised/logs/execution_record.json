@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 0.5984999999999999,
+  "stdout": "Optimal spare parts allocation (shared across scenarios): Component 1: 2, Component 2: 2, Component 3: 1\nTotal cost (both scenarios share this configuration): 140.0\nTotal weight (both scenarios share this configuration): 18.0\nComponent reliabilities (scenario-independent): 0.7, 0.95, 0.9\nScenario A system reliability: 0.5984999999999999\nScenario B system reliability: 0.5984999999999999\nExpected system reliability (two equally likely scenarios): 0.5984999999999999\nOBJECTIVE_VALUE: 0.5984999999999999\nSet parameter LicenseID to value 2802670\n",
+  "stderr": "",
+  "error": null
+}

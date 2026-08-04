@@ -1,0 +1,80 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item \(I\): set of cars, indexed by \(i\). In the data, \(I=\{1,\dots,\texttt{num\_cars}\}\), with identifiers from column \texttt{i}.
+    \item \(S\): set of street sides, indexed by \(s\). In the implementation, \(S=\{1,2\}\).
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item \(\lambda_i\): length of car \(i\) (code/data: \texttt{cars[i]}, CSV field \texttt{lambda\_i}).
+    \item \(M\): maximum total parked length allowed on any side that is opened for party parking (code/data: \texttt{max\_length\_one\_side}).
+    \item \(K\): number of sides available to host party cars (code/data: \texttt{available\_party\_side\_count}).
+\end{itemize}
+
+For this revised instance, the business rule implies \(K=1\): exactly one side may be used by party cars, while the other side remains clear.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(y_s \in \{0,1\}\) (code: \texttt{y[s]}): 1 if side \(s\) is opened for party parking, 0 otherwise.
+    \item \(a_{is} \in \{0,1\}\) (code: \texttt{a[i,s]}): 1 if car \(i\) is assigned to side \(s\), 0 otherwise.
+    \item \(L_s \ge 0\) (code: \texttt{L[s]}): total parked length assigned to side \(s\).
+    \item \(T \ge 0\) (code: \texttt{T}): maximum occupied length among the two sides.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the maximum occupied length across the street sides:
+\[
+\min \; T.
+\]
+
+\section*{Constraints}
+
+\paragraph{Available-side rule.}
+Exactly \(K\) sides may be used:
+\[
+\sum_{s \in S} y_s = K.
+\]
+
+\paragraph{Each car assigned to one side.}
+Every car must be assigned to exactly one side:
+\[
+\sum_{s \in S} a_{is} = 1 \qquad \forall i \in I.
+\]
+
+\paragraph{Assignment allowed only on opened sides.}
+A car can be assigned to side \(s\) only if that side is opened:
+\[
+a_{is} \le y_s \qquad \forall i \in I,\; \forall s \in S.
+\]
+
+\paragraph{Definition of occupied length on each side.}
+\[
+L_s = \sum_{i \in I} \lambda_i a_{is} \qquad \forall s \in S.
+\]
+
+\paragraph{Length cap on an opened side.}
+If side \(s\) is closed, then \(L_s=0\); if it is opened, its occupied length may not exceed \(M\):
+\[
+L_s \le M y_s \qquad \forall s \in S.
+\]
+
+\paragraph{Maximum-length epigraph.}
+\[
+T \ge L_s \qquad \forall s \in S.
+\]
+
+\section*{Notes on Implementation}
+
+The formulation above matches the implemented model in \texttt{current\_heuristic.py} exactly.
+
+Although the business brief says that one entire side must remain clear and party cars may use only the other side, the code still keeps the two-side index set \(S=\{1,2\}\) and enforces this through
+\[
+\sum_{s\in S} y_s = \texttt{available\_party\_side\_count},
+\]
+with \texttt{available\_party\_side\_count} taken from the data. Thus one side is selected as usable and the other is forced inactive.
+
+Because every car must be assigned to exactly one side and assignments to a side require that side to be opened, all cars are necessarily assigned to the single opened side. Then \(T\) equals that side's total occupied length, while the closed side has \(L_s=0\). The model is therefore implemented as a binary linear optimization problem and solved with the LP/MIP solver interface \texttt{GUROBI\_CMD}.

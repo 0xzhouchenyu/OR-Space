@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 330.0,
+  "stdout": "Best assignment: (1, 0), cost=630.0\n  Off-diag perm (0, 1): 340.0\n  Off-diag perm (1, 0): 360.0\n  Transposed c, perm (0, 1): 690.0\n  Transposed c, perm (1, 0): 610.0\nLinear assignment interpretation:\n  Perm (0, 1): 330.0\n  Perm (1, 0): 340.0\nOBJECTIVE_VALUE: 330.0\nSet parameter LicenseID to value 2802670\n",
+  "stderr": "",
+  "error": null
+}

@@ -1,0 +1,115 @@
+\section*{Sets and Indices}
+
+\[
+C = \{\text{steel},\text{engine},\text{electronics},\text{plastic}\}
+\]
+
+Index:
+\[
+c \in C
+\]
+
+When needed, \(c' \in C\) denotes a producing commodity whose output is used as an input to commodity \(c\).
+
+\section*{Parameters}
+
+For each commodity \(c \in C\):
+
+\begin{itemize}
+\item \(p_c\): world-market price per unit of commodity \(c\) (from CSV fields \texttt{steel\_price}, \texttt{engine\_price}, \texttt{electronics\_price}, \texttt{plastic\_price}).
+\item \(m_c\): imported-goods cost per unit produced of commodity \(c\) (from \texttt{\{c\}\_import\_cost}).
+\item \(\ell_c\): labor requirement per unit produced of commodity \(c\) (from \texttt{\{c\}\_labor\_requirement}).
+\item \(u_c\): optional upper bound on production of commodity \(c\), if present in the data under one of
+\texttt{\{c\}\_production\_limit}, \texttt{\{c\}\_limit}, or \texttt{\{c\}\_capacity}.
+In this instance,
+\[
+u_{\text{engine}} = 650000,\qquad
+u_{\text{plastic}} = 60000,
+\]
+while steel and electronics have no explicit upper bound in the code.
+\end{itemize}
+
+For each ordered pair \((c',c) \in C \times C\):
+
+\begin{itemize}
+\item \(a_{c',c}\): units of commodity \(c\) required to produce one unit of commodity \(c'\), taken from CSV field \texttt{\{c'\}\_\{c\}\_requirement} when present, and \(0\) otherwise.
+\end{itemize}
+
+Aggregate parameter:
+
+\begin{itemize}
+\item \(L\): total available labor force (from \texttt{labor\_force}).
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+\item \(x_c\) (code: \texttt{x[c]}): production level of commodity \(c\), with
+\[
+x_c \ge 0 \qquad \forall c \in C.
+\]
+\item \(n_c\): net export of commodity \(c\), defined by production minus domestic intermediate consumption:
+\[
+n_c = x_c - \sum_{c' \in C} a_{c',c} x_{c'} \qquad \forall c \in C.
+\]
+These are not explicit solver variables in the code; they are linear expressions (code: \texttt{net\_export[c]}).
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model maximizes GDP defined as export revenue from net exports minus imported-goods costs used in production:
+
+\[
+\max \;
+\sum_{c \in C} p_c\, n_c \;-\; \sum_{c \in C} m_c x_c
+\]
+
+or equivalently,
+
+\[
+\max \;
+\sum_{c \in C} p_c \left(x_c - \sum_{c' \in C} a_{c',c} x_{c'}\right)
+- \sum_{c \in C} m_c x_c.
+\]
+
+\section*{Constraints}
+
+Net exports must be nonnegative for every commodity:
+
+\[
+x_c - \sum_{c' \in C} a_{c',c} x_{c'} \ge 0
+\qquad \forall c \in C.
+\]
+
+Total labor usage cannot exceed the available labor force:
+
+\[
+\sum_{c \in C} \ell_c x_c \le L.
+\]
+
+Production upper bounds are imposed only when present in the parameter file:
+
+\[
+x_c \le u_c
+\qquad \forall c \in C \text{ such that an upper bound is provided.}
+\]
+
+Nonnegativity:
+
+\[
+x_c \ge 0 \qquad \forall c \in C.
+\]
+
+\section*{Notes on Implementation}
+
+The model in \texttt{current\_heuristic.py} is a linear program solved with PuLP using the Gurobi command-line solver interface (\texttt{GUROBI\_CMD}).
+
+A key implementation detail is the direction of the input coefficients: \(a_{c',c}\) is the amount of commodity \(c\) consumed when producing commodity \(c'\). Therefore, domestic consumption of commodity \(c\) is computed as
+\[
+\sum_{c' \in C} a_{c',c} x_{c'},
+\]
+exactly as in the code.
+
+The net-export nonnegativity constraints are the only commodity-balance constraints. There are no separate variables for exports or imports of the four modeled commodities, and there is no explicit domestic final demand term. Imported-goods costs enter only through the linear term \(\sum_c m_c x_c\) in the objective.
+
+Upper bounds are added programmatically only if a matching parameter name exists in the CSV under one of the suffixes \texttt{\_production\_limit}, \texttt{\_limit}, or \texttt{\_capacity}. For this instance, such bounds apply to engines and plastic only.

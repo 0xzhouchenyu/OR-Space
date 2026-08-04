@@ -1,0 +1,39 @@
+{
+  "solver": "gurobi",
+  "model_name": "Minimize_Overtime",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 215.0,
+  "objective_bound": 215.0,
+  "mip_gap": null,
+  "runtime": 0.0003650188446044922,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_6wm69dxy/solver_records/Minimize_Overtime.gurobi.log",
+  "variables": {
+    "y_ft": {
+      "value": 143.33333333333334,
+      "reduced_cost": 0.0
+    },
+    "y_pt": {
+      "value": 71.66666666666667,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 0.25
+    },
+    "_C2": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 0.5
+    }
+  }
+}

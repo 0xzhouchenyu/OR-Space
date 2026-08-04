@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_54_revise_business",
+  "original_instance_id": "IndustryOR_54",
+  "revise_description": "Due to new labor rules, production is split into regular and overtime modes per product. Overtime hours are capped by overtime_hours_cap and charged at overtime_cost_multiplier; both modes share equipment capacity, and the objective minimizes total production and overtime cost.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Medium",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+3var, +7constr, mod_3constr, mod_obj, mod_2data",
+      "counts": {
+        "+variable": 3,
+        "-variable": 0,
+        "+constraint": 7,
+        "-constraint": 0,
+        "modify_constraint": 3,
+        "modify_data": 2
+      },
+      "op_count": 16,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 66.666667
+  }
+}

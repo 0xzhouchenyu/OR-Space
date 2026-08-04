@@ -1,0 +1,131 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $M$ : transportation methods, with
+    \[
+    M=\{\text{motorcycle},\text{small\_truck},\text{large\_truck}\}.
+    \]
+    Index $m \in M$.
+    \item $P$ : demand periods, with
+    \[
+    P=\{\text{peak},\text{offpeak}\}.
+    \]
+    Index $p \in P$.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter values are read from \texttt{general\_parameters.csv}.
+
+\begin{itemize}
+    \item $e_m$ : pollution per owned trip of method $m$ (code data: \texttt{pollution[m]}), derived from
+    \texttt{motorcycle\_pollution}, \texttt{small\_truck\_pollution}, \texttt{large\_truck\_pollution}.
+    \item $q_m$ : capacity per owned trip of method $m$ (code data: \texttt{capacity[m]}), derived from
+    \texttt{motorcycle\_capacity}, \texttt{small\_truck\_capacity}, \texttt{large\_truck\_capacity}.
+    \item $D_p$ : required transported units in period $p$, from
+    \texttt{demand\_peak\_units} and \texttt{demand\_offpeak\_units}.
+    \item $T^{\max}_{\mathrm{mc}}$ : daily maximum number of motorcycle trips (code: \texttt{max\_motorcycle\_trips}).
+    \item $T^{\max}$ : daily maximum total owned trips across all methods and periods (code: \texttt{max\_total\_trips}).
+    \item $L^{\max}$ : maximum total leased units over the day (code: \texttt{leasing\_capacity}).
+    \item $\alpha^{\max}$ : maximum fraction of peak demand that may be satisfied by leasing (code: \texttt{max\_leasing\_fraction\_peak}).
+    \item $c^{L}$ : pollution per leased unit (code: \texttt{leasing\_pollution\_per\_unit}).
+    \item $f^{L}$ : fixed pollution incurred if any leasing is used (code: \texttt{leasing\_fixed\_pollution}).
+    \item $M^{L}$ : big-$M$ used to link leasing volume to leasing activation (code: \texttt{bigM\_leasing}).
+    \item $\varepsilon$ : minimum total leasing volume when leasing is activated (code: \texttt{epsilon}).
+    \item $M^{T}$ : big-$M$ used to link trips to method activation, set in code as
+    \[
+    M^{T}=T^{\max}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{m,p}$ (code: \texttt{trips[(m,p)]}) : integer number of owned trips of method $m$ in period $p$, with
+    \[
+    x_{m,p} \in \mathbb{Z}_{\ge 0}.
+    \]
+    \item $y_{m,p}$ (code: \texttt{method\_active[(m,p)]}) : binary indicator equal to $1$ if method $m$ is active in period $p$, and $0$ otherwise:
+    \[
+    y_{m,p} \in \{0,1\}.
+    \]
+    \item $\ell_{\mathrm{peak}}$ (code: \texttt{leasing\_units\_peak}) : leased units used in the peak period, with
+    \[
+    \ell_{\mathrm{peak}} \ge 0.
+    \]
+    \item $\ell_{\mathrm{off}}$ (code: \texttt{leasing\_units\_offpeak}) : leased units used in the off-peak period, with
+    \[
+    \ell_{\mathrm{off}} \ge 0.
+    \]
+    \item $z$ (code: \texttt{leasing\_used}) : binary indicator of whether any leasing is used:
+    \[
+    z \in \{0,1\}.
+    \]
+\end{itemize}
+
+For brevity, define total leasing
+\[
+\ell^{\mathrm{tot}}=\ell_{\mathrm{peak}}+\ell_{\mathrm{off}}.
+\]
+
+\section*{Objective}
+
+Minimize total pollution:
+\[
+\min \;
+\sum_{p \in P}\sum_{m \in M} e_m x_{m,p}
+\;+\;
+c^{L}\left(\ell_{\mathrm{peak}}+\ell_{\mathrm{off}}\right)
+\;+\;
+f^{L} z.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{m \in M} q_m x_{m,\mathrm{peak}} + \ell_{\mathrm{peak}} &\ge D_{\mathrm{peak}}
+&& \text{(peak demand)} \\
+\sum_{m \in M} q_m x_{m,\mathrm{offpeak}} + \ell_{\mathrm{off}} &\ge D_{\mathrm{offpeak}}
+&& \text{(off-peak demand)} \\
+x_{\mathrm{motorcycle},\mathrm{peak}} + x_{\mathrm{motorcycle},\mathrm{offpeak}} &\le T^{\max}_{\mathrm{mc}}
+&& \text{(daily motorcycle trip limit)} \\
+\sum_{p \in P}\sum_{m \in M} x_{m,p} &\le T^{\max}
+&& \text{(daily total trip limit)} \\
+x_{m,p} &\le M^{T} y_{m,p}
+&& \forall m \in M,\; p \in P \\
+x_{m,p} &\ge y_{m,p}
+&& \forall m \in M,\; p \in P \\
+\sum_{m \in M} y_{m,p} &\le 2
+&& \forall p \in P \quad \text{(at most two active methods per period)} \\
+\ell^{\mathrm{tot}} &\le L^{\max}
+&& \text{(daily leasing capacity)} \\
+\ell^{\mathrm{tot}} &\le M^{L} z
+&& \text{(leasing activation upper link)} \\
+\ell^{\mathrm{tot}} &\ge \varepsilon z
+&& \text{(leasing activation lower link)} \\
+\ell_{\mathrm{peak}} &\le \alpha^{\max} D_{\mathrm{peak}}
+&& \text{(peak leasing share limit)} \\
+x_{m,p} &\in \mathbb{Z}_{\ge 0}
+&& \forall m \in M,\; p \in P \\
+y_{m,p} &\in \{0,1\}
+&& \forall m \in M,\; p \in P \\
+\ell_{\mathrm{peak}},\ell_{\mathrm{off}} &\ge 0,\qquad z \in \{0,1\}. &&
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a MILP solved by \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+    \item The ``choose only two transportation methods'' rule is implemented \emph{per period}, not day-wide:
+    \[
+    \sum_{m \in M} y_{m,p} \le 2 \quad \forall p \in P.
+    \]
+    Thus different pairs of methods may be active in peak and off-peak.
+    \item Method activation is modeled as an exact gate, consistent with the code and business brief: $y_{m,p}=0$ forces $x_{m,p}=0$, while $y_{m,p}=1$ forces at least one trip through
+    \[
+    y_{m,p} \le x_{m,p} \le M^{T} y_{m,p}.
+    \]
+    \item Leasing is also modeled as a gate. If $z=0$, then total leasing must be $0$; if $z=1$, then total leasing must be at least $\varepsilon$ and incurs the fixed pollution term $f^L$.
+    \item Owned trips have integer counts and use method-specific capacities and pollution rates. Leasing contributes directly in transported units rather than trip counts.
+    \item The parameter \texttt{min\_transport\_requirement} from the CSV is loaded nowhere in the model and is not part of the formulation.
+\end{itemize}

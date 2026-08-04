@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 904590.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nApproach 1 (per container cost): 904590.0\nApproach 2 (per truck cost): 478680.0\nApproach 3 (per truck, cost includes capacity): 957360.0\nBest match: Approach 1 with value 904590.0\n\nOBJECTIVE_VALUE: 904590.0\n",
+  "stderr": "",
+  "error": null
+}

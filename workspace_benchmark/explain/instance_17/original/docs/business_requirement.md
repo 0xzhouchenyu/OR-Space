@@ -1,0 +1,1 @@
+Certain strategic bomber groups are tasked with destroying enemy military targets. It is known that the target has four key parts, and destroying at least two of them will suffice. Resources and constraints include bomb stockpile limits, fuel consumption rules, and aircraft capacity. Please refer to the corresponding CSV files in the data folder for specific parameter values.

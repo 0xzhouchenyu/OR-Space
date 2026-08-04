@@ -1,0 +1,78 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinCostProduction",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 37000.0,
+  "objective_bound": 37000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004321098327636719,
+  "node_count": 1.0,
+  "iteration_count": 4.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_0d2qbwdq/solver_records/MinCostProduction.gurobi.log",
+  "variables": {
+    "x_A": {
+      "value": 800.0,
+      "reduced_cost": null
+    },
+    "x_B": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_C": {
+      "value": 1200.0,
+      "reduced_cost": null
+    },
+    "x_D": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_A": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_B": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_C": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_D": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "TotalProduction": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Link_A": {
+      "sense": "<=",
+      "slack": 100.0,
+      "dual_value": null
+    },
+    "Link_B": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Link_C": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Link_D": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+investment_budget,6000000,dollars,The Zhang family's total budget covering acquisition plus premium upgrade costs
+restaurant_d_a_constraint,1,None,If Restaurant D is purchased Restaurant A cannot be purchased
+premium_revenue_uplift,0.30,fraction,Fractional revenue increase if a restaurant is operated in Premium mode
+premium_upgrade_cost,400000,dollars,One-time renovation cost per restaurant chosen to operate in Premium mode
+staff_hours_cap,12000,hours_per_year,Maximum total staff hours available across all acquired restaurants

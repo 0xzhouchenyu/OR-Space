@@ -1,0 +1,96 @@
+\section*{Sets and Indices}
+
+No nontrivial index sets are used in the implemented model. The model contains separate continuous decision variables for the two fabric categories:
+\begin{itemize}
+    \item clothing fabric,
+    \item curtain fabric.
+\end{itemize}
+
+\section*{Parameters}
+
+The following scalar parameters are read from \texttt{general\_parameters.csv}:
+\begin{itemize}
+    \item Weekly regular production time $T$ (code: \texttt{weekly\_production\_time}), in hours.
+    \item Fabric production rate $r$ (code: \texttt{fabric\_production\_rate}), in meters per hour.
+    \item Minimum weekly curtain-fabric sales $D^{\mathrm{cur}}$ (code: \texttt{min\_curtain\_fabric\_sales}), in meters.
+    \item Minimum weekly clothing-fabric sales $D^{\mathrm{clo}}$ (code: \texttt{min\_clothing\_fabric\_sales}), in meters.
+    \item Maximum allowable overtime $O^{\max}$ (code: \texttt{max\_overtime}), in hours.
+    \item Curtain-fabric profit $p^{\mathrm{cur}}$ (code: \texttt{curtain\_fabric\_profit}), in yuan per meter.
+    \item Clothing-fabric profit $p^{\mathrm{clo}}$ (code: \texttt{clothing\_fabric\_profit}), in yuan per meter.
+\end{itemize}
+
+The code converts the minimum sales requirements into minimum processing times:
+\[
+H^{\mathrm{cur}} = \frac{D^{\mathrm{cur}}}{r}
+\qquad\text{(code: \texttt{min\_curtain\_hours})},
+\]
+\[
+H^{\mathrm{clo}} = \frac{D^{\mathrm{clo}}}{r}
+\qquad\text{(code: \texttt{min\_clothing\_hours})}.
+\]
+
+For this instance,
+\[
+T=110,\quad r=1000,\quad D^{\mathrm{cur}}=70000,\quad D^{\mathrm{clo}}=45000,\quad O^{\max}=10,
+\]
+so
+\[
+H^{\mathrm{cur}}=70,\qquad H^{\mathrm{clo}}=45.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Clothing-fabric production time $x^{\mathrm{clo}}$ (code: \texttt{x\_clothing}), continuous, in hours.
+    \item Curtain-fabric production time $x^{\mathrm{cur}}$ (code: \texttt{x\_curtain}), continuous, in hours.
+    \item Overtime $o$ (code: \texttt{overtime}), continuous, in hours.
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model minimizes overtime:
+\[
+\min \; o.
+\]
+
+\section*{Constraints}
+
+Minimum production times implied by the minimum sales requirements:
+\[
+x^{\mathrm{clo}} \ge H^{\mathrm{clo}},
+\]
+\[
+x^{\mathrm{cur}} \ge H^{\mathrm{cur}}.
+\]
+
+Production-time balance:
+\[
+x^{\mathrm{clo}} + x^{\mathrm{cur}} = T + o.
+\]
+
+Overtime bounds:
+\[
+0 \le o \le O^{\max}.
+\]
+
+Thus, the full implemented optimization problem is
+\[
+\begin{aligned}
+\min_{x^{\mathrm{clo}},\,x^{\mathrm{cur}},\,o}\quad & o \\
+\text{s.t.}\quad
+& x^{\mathrm{clo}} \ge H^{\mathrm{clo}},\\
+& x^{\mathrm{cur}} \ge H^{\mathrm{cur}},\\
+& x^{\mathrm{clo}} + x^{\mathrm{cur}} = T + o,\\
+& 0 \le o \le O^{\max}.
+\end{aligned}
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a linear program in \texttt{current\_heuristic.py} using PuLP-compatible syntax and solved with \texttt{GUROBI\_CMD}.
+    \item The profit parameters $p^{\mathrm{cur}}$ and $p^{\mathrm{clo}}$ are loaded from data but are not used anywhere in the optimization model.
+    \item There is no explicit upper bound on $x^{\mathrm{clo}}$ or $x^{\mathrm{cur}}$ besides the time-balance equation and the overtime bound.
+    \item Because the time-balance constraint is an equality, the model forces total assigned production time to equal regular weekly time plus overtime exactly; it does not permit unused regular time.
+    \item The two-shift operational description is not represented explicitly in the code as separate shift-indexed variables or constraints.
+\end{itemize}

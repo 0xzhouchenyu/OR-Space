@@ -1,0 +1,5 @@
+Parameter_Name,Value,Unit,Context_Description
+profit_per_pair,0.3,yuan,Profit earned per pair of shoes sold
+monthly_sales_goal,5500,pairs,Goal to achieve monthly sales of 5500 pairs
+full_employment_goal,1,boolean,Ensure full employment of all sales clerks
+minimize_overtime_goal,1,boolean,Goal to minimize overtime hours

@@ -1,0 +1,147 @@
+\section*{Sets and Indices}
+
+No nontrivial index sets are used in the implemented model. The problem has two product-specific continuous production decisions:
+\[
+\text{liquid fertilizer}, \qquad \text{solid fertilizer}.
+\]
+
+\section*{Parameters}
+
+All time coefficients are measured in minutes per lot, and machine availability is converted from hours to minutes in the code.
+
+\[
+a_{1L} = 50
+\]
+Machine 1 time required per lot of liquid fertilizer (code: \texttt{m1\_liquid}).
+
+\[
+a_{2L} = 30
+\]
+Machine 2 time required per lot of liquid fertilizer (code: \texttt{m2\_liquid}).
+
+\[
+a_{1S} = 24
+\]
+Machine 1 time required per lot of solid fertilizer (code: \texttt{m1\_solid}).
+
+\[
+a_{2S} = 33
+\]
+Machine 2 time required per lot of solid fertilizer (code: \texttt{m2\_solid}).
+
+\[
+I_L^0 = 30, \qquad I_S^0 = 90
+\]
+Initial inventories of liquid and solid fertilizer, respectively (code: \texttt{init\_liquid}, \texttt{init\_solid}).
+
+\[
+T_1 = 40 \times 60 = 2400, \qquad T_2 = 35 \times 60 = 2100
+\]
+Available processing time on Machines 1 and 2 during the week, respectively, in minutes (code: \texttt{m1\_avail}, \texttt{m2\_avail}).
+
+\[
+D_L = 75, \qquad D_S = 95
+\]
+Forecast demand for liquid and solid fertilizer, respectively (code: \texttt{demand\_liquid}, \texttt{demand\_solid}).
+
+\section*{Decision Variables}
+
+\[
+x_L \ge 0
+\]
+Lots of liquid fertilizer produced during the week (code: \texttt{x\_l}).
+
+\[
+x_S \ge 0
+\]
+Lots of solid fertilizer produced during the week (code: \texttt{x\_s}).
+
+For convenience, the code also forms ending inventories as affine expressions:
+\[
+E_L = I_L^0 + x_L - D_L
+\]
+Ending inventory of liquid fertilizer (code expression: \texttt{end\_liquid}).
+
+\[
+E_S = I_S^0 + x_S - D_S
+\]
+Ending inventory of solid fertilizer (code expression: \texttt{end\_solid}).
+
+\section*{Objective}
+
+Maximize total ending inventory:
+\[
+\max \; E_L + E_S
+\]
+equivalently,
+\[
+\max \; \left(I_L^0 + x_L - D_L\right) + \left(I_S^0 + x_S - D_S\right).
+\]
+
+With the given data, this is
+\[
+\max \; (30 + x_L - 75) + (90 + x_S - 95).
+\]
+
+\section*{Constraints}
+
+Machine 1 weekly capacity:
+\[
+a_{1L}x_L + a_{1S}x_S \le T_1,
+\]
+i.e.,
+\[
+50x_L + 24x_S \le 2400.
+\]
+
+Machine 2 weekly capacity:
+\[
+a_{2L}x_L + a_{2S}x_S \le T_2,
+\]
+i.e.,
+\[
+30x_L + 33x_S \le 2100.
+\]
+
+Liquid demand satisfaction, implemented as nonnegative ending inventory:
+\[
+E_L \ge 0,
+\]
+equivalently,
+\[
+I_L^0 + x_L - D_L \ge 0,
+\]
+or
+\[
+x_L \ge D_L - I_L^0 = 45.
+\]
+
+Solid demand satisfaction, implemented as nonnegative ending inventory:
+\[
+E_S \ge 0,
+\]
+equivalently,
+\[
+I_S^0 + x_S - D_S \ge 0,
+\]
+or
+\[
+x_S \ge D_S - I_S^0 = 5.
+\]
+
+Nonnegativity:
+\[
+x_L \ge 0,\qquad x_S \ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a continuous linear program with two decision variables. Fractional lots are allowed because both variables are created as continuous nonnegative variables with no integrality restrictions.
+
+The objective in the code is written using ending inventory expressions directly:
+\[
+\max \; (I_L^0 + x_L - D_L) + (I_S^0 + x_S - D_S).
+\]
+Since \(I_L^0\), \(I_S^0\), \(D_L\), and \(D_S\) are constants, this is equivalent to maximizing \(x_L + x_S\) plus a constant; however, the formulation above matches the code exactly.
+
+The model is solved using PuLP with the Gurobi command-line solver interface (\texttt{GUROBI\_CMD}). No exact enumeration or dynamic programming is used.

@@ -1,0 +1,165 @@
+\section*{Sets and Indices}
+
+Let the planning years be indexed by
+\[
+t \in \{1,2,3\}.
+\]
+Because the implementation uses distinct variables for each year-specific investment channel, the formulation is written directly by year rather than with a more abstract indexed family.
+
+\section*{Parameters}
+
+All parameter values are read from \texttt{general\_parameters.csv}.
+
+\[
+I \quad \text{(code: \texttt{initial\_fund})}
+\]
+Initial fund available at the start of year 1.
+
+\[
+r \quad \text{(code: \texttt{annual\_rate})}
+\]
+Annual return rate for the standard one-year investment.
+
+\[
+L_1 \quad \text{(code: \texttt{inv\_limit\_y1})}
+\]
+Maximum amount allowed in the special investment started in year 1.
+
+\[
+R_{12} \quad \text{(code: \texttt{return\_rate\_y1y2})}
+\]
+Gross return multiplier for the special investment started in year 1 and recovered at the end of year 2.
+
+\[
+L_2 \quad \text{(code: \texttt{inv\_limit\_y2})}
+\]
+Maximum amount allowed in the special investment started in year 2.
+
+\[
+R_{23} \quad \text{(code: \texttt{return\_rate\_y2y3})}
+\]
+Gross return multiplier for the special investment started in year 2 and recovered at the end of year 3.
+
+\[
+L_3 \quad \text{(code: \texttt{inv\_limit\_y3})}
+\]
+Maximum amount allowed in the special investment started in year 3.
+
+\[
+r_3 \quad \text{(code: \texttt{profit\_rate\_y3})}
+\]
+Profit rate for the special investment started in year 3 and recovered one year later, so its gross multiplier is \(1+r_3\).
+
+\[
+F_1 \quad \text{(code: \texttt{fee\_y1})}, \qquad
+F_2 \quad \text{(code: \texttt{fee\_y2})}, \qquad
+F_3 \quad \text{(code: \texttt{fee\_y3})}
+\]
+Fixed management fees charged if the year-1, year-2, or year-3 special investment channel is used.
+
+\section*{Decision Variables}
+
+\[
+a_1 \ge 0 \quad \text{(code: \texttt{a1})}
+\]
+Amount placed at the start of year 1 in the standard one-year investment.
+
+\[
+a_2 \ge 0 \quad \text{(code: \texttt{a2})}
+\]
+Amount placed at the start of year 2 in the standard one-year investment.
+
+\[
+a_3 \ge 0 \quad \text{(code: \texttt{a3})}
+\]
+Amount placed at the start of year 3 in the standard one-year investment.
+
+\[
+b_1 \ge 0 \quad \text{(code: \texttt{b1})}
+\]
+Amount placed in the year-1 special investment, with upper bound \(L_1\).
+
+\[
+c_2 \ge 0 \quad \text{(code: \texttt{c2})}
+\]
+Amount placed in the year-2 special investment, with upper bound \(L_2\).
+
+\[
+d_3 \ge 0 \quad \text{(code: \texttt{d3})}
+\]
+Amount placed in the year-3 special investment, with upper bound \(L_3\).
+
+\[
+y_{b1} \in \{0,1\} \quad \text{(code: \texttt{y\_b1})}
+\]
+Binary indicator equal to 1 if the year-1 special investment channel is used.
+
+\[
+y_{c2} \in \{0,1\} \quad \text{(code: \texttt{y\_c2})}
+\]
+Binary indicator equal to 1 if the year-2 special investment channel is used.
+
+\[
+y_{d3} \in \{0,1\} \quad \text{(code: \texttt{y\_d3})}
+\]
+Binary indicator equal to 1 if the year-3 special investment channel is used.
+
+\section*{Objective}
+
+The code maximizes final wealth at the end of year 3 net of fixed management fees:
+\[
+\max \; Z
+\]
+with
+\[
+Z=
+\underbrace{\left(I-a_1-b_1\right)+a_1(1+r)-a_2-c_2+a_2(1+r)+b_1R_{12}-a_3-d_3}_{\text{cash\_year3}}
++ a_3(1+r) + c_2R_{23} + d_3(1+r_3)
+- F_1y_{b1} - F_2y_{c2} - F_3y_{d3}.
+\]
+
+\section*{Constraints}
+
+Special-investment activation constraints:
+\[
+b_1 \le L_1 y_{b1},
+\]
+\[
+c_2 \le L_2 y_{c2},
+\]
+\[
+d_3 \le L_3 y_{d3}.
+\]
+
+Year-1 budget:
+\[
+a_1 + b_1 \le I.
+\]
+
+Year-2 budget:
+\[
+a_2 + c_2 \le (I-a_1-b_1)+a_1(1+r).
+\]
+
+Year-3 budget:
+\[
+a_3 + d_3 \le (I-a_1-b_1)+a_1(1+r)-a_2-c_2+a_2(1+r)+b_1R_{12}.
+\]
+
+Variable domains:
+\[
+a_1,a_2,a_3,b_1,c_2,d_3 \ge 0,
+\]
+\[
+y_{b1},y_{c2},y_{d3}\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The formulation above matches the implemented mixed-integer linear model in \texttt{current\_heuristic.py}.
+
+The standard investments \(a_1,a_2,a_3\) are modeled as one-year placements earning multiplier \(1+r\). The special investments \(b_1,c_2,d_3\) are year-specific channels with limits \(L_1,L_2,L_3\) and gross return multipliers \(R_{12},R_{23},1+r_3\), respectively.
+
+The fixed management fees are modeled exactly as in the code: each fee is subtracted in the objective if and only if the corresponding special-investment variable is positive, enforced through the binary variables and the big-\(M\) constraints \(b_1 \le L_1 y_{b1}\), \(c_2 \le L_2 y_{c2}\), and \(d_3 \le L_3 y_{d3}\).
+
+No fee is charged to the year-by-year budget constraints in the implementation; the fees appear only as deductions in the final objective. The year-3 objective expression also follows the code literally by carrying forward intermediate cash balances and adding the matured year-3 investments separately. The model is solved with a MIP solver (\texttt{GUROBI\_CMD} through PuLP compatibility).

@@ -1,0 +1,107 @@
+{
+  "solver": "gurobi",
+  "model_name": "NurseScheduling_Revised_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 4400.0,
+  "runtime": 0.00027108192443847656,
+  "variables": {
+    "x_0": {
+      "value": -0.0,
+      "reduced_cost": 40.0
+    },
+    "x_1": {
+      "value": 21.0,
+      "reduced_cost": 0.0
+    },
+    "x_3": {
+      "value": 16.0,
+      "reduced_cost": 0.0
+    },
+    "x_4": {
+      "value": 2.0,
+      "reduced_cost": 0.0
+    },
+    "x_5": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    },
+    "y_0": {
+      "value": -0.0,
+      "reduced_cost": 80.0
+    },
+    "y_1": {
+      "value": -0.0,
+      "reduced_cost": 40.0
+    },
+    "y_2": {
+      "value": 4.0,
+      "reduced_cost": 0.0
+    },
+    "y_3": {
+      "value": -0.0,
+      "reduced_cost": 40.0
+    },
+    "y_4": {
+      "value": -0.0,
+      "reduced_cost": 40.0
+    }
+  },
+  "constraints": {
+    "demand_0": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 40.0
+    },
+    "demand_1": {
+      "sense": ">",
+      "slack": -6.0,
+      "dual_value": 0.0
+    },
+    "demand_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 80.0
+    },
+    "demand_3": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 40.0
+    },
+    "demand_4": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 40.0
+    },
+    "demand_5": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 40.0
+    },
+    "min_regular_daytime_1": {
+      "sense": ">",
+      "slack": -13.0,
+      "dual_value": 0.0
+    },
+    "min_regular_daytime_2": {
+      "sense": ">",
+      "slack": -13.0,
+      "dual_value": 0.0
+    },
+    "min_regular_daytime_3": {
+      "sense": ">",
+      "slack": -8.0,
+      "dual_value": 0.0
+    },
+    "min_regular_daytime_4": {
+      "sense": ">",
+      "slack": -10.0,
+      "dual_value": 0.0
+    },
+    "contract_cap": {
+      "sense": "<",
+      "slack": 16.0,
+      "dual_value": 0.0
+    }
+  }
+}

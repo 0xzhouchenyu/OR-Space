@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 53.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nShift starting at period 2:00-6:00: 0 salespeople\nShift starting at period 6:00-10:00: 15 salespeople\nShift starting at period 10:00-14:00: 10 salespeople\nShift starting at period 14:00-18:00: 10 salespeople\nShift starting at period 18:00-22:00: 8 salespeople\nShift starting at period 22:00-2:00: 10 salespeople\nOBJECTIVE_VALUE: 53.0\n",
+  "stderr": "",
+  "error": null
+}

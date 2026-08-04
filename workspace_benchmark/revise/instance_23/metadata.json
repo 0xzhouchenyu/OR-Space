@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_23_revise_business",
+  "original_instance_id": "IndustryOR_23",
+  "revise_description": "In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. Hongdou's weekly clothing plan now separates ordinary sales from promotional commitments. A product line that opens still pays its equipment cost, but its units may serve the regular segment or the promotional segment, each with the corresponding commercial terms in the CSV files. Sales will only treat a product as present in a segment if that segment clears its product-specific minimum batch size. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+6var, +10constr, mod_6constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 6,
+        "-variable": 0,
+        "+constraint": 10,
+        "-constraint": 0,
+        "modify_constraint": 6,
+        "modify_data": 1
+      },
+      "op_count": 23,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 77.777778
+  }
+}

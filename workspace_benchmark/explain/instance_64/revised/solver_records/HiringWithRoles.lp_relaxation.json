@@ -1,0 +1,141 @@
+{
+  "solver": "gurobi",
+  "model_name": "HiringWithRoles_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 39000.0,
+  "runtime": 0.0003349781036376953,
+  "variables": {
+    "eng_F": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "eng_G": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "eng_H": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "eng_I": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "eng_J": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "lead_F": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "lead_G": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "lead_H": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "lead_I": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "lead_J": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "pairs": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_F": {
+      "value": 0.0,
+      "reduced_cost": 2000.0
+    },
+    "x_G": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_H": {
+      "value": 1.0,
+      "reduced_cost": -2000.0
+    },
+    "x_I": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_J": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Role_F": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Role_G": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Role_H": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Role_I": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Role_J": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "MaxEmployees": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "MinSkill": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 5000.0
+    },
+    "MinPM": {
+      "sense": ">",
+      "slack": -1.0,
+      "dual_value": 0.0
+    },
+    "MaxOneGJ": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "MinLeads": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1000.0
+    },
+    "PairLeadCap": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -2000.0
+    },
+    "PairEngCap": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "Budget": {
+      "sense": "<",
+      "slack": 1000.0,
+      "dual_value": 0.0
+    }
+  }
+}

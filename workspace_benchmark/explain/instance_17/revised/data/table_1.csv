@@ -1,0 +1,5 @@
+Key_Part,Distance_from_Airport_km,Probability_of_Destruction_per_Heavy_Bomb,Probability_of_Destruction_per_Light_Bomb
+1,450,0.03,0.08
+2,480,0.10,0.11
+3,540,0.05,0.12
+4,600,0.05,0.09

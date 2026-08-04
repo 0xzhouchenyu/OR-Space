@@ -1,0 +1,67 @@
+{
+  "solver": "gurobi",
+  "model_name": "farm",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": -0.0,
+  "objective_bound": -0.0,
+  "mip_gap": null,
+  "runtime": 0.00011706352233886719,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_6ko6m_46/solver_records/farm.gurobi.log",
+  "variables": {
+    "x_apples": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_lemons": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_oranges": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_pears": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 4466.666666666666
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1800.0
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 120.0,
+      "dual_value": 0.0
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C5": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -2466.6666666666665
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 2200.0
+    }
+  }
+}

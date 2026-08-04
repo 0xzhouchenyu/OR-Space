@@ -1,0 +1,43 @@
+{
+  "solver": "gurobi",
+  "model_name": "FarmProfit",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 30400.0,
+  "objective_bound": 30400.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0036499500274658203,
+  "node_count": 1.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_z6qs16ub/solver_records/FarmProfit.gurobi.log",
+  "variables": {
+    "chickens": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "cows": {
+      "value": 70.0,
+      "reduced_cost": null
+    },
+    "sheep": {
+      "value": 20.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 10.0,
+      "dual_value": null
+    }
+  }
+}

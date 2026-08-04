@@ -1,0 +1,53 @@
+{
+  "solver": "gurobi",
+  "model_name": "Furniture_Production",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 9800.0,
+  "objective_bound": 9800.0,
+  "mip_gap": 0.0,
+  "runtime": 0.002045869827270508,
+  "node_count": 1.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_hshhz59a/solver_records/Furniture_Production.gurobi.log",
+  "variables": {
+    "bookshelves": {
+      "value": 150.0,
+      "reduced_cost": null
+    },
+    "chairs": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "tables": {
+      "value": 10.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Warehouse_Space": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Min_Tables": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Min_Bookshelves": {
+      "sense": ">=",
+      "slack": -130.0,
+      "dual_value": null
+    },
+    "Max_Total_Items": {
+      "sense": "<=",
+      "slack": 40.0,
+      "dual_value": null
+    }
+  }
+}

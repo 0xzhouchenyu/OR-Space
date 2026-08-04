@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 1005.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nPart 1 -> Machine B (cost=15.0)\nPart 2 -> Machine A (cost=20.0)\nPart 3 -> Machine A (cost=30.0)\nPart 4 -> Machine B (cost=45.0)\nPart 5 -> Machine C (cost=60.0)\nPart 6 -> Machine A (cost=60.0)\nPart 7 -> Machine A (cost=70.0)\nPart 8 -> Machine A (cost=80.0)\nPart 9 -> Machine A (cost=90.0)\nPart 10 -> Machine A (cost=100.0)\nMachine A used, setup cost=100.0\nMachine B used, setup cost=135.0\nMachine C used, setup cost=200.0\nOBJECTIVE_VALUE: 1005.0\n",
+  "stderr": "",
+  "error": null
+}

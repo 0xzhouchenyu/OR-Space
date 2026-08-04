@@ -1,0 +1,171 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $P$: set of products, indexed by $p$. In this instance,
+    \[
+    P=\{\text{Product\_A},\text{Product\_B},\text{Product\_C}\}.
+    \]
+    \item $S_p$: ordered set of sales-volume segments listed in \texttt{table\_1.csv} for product $p$, indexed by $i$.
+\end{itemize}
+
+\section*{Parameters}
+
+All numerical values are read from the CSV files.
+
+\begin{itemize}
+    \item For each product $p \in P$:
+    \begin{itemize}
+        \item $a_p$: technical preparation time per unit, from \texttt{technical\_prep\_time\_A}, \texttt{technical\_prep\_time\_B}, \texttt{technical\_prep\_time\_C}.
+        \item $\ell_p$: labor time per unit, from \texttt{labor\_time\_A}, \texttt{labor\_time\_B}, \texttt{labor\_time\_C}.
+        \item $m_p$: material requirement per unit, from \texttt{materials\_A}, \texttt{materials\_B}, \texttt{materials\_C}.
+        \item $q_p$: packaging consumption per unit, from \texttt{pack\_units\_A}, \texttt{pack\_units\_B}, \texttt{pack\_units\_C}.
+    \end{itemize}
+    \item Resource capacities:
+    \begin{itemize}
+        \item $A^{\max}$: available technical preparation time, \texttt{available\_technical\_prep\_time}.
+        \item $L^{\max}$: available regular labor time, \texttt{available\_labor\_time}.
+        \item $M^{\max}$: available materials, \texttt{available\_materials}.
+        \item $Q^{\max}$: shared packaging capacity, \texttt{packaging\_cap\_units}.
+        \item $O^{\max}$: overtime capacity, \texttt{overtime\_cap\_hours}.
+    \end{itemize}
+    \item Overtime cost parameters:
+    \begin{itemize}
+        \item $c^{ot}$: overtime cost per hour, \texttt{overtime\_cost\_per\_hour}.
+        \item $\tau$: threshold for second review, \texttt{overtime\_second\_review\_threshold}.
+        \item $f^{rev}$: one-time second-review fee, \texttt{overtime\_second\_review\_fee}.
+    \end{itemize}
+    \item For each product $p \in P$ and segment $i \in S_p$:
+    \begin{itemize}
+        \item $L_{pi}$: lower endpoint parsed from \texttt{Sales\_Volume\_Range}.
+        \item $U_{pi}$: upper endpoint parsed from \texttt{Sales\_Volume\_Range}; if the CSV row is of the form \texttt{Above\_k}, then $U_{pi}$ is undefined.
+        \item $\pi_{pi}$: profit coefficient for that segment, from \texttt{Profit}.
+    \end{itemize}
+    \item $M$: big-$M$ constant used in the implementation, fixed at
+    \[
+    M=10000.
+    \]
+\end{itemize}
+
+For this instance, the segment sets are:
+\[
+S_{\text{Product\_A}}=\{1,2,3,4\},\quad
+S_{\text{Product\_B}}=\{1,2,3\},\quad
+S_{\text{Product\_C}}=\{1,2\}.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_p$ (code: \texttt{x[prod]}): integer production/sales volume of product $p$, $x_p \in \mathbb{Z}_{\ge 0}$.
+    \item $P_p$ (code: \texttt{p\_var[prod]}): nonnegative profit contribution variable for product $p$.
+    \item $y_{pi}$ (code: \texttt{y[prod][i]}): binary variable indicating whether segment $i \in S_p$ is selected for product $p$.
+    \item $L^{reg}$ (code: \texttt{L\_reg}): regular labor hours used.
+    \item $L^{ot}$ (code: \texttt{L\_ot}): overtime labor hours used.
+    \item $z^{rev}$ (code: \texttt{overtime\_second\_review}): binary variable indicating whether overtime exceeds the first review tier.
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model is:
+\[
+\max \sum_{p \in P} P_p \;-\; c^{ot} L^{ot} \;-\; f^{rev} z^{rev}.
+\]
+
+\section*{Constraints}
+
+\paragraph{1. Segment selection and linking}
+For each product $p \in P$,
+\[
+\sum_{i \in S_p} y_{pi} \le 1.
+\]
+
+For each product $p \in P$ and segment $i \in S_p$:
+
+if $L_{pi}=0$,
+\[
+x_p \ge 1 - M(1-y_{pi}),
+\]
+otherwise,
+\[
+x_p \ge (L_{pi}+1) - M(1-y_{pi}).
+\]
+
+If $U_{pi}$ is defined,
+\[
+x_p \le U_{pi} + M(1-y_{pi}).
+\]
+
+Also,
+\[
+P_p \le \pi_{pi} x_p + M(1-y_{pi}).
+\]
+
+For each product $p \in P$,
+\[
+x_p \le M \sum_{i \in S_p} y_{pi},
+\]
+\[
+P_p \le M \sum_{i \in S_p} y_{pi}.
+\]
+
+These constraints reproduce the code's logic exactly: at most one segment may be active for a product, and if no segment is active then both $x_p$ and $P_p$ are forced to $0$.
+
+\paragraph{2. Technical preparation capacity}
+\[
+\sum_{p \in P} a_p x_p \le A^{\max}.
+\]
+
+\paragraph{3. Materials capacity}
+\[
+\sum_{p \in P} m_p x_p \le M^{\max}.
+\]
+
+\paragraph{4. Labor balance and limits}
+\[
+L^{reg} + L^{ot} = \sum_{p \in P} \ell_p x_p,
+\]
+\[
+L^{reg} \le L^{\max},
+\]
+\[
+L^{ot} \le O^{\max}.
+\]
+
+\paragraph{5. Second overtime review tier}
+\[
+L^{ot} \le \tau + O^{\max} z^{rev}.
+\]
+
+With $z^{rev}=0$, overtime is limited to the first-tier threshold $\tau$; with $z^{rev}=1$, overtime may extend up to the full overtime cap, and the objective pays the one-time fee $f^{rev}$.
+
+\paragraph{6. Packaging capacity}
+\[
+\sum_{p \in P} q_p x_p \le Q^{\max}.
+\]
+
+\paragraph{7. Variable domains}
+\[
+x_p \in \mathbb{Z}_{\ge 0} \qquad \forall p \in P,
+\]
+\[
+P_p \ge 0 \qquad \forall p \in P,
+\]
+\[
+y_{pi} \in \{0,1\} \qquad \forall p \in P,\ i \in S_p,
+\]
+\[
+L^{reg} \ge 0,\qquad L^{ot} \ge 0,\qquad z^{rev}\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The formulation above matches \texttt{current\_heuristic.py} directly, including the use of a single big-$M$ value $M=10000$ and the segment rule
+    \[
+    x_p \ge L_{pi}+1
+    \]
+    when segment $i$ is selected and the CSV lower bound is positive. Thus a row labeled \texttt{40\_100} is implemented as permitting integer volumes $41,\dots,100$, while \texttt{0\_40} is implemented as permitting $1,\dots,40$.
+    \item The product profit variable $P_p$ is only upper-bounded by the active segment expression $\pi_{pi}x_p$; because the model maximizes $P_p$ and at most one segment can be active, the optimizer will drive $P_p$ to the largest feasible upper bound implied by the chosen segment. No lower bound of the form $P_p \ge \pi_{pi}x_p$ is included in the code, so none is added here.
+    \item The second overtime review is modeled exactly as an additional binary-triggered one-time penalty: the first \texttt{overtime\_second\_review\_threshold} hours of overtime can be used without that fee, and using more overtime is allowed only if \texttt{overtime\_second\_review} is activated, in which case \texttt{overtime\_second\_review\_fee} is subtracted once in the objective.
+    \item The implementation solves this mixed-integer linear optimization model with Gurobi through the PuLP-compatible interface \texttt{GUROBI\_CMD(msg=0)}.
+\end{itemize}

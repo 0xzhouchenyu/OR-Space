@@ -1,0 +1,39 @@
+{
+  "solver": "gurobi",
+  "model_name": "Product_Mix",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 409.09090909090907,
+  "objective_bound": 409.09090909090907,
+  "mip_gap": null,
+  "runtime": 0.0004649162292480469,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_37i_icny/solver_records/Product_Mix.gurobi.log",
+  "variables": {
+    "Product_A": {
+      "value": 81.81818181818181,
+      "reduced_cost": 0.0
+    },
+    "Product_B": {
+      "value": 32.72727272727273,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Machine_Time": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.22727272727272727
+    },
+    "Production_Ratio": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.13636363636363624
+    }
+  }
+}

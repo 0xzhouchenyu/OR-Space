@@ -1,0 +1,19 @@
+{
+  "instance_id": "IndustryOR_77_revise_4",
+  "original_instance_id": "IndustryOR_77",
+  "revise_description": "Added a fixed overtime penalty if a machine processes more than a specified threshold of parts.",
+  "revise_type": "R4",
+  "revise_type_name": "Penalty / Fixed Cost Addition",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research"
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 72.222222
+  }
+}

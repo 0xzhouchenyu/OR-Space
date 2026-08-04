@@ -1,0 +1,101 @@
+{
+  "solver": "gurobi",
+  "model_name": "Transportation_Problem",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 685.0,
+  "objective_bound": 685.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0034940242767333984,
+  "node_count": 1.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_febw0duv/solver_records/Transportation_Problem.gurobi.log",
+  "variables": {
+    "x_1_1": {
+      "value": 100.0,
+      "reduced_cost": null
+    },
+    "x_1_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_2": {
+      "value": 100.0,
+      "reduced_cost": null
+    },
+    "y_1_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_1_2": {
+      "value": 100.0,
+      "reduced_cost": null
+    },
+    "y_2_1": {
+      "value": 80.0,
+      "reduced_cost": null
+    },
+    "y_2_2": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "z_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Supply_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Supply_2": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": null
+    },
+    "Demand_1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Demand_2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "FlowBalance_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "FlowBalance_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Capacity_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Capacity_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

@@ -1,0 +1,95 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $N$ : set of communication nodes (code: \texttt{nodes}). In the given instance,
+    \[
+    N=\{A,B,C,D,E\}.
+    \]
+    \item $i,j \in N$ : indices for origin and destination nodes.
+    \item $P_{AC}$ : set of all simple directed paths from source node $A$ to mandatory service node $C$, where each consecutive arc has strictly positive bandwidth. These are exactly the paths enumerated by \texttt{find\_all\_simple\_paths('A','C',...)}.
+    \item $P_{CE}$ : set of all simple directed paths from service node $C$ to target node $E$, where each consecutive arc has strictly positive bandwidth. These are exactly the paths enumerated by \texttt{find\_all\_simple\_paths('C','E',...)}.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $b_{ij}$ (code: \texttt{bandwidth[(i,j)]}) : directed bandwidth from node $i$ to node $j$. If $b_{ij}=0$, the code treats arc $(i,j)$ as unavailable.
+    \item $s=A$ : source node (code: \texttt{source}).
+    \item $m=C$ : mandatory intermediate/service node (code: \texttt{intermediate}).
+    \item $t=E$ : target node (code: \texttt{target}).
+    \item For each path $p \in P_{AC} \cup P_{CE}$, let
+    \[
+    \beta_p = \min_{(i,j)\in p} b_{ij},
+    \]
+    the minimum arc bandwidth along that path. This is the value carried in the code as the second component of each stored pair \texttt{(path, min\_bandwidth)}.
+    \item For each pair $(p,q)\in P_{AC}\times P_{CE}$, define the compatibility indicator
+    \[
+    \gamma_{pq}=
+    \begin{cases}
+    1, & \text{if } V(p)\cap \bigl(V(q)\setminus\{m\}\bigr)=\varnothing,\\
+    0, & \text{otherwise},
+    \end{cases}
+    \]
+    where $V(p)$ is the set of nodes on path $p$. This matches the code test
+    \[
+    \texttt{set(path\_ac) \& (set(path\_ce) - \{C\})}.
+    \]
+    \item For each compatible pair $(p,q)$, define the combined path bandwidth
+    \[
+    B_{pq}=\min\{\beta_p,\beta_q\}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+The implemented search is an exact enumeration over path pairs. A compact selection formulation for the evaluated finite optimization problem is:
+
+\begin{itemize}
+    \item $x_{pq}\in\{0,1\}$ for $(p,q)\in P_{AC}\times P_{CE}$ (conceptually corresponding to selecting one pair of enumerated paths): $x_{pq}=1$ if path $p$ from $A$ to $C$ and path $q$ from $C$ to $E$ are chosen together; $0$ otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize the bandwidth of the resulting loop-free link from $A$ to $E$ through $C$:
+\[
+\max \sum_{p\in P_{AC}}\sum_{q\in P_{CE}} B_{pq}\, x_{pq}.
+\]
+
+\section*{Constraints}
+
+Select exactly one path pair:
+\[
+\sum_{p\in P_{AC}}\sum_{q\in P_{CE}} x_{pq} = 1.
+\]
+
+Disallow incompatible pairs that repeat a node other than the shared node $C$:
+\[
+x_{pq} \le \gamma_{pq}
+\qquad \forall p\in P_{AC},\ q\in P_{CE}.
+\]
+
+Binary selection:
+\[
+x_{pq}\in\{0,1\}
+\qquad \forall p\in P_{AC},\ q\in P_{CE}.
+\]
+
+Equivalently, the code solves
+\[
+\max \left\{ B_{pq} : p\in P_{AC},\ q\in P_{CE},\ \gamma_{pq}=1 \right\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code does not build a graph optimization model with arc variables. Instead, it first enumerates all simple directed paths from $A$ to $C$ and all simple directed paths from $C$ to $E$ using depth-first search.
+    \item A path is considered feasible only if every traversed arc has strictly positive bandwidth, i.e., $b_{ij}>0$.
+    \item For each enumerated path, the path bandwidth is the minimum bandwidth over its arcs, maintained incrementally in the DFS as \texttt{min\_bw}.
+    \item The final feasible $A\to E$ route is obtained by concatenating one $A\to C$ path and one $C\to E$ path, provided they share no node other than $C$. This enforces the ``without loops'' condition exactly as implemented; in particular, the node sets of the two subpaths must be disjoint except for $C$.
+    \item The objective value is the maximum, over all compatible enumerated pairs, of the minimum of the two subpath bandwidths:
+    \[
+    \max_{(p,q):\gamma_{pq}=1} \min\{\beta_p,\beta_q\}.
+    \]
+    Since each $\beta_p$ and $\beta_q$ is already a minimum arc bandwidth, this equals the minimum arc bandwidth over the full concatenated route.
+    \item The search is performed by exact finite enumeration of path pairs, not by solving an LP/MIP with an external optimizer.
+\end{itemize}

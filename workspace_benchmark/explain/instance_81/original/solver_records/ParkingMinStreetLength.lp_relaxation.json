@@ -1,0 +1,96 @@
+{
+  "solver": "gurobi",
+  "model_name": "ParkingMinStreetLength_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 28.55,
+  "runtime": 0.0003268718719482422,
+  "variables": {
+    "T": {
+      "value": 28.55,
+      "reduced_cost": 0.0
+    },
+    "x_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_10": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_11": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_12": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_13": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_14": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_15": {
+      "value": 0.01666666666666809,
+      "reduced_cost": 0.0
+    },
+    "x_2": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_3": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_4": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_5": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_6": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_7": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_8": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_9": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "T_geq_side1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.5
+    },
+    "T_geq_side2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.5
+    },
+    "max_side1": {
+      "sense": "<",
+      "slack": 1.4499999999999966,
+      "dual_value": 0.0
+    },
+    "max_side2": {
+      "sense": "<",
+      "slack": 1.4500000000000033,
+      "dual_value": 0.0
+    }
+  }
+}

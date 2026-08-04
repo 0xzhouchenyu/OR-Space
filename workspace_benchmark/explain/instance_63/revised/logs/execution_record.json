@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 1745.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nHorse trips: 8\nBicycle trips: 19\nHandcart trips: 0\nOBJECTIVE_VALUE: 1745.0\n",
+  "stderr": "",
+  "error": null
+}

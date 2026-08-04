@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_066",
+  "instance_number": 66,
+  "source_revise_instance": "IndustryOR_66_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "Explain why the revised model’s objective increases from 25000.0 to 25500.0 even though the business brief adds fatigue and review logic. Your answer must identify the exact code additions in `src/current_heuristic.py` that changed the objective and feasible region—specifically the variables `ot`, `fatigue`, `review`, the modified period labor constraints, and the review/fatigue trigger constraints—and trace them back to the exact CSV field names and business-brief terms they implement. Then use the solver records to state which original and revised constraints are binding (name the original ones exactly, and map revised `_C3`, `_C6`, `_C7`, `_C10` to their code constraints), interpret the visible dual/shadow prices and slack values in business terms, and explain why you cannot linearly extrapolate those LP marginal values to predict the full revised objective change once the binary trigger variables are present."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ToyProduction.gurobi.log",
+        "ToyProduction.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ToySeasonFatigue.gurobi.log",
+        "ToySeasonFatigue.lp_relaxation.json",
+        "ToySeasonFatigue.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 68.887222
+  }
+}

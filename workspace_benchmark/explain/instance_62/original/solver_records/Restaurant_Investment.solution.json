@@ -1,0 +1,47 @@
+{
+  "solver": "gurobi",
+  "model_name": "Restaurant_Investment",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 90000.0,
+  "objective_bound": 90000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0007038116455078125,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_pb_v69p1/solver_records/Restaurant_Investment.gurobi.log",
+  "variables": {
+    "x_Restaurant_A": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Restaurant_B": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_Restaurant_C": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Restaurant_D": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Budget_Constraint": {
+      "sense": "<=",
+      "slack": 500000.0,
+      "dual_value": null
+    },
+    "D_A_Exclusion_Constraint": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

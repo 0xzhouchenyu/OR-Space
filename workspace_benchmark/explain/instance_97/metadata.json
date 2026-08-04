@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_097",
+  "instance_number": 97,
+  "source_revise_instance": "IndustryOR_97_revise_business",
+  "domain": "Blending_Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Blending_Production_Planning",
+    "question": "In the revised tiered model, explain why the optimal plan changes from the original 115.0 profit solution to 60.0, tracing the exact code and data links. Your answer must identify which new constraints and variables in `src/current_heuristic.py` force the shift (name at least `x_C_ProdA_premium`, `x_C_ProdA_standard`, `x_C_ProdB_premium`, `x_D_ProdB_premium`, and the sulfur constraints), and connect them to the exact CSV columns/parameter names used (`Sulfur_Content_Percentage`, `Purchase_Price_Thousand_Yuan_Per_Ton`, `max_sulfur_content_A_premium`, `selling_price_B_standard`, etc.). Also interpret the solver state: which constraints are binding vs slack in the revised solution, what the reported dual values mean in business terms, and why the dual value on a binding sulfur or demand constraint cannot be used to linearly extrapolate profit for a large increase in capacity. Finally, compare to the original formulation in `src/formulation.tex` and point to the specific objective/constraint edits that caused the objective drop, quantifying the contribution of the premium-tier restructuring."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Mixing_Problem.gurobi.log",
+        "Mixing_Problem.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Mixing_Problem_Tiered.gurobi.log",
+        "Mixing_Problem_Tiered.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 63.968333
+  }
+}

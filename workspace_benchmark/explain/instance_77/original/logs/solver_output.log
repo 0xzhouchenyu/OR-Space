@@ -1,0 +1,15 @@
+Set parameter LicenseID to value 2802670
+Part 1 -> Machine B (cost=15.0)
+Part 2 -> Machine A (cost=20.0)
+Part 3 -> Machine A (cost=30.0)
+Part 4 -> Machine B (cost=45.0)
+Part 5 -> Machine C (cost=60.0)
+Part 6 -> Machine A (cost=60.0)
+Part 7 -> Machine A (cost=70.0)
+Part 8 -> Machine A (cost=80.0)
+Part 9 -> Machine A (cost=90.0)
+Part 10 -> Machine A (cost=100.0)
+Machine A used, setup cost=100.0
+Machine B used, setup cost=135.0
+Machine C used, setup cost=200.0
+OBJECTIVE_VALUE: 1005.0

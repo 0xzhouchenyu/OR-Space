@@ -1,0 +1,7 @@
+A company blends two types of crude oil to produce two types of gasoline. The gasoline types have specific requirements for the proportion of crude oil used in their production. The company has existing inventories of crude oil and can purchase additional quantities from the market at varying prices. The goal is to determine the optimal purchasing and processing plan. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. At the latest operating review, the business owner rejected treating this as a cosmetic rerun. The plan has to follow the commercial interpretation below, with the data-pack labels read literally. The refinery now has two commercial thresholds layered onto the blending run. Type II receives `type_II_price_lift` only when its output reaches `type_II_contract_threshold`, and crude A purchases receive `bulk_purchase_rebate` only when total market purchase clears `bulk_purchase_rebate_threshold`. The staged crude A blocks, quality shares, throughput window, and per-ton processing cost remain part of the period plan. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

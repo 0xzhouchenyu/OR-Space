@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_095",
+  "instance_number": 95,
+  "source_revise_instance": "IndustryOR_95_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model, identify exactly which code variables and CSV parameters implement the new Week 2 business rules, and explain why the objective rises from 528.0 to 591.0 even though the integer optimum has `week2_microclean = 0` and `week3_recovery_loss = 0`. In your answer, trace the Week 2 micro-clean rule and the Week 2 push/Week 3 recovery rule from `src/current_heuristic.py` and `src/formulation.tex` back to the exact `general_parameters.csv` field names and their numeric values, then use the LP-relaxation solver output to name which trigger constraints are binding (zero slack) and interpret the associated shadow prices/marginal values in business terms. Finally, quantify the 63.0 increase by pinpointing the exact code additions that changed the objective and production pattern, and explain why it would be wrong to linearly extrapolate the LP dual values to predict the effect of allowing Week 2 production above the trigger thresholds in the actual MIP."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Beverage_Production_Planning.gurobi.log",
+        "Beverage_Production_Planning.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Beverage_Production_Recovery.gurobi.log",
+        "Beverage_Production_Recovery.lp_relaxation.json",
+        "Beverage_Production_Recovery.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 69.533889
+  }
+}

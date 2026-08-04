@@ -1,0 +1,74 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $T = \{1,2,3,4\}$: set of planning weeks, indexed by $t$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_t$: demand in week $t$ (from \texttt{weeks\_data[t]['demand']}), in thousand boxes.
+    \item $u_t$: production capacity in week $t$ (from \texttt{weeks\_data[t]['capacity']}), in thousand boxes.
+    \item $c_t$: production cost in week $t$ (from \texttt{weeks\_data[t]['cost']}), in thousand yuan per thousand boxes.
+    \item $h$: inventory holding cost per week (code: \texttt{storage\_cost}), in thousand yuan per thousand boxes.
+\end{itemize}
+
+For this instance,
+\[
+(d_1,d_2,d_3,d_4) = (15,25,35,25),
+\]
+\[
+(u_1,u_2,u_3,u_4) = (30,40,45,20),
+\]
+\[
+(c_1,c_2,c_3,c_4) = (5.0,5.1,5.4,5.5),
+\]
+\[
+h = 0.2.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_t$ (code: \texttt{x[t]}): production quantity in week $t$, in thousand boxes.
+    \item $s_t$ (code: \texttt{s[t]}): inventory at the end of week $t$, in thousand boxes.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total production and storage cost over the four weeks:
+\[
+\min \sum_{t \in T} c_t x_t + \sum_{t \in T} h s_t.
+\]
+
+\section*{Constraints}
+
+Production capacity bounds:
+\[
+0 \le x_t \le u_t \qquad \forall t \in T.
+\]
+
+End-of-week inventory nonnegativity:
+\[
+s_t \ge 0 \qquad \forall t \in T.
+\]
+
+Inventory balance in week 1, with zero initial inventory:
+\[
+x_1 - s_1 = d_1.
+\]
+
+Inventory balance in weeks $t=2,3,4$:
+\[
+s_{t-1} + x_t - s_t = d_t \qquad \forall t \in T \setminus \{1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program created with PuLP and solved using \texttt{GUROBI\_CMD(msg=0)}.
+    \item The code enforces zero initial inventory implicitly through the first balance equation $x_1 - s_1 = d_1$.
+    \item There is no explicit terminal condition on inventory after week 4 beyond $s_4 \ge 0$; however, since storage cost is positive, the optimizer will avoid unnecessary ending inventory.
+    \item All quantities are continuous in the implementation; no integrality restrictions are imposed.
+    \item Storage cost is charged on every end-of-week inventory variable included in the model, namely $s_1,s_2,s_3,s_4$.
+\end{itemize}

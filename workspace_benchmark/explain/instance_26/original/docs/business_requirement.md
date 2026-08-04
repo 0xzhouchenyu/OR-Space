@@ -1,0 +1,1 @@
+The problem involves determining the minimum number of salespeople required to meet staffing needs at a 24-hour convenience store. The staffing requirements vary across different time periods, and salespeople work in 8-hour shifts starting at specific times. Please refer to the corresponding CSV files in the data folder for specific parameter values.

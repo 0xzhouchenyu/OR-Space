@@ -1,0 +1,97 @@
+{
+  "solver": "gurobi",
+  "model_name": "FarmBiosecurity",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 20260.869565217392,
+  "objective_bound": 20260.869565217392,
+  "mip_gap": 0.0,
+  "runtime": 0.002557992935180664,
+  "node_count": 1.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_3ztkeggb/solver_records/FarmBiosecurity.gurobi.log",
+  "variables": {
+    "aw_outside": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "chickens": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "coop_open": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "cows": {
+      "value": 21.30434782608696,
+      "reduced_cost": null
+    },
+    "crop_Corn": {
+      "value": 39.130434782608695,
+      "reduced_cost": null
+    },
+    "crop_Soybean": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "crop_Wheat": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "large_flock_review": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "ss_outside": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 28.91304347826086,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 6478.260869565216,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 1800.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

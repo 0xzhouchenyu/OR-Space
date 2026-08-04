@@ -1,0 +1,7 @@
+Container_Type_Code,Volume_cm3,Market_Demand_units,Unit_Variable_Production_Cost_Yuan_per_unit
+1,1500,500,5
+2,2500,550,8
+3,4000,700,10
+4,6000,900,12
+5,9000,400,16
+6,12000,300,18

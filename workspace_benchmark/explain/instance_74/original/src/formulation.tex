@@ -1,0 +1,99 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$: set of activities, with
+    \[
+    I=\{A,B,C,D,E,F,G\}.
+    \]
+    \item $P \subseteq I \times I$: set of precedence arcs $(i,j)$ such that activity $i$ must finish before activity $j$ can start.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_i$: duration of activity $i$ in days.
+    \[
+    d_A=4,\;
+    d_B=3,\;
+    d_C=5,\;
+    d_D=2,\;
+    d_E=10,\;
+    d_F=10,\;
+    d_G=1.
+    \]
+    \item $c^{\text{work}}$: project work cost per day,
+    \[
+    c^{\text{work}}=1000.
+    \]
+    \item $c^{\text{mach}}$: machine rental cost per day,
+    \[
+    c^{\text{mach}}=5000.
+    \]
+    \item Precedence set
+    \[
+    P=\{(A,G),(A,D),(E,F),(G,F),(D,C),(F,C),(F,B)\}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $S_i$ (code: \texttt{S[a]}): start time of activity $i$, for all $i \in I$.
+    \item $T$ (code: \texttt{T}): project time variable used in the objective and constrained to cover the completion of activities $B$ and $C$.
+\end{itemize}
+
+All variables are continuous and nonnegative:
+\[
+S_i \ge 0 \quad \forall i \in I, \qquad T \ge 0.
+\]
+
+\section*{Objective}
+
+Minimize total cost:
+\[
+\min \; c^{\text{work}} T + c^{\text{mach}}\bigl(S_B + d_B - S_A\bigr).
+\]
+
+With the given data, this is
+\[
+\min \; 1000\,T + 5000\,(S_B + 3 - S_A).
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Precedence constraints.} For every $(i,j)\in P$,
+    \[
+    S_j \ge S_i + d_i.
+    \]
+    Explicitly,
+    \begin{align*}
+        S_G &\ge S_A + d_A,\\
+        S_D &\ge S_A + d_A,\\
+        S_F &\ge S_E + d_E,\\
+        S_F &\ge S_G + d_G,\\
+        S_C &\ge S_D + d_D,\\
+        S_C &\ge S_F + d_F,\\
+        S_B &\ge S_F + d_F.
+    \end{align*}
+
+    \item \textbf{Project time coverage.}
+    \[
+    T \ge S_C + d_C,
+    \]
+    \[
+    T \ge S_B + d_B.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+The implemented model is a linear program solved by the code with a continuous LP solver interface. No integrality restrictions are imposed on start times.
+
+The variable $T$ is not constrained to be the completion time of all activities; it is only required to be at least the completion times of activities $B$ and $C$. Given the precedence network, these are the only terminal activities explicitly used to define $T$ in the code.
+
+The machine-rental term is modeled exactly as
+\[
+c^{\text{mach}}(S_B+d_B-S_A),
+\]
+i.e., the elapsed time from the start of activity $A$ to the finish of activity $B$. This is not generalized in the implementation to any broader machine-usage logic; the formulation above matches the code exactly.

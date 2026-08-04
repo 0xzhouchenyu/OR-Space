@@ -1,0 +1,101 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $Y$: set of coal yards appearing in \texttt{table\_1.csv} (code: \texttt{coal\_yards}); here $Y=\{\mathrm{A},\mathrm{B}\}$.
+    \item $R$: set of residential areas appearing in \texttt{table\_1.csv} together with the explicitly modeled demand areas (code: \texttt{areas} and loop over \texttt{[1,2,3]}); here $R=\{1,2,3\}$.
+    \item $E \subseteq Y \times R$: set of allowed shipment routes listed in \texttt{table\_1.csv} (code: \texttt{routes}). For this instance,
+    \[
+    E=\{(\mathrm{A},1),(\mathrm{A},2),(\mathrm{A},3),(\mathrm{B},1),(\mathrm{B},2)\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $c_{yr}$: transportation cost per ton on route $(y,r)\in E$, taken directly from \texttt{Distance\_km} in \texttt{table\_1.csv} (code: \texttt{distances[(yard, area)]}).
+    \item $d_r$: demand of residential area $r\in R$ (code: \texttt{demand[r]}), from:
+    \begin{itemize}
+        \item \texttt{residential\_area\_1\_demand},
+        \item \texttt{residential\_area\_2\_demand},
+        \item \texttt{residential\_area\_3\_demand}.
+    \end{itemize}
+    \item $m_y$: minimum monthly dispatch requirement for coal yard $y\in Y$ (code: \texttt{min\_supply[y]}), from:
+    \begin{itemize}
+        \item \texttt{min\_coal\_yard\_A},
+        \item \texttt{min\_coal\_yard\_B\_adjusted}.
+    \end{itemize}
+    \item $\alpha$: minimum share of Area 3 demand that must be supplied by yard A (code: \texttt{min\_share\_area3\_from\_A}), from \texttt{min\_share\_area3\_from\_A}.
+    \item $T$: ordinary staging-lane threshold for shipments from A to Area 3 (code: \texttt{area3\_staging\_threshold}), from \texttt{area3\_A\_staging\_threshold}.
+    \item $p$: extra handling cost per ton above the threshold on route $(\mathrm{A},3)$ (code: \texttt{area3\_excess\_cost}), from \texttt{area3\_A\_excess\_staging\_cost}.
+\end{itemize}
+
+For this instance, the code uses
+\[
+m_{\mathrm{A}}=80,\quad m_{\mathrm{B}}=55,\quad
+d_1=55,\quad d_2=75,\quad d_3=50,\quad
+\alpha=0.7,\quad T=40,\quad p=3.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{yr}\ge 0$ for each $(y,r)\in E$: tons shipped from coal yard $y$ to residential area $r$ (code: \texttt{x[(y,r)]}).
+    \item $e\ge 0$: excess tons on the A-to-Area-3 route above the ordinary staging threshold (code: \texttt{area3\_excess}).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total transportation cost plus the extra handling cost for A-to-Area-3 tons above the threshold:
+\[
+\min \sum_{(y,r)\in E} c_{yr}\,x_{yr} + p\,e.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item Minimum dispatch from each coal yard:
+    \[
+    \sum_{r:(y,r)\in E} x_{yr} \ge m_y
+    \qquad \forall y\in Y.
+    \]
+
+    \item Demand satisfaction for each residential area:
+    \[
+    \sum_{y:(y,r)\in E} x_{yr} = d_r
+    \qquad \forall r\in R.
+    \]
+
+    \item Minimum share of Area 3 supplied by yard A:
+    \[
+    x_{\mathrm{A},3} \ge \alpha\, d_3.
+    \]
+
+    \item Definition of excess staging usage on the A-to-Area-3 route:
+    \[
+    e \ge x_{\mathrm{A},3} - T.
+    \]
+
+    \item Nonnegativity:
+    \[
+    x_{yr}\ge 0 \qquad \forall (y,r)\in E,
+    \qquad
+    e\ge 0.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program solved by the LP solver interface in \texttt{current\_heuristic.py} using \texttt{GUROBI\_CMD}.
+    \item The route set is taken exactly from \texttt{table\_1.csv}. Since \texttt{table\_1.csv} contains no row for $(\mathrm{B},3)$, there is no decision variable $x_{\mathrm{B},3}$. Thus Area 3 is supplied only through $x_{\mathrm{A},3}$ in the implemented model.
+    \item The staging-yard rule is modeled in the forward direction only, exactly as coded: $e$ must be at least $x_{\mathrm{A},3}-T$, and the objective penalizes $e$ with coefficient $p$. Because $e$ has a positive objective coefficient and lower bound $0$, optimality implies
+    \[
+    e=\max\{0,\,x_{\mathrm{A},3}-T\}.
+    \]
+    \item The minimum-share condition for Area 3 is also one-way only:
+    \[
+    x_{\mathrm{A},3} \ge \alpha d_3.
+    \]
+    No reverse implication or complementary condition is added.
+    \item Costs are exactly the route distances from the CSV plus the additional per-ton excess staging cost on A-to-Area-3 shipments above \texttt{area3\_A\_staging\_threshold}; no other fixed charges, capacities, or balancing constraints are present.
+\end{itemize}

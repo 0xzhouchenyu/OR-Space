@@ -1,0 +1,3 @@
+Parameter_Name,Value,Unit,Context_Description
+min_year3_reserve,80000,yuan,Desired uninvested cash reserve at beginning of Year 3
+reserve_shortfall_penalty,0.5,yuan per yuan shortfall,Penalty applied in objective for reserve shortfall at beginning of Year 3

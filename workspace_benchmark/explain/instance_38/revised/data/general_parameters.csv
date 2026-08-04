@@ -1,0 +1,14 @@
+Parameter_Name,Value,Unit,Context_Description
+t_ij,,seconds,Time to process the i-th product on the j-th machine
+time_window_1,7,seconds,Regular availability limit for Machine 1
+time_window_2,9,seconds,Regular availability limit for Machine 2
+time_window_3,6,seconds,Regular availability limit for Machine 3
+overtime_window_1,3,seconds,Maximum overtime availability for Machine 1
+overtime_window_2,3,seconds,Maximum overtime availability for Machine 2
+overtime_window_3,3,seconds,Maximum overtime availability for Machine 3
+overtime_penalty_per_unit,0.5,1/seconds,Penalty cost per second of overtime usage
+M_1,20,seconds,Big-M constant for Machine 1 sequencing constraints
+M_2,20,seconds,Big-M constant for Machine 2 sequencing constraints
+M_3,20,seconds,Big-M constant for Machine 3 sequencing constraints
+machine1_overtime_review_threshold,1,seconds,Machine 1 overtime covered by the normal maintenance note
+machine1_overtime_review_fee,1.2,time_cost_units,One-time maintenance-review burden if Machine 1 overtime exceeds the normal note

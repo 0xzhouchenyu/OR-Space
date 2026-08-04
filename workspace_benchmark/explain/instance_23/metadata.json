@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_023",
+  "instance_number": 23,
+  "source_revise_instance": "IndustryOR_23_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised LP relaxation diagnostics and the integer solution, explain why `q_2_0`/`y_2` (Casual Cloth in the regular segment) replaces the original model’s mix of `x_0` and `x_2`, and identify exactly which code additions caused the objective to increase from 21500.0 to 24000.0. Your answer must name the revised variables and constraints (`q[i][seg]`, `y[i]`, `labor_capacity`, at least one of `max_reg_prod_link_2` or `min_batch_2`), trace them to the exact CSV columns/parameters (`Selling Price`, `Variable Cost`, `Labor per unit`, `available_labor`, `fixed_cost_casual_clothes`, `segment_regular_discount`, `max_prod_casual_clothes`), and interpret the LP shadow prices/slacks: why does `labor_capacity` have positive dual value while promo-cap constraints have zero dual value, and why can’t you linearly extrapolate the LP marginal values to the MIP if labor is increased by 1 unit?"
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "clothing_production.gurobi.log",
+        "clothing_production.lp_relaxation.json",
+        "clothing_production.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "clothing_production_segmented.gurobi.log",
+        "clothing_production_segmented.lp_relaxation.json",
+        "clothing_production_segmented.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 64.712222
+  }
+}

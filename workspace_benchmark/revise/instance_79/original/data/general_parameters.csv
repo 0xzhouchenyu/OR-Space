@@ -1,0 +1,14 @@
+Parameter_Name,Value,Unit,Context_Description
+sell_price_table,200,USD,Selling price for each table
+sell_price_chair,50,USD,Selling price for each chair
+sell_price_bookshelf,150,USD,Selling price for each bookshelf
+manufacturing_cost_table,120,USD,Manufacturing cost for each table
+manufacturing_cost_chair,20,USD,Manufacturing cost for each chair
+manufacturing_cost_bookshelf,90,USD,Manufacturing cost for each bookshelf
+warehouse_space_table,5,square meters,Warehouse space occupied by each table
+warehouse_space_chair,2,square meters,Warehouse space occupied by each chair
+warehouse_space_bookshelf,3,square meters,Warehouse space occupied by each bookshelf
+max_warehouse_space,500,square meters,Maximum warehouse space available
+min_tables,10,items,Minimum number of tables to produce
+min_bookshelves,20,items,Minimum number of bookshelves to produce
+max_total_items,200,items,Maximum total number of items the factory can produce

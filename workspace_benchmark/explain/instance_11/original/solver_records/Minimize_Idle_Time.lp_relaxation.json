@@ -1,0 +1,40 @@
+{
+  "solver": "gurobi",
+  "model_name": "Minimize_Idle_Time_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 194.66666666666652,
+  "runtime": 0.00023794174194335938,
+  "variables": {
+    "x_A": {
+      "value": 6.0,
+      "reduced_cost": 0.0
+    },
+    "x_B": {
+      "value": 3.6666666666666665,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -12.6
+    },
+    "_C2": {
+      "sense": "<",
+      "slack": 24.333333333333332,
+      "dual_value": 0.0
+    },
+    "_C3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -19.333333333333332
+    },
+    "_C4": {
+      "sense": ">",
+      "slack": -1273.0,
+      "dual_value": 0.0
+    }
+  }
+}

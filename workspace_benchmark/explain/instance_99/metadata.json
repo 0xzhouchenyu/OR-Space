@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_099",
+  "instance_number": 99,
+  "source_revise_instance": "IndustryOR_99_revise_business",
+  "domain": "Reliability_Allocation",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Reliability_Allocation",
+    "question": "In the revised model, explain exactly why the optimal spare package changes from `(s1,s2,s3)=(4,1,1)` with objective `0.6075` to `(2,2,1)` with expected reliability `0.5985`, and identify the precise code additions that cause this objective drop. Your answer must trace the binding logistics restriction back through the revised `current_heuristic.py` variable names, the exact `general_parameters.csv` column/parameter names and values, and the business document phrase that requires one common package across both scenarios; then use `table_1.csv` / `formulation.tex` to show how the reliabilities for `s1,s2,s3` are read into `r1,r2,r3`, `sysrel_A`, `sysrel_B`, and `expected_rel`. Finally, diagnose the state in dual terms: which revised constraints are binding vs slack at the new optimum, what the implied shadow-price interpretation is for tightening/relaxing Scenario B budget or weight, and why any linear shadow-price extrapolation is unreliable here despite the solver status being OPTIMAL in the JSON record."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Advanced_99.gurobi.log",
+        "Advanced_99.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Revise_99_revised.gurobi.log",
+        "Revise_99_revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 81.086667
+  }
+}

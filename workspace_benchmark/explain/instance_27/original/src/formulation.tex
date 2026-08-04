@@ -1,0 +1,105 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $E$: set of all equipment, indexed by $e$.
+    \item $P$: set of products, indexed by $p$, where
+    \[
+    P=\{\text{Product\_I},\text{Product\_II},\text{Product\_III}\}.
+    \]
+    \item $E^A \subseteq E$: equipment used for procedure A, i.e., machines whose names start with A.
+    \item $E^B \subseteq E$: equipment used for procedure B, i.e., machines whose names start with B.
+    \item $K \subseteq E \times P$: compatible equipment--product pairs for which a processing time is provided in \texttt{table\_1.csv}. Variables are created only for $(e,p)\in K$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $t_{ep}$ (\texttt{proc\_times[e][p]}): processing time required on equipment $e$ per unit of product $p$, for $(e,p)\in K$.
+    \item $H_e$ (\texttt{eff\_hours[e]}): effective machine hours available on equipment $e$.
+    \item $C_e$ (\texttt{op\_costs[e]}): operating cost of equipment $e$ when used at full capacity.
+    \item $r_p$ (\texttt{raw\_costs[p]}): raw material cost per unit of product $p$.
+    \item $q_p$ (\texttt{prices[p]}): sales price per unit of product $p$.
+\end{itemize}
+
+For this instance, compatibility is:
+\[
+\begin{aligned}
+K=\{&(\text{A1},\text{Product\_I}),(\text{A1},\text{Product\_II}),\\
+&(\text{A2},\text{Product\_I}),(\text{A2},\text{Product\_II}),(\text{A2},\text{Product\_III}),\\
+&(\text{B1},\text{Product\_I}),(\text{B1},\text{Product\_II}),\\
+&(\text{B2},\text{Product\_I}),(\text{B2},\text{Product\_III}),\\
+&(\text{B3},\text{Product\_I})\}.
+\end{aligned}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ep}$ (code: \texttt{x[e][p]}) $\ge 0$ for $(e,p)\in K$: number of units of product $p$ processed on equipment $e$.
+\end{itemize}
+
+The code also forms total production by product as an expression
+\[
+y_p := \sum_{e\in E^A:(e,p)\in K} x_{ep},
+\]
+but $y_p$ is not an explicit optimization variable in the implementation.
+
+\section*{Objective}
+
+Maximize profit:
+\[
+\max \; \sum_{p\in P} q_p\, y_p
+\;-\;
+\sum_{p\in P} r_p\, y_p
+\;-\;
+\sum_{e\in E} C_e
+\left(
+\frac{\sum_{p:(e,p)\in K} t_{ep} x_{ep}}{H_e}
+\right).
+\]
+
+Substituting $y_p=\sum_{e\in E^A:(e,p)\in K}x_{ep}$, this is
+\[
+\max \;
+\sum_{p\in P}(q_p-r_p)\sum_{e\in E^A:(e,p)\in K}x_{ep}
+-
+\sum_{e\in E} \frac{C_e}{H_e}\sum_{p:(e,p)\in K} t_{ep}x_{ep}.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Equipment capacity constraints} for each equipment $e\in E$:
+    \[
+    \sum_{p:(e,p)\in K} t_{ep} x_{ep} \le H_e.
+    \]
+
+    \item \textbf{Flow balance between procedure A and procedure B} for each product $p\in P$:
+    \[
+    \sum_{e\in E^A:(e,p)\in K} x_{ep}
+    =
+    \sum_{e\in E^B:(e,p)\in K} x_{ep}.
+    \]
+
+    \item \textbf{Nonnegativity} for all compatible pairs $(e,p)\in K$:
+    \[
+    x_{ep}\ge 0.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is a linear program, implemented with PuLP and solved through \texttt{GUROBI\_CMD}.
+    \item Procedure A equipment and procedure B equipment are inferred directly from equipment names: \texttt{A\_equip = [e for e in equipment if e.startswith('A')]} and similarly for B.
+    \item Variables are created only for compatible equipment--product pairs with nonmissing processing times in \texttt{table\_1.csv}; incompatible pairs are omitted entirely rather than fixed to zero.
+    \item Revenue and raw material cost are both computed from the A-side production totals $y_p$. Because of the balance constraints, these equal the B-side totals in any feasible solution.
+    \item Operating cost is modeled as proportional to the utilized fraction of each machine's effective capacity:
+    \[
+    \text{usage fraction of }e
+    =
+    \frac{\sum_{p:(e,p)\in K} t_{ep}x_{ep}}{H_e},
+    \]
+    and machine $e$ contributes $C_e$ times this fraction to cost.
+    \item No integrality, setup, demand, or minimum-production constraints are present in the implemented model.
+\end{itemize}

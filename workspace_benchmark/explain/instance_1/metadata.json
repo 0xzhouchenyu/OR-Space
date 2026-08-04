@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_001",
+  "instance_number": 1,
+  "source_revise_instance": "IndustryOR_1_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, use week 2 to explain exactly how the new single-family operating rule is encoded and why it changes cost relative to the original model. You must trace the logic from the business document’s QA/sanitation rule to the code variables/constraints (`produce_I_flag[t]`, `mut_excl_I_2`, `mut_excl_II_2`, and the relevant hour/backlog variables), and then to the CSV columns and parameter values that determine the week-2 numbers; explicitly cite `table_1.csv` columns (`I`, `II`) for week 2 and `general_parameters.csv` parameter names and values used in the calculation of `BIG_M` and production. Then, interpreting the LP-relaxation diagnostics together with the revised integer solution, identify which backlog side is effectively binding in late horizon for Food II (use `bII_7`/`bII_8` and their reduced-cost/shadow-price meaning), explain the business meaning of that marginal value, and state why you cannot linearly extrapolate that dual interpretation to a larger demand increase once the mutual-exclusion binary regime changes. Finally, quantify the objective increase from original to revised and name the exact code additions responsible for it, tying them back to the compliance motivation in the revised business requirement."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "factory_training.gurobi.log",
+        "factory_training.lp_relaxation.json",
+        "factory_training.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "factory_training.gurobi.log",
+        "factory_training.lp_relaxation.json",
+        "factory_training.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 63.190556
+  }
+}

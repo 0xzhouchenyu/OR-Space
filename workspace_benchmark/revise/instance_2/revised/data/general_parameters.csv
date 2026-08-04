@@ -1,0 +1,10 @@
+Parameter_Name,Value,Unit,Context_Description
+a1,10,units,Annual production of fighter jets in year 1
+a2,15,units,Annual production of fighter jets in year 2
+training_capacity_per_jet,5,pilots per year,Number of pilots trained per training jet per year
+training_duration,2,years,Duration of training program starting in year 1
+dual_use_training_efficiency,0.6,fraction,Relative training capacity of a dual-use jet versus a training-only jet
+training_intensity_cap,0.8,fraction,Maximum fraction of jets allowed in training-only or dual-use modes per year
+combat_jet_min_year2,8,units,Minimum required number of combat jets in year 2
+combat_weight,2,dimensionless,Weight of each combat jet in year 2 in the objective
+training_weight,1,dimensionless,Weight of each trained pilot in the objective

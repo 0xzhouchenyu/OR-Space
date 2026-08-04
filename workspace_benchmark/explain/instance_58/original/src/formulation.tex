@@ -1,0 +1,105 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Fruit set $F$:
+    \[
+    F=\{\text{apples},\text{pears},\text{oranges},\text{lemons}\}.
+    \]
+    \item Enumerated subset set $\mathcal{S}$:
+    \[
+    \mathcal{S}=\{S \subseteq F : 1 \le |S| \le K\},
+    \]
+    where each subset $S$ represents the fruit types allowed to have positive acreage in one subproblem.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Profit per acre for fruit $f \in F$, denoted $p_f$:
+    \[
+    p_{\text{apples}}=2000,\quad
+    p_{\text{pears}}=1800,\quad
+    p_{\text{oranges}}=2200,\quad
+    p_{\text{lemons}}=3000.
+    \]
+    These correspond to code dictionary \texttt{profits[f]}.
+
+    \item Total available farm area $A=120$ (code: \texttt{total\_area}).
+
+    \item Minimum apples-to-pears ratio $\alpha^{AP}=2$ (code: \texttt{min\_a\_to\_p}).
+
+    \item Minimum apples-to-lemons ratio $\alpha^{AL}=3$ (code: \texttt{min\_a\_to\_l}).
+
+    \item Oranges-to-lemons ratio $\alpha^{OL}=2$ (code: \texttt{o\_to\_l}).
+
+    \item Maximum number of fruit types allowed,
+    \[
+    K=2
+    \]
+    (code: \texttt{max\_types}).
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each enumerated subset $S \in \mathcal{S}$, the code solves a continuous LP with acreage variables
+\[
+x_f^{S} \ge 0 \qquad \forall f \in F,
+\]
+where $x_f^{S}$ is the acres allocated to fruit $f$ in the subproblem for subset $S$ (code: \texttt{x[f]}).
+
+The overall selected solution is the best among all subset-specific LP solutions.
+
+\section*{Objective}
+
+For each subset $S \in \mathcal{S}$, solve
+\[
+\max \sum_{f \in F} p_f x_f^{S}.
+\]
+
+Equivalently, the implemented search is
+\[
+\max_{S \in \mathcal{S}} \;
+\left\{
+\max_{x^{S}} \sum_{f \in F} p_f x_f^{S}
+\;:\;
+x^{S} \text{ satisfies the constraints below}
+\right\}.
+\]
+
+\section*{Constraints}
+
+For each subset $S \in \mathcal{S}$, the acreage vector $x^{S}$ must satisfy:
+
+\begin{align}
+&x_f^{S}=0 &&\forall f \in F \setminus S
+&&\text{(non-selected fruit types fixed to zero)} \\
+&\sum_{f \in F} x_f^{S} \le A
+&&&\text{(total farm area)} \\
+&x_{\text{apples}}^{S} \ge \alpha^{AP} x_{\text{pears}}^{S}
+&&&\text{(apples-to-pears ratio)} \\
+&x_{\text{apples}}^{S} \ge \alpha^{AL} x_{\text{lemons}}^{S}
+&&&\text{(apples-to-lemons ratio)} \\
+&x_{\text{oranges}}^{S} = \alpha^{OL} x_{\text{lemons}}^{S}
+&&&\text{(oranges-to-lemons ratio)} \\
+&x_f^{S} \ge 0 &&\forall f \in F.
+\end{align}
+
+With the given data, these are explicitly:
+\begin{align}
+&\sum_{f \in F} x_f^{S} \le 120,\\
+&x_{\text{apples}}^{S} \ge 2x_{\text{pears}}^{S},\\
+&x_{\text{apples}}^{S} \ge 3x_{\text{lemons}}^{S},\\
+&x_{\text{oranges}}^{S} = 2x_{\text{lemons}}^{S}.
+\end{align}
+
+\section*{Notes on Implementation}
+
+The code does not formulate a single mixed-integer model for the ``at most two fruit types'' requirement. Instead, it exactly enumerates all subsets $S \subseteq F$ with cardinality $1$ or $2$, solves one LP for each subset, and returns the feasible solution with the largest objective value.
+
+Thus, the cardinality restriction is enforced by subset enumeration together with the fixing constraints
+\[
+x_f^{S}=0 \quad \forall f \notin S,
+\]
+rather than by binary variables in one optimization model.
+
+Each subset-specific problem is a linear program solved through PuLP using the Gurobi command interface (code: \texttt{pulp.GUROBI\_CMD(msg=0)}). The final reported solution is the best objective value among all LPs with solver status equal to optimal/feasible status code \texttt{1} in the implementation.

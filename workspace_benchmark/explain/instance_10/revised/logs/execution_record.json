@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 6.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\n  Small store at A serves ['C']\n  Small store at B serves ['B', 'H', 'I']\n  Small store at D serves ['D', 'J']\n  Small store at E serves ['A', 'E', 'G']\n  Small store at F serves ['F', 'J', 'K']\n  Small store at L serves ['J', 'K', 'L']\nOBJECTIVE_VALUE: 6.0\n",
+  "stderr": "",
+  "error": null
+}

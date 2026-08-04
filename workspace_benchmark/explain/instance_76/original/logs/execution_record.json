@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 4700.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nBuy in Winter, sell in Winter (store 0q): 100.00 x 10,000 m³\nBuy in Spring, sell in Spring (store 0q): 140.00 x 10,000 m³\nBuy in Summer, sell in Summer (store 0q): 200.00 x 10,000 m³\nBuy in Autumn, sell in Autumn (store 0q): 160.00 x 10,000 m³\nOBJECTIVE_VALUE: 4700.0\n",
+  "stderr": "",
+  "error": null
+}

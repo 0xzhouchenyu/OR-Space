@@ -1,0 +1,80 @@
+{
+  "solver": "gurobi",
+  "model_name": "ZhangFamilyTrip",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 3050.0,
+  "objective_bound": 3050.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0007030963897705078,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_bp54n9jk/solver_records/ZhangFamilyTrip.gurobi.log",
+  "variables": {
+    "x_Fred": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_George": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Ginny": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_Harry": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Hermione": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Ron": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Ginny_must_go": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Max_children": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "Min_children": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Harry_no_Fred": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Harry_no_George": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "George_requires_Fred": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "George_requires_Hermione": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

@@ -1,0 +1,100 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products \(P=\{X,Y\}\), indexed by \(p\).
+\end{itemize}
+
+\section*{Parameters}
+
+All numerical values are read from the CSV files using the field names shown below.
+
+\begin{itemize}
+    \item \(a_p\): machine time requirement per batch of product \(p\), in minutes (from \texttt{Machine\_Time\_minutes} in \texttt{table\_1.csv}).
+    \item \(b_p\): craftsman time requirement per batch of product \(p\), in minutes (from \texttt{Craftsman\_Time\_minutes} in \texttt{table\_1.csv}).
+    \item \(M\): available machine hours (code data: \texttt{machine\_time\_available}).
+    \item \(R\): available regular craftsman hours (code data: \texttt{craftsman\_regular\_time\_available}).
+    \item \(O\): available overtime craftsman hours (code data: \texttt{craftsman\_overtime\_available}).
+    \item \(c^m\): machine-hour cost (code data: \texttt{machine\_time\_cost}).
+    \item \(c^r\): regular craftsman-hour cost (code data: \texttt{craftsman\_time\_cost}).
+    \item \(c^o\): overtime craftsman-hour cost (code data: \texttt{craftsman\_overtime\_cost}).
+    \item \(v_X\): revenue per batch of product \(X\) (code data: \texttt{revenue\_product\_X}).
+    \item \(v_Y\): revenue per batch of product \(Y\) (code data: \texttt{revenue\_product\_Y}).
+    \item \(L_X\): minimum required batches of product \(X\) (code data: \texttt{min\_batches\_product\_X}).
+    \item \(T_Y\): Product \(Y\) QA threshold in batches (code data: \texttt{product\_Y\_QA\_threshold}).
+    \item \(F_Y\): one-time QA fee for exceeding the Product \(Y\) threshold (code data: \texttt{product\_Y\_QA\_fee}).
+    \item \(\bar M_Y = 10000\): big-\(M\) constant used in the implemented QA-tier constraint.
+\end{itemize}
+
+Define the implied resource-use expressions
+\[
+h^m(x,y)=\frac{a_X x+a_Y y}{60}, \qquad
+h^c(x,y)=\frac{b_X x+b_Y y}{60}.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x\) (code: \texttt{X}): batches of product \(X\), continuous, \(x \ge 0\).
+    \item \(y\) (code: \texttt{Y}): batches of product \(Y\), continuous, \(y \ge 0\).
+    \item \(r\) (code: \texttt{craft\_reg}): regular craftsman hours used, continuous, \(0 \le r \le R\).
+    \item \(o\) (code: \texttt{craft\_ot}): overtime craftsman hours used, continuous, \(0 \le o \le O\).
+    \item \(q\) (code: \texttt{product\_Y\_QA}): binary indicator for the Product \(Y\) QA fee, \(q \in \{0,1\}\).
+\end{itemize}
+
+\section*{Objective}
+
+Maximize weekly profit:
+\[
+\max \;
+v_X x + v_Y y
+- c^m \, h^m(x,y)
+- c^r r
+- c^o o
+- F_Y q.
+\]
+
+Equivalently,
+\[
+\max \;
+v_X x + v_Y y
+- c^m \frac{a_X x+a_Y y}{60}
+- c^r r
+- c^o o
+- F_Y q.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+h^m(x,y) &\le M
+&& \text{(machine capacity)} \\
+h^c(x,y) &= r+o
+&& \text{(craftsman-time balance)} \\
+x &\ge L_X
+&& \text{(minimum production of product \(X\))} \\
+y &\le T_Y + \bar M_Y q
+&& \text{(implemented Product \(Y\) QA-tier logic)} \\
+0 \le r &\le R
+&& \text{(regular craftsman availability)} \\
+0 \le o &\le O
+&& \text{(overtime craftsman availability)} \\
+x &\ge 0,\; y \ge 0,\; q \in \{0,1\}. &&
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a mixed-integer linear program and solved with \texttt{GUROBI\_CMD}.
+    \item Product quantities \(x\) and \(y\) are continuous, so fractional batches are allowed.
+    \item The regular/overtime split is modeled through variables \(r\) and \(o\) with the equality
+    \[
+    h^c(x,y)=r+o,
+    \]
+    so all craftsman hours required by production must be assigned to either regular or overtime hours.
+    \item The QA revision for Product \(Y\) is implemented exactly as
+    \[
+    y \le T_Y + 10000\, q,
+    \]
+    with fee term \(-F_Y q\) in the objective. This formulation allows \(q=1\) both when \(y>T_Y\) and when \(y\le T_Y\); the fee is therefore economically discouraged rather than enforced by a reverse implication. The formulation above matches the code and should not be strengthened when reproducing the workspace model.
+    \item There is no explicit upper bound on \(y\) other than resource limits and the big-\(M\) QA-tier constraint.
+\end{itemize}

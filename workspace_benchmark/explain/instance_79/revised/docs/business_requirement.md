@@ -1,0 +1,7 @@
+A furniture factory needs to decide how many tables, chairs, and bookshelves to produce in order to maximize its profit. The profit is calculated as the difference between the selling price and the manufacturing cost. The factory has constraints related to warehouse space, minimum production requirements for certain items, and a maximum total production limit. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. At the latest operating review, the business owner rejected treating this as a cosmetic rerun. The plan has to follow the commercial interpretation below, with the data-pack labels read literally. The furniture factory now distinguishes regular orders from rush orders across the monthly plan. Rush units use the same warehouse space as regular units but draw on monthly labor caps, rush-capacity limits, and the tiered `rush_profit_bonus_*` terms. Tables, chairs, and bookshelves all still compete for the shared warehouse limit. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

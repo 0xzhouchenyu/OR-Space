@@ -1,0 +1,123 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+\item $I$: set of container types, indexed by $i$ for produced type and $j$ for demand type.
+\item Each type $i \in I$ has a volume, and type $i$ may satisfy demand of type $j$ only if its volume is at least as large as that of $j$.
+\item Define the eligible assignment set
+\[
+A := \{(i,j)\in I\times I : \texttt{Volume\_cm3}_i \ge \texttt{Volume\_cm3}_j\}.
+\]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+\item $d_j$: market demand of container type $j$ (data field: \texttt{Market\_Demand\_units}).
+\item $c_i$: unit variable production cost of type $i$ (data field: \texttt{Unit\_Variable\_Production\_Cost\_Yuan\_per\_unit}).
+\item $v_i$: volume of type $i$ (data field: \texttt{Volume\_cm3}); used only to define eligibility $(i,j)\in A$.
+\item $F$: fixed setup cost per activated type-mode (data field: \texttt{fixed\_setup\_cost}).
+\item $p^E$: electricity cost per kWh (data field: \texttt{energy\_cost\_per\_kwh}).
+\item $E^{\max}$: maximum total energy allowed (data field: \texttt{max\_total\_energy\_kwh}).
+\item $\alpha$: eco capacity share (data field: \texttt{eco\_capacity\_share}).
+\item $H$: additional fixed overhead for activating eco mode for a type (data field: \texttt{eco\_overhead\_cost}).
+\item $e^R$: regular-mode energy intensity in kWh per unit (data field: \texttt{regular\_energy\_intensity\_kwh\_per\_unit}).
+\item $e^E$: eco-mode energy intensity in kWh per unit (data field: \texttt{eco\_energy\_intensity\_kwh\_per\_unit}).
+\item $M := \sum_{j\in I} d_j$, the big-$M$ constant used in the implementation.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+\item $x^R_{ij}$ (code: \texttt{x\_regular[i,j]}) for $(i,j)\in A$: nonnegative integer units of type $i$ produced in Regular mode and assigned to satisfy demand of type $j$.
+\item $x^E_{ij}$ (code: \texttt{x\_eco[i,j]}) for $(i,j)\in A$: nonnegative integer units of type $i$ produced in Eco mode and assigned to satisfy demand of type $j$.
+\item $y^R_i$ (code: \texttt{y\_regular[i]}): binary variable equal to $1$ if Regular mode is activated for type $i$.
+\item $y^E_i$ (code: \texttt{y\_eco[i]}): binary variable equal to $1$ if Eco mode is activated for type $i$.
+\end{itemize}
+
+For convenience, define total production by type and mode:
+\[
+T^R_i := \sum_{j:(i,j)\in A} x^R_{ij},
+\qquad
+T^E_i := \sum_{j:(i,j)\in A} x^E_{ij}.
+\]
+
+\section*{Objective}
+
+Minimize total variable production cost, setup cost, eco overhead, and electricity cost:
+\[
+\min \;
+\sum_{(i,j)\in A} c_i\left(x^R_{ij}+x^E_{ij}\right)
+\;+\;
+\sum_{i\in I} F y^R_i
+\;+\;
+\sum_{i\in I} F y^E_i
+\;+\;
+\sum_{i\in I} H y^E_i
+\;+\;
+p^E \sum_{i\in I}\left(e^R T^R_i + e^E T^E_i\right).
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+\item \textbf{Demand coverage with substitution.}  
+Each demand type must be met by eligible same-size or larger containers, from either mode:
+\[
+\sum_{i:(i,j)\in A}\left(x^R_{ij}+x^E_{ij}\right)\ge d_j
+\qquad \forall j\in I.
+\]
+
+\item \textbf{Setup linking for Regular mode.}
+\[
+T^R_i \le M y^R_i
+\qquad \forall i\in I.
+\]
+
+\item \textbf{Setup linking for Eco mode.}
+\[
+T^E_i \le M y^E_i
+\qquad \forall i\in I.
+\]
+
+\item \textbf{Eco capacity share.}  
+The implemented rule limits eco production relative to regular production:
+\[
+(1-\alpha)T^E_i \le \alpha T^R_i
+\qquad \forall i\in I.
+\]
+Equivalently, when $\alpha \in (0,1)$,
+\[
+T^E_i \le \frac{\alpha}{1-\alpha} T^R_i.
+\]
+
+\item \textbf{Total energy cap.}
+\[
+\sum_{i\in I}\left(e^R T^R_i + e^E T^E_i\right)\le E^{\max}.
+\]
+
+\item \textbf{Integrality and domains.}
+\[
+x^R_{ij},x^E_{ij}\in \mathbb{Z}_{\ge 0}
+\qquad \forall (i,j)\in A,
+\]
+\[
+y^R_i,y^E_i\in \{0,1\}
+\qquad \forall i\in I.
+\]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+\item The model is implemented as a mixed-integer linear optimization problem and solved with Gurobi through the PuLP-compatible interface.
+\item The assignment variables are created only for eligible pairs $(i,j)$ satisfying $\texttt{Volume\_cm3}_i \ge \texttt{Volume\_cm3}_j$; thus substitution is allowed only from larger or equal-volume types to smaller-demand types.
+\item Variable production cost depends only on produced type $i$, not on the demand type $j$ it serves, and is identical in Regular and Eco modes.
+\item Both modes incur the general fixed setup cost \texttt{fixed\_setup\_cost} when activated; Eco mode additionally incurs \texttt{eco\_overhead\_cost}.
+\item The electricity cost is modeled explicitly in the objective via \texttt{energy\_cost\_per\_kwh} multiplied by total energy consumption, and total energy is also capped by \texttt{max\_total\_energy\_kwh}.
+\item The eco-share constraint should be read literally as implemented:
+\[
+(1-\texttt{eco\_capacity\_share})\cdot T^E_i \le \texttt{eco\_capacity\_share}\cdot T^R_i,
+\]
+not as a bound on eco production against total production.
+\item No explicit upper bound on total production is imposed beyond demand satisfaction, setup linking, and the total energy cap.
+\end{itemize}

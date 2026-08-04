@@ -1,0 +1,71 @@
+{
+  "solver": "gurobi",
+  "model_name": "Furniture_Production_With_Modes_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 10450.0,
+  "runtime": 0.0004258155822753906,
+  "variables": {
+    "bookshelves_regular": {
+      "value": 120.0,
+      "reduced_cost": 0.0
+    },
+    "bookshelves_rush": {
+      "value": 30.0,
+      "reduced_cost": 0.0
+    },
+    "chairs_regular": {
+      "value": -0.0,
+      "reduced_cost": -10.0
+    },
+    "chairs_rush": {
+      "value": -0.0,
+      "reduced_cost": -15.0
+    },
+    "tables_regular": {
+      "value": -0.0,
+      "reduced_cost": -5.0
+    },
+    "tables_rush": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Warehouse_Space": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 20.0
+    },
+    "Regular_Labor_Hours": {
+      "sense": "<",
+      "slack": 40.0,
+      "dual_value": 0.0
+    },
+    "Rush_Labor_Hours": {
+      "sense": "<",
+      "slack": 20.0,
+      "dual_value": 0.0
+    },
+    "Rush_Items_Cap": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 15.0
+    },
+    "Min_Tables_Total": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -15.0
+    },
+    "Min_Bookshelves_Total": {
+      "sense": ">",
+      "slack": -130.0,
+      "dual_value": 0.0
+    },
+    "Max_Total_Items_All_Modes": {
+      "sense": "<",
+      "slack": 40.0,
+      "dual_value": 0.0
+    }
+  }
+}

@@ -1,0 +1,1 @@
+A school is organizing a trip for a group of students. The transportation company has buses and minibuses available, but there is a limited number of drivers. The goal is to determine how many of each type of vehicle should be used to minimize the transportation cost. Please refer to the corresponding CSV files in the data folder for specific parameter values.

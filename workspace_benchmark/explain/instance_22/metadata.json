@@ -1,0 +1,62 @@
+{
+  "instance_id": "OR_explain_022",
+  "instance_number": 22,
+  "source_revise_instance": "IndustryOR_22_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the optimizer stops exactly at `x['A1'] = 3000` instead of pushing A1 above that level, even though A1 has positive unit margin in `table_1.csv`. Trace the full logical-physical chain by naming the exact code variables (`x['A1']`, `watch`, `deep`, `excess` / their solver names), the exact CSV fields and parameter values from `general_parameters.csv` and `table_1.csv`, and the business brief terms they implement. Then use the LP-relaxation diagnostics to identify which revised constraints are binding at that solution, interpret the shadow prices/slacks of the production-days limit and the excess/watch gate, and compare against the original model to pinpoint the exact code additions that caused the objective to fall from 156483.0 to about 156000.0; quantify that drop using the displaced product mix and explain why the dual-based marginal value cannot be linearly extrapolated once `a1_watch_threshold` is crossed."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "table_2.csv",
+        "table_3.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Production_Planning.gurobi.log",
+        "Production_Planning.lp_relaxation.json",
+        "Production_Planning.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "table_2.csv",
+        "table_3.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "A1PriorityCalendar.gurobi.log",
+        "A1PriorityCalendar.lp_relaxation.json",
+        "A1PriorityCalendar.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 72.267778
+  }
+}

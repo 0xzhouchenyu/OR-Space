@@ -1,0 +1,6 @@
+Child,Cost,Relationship_Constraint
+Alice,1000,"Cannot be taken with Diana"
+Bob,900,"Will definitely be taken; Cannot be taken with Charlie"
+Charlie,600,"Must be taken with Diana"
+Diana,500,"Must be taken with Ella"
+Ella,700,"Must be taken with Diana"

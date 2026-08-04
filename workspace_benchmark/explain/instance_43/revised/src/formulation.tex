@@ -1,0 +1,150 @@
+\section*{Sets and Indices}
+
+There are no nontrivial sets in the implemented model. The problem is a single-day, two-source dispatch decision:
+\[
+w \in \{A,B\},
+\]
+where \(A\) and \(B\) denote warehouses A and B.
+
+\section*{Parameters}
+
+All parameter values are read from \texttt{general\_parameters.csv}.
+
+Daily minimum raw-material requirements:
+\[
+R_A = \texttt{min\_raw\_material\_A},\qquad
+R_B = \texttt{min\_raw\_material\_B},\qquad
+R_C = \texttt{min\_raw\_material\_C}.
+\]
+
+Per-truck capacities from warehouse \(A\):
+\[
+q_{A,A} = \texttt{warehouse\_A\_truck\_capacity\_A},\qquad
+q_{A,B} = \texttt{warehouse\_A\_truck\_capacity\_B},\qquad
+q_{A,C} = \texttt{warehouse\_A\_truck\_capacity\_C}.
+\]
+
+Per-truck capacities from warehouse \(B\):
+\[
+q_{B,A} = \texttt{warehouse\_B\_truck\_capacity\_A},\qquad
+q_{B,B} = \texttt{warehouse\_B\_truck\_capacity\_B},\qquad
+q_{B,C} = \texttt{warehouse\_B\_truck\_capacity\_C}.
+\]
+
+Per-truck freight costs:
+\[
+c_A = \texttt{warehouse\_A\_truck\_cost},\qquad
+c_B = \texttt{warehouse\_B\_truck\_cost}.
+\]
+
+Fixed usage costs:
+\[
+F_A = \texttt{warehouse\_A\_fixed\_cost},\qquad
+F_B = \texttt{warehouse\_B\_fixed\_cost}.
+\]
+
+Warehouse \(B\) overflow threshold and gate cost:
+\[
+T_B = \texttt{warehouse\_B\_overflow\_threshold\_trucks},\qquad
+G_B = \texttt{warehouse\_B\_overflow\_coordination\_cost}.
+\]
+
+Dual-warehouse reconciliation fee:
+\[
+D = \texttt{dual\_warehouse\_reconciliation\_fee}.
+\]
+
+Big-\(M\) constant used by the implementation:
+\[
+M = 10000.
+\]
+
+\section*{Decision Variables}
+
+Number of trucks dispatched:
+\[
+x \in \mathbb{Z}_{\ge 0} \quad \text{(code: \texttt{x})},
+\qquad
+y \in \mathbb{Z}_{\ge 0} \quad \text{(code: \texttt{y})},
+\]
+where \(x\) is trucks from warehouse \(A\) and \(y\) is trucks from warehouse \(B\).
+
+Binary warehouse-use indicators:
+\[
+z_A \in \{0,1\} \quad \text{(code: \texttt{z\_A})},
+\qquad
+z_B \in \{0,1\} \quad \text{(code: \texttt{z\_B})}.
+\]
+
+Binary gate for warehouse \(B\) overflow coordination:
+\[
+z^{\text{over}}_B \in \{0,1\} \quad \text{(code: \texttt{z\_over})}.
+\]
+
+Binary indicator for the one-time dual-warehouse reconciliation charge:
+\[
+z^{\text{dual}} \in \{0,1\} \quad \text{(code: \texttt{z\_dual})}.
+\]
+
+\section*{Objective}
+
+Minimize total daily cost:
+\[
+\min \;
+c_A x + c_B y + F_A z_A + F_B z_B + G_B z^{\text{over}}_B + D z^{\text{dual}}.
+\]
+
+\section*{Constraints}
+
+Raw-material demand satisfaction:
+\[
+q_{A,A} x + q_{B,A} y \ge R_A,
+\]
+\[
+q_{A,B} x + q_{B,B} y \ge R_B,
+\]
+\[
+q_{A,C} x + q_{B,C} y \ge R_C.
+\]
+
+Warehouse-usage activation:
+\[
+x \le M z_A,
+\]
+\[
+y \le M z_B.
+\]
+
+Warehouse \(B\) overflow gate:
+\[
+y \le T_B + M z^{\text{over}}_B.
+\]
+Thus, if \(y \le T_B\), the overflow variable may remain \(0\); if \(y > T_B\), then \(z^{\text{over}}_B\) must be \(1\), triggering the one-time overflow coordination cost.
+
+Dual-warehouse reconciliation logic:
+\[
+z^{\text{dual}} \ge z_A + z_B - 1,
+\]
+\[
+z^{\text{dual}} \le z_A,
+\]
+\[
+z^{\text{dual}} \le z_B.
+\]
+These constraints force
+\[
+z^{\text{dual}} = 1 \iff z_A = z_B = 1,
+\]
+so the reconciliation fee is charged exactly once when both warehouses are used.
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program solved through \texttt{GUROBI\_CMD} in PuLP compatibility mode.
+
+The revised business rule is modeled as a binary gate, not as a proportional surcharge:
+\begin{itemize}
+\item warehouse \(B\)'s overflow coordination charge is a one-time fixed cost activated only when \(\texttt{trucks\_from\_B} > \texttt{warehouse\_B\_overflow\_threshold\_trucks}\);
+\item if both warehouses are used on the same day, a one-time reconciliation fee \(\texttt{dual\_warehouse\_reconciliation\_fee}\) is added through \(\texttt{z\_dual}\).
+\end{itemize}
+
+The formulation above matches the code exactly, including the one-sided big-\(M\) linking constraints \(x \le M z_A\) and \(y \le M z_B\). There are no converse constraints such as \(x \ge z_A\) or \(y \ge z_B\); however, because the fixed costs \(F_A,F_B\) are positive and the objective is minimized, the optimal solution will not set a usage binary to \(1\) unless needed.

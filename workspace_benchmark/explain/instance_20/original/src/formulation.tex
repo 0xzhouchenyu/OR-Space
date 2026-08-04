@@ -1,0 +1,166 @@
+\section*{Sets and Indices}
+
+Let
+\[
+T = \{\text{robot},\text{car},\text{blocks},\text{doll}\}
+\]
+be the set of toy types.
+
+No additional indexing sets are used in the implemented model.
+
+\section*{Parameters}
+
+Profits per unit:
+\[
+p_{\text{robot}}=15,\quad
+p_{\text{car}}=8,\quad
+p_{\text{blocks}}=12,\quad
+p_{\text{doll}}=5.
+\]
+
+Plastic consumption per unit:
+\[
+a_{\text{robot}}=30,\quad
+a_{\text{car}}=10,\quad
+a_{\text{blocks}}=20,\quad
+a_{\text{doll}}=15.
+\]
+
+Available plastic:
+\[
+A=1200.
+\]
+
+Big-\(M\) constant used for logical linking:
+\[
+M=10000.
+\]
+
+The CSV also contains electronic-component data and Boolean flags for business rules, but in the current implementation only the plastic parameters and the three logical rules listed below are enforced.
+
+\section*{Decision Variables}
+
+Integer production quantities:
+\[
+x_{\text{robot}} \in \mathbb{Z}_{\ge 0} \quad \text{(code: \texttt{x\_robot})},
+\]
+\[
+x_{\text{car}} \in \mathbb{Z}_{\ge 0} \quad \text{(code: \texttt{x\_car})},
+\]
+\[
+x_{\text{blocks}} \in \mathbb{Z}_{\ge 0} \quad \text{(code: \texttt{x\_blocks})},
+\]
+\[
+x_{\text{doll}} \in \mathbb{Z}_{\ge 0} \quad \text{(code: \texttt{x\_doll})}.
+\]
+
+Binary indicators for whether a toy type is manufactured:
+\[
+y_{\text{robot}} \in \{0,1\} \quad \text{(code: \texttt{y\_robot})},
+\]
+\[
+y_{\text{car}} \in \{0,1\} \quad \text{(code: \texttt{y\_car})},
+\]
+\[
+y_{\text{blocks}} \in \{0,1\} \quad \text{(code: \texttt{y\_blocks})},
+\]
+\[
+y_{\text{doll}} \in \{0,1\} \quad \text{(code: \texttt{y\_doll})}.
+\]
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+p_{\text{robot}}x_{\text{robot}}
++ p_{\text{car}}x_{\text{car}}
++ p_{\text{blocks}}x_{\text{blocks}}
++ p_{\text{doll}}x_{\text{doll}}.
+\]
+
+With the given data:
+\[
+\max \;
+15x_{\text{robot}} + 8x_{\text{car}} + 12x_{\text{blocks}} + 5x_{\text{doll}}.
+\]
+
+\section*{Constraints}
+
+Plastic capacity:
+\[
+a_{\text{robot}}x_{\text{robot}}
++ a_{\text{car}}x_{\text{car}}
++ a_{\text{blocks}}x_{\text{blocks}}
++ a_{\text{doll}}x_{\text{doll}}
+\le A.
+\]
+
+With the given data:
+\[
+30x_{\text{robot}} + 10x_{\text{car}} + 20x_{\text{blocks}} + 15x_{\text{doll}} \le 1200.
+\]
+
+Upper linking of production to activity indicators:
+\[
+x_{\text{robot}} \le M y_{\text{robot}},
+\]
+\[
+x_{\text{car}} \le M y_{\text{car}},
+\]
+\[
+x_{\text{blocks}} \le M y_{\text{blocks}},
+\]
+\[
+x_{\text{doll}} \le M y_{\text{doll}}.
+\]
+
+Lower linking of activity indicators to production:
+\[
+y_{\text{robot}} \le x_{\text{robot}},
+\]
+\[
+y_{\text{car}} \le x_{\text{car}},
+\]
+\[
+y_{\text{blocks}} \le x_{\text{blocks}},
+\]
+\[
+y_{\text{doll}} \le x_{\text{doll}}.
+\]
+
+Robot--doll mutual exclusion:
+\[
+y_{\text{robot}} + y_{\text{doll}} \le 1.
+\]
+
+Model-car implies building-blocks production:
+\[
+y_{\text{car}} \le y_{\text{blocks}}.
+\]
+
+Dolls cannot exceed model cars:
+\[
+x_{\text{doll}} \le x_{\text{car}}.
+\]
+
+Integrality and binary restrictions:
+\[
+x_t \in \mathbb{Z}_{\ge 0} \qquad \forall t \in T,
+\]
+\[
+y_t \in \{0,1\} \qquad \forall t \in T.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program solved via \texttt{GUROBI\_CMD} through a PuLP-compatible interface.
+
+The formulation intentionally matches the code exactly:
+\begin{itemize}
+\item Only the plastic resource constraint is enforced.
+\item Although the data file provides electronic-component capacities and requirements, they are not used in the current model.
+\item The three business rules are modeled through binary variables and linear constraints exactly as coded.
+\item The pair of constraints \(x_t \le M y_t\) and \(y_t \le x_t\) forces \(y_t=1\) iff \(x_t \ge 1\), since \(x_t\) is a nonnegative integer and \(y_t\) is binary.
+\item The big-\(M\) value is fixed in code as \(M=10000\); it is not derived from resource bounds.
+\end{itemize}

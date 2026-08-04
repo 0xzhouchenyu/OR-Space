@@ -1,0 +1,113 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $M$: set of raw materials, indexed by $m$.
+    \item $P$: set of products, indexed by $p$.
+\end{itemize}
+
+In this instance,
+\[
+M=\{A,B,C,D\}, \qquad P=\{\text{ProdA},\text{ProdB}\}.
+\]
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $s_m$: sulfur content percentage of raw material $m$.
+    \item $c_m$: purchase price of raw material $m$ (thousand yuan per ton).
+    \item $r$: selling price of either product (thousand yuan per ton) (code: \texttt{selling\_price}).
+    \item $\bar{s}_{\text{ProdA}}$: maximum sulfur content allowed for product ProdA (code: \texttt{max\_sulfur\_A}).
+    \item $\bar{s}_{\text{ProdB}}$: maximum sulfur content allowed for product ProdB (code: \texttt{max\_sulfur\_B}).
+    \item $U_D$: maximum available supply of raw material $D$ (tons) (code: \texttt{max\_supply\_D}).
+    \item $D_{\text{ProdA}}$: market demand upper bound for product ProdA (tons) (code: \texttt{demand\_A}).
+    \item $D_{\text{ProdB}}$: market demand upper bound for product ProdB (tons) (code: \texttt{demand\_B}).
+\end{itemize}
+
+For this instance, the data are:
+\[
+\begin{aligned}
+&s_A=3,\; s_B=1,\; s_C=2,\; s_D=1,\\
+&c_A=6,\; c_B=16,\; c_C=10,\; c_D=15,\\
+&r=9.15,\\
+&\bar{s}_{\text{ProdA}}=2.5,\qquad \bar{s}_{\text{ProdB}}=1.5,\\
+&U_D=50,\qquad D_{\text{ProdA}}=100,\qquad D_{\text{ProdB}}=200.
+\end{aligned}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{m,p} \ge 0$ (code: \texttt{x[m,p]}): tons of raw material $m$ allocated to product $p$.
+\end{itemize}
+
+Define the total production volumes
+\[
+T_{\text{ProdA}}=\sum_{m\in M} x_{m,\text{ProdA}},
+\qquad
+T_{\text{ProdB}}=\sum_{m\in M} x_{m,\text{ProdB}}.
+\]
+These totals correspond to the code expressions \texttt{total\_A} and \texttt{total\_B}; they are not separate optimization variables in the implementation.
+
+\section*{Objective}
+
+Maximize profit:
+\[
+\max \;
+r\left(T_{\text{ProdA}}+T_{\text{ProdB}}\right)
+-
+\sum_{m\in M} c_m\left(x_{m,\text{ProdA}}+x_{m,\text{ProdB}}\right).
+\]
+
+Equivalently,
+\[
+\max \;
+r \sum_{p\in P}\sum_{m\in M} x_{m,p}
+-
+\sum_{p\in P}\sum_{m\in M} c_m x_{m,p}.
+\]
+
+\section*{Constraints}
+
+Sulfur-content constraints for each product:
+\[
+\sum_{m\in M} s_m \, x_{m,\text{ProdA}}
+\;\le\;
+\bar{s}_{\text{ProdA}} \, T_{\text{ProdA}},
+\]
+\[
+\sum_{m\in M} s_m \, x_{m,\text{ProdB}}
+\;\le\;
+\bar{s}_{\text{ProdB}} \, T_{\text{ProdB}}.
+\]
+
+Supply limit for raw material $D$:
+\[
+x_{D,\text{ProdA}} + x_{D,\text{ProdB}} \le U_D.
+\]
+
+Market demand limits:
+\[
+T_{\text{ProdA}} \le D_{\text{ProdA}},
+\qquad
+T_{\text{ProdB}} \le D_{\text{ProdB}}.
+\]
+
+Nonnegativity:
+\[
+x_{m,p} \ge 0
+\qquad \forall m\in M,\; p\in P.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program. Although the sulfur restrictions represent average sulfur limits, the code writes them in the linearized form
+    \[
+    \sum_m s_m x_{m,p} \le \bar{s}_p \sum_m x_{m,p},
+    \]
+    which is exactly equivalent here because $\sum_m x_{m,p}$ is the product output volume.
+    \item Only raw material $D$ has an explicit supply upper bound in the code. No supply limits are imposed on materials $A$, $B$, or $C$.
+    \item Both products use the same selling price parameter $r$; the code does not distinguish product-specific revenues.
+    \item The total production amounts $T_{\text{ProdA}}$ and $T_{\text{ProdB}}$ are implemented as sums of allocation variables, not as separate decision variables.
+    \item The model is solved with the Gurobi command interface through PuLP (\texttt{GUROBI\_CMD(msg=0)}).
+\end{itemize}

@@ -1,0 +1,12 @@
+Parameter_Name,Value,Unit,Context_Description
+milk_per_barrel,1,barrel,Amount of milk in one barrel
+product_A1_yield,3,kg,Amount of product A1 produced from one barrel of milk
+product_A1_time,12,hours,Time required to produce 3 kg of product A1 on Type A equipment
+product_A2_yield,4,kg,Amount of product A2 produced from one barrel of milk
+product_A2_time,8,hours,Time required to produce 4 kg of product A2 on Type B equipment
+profit_per_kg_A1,24,yuan,Profit per kilogram of product A1
+profit_per_kg_A2,16,yuan,Profit per kilogram of product A2
+daily_milk_supply,50,barrels,Daily supply of milk available to the plant
+daily_labor_hours,480,hours,Total labor hours available from regular workers each day
+type_A_capacity,100,kg,Maximum daily processing capacity of Type A equipment
+type_B_capacity,unlimited,N/A,Processing capacity of Type B equipment is not limited

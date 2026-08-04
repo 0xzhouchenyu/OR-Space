@@ -1,0 +1,1 @@
+# Utility functions (minimal for this problem)

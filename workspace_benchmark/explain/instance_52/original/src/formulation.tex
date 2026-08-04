@@ -1,0 +1,84 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $T = \{1,\dots,n\}$: set of time periods in the day, indexed by $t$.
+    \item $n$: number of periods. In the data used here, $n=6$.
+    \item For each period $t \in T$, arithmetic on period indices is circular over the 24-hour horizon, i.e., period references wrap modulo $n$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $r_t$: required number of workers in period $t$ (code: \texttt{required[t-1]}), taken from \texttt{table\_1\_2.csv}.
+    \item $H$: shift duration in hours (code: \texttt{shift\_duration}), taken from \texttt{general\_parameters.csv}. Here $H=8$.
+    \item $L$: number of periods covered by one shift (code: \texttt{periods\_per\_shift}), computed as
+    \[
+    L = H/4.
+    \]
+    Since each period is 4 hours in the implementation, here $L=2$.
+\end{itemize}
+
+Using the provided data, the demands are
+\[
+(r_1,r_2,r_3,r_4,r_5,r_6)=(60,70,60,50,20,30).
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_t \in \mathbb{Z}_{\ge 0}$: number of workers starting their shift at the beginning of period $t$ (code: \texttt{x[t-1]}).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the total number of workers started across all periods:
+\[
+\min \sum_{t \in T} x_t.
+\]
+
+\section*{Constraints}
+
+A worker who starts in period $i$ covers periods
+\[
+i,\, i+1,\, \dots,\, i+L-1
+\qquad (\text{mod } n).
+\]
+Therefore, for each demand period $j \in T$, the total number of workers whose start times cover period $j$ must be at least the required number:
+\[
+\sum_{i \in T:\; j \in \{i,i+1,\dots,i+L-1\}\,(\mathrm{mod}\ n)} x_i \;\ge\; r_j
+\qquad \forall j \in T.
+\]
+
+With $L=2$, this becomes
+\[
+x_j + x_{j-1} \ge r_j
+\qquad \forall j \in T,
+\]
+where index $j-1$ is taken modulo $n$ (so for $j=1$, $j-1=n$). Explicitly:
+\begin{align*}
+x_1 + x_6 &\ge 60,\\
+x_2 + x_1 &\ge 70,\\
+x_3 + x_2 &\ge 60,\\
+x_4 + x_3 &\ge 50,\\
+x_5 + x_4 &\ge 20,\\
+x_6 + x_5 &\ge 30.
+\end{align*}
+
+Nonnegativity and integrality:
+\[
+x_t \in \mathbb{Z}_{\ge 0}
+\qquad \forall t \in T.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code builds this model as an integer linear program with one variable for each period start time.
+    \item Coverage is generated algorithmically by checking, for each period $j$, which start periods $i$ satisfy
+    \[
+    j \in \{(i+k) \bmod n : k=0,\dots,L-1\}.
+    \]
+    \item The planning horizon is treated cyclically: workers starting late in the day can cover the first period of the next day.
+    \item Although the business description mentions ``drivers and crew members,'' the implemented model contains only one worker type and one demand vector, so it minimizes a single aggregate worker count rather than separate driver and crew counts.
+    \item The model is solved in the code using \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+\end{itemize}

@@ -1,0 +1,79 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinimizeFeedCost",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 35.0,
+  "objective_bound": 35.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0033690929412841797,
+  "node_count": 1.0,
+  "iteration_count": 5.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_sa9pqgl5/solver_records/MinimizeFeedCost.gurobi.log",
+  "variables": {
+    "x_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_4": {
+      "value": 116.66666666666667,
+      "reduced_cost": null
+    },
+    "x_5": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_4": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_5": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": ">=",
+      "slack": -203.33333333333334,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": ">=",
+      "slack": -133.33333333333334,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 99883.33333333333,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

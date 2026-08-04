@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 670.57,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nA2_B2_joint_calibration = 1\nx_A1_I = 1200.0\nx_A2_I = 230.0492610837439\nx_A2_II = 500.0\nx_A2_III = 324.13793103448273\nx_B1_II = 500.0\nx_B2_I = 858.6206896551724\nx_B2_III = 324.13793103448273\nx_B3_I = 571.4285714285714\ny_A1 = 1\ny_A2 = 1\ny_B1 = 1\ny_B2 = 1\ny_B3 = 1\nOBJECTIVE_VALUE: 670.57\n",
+  "stderr": "",
+  "error": null
+}

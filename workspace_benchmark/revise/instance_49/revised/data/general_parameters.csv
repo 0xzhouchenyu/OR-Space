@@ -1,0 +1,11 @@
+Parameter_Name,Value,Unit,Context_Description
+min_contract_types,2,None,Minimum number of different contract lengths required over 4 months
+max_contract_types,3,None,Maximum number of distinct contract lengths allowed
+mutual_exclusion_1_and_4,True,None,Whether 1-month and 4-month leases cannot both be used
+warehouse_capacity,Unlimited,None,Available capacity of each warehouse
+monthly_demand_fulfillment,True,None,Demand for each month must be fully satisfied without shortage or excess
+monthly_max_parallel_contracts,3,None,Maximum active contracts in any month
+min_area_per_contract_units,2,100_sqm_units,Minimum rented area per active contract
+activation_fee_per_contract,2500,yuan,Fixed startup fee for each active contract
+onboarding_loss_units,1,100_sqm_units,Unavailable start-month area for a newly opened contract without expedited onboarding
+expedited_onboarding_fee,1800,yuan,Fee that restores the start-month onboarding loss for one contract

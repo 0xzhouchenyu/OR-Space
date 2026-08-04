@@ -1,0 +1,147 @@
+{
+  "solver": "gurobi",
+  "model_name": "Beverage_Production_Recovery",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 591.0,
+  "objective_bound": 591.0,
+  "mip_gap": 0.0,
+  "runtime": 0.005296945571899414,
+  "node_count": 1.0,
+  "iteration_count": 6.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_vn3eywyw/solver_records/Beverage_Production_Recovery.gurobi.log",
+  "variables": {
+    "s_1": {
+      "value": 15.0,
+      "reduced_cost": null
+    },
+    "s_2": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "s_3": {
+      "value": 25.0,
+      "reduced_cost": null
+    },
+    "s_4": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "week2_microclean": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "week3_recovery_loss": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_1": {
+      "value": 30.0,
+      "reduced_cost": null
+    },
+    "x_2": {
+      "value": 30.0,
+      "reduced_cost": null
+    },
+    "x_3": {
+      "value": 40.0,
+      "reduced_cost": null
+    },
+    "x_4": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 10.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 10.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 5.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 5.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": "<=",
+      "slack": 5.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

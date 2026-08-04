@@ -1,0 +1,139 @@
+{
+  "solver": "gurobi",
+  "model_name": "Timber_Profit_Maximization_With_Inventory_Policy",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 4800.0,
+  "objective_bound": 4800.0,
+  "mip_gap": null,
+  "runtime": 0.0004150867462158203,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_68om8kut/solver_records/Timber_Profit_Maximization_With_Inventory_Policy.gurobi.log",
+  "variables": {
+    "end_inventory_10k_m3": {
+      "value": 20.0,
+      "reduced_cost": 0.0
+    },
+    "over_stock_10k_m3": {
+      "value": 0.0,
+      "reduced_cost": -300.0
+    },
+    "x_0_0": {
+      "value": 100.0,
+      "reduced_cost": 0.0
+    },
+    "x_0_1": {
+      "value": 0.0,
+      "reduced_cost": -150.0
+    },
+    "x_0_2": {
+      "value": 0.0,
+      "reduced_cost": -220.0
+    },
+    "x_0_3": {
+      "value": 0.0,
+      "reduced_cost": -330.0
+    },
+    "x_1_1": {
+      "value": 140.0,
+      "reduced_cost": 0.0
+    },
+    "x_1_2": {
+      "value": 0.0,
+      "reduced_cost": -140.0
+    },
+    "x_1_3": {
+      "value": 0.0,
+      "reduced_cost": -250.0
+    },
+    "x_2_2": {
+      "value": 200.0,
+      "reduced_cost": 0.0
+    },
+    "x_2_3": {
+      "value": 0.0,
+      "reduced_cost": -180.0
+    },
+    "x_3_3": {
+      "value": 160.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "SalesCap_Winter": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 15.0
+    },
+    "SalesCap_Spring": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 10.0
+    },
+    "SalesCap_Summer": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 5.0
+    },
+    "SalesCap_Autumn": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 5.0
+    },
+    "StorageCap_after_Winter": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": 0.0
+    },
+    "StorageCap_after_Spring": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": 0.0
+    },
+    "StorageCap_after_Summer": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": 0.0
+    },
+    "PurchaseCap_Winter": {
+      "sense": "<=",
+      "slack": 100.0,
+      "dual_value": 0.0
+    },
+    "PurchaseCap_Spring": {
+      "sense": "<=",
+      "slack": 80.0,
+      "dual_value": 0.0
+    },
+    "PurchaseCap_Summer": {
+      "sense": "<=",
+      "slack": 60.0,
+      "dual_value": 0.0
+    },
+    "PurchaseCap_Autumn": {
+      "sense": "<=",
+      "slack": 60.0,
+      "dual_value": 0.0
+    },
+    "MinSafetyInventory": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "EndInventoryStorageCap": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 5.0
+    },
+    "OverStockDef": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": 0.0
+    }
+  }
+}

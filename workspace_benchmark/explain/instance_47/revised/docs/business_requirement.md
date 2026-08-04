@@ -1,0 +1,7 @@
+A farm is planning its operations to maximize annual net income. The farm has constraints on land, funds, labor availability, and facility capacities. It cultivates crops and raises animals, each with specific requirements for land, labor, and investment. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the risk reviewer framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The poultry plan now has two biosecurity steps instead of a simple per-bird economics check. Opening the coop at all requires a commercially meaningful flock and consumes seasonal training time before outside work can be sold. A larger flock above the second review level triggers an additional inspection bill. The rest of the farm still balances land, funds, seasonal labor, dairy housing, crops, and outside work for the best annual net income. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

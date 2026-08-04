@@ -1,0 +1,9 @@
+Item,Protein_Content_per_100g,Cost_per_100g,Type
+Chicken,23,3.00,Protein
+Salmon,20,5.00,Protein
+Tofu,8,1.50,Protein
+Broccoli,2.8,1.20,Vegetable
+Carrots,0.9,0.80,Vegetable
+Spinach,2.9,1.50,Vegetable
+Bell_Pepper,1.0,1.00,Vegetable
+Mushrooms,3.1,2.00,Vegetable

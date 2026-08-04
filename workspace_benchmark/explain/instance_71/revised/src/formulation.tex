@@ -1,0 +1,125 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$: set of factories, indexed by $i$.
+    \item $P$: set of candidate locations, indexed by $p$.
+    \item $J$: set of destination locations used in outbound-volume and cost aggregation, indexed by $j$.
+\end{itemize}
+
+In the implementation, these sets all have cardinality $n$ and are represented by \texttt{range(n)}.
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_{ij}$ (code: \texttt{d[i][j]}): outbound transportation volume from factory $i$ to destination $j$.
+    \item $c_{pj}$ (code uses \texttt{c[p][j]}): unit transportation cost from assigned location $p$ to destination $j$.
+    \item $\alpha$ (code: \texttt{premium\_cost\_multiplier}): premium cost multiplier.
+    \item $\beta$ (code: \texttt{min\_premium\_share}): minimum premium share if premium is activated.
+    \item $O_i$ (code: \texttt{outbound[i]}): total outbound volume of factory $i$,
+    \[
+    O_i = \sum_{j \in J} d_{ij}.
+    \]
+    \item $M_i$: big-$M$ constant used for factory $i$; in the code,
+    \[
+    M_i = O_i.
+    \]
+    \item $c^{\mathrm{std}}_{ip}$ (code: \texttt{c\_std[(i,p)]}): standard unit handling/transportation cost for factory $i$ operated from location $p$,
+    \[
+    c^{\mathrm{std}}_{ip} =
+    \begin{cases}
+    \dfrac{\sum_{j \in J} d_{ij}\, c_{pj}}{O_i}, & O_i > 0,\\[6pt]
+    0, & O_i = 0.
+    \end{cases}
+    \]
+    \item $c^{\mathrm{prem}}_{ip}$ (code: \texttt{c\_prem[(i,p)]}): premium unit cost,
+    \[
+    c^{\mathrm{prem}}_{ip} = \alpha\, c^{\mathrm{std}}_{ip}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ip}$ (code: \texttt{x[i][p]}) $\in \{0,1\}$: equals $1$ if factory $i$ is assigned to location $p$.
+    \item $y_{ip}$ (code: \texttt{y[i][p]}) $\in \{0,1\}$: equals $1$ if premium mode is selected for factory $i$ at location $p$.
+    \item $v^{\mathrm{std}}_{ip}$ (code: \texttt{v\_std[i][p]}) $\ge 0$: outbound volume of factory $i$ handled in standard mode at location $p$.
+    \item $v^{\mathrm{prem}}_{ip}$ (code: \texttt{v\_prem[i][p]}) $\ge 0$: outbound volume of factory $i$ handled in premium mode at location $p$.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total handling and transportation cost:
+\[
+\min \sum_{i \in I}\sum_{p \in P}
+\left(
+c^{\mathrm{std}}_{ip}\, v^{\mathrm{std}}_{ip}
++
+c^{\mathrm{prem}}_{ip}\, v^{\mathrm{prem}}_{ip}
+\right).
+\]
+
+\section*{Constraints}
+
+\paragraph{Factory assignment}
+Each factory is assigned to exactly one location:
+\[
+\sum_{p \in P} x_{ip} = 1
+\qquad \forall i \in I.
+\]
+
+\paragraph{Location capacity}
+Each location hosts at most one factory:
+\[
+\sum_{i \in I} x_{ip} \le 1
+\qquad \forall p \in P.
+\]
+
+\paragraph{Outbound volume balance}
+All outbound volume of each factory must be processed across the chosen location/mode combination:
+\[
+\sum_{p \in P} \left(v^{\mathrm{std}}_{ip} + v^{\mathrm{prem}}_{ip}\right) = O_i
+\qquad \forall i \in I.
+\]
+
+\paragraph{Volume only at assigned location}
+Standard and premium handled volumes are allowed only at the assigned location:
+\[
+v^{\mathrm{std}}_{ip} \le M_i x_{ip}
+\qquad \forall i \in I,\ \forall p \in P,
+\]
+\[
+v^{\mathrm{prem}}_{ip} \le M_i x_{ip}
+\qquad \forall i \in I,\ \forall p \in P.
+\]
+
+\paragraph{Premium volume only if premium is selected}
+\[
+v^{\mathrm{prem}}_{ip} \le M_i y_{ip}
+\qquad \forall i \in I,\ \forall p \in P.
+\]
+
+\paragraph{Minimum premium share if premium is activated}
+\[
+v^{\mathrm{prem}}_{ip} \ge \beta\, M_i\, y_{ip}
+\qquad \forall i \in I,\ \forall p \in P.
+\]
+
+\paragraph{Premium only at assigned location}
+\[
+y_{ip} \le x_{ip}
+\qquad \forall i \in I,\ \forall p \in P.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program solved by Gurobi through PuLP.
+
+The code does \emph{not} use a separate linearized per-unit-cost term of the form
+\[
+c^{\mathrm{std}}_{ip} + \left(c^{\mathrm{prem}}_{ip} - c^{\mathrm{std}}_{ip}\right) y_{ip}
+\]
+in the objective. Instead, it uses explicit standard and premium volume variables $v^{\mathrm{std}}_{ip}$ and $v^{\mathrm{prem}}_{ip}$, charging them directly at $c^{\mathrm{std}}_{ip}$ and $c^{\mathrm{prem}}_{ip}$, respectively.
+
+Because $c^{\mathrm{prem}}_{ip} = \alpha c^{\mathrm{std}}_{ip}$ with $\alpha > 1$, the model will never send more than the minimum required premium volume when $y_{ip}=1$ unless there is cost indifference. Thus, in optimal solutions, premium use is effectively optional and, if chosen, is typically at the threshold $\beta O_i$.
+
+Also, the code enforces total outbound balance by factory across all locations, together with upper bounds tying volume to assignment. This is equivalent to requiring all of a factory's outbound volume to be processed at its assigned location.

@@ -1,0 +1,125 @@
+\section*{Sets and Indices}
+
+There are no nontrivial index sets in the implemented model. The model has two product activities:
+\[
+i \in \{A,B\}.
+\]
+
+\section*{Parameters}
+
+From the data file:
+\[
+p_A = 3
+\qquad\text{(profit of product A, code: \texttt{profit\_A})},
+\]
+\[
+p_B = 5
+\qquad\text{(profit of product B, code: \texttt{profit\_B})},
+\]
+\[
+t_A = 12
+\qquad\text{(assembly time per unit of A in minutes, code: \texttt{assembly\_time\_A})},
+\]
+\[
+t_B = 25
+\qquad\text{(assembly time per unit of B in minutes, code: \texttt{assembly\_time\_B})}.
+\]
+
+Weekly machine time is read in hours and converted in the code to minutes:
+\[
+H = 30
+\qquad\text{(machine working time in hours, code: \texttt{machine\_working\_time\_hours})},
+\]
+\[
+T = 60H = 1800
+\qquad\text{(machine working time in minutes, code: \texttt{machine\_working\_time\_minutes})}.
+\]
+
+The production-ratio data value is ``\(5:2\)'', implemented as constants
+\[
+r_A = 5
+\qquad\text{(code: \texttt{ratio\_A})},
+\]
+\[
+r_B = 2
+\qquad\text{(code: \texttt{ratio\_B})},
+\]
+with the intended requirement that at least \(2\) units of \(B\) are produced for every \(5\) units of \(A\).
+
+\section*{Decision Variables}
+
+\[
+x_A \ge 0
+\qquad\text{(production quantity of product A, code: \texttt{A})},
+\]
+\[
+x_B \ge 0
+\qquad\text{(production quantity of product B, code: \texttt{B})}.
+\]
+
+Both variables are continuous in the implementation.
+
+\section*{Objective}
+
+Maximize total weekly profit:
+\[
+\max \; z = p_A x_A + p_B x_B.
+\]
+
+With the given data, this is
+\[
+\max \; z = 3x_A + 5x_B.
+\]
+
+\section*{Constraints}
+
+Machine-time capacity:
+\[
+t_A x_A + t_B x_B \le T.
+\]
+
+With the given data,
+\[
+12x_A + 25x_B \le 1800.
+\]
+
+Production-ratio constraint as implemented:
+\[
+r_B x_A - r_A x_B \le 0.
+\]
+
+Equivalently,
+\[
+x_B \ge \frac{r_B}{r_A}x_A.
+\]
+
+With the given data,
+\[
+2x_A - 5x_B \le 0,
+\]
+equivalently
+\[
+x_B \ge \frac{2}{5}x_A.
+\]
+
+Nonnegativity:
+\[
+x_A \ge 0,\qquad x_B \ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+The source code formulates and solves a linear program using PuLP with the Gurobi command-line solver interface (\texttt{pulp.GUROBI\_CMD(msg=0)}).
+
+The variables are explicitly declared as continuous and nonnegative; there are no integrality restrictions.
+
+The ratio parameter from the CSV is parsed by the utility code as a tuple, but the optimization model itself hard-codes
+\[
+\texttt{ratio\_A}=5,\qquad \texttt{ratio\_B}=2,
+\]
+and imposes the constraint
+\[
+\texttt{ratio\_B} \cdot A - \texttt{ratio\_A} \cdot B \le 0.
+\]
+
+The machine time in the CSV is provided in hours and converted in the code to minutes before building the capacity constraint.

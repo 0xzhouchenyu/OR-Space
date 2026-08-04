@@ -1,0 +1,156 @@
+{
+  "solver": "gurobi",
+  "model_name": "Factory_Production_With_Setup_Costs_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 670.5665024630543,
+  "runtime": 0.0005779266357421875,
+  "variables": {
+    "A2_B2_joint_calibration": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_A1_I": {
+      "value": 1200.0,
+      "reduced_cost": 0.0
+    },
+    "x_A1_II": {
+      "value": 0.0,
+      "reduced_cost": -0.31034482758620674
+    },
+    "x_A2_I": {
+      "value": 230.04926108374386,
+      "reduced_cost": 0.0
+    },
+    "x_A2_II": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "x_A2_III": {
+      "value": 324.13793103448273,
+      "reduced_cost": 0.0
+    },
+    "x_B1_I": {
+      "value": 0.0,
+      "reduced_cost": -0.25301724137931025
+    },
+    "x_B1_II": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "x_B2_I": {
+      "value": 858.6206896551724,
+      "reduced_cost": 0.0
+    },
+    "x_B2_III": {
+      "value": 324.13793103448273,
+      "reduced_cost": 0.0
+    },
+    "x_B3_I": {
+      "value": 571.4285714285714,
+      "reduced_cost": 0.0
+    },
+    "y_A1": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "y_A2": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "y_B1": {
+      "value": 1.0,
+      "reduced_cost": 215.68965517241378
+    },
+    "y_B2": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "y_B3": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "flow_balance_I": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.5655172413793104
+    },
+    "flow_balance_II": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.0913793103448275
+    },
+    "flow_balance_III": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.5551724137931036
+    },
+    "capacity_A1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.02356321839080458
+    },
+    "activation_A1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.013333333333333334
+    },
+    "capacity_A2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.010068965517241376
+    },
+    "activation_A2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.022
+    },
+    "capacity_B1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "activation_B1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.07642241379310344
+    },
+    "capacity_B2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.007093596059113305
+    },
+    "activation_B2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.024285714285714285
+    },
+    "capacity_B3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.01578817733990147
+    },
+    "activation_B3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.015
+    },
+    "A2_B2_joint_calibration_lower": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -100.0
+    },
+    "A2_B2_joint_calibration_A2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "A2_B2_joint_calibration_B2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    }
+  }
+}

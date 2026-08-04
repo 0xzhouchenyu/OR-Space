@@ -1,0 +1,18 @@
+Parameter_Name,Value,Unit,Context_Description
+cost_per_chair_A,50,USD,Cost of ordering each chair from manufacturer A
+cost_per_chair_B,45,USD,Cost of ordering each chair from manufacturer B
+cost_per_chair_C,40,USD,Cost of ordering each chair from manufacturer C
+chairs_per_order_A,15,chairs,Number of chairs included in each order from manufacturer A
+chairs_per_order_B,10,chairs,Number of chairs included in each order from manufacturer B
+chairs_per_order_C,10,chairs,Number of chairs included in each order from manufacturer C
+min_total_chairs,100,chairs,Minimum total number of chairs the store needs to order
+max_total_chairs,500,chairs,Maximum total number of chairs the store can order
+min_chairs_B_if_A,10,chairs,Minimum number of chairs from manufacturer B if chairs are ordered from manufacturer A
+dependency_B_C,1,boolean,Dependency indicating that if chairs are ordered from manufacturer B, chairs must also be ordered from manufacturer C
+fixed_fee_A_regular,200,USD,Fixed fee if manufacturer A is used in regular mode
+fixed_fee_A_express,260,USD,Fixed fee if manufacturer A is used in express mode
+fixed_fee_B_regular,180,USD,Fixed fee if manufacturer B is used in regular mode
+fixed_fee_B_express,240,USD,Fixed fee if manufacturer B is used in express mode
+fixed_fee_C_regular,150,USD,Fixed fee if manufacturer C is used in regular mode
+fixed_fee_C_express,210,USD,Fixed fee if manufacturer C is used in express mode
+weekly_order_budget,2,count,Maximum number of active manufacturer-mode combinations allowed in the planning period

@@ -1,0 +1,79 @@
+{
+  "solver": "gurobi",
+  "model_name": "FertilizerReserveScore_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 17.300000000000004,
+  "runtime": 0.00040793418884277344,
+  "variables": {
+    "excess_liquid": {
+      "value": 0.0,
+      "reduced_cost": -0.65
+    },
+    "excess_solid": {
+      "value": 0.0,
+      "reduced_cost": -0.13
+    },
+    "liquid_prod": {
+      "value": 52.8,
+      "reduced_cost": 0.0
+    },
+    "machine1_extended": {
+      "value": 1.0,
+      "reduced_cost": 11.5
+    },
+    "machine2_extended": {
+      "value": 0.0,
+      "reduced_cost": -0.5
+    },
+    "priority_liquid": {
+      "value": 7.800000000000004,
+      "reduced_cost": 0.0
+    },
+    "priority_solid": {
+      "value": 10.0,
+      "reduced_cost": 0.52
+    },
+    "solid_prod": {
+      "value": 15.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.02
+    },
+    "_C2": {
+      "sense": "<",
+      "slack": 21.0,
+      "dual_value": 0.0
+    },
+    "_C3": {
+      "sense": "<",
+      "slack": 2.0,
+      "dual_value": 0.0
+    },
+    "_C4": {
+      "sense": ">",
+      "slack": -7.800000000000004,
+      "dual_value": 0.0
+    },
+    "_C5": {
+      "sense": ">",
+      "slack": -10.0,
+      "dual_value": 0.0
+    },
+    "_C6": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "_C7": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.48
+    }
+  }
+}

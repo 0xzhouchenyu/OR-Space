@@ -1,0 +1,11 @@
+Parameter_Name,Value,Unit,Context_Description
+min_proportion_crude_A_type_I,50,percent,Minimum proportion of crude oil A in gasoline Type I
+min_proportion_crude_A_type_II,60,percent,Minimum proportion of crude oil A in gasoline Type II
+selling_price_type_I,4800,yuan/t,Selling price of gasoline Type I
+selling_price_type_II,5600,yuan/t,Selling price of gasoline Type II
+inventory_crude_A,500,t,Current inventory of crude oil A
+inventory_crude_B,1000,t,Current inventory of crude oil B
+max_purchase_crude_A,1500,t,Maximum amount of crude oil A that can be purchased from the market
+market_price_crude_A_tier_1,10000,yuan/t,Market price for crude oil A for purchases up to 500 t
+market_price_crude_A_tier_2,8000,yuan/t,Market price for crude oil A for purchases exceeding 500 t but not exceeding 1000 t
+market_price_crude_A_tier_3,6000,yuan/t,Market price for crude oil A for purchases exceeding 1000 t

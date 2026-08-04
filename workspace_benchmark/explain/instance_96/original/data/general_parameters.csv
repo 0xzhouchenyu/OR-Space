@@ -1,0 +1,8 @@
+Parameter_Name,Value,Unit,Context_Description
+raw_pipe_length,1850,mm,Length of each raw steel pipe supplied by the mill
+max_cutting_patterns,4,,Maximum number of cutting patterns allowed
+most_frequent_pattern_cost_rate,0.1,,Extra cost rate for the most frequently used cutting pattern
+second_frequent_pattern_cost_rate,0.2,,Extra cost rate for the second most frequently used cutting pattern
+third_frequent_pattern_cost_rate,0.3,,Extra cost rate for the third most frequently used cutting pattern
+max_cuts_per_pipe,5,,Maximum number of cuts allowed per raw pipe
+max_leftover_length,100,mm,Maximum leftover length allowed for any cutting pattern

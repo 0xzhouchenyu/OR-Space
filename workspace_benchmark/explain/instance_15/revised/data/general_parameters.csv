@@ -1,0 +1,14 @@
+Parameter_Name,Value,Unit,Context_Description
+n,10,,Number of planning stages
+cost_new_tool,10,dollars,Cost of buying a new tool
+cost_slow_repair,1,dollars,Cost of slow repair per tool
+cost_fast_repair,3,dollars,Cost of fast repair per tool
+slow_repair_duration,3,stages,Duration of slow repair
+fast_repair_duration,1,stages,Duration of fast repair
+max_fast_stage,4,tools per stage,Maximum number of tools that can be sent to fast repair in any stage
+max_slow_stage,6,tools per stage,Maximum number of tools that can be sent to slow repair in any stage
+emission_buy,2,carbon units per tool,Carbon emission per new tool purchased
+emission_fast_repair,1,carbon units per tool,Carbon emission per tool sent to fast repair
+emission_slow_repair,0.5,carbon units per tool,Carbon emission per tool sent to slow repair
+carbon_budget,170,carbon units,Total carbon emission budget over all stages
+penalty_shortage,7,dollars per tool,Penalty cost per unit of unmet tool requirement

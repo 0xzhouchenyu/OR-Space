@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+min_coal_yard_A,80,tons,Minimum monthly coal requirement for coal yard A
+min_coal_yard_B,100,tons,Minimum monthly coal requirement for coal yard B
+residential_area_1_demand,55,tons,Monthly coal demand for residential area 1
+residential_area_2_demand,75,tons,Monthly coal demand for residential area 2
+residential_area_3_demand,50,tons,Monthly coal demand for residential area 3

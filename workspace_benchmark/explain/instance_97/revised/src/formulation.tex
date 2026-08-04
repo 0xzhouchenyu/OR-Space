@@ -1,0 +1,141 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $M$ : set of raw materials, indexed by $m \in M$. In the data, $M=\{\mathrm{A},\mathrm{B},\mathrm{C},\mathrm{D}\}$.
+    \item $P$ : set of saleable product-tier streams, indexed by $p \in P$, where
+    \[
+    P=\{\mathrm{ProdA\_premium},\mathrm{ProdA\_standard},\mathrm{ProdB\_premium},\mathrm{ProdB\_standard}\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $s_m$ : sulfur content percentage of raw material $m$ (code: \texttt{sulfur\_content[m]}).
+    \item $c_m$ : purchase price of raw material $m$ in thousand yuan per ton (code: \texttt{purchase\_price[m]}).
+    \item $\bar{s}^{A,\mathrm{prem}}$ : maximum sulfur content for A premium (code: \texttt{max\_sulfur\_A\_prem}).
+    \item $\bar{s}^{A,\mathrm{std}}$ : maximum sulfur content for A standard (code: \texttt{max\_sulfur\_A\_std}).
+    \item $\bar{s}^{B,\mathrm{prem}}$ : maximum sulfur content for B premium (code: \texttt{max\_sulfur\_B\_prem}).
+    \item $\bar{s}^{B,\mathrm{std}}$ : maximum sulfur content for B standard (code: \texttt{max\_sulfur\_B\_std}).
+    \item $\pi^{A,\mathrm{prem}}$ : selling price of A premium in thousand yuan per ton (code: \texttt{price\_A\_prem}).
+    \item $\pi^{A,\mathrm{std}}$ : selling price of A standard in thousand yuan per ton (code: \texttt{price\_A\_std}).
+    \item $\pi^{B,\mathrm{prem}}$ : selling price of B premium in thousand yuan per ton (code: \texttt{price\_B\_prem}).
+    \item $\pi^{B,\mathrm{std}}$ : selling price of B standard in thousand yuan per ton (code: \texttt{price\_B\_std}).
+    \item $\bar{D}$ : maximum total supply of raw material D (code: \texttt{max\_supply\_D}).
+    \item $\bar{Q}_A$ : market demand limit for family A across premium and standard (code: \texttt{demand\_A}).
+    \item $\bar{Q}_B$ : market demand limit for family B across premium and standard (code: \texttt{demand\_B}).
+    \item $\underline{P}_A,\overline{P}_A$ : minimum and maximum premium tonnage for family A (code: \texttt{min\_prem\_A}, \texttt{max\_prem\_A}).
+    \item $\underline{P}_B,\overline{P}_B$ : minimum and maximum premium tonnage for family B (code: \texttt{min\_prem\_B}, \texttt{max\_prem\_B}).
+\end{itemize}
+
+For compactness, define the stream totals exactly as in the code:
+\[
+T_{A,\mathrm{prem}}=\sum_{m\in M} x_{m,\mathrm{ProdA\_premium}},\quad
+T_{A,\mathrm{std}}=\sum_{m\in M} x_{m,\mathrm{ProdA\_standard}},
+\]
+\[
+T_{B,\mathrm{prem}}=\sum_{m\in M} x_{m,\mathrm{ProdB\_premium}},\quad
+T_{B,\mathrm{std}}=\sum_{m\in M} x_{m,\mathrm{ProdB\_standard}}.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{m,p} \ge 0$ : tons of raw material $m$ assigned to product-tier stream $p$ (code: \texttt{x[m,p]}).
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+\pi^{A,\mathrm{prem}} T_{A,\mathrm{prem}}
++\pi^{A,\mathrm{std}} T_{A,\mathrm{std}}
++\pi^{B,\mathrm{prem}} T_{B,\mathrm{prem}}
++\pi^{B,\mathrm{std}} T_{B,\mathrm{std}}
+-\sum_{m\in M} c_m \Bigl(
+x_{m,\mathrm{ProdA\_premium}}
++x_{m,\mathrm{ProdA\_standard}}
++x_{m,\mathrm{ProdB\_premium}}
++x_{m,\mathrm{ProdB\_standard}}
+\Bigr).
+\]
+
+\section*{Constraints}
+
+Sulfur compliance for each product-tier stream:
+\[
+\sum_{m\in M} s_m\, x_{m,\mathrm{ProdA\_premium}}
+\le
+\bar{s}^{A,\mathrm{prem}} \, T_{A,\mathrm{prem}},
+\]
+\[
+\sum_{m\in M} s_m\, x_{m,\mathrm{ProdA\_standard}}
+\le
+\bar{s}^{A,\mathrm{std}} \, T_{A,\mathrm{std}},
+\]
+\[
+\sum_{m\in M} s_m\, x_{m,\mathrm{ProdB\_premium}}
+\le
+\bar{s}^{B,\mathrm{prem}} \, T_{B,\mathrm{prem}},
+\]
+\[
+\sum_{m\in M} s_m\, x_{m,\mathrm{ProdB\_standard}}
+\le
+\bar{s}^{B,\mathrm{std}} \, T_{B,\mathrm{std}}.
+\]
+
+Total supply limit for raw material D:
+\[
+x_{\mathrm{D},\mathrm{ProdA\_premium}}
++x_{\mathrm{D},\mathrm{ProdA\_standard}}
++x_{\mathrm{D},\mathrm{ProdB\_premium}}
++x_{\mathrm{D},\mathrm{ProdB\_standard}}
+\le \bar{D}.
+\]
+
+Family-level demand limits:
+\[
+T_{A,\mathrm{prem}} + T_{A,\mathrm{std}} \le \bar{Q}_A,
+\]
+\[
+T_{B,\mathrm{prem}} + T_{B,\mathrm{std}} \le \bar{Q}_B.
+\]
+
+Premium-volume bounds:
+\[
+T_{A,\mathrm{prem}} \ge \underline{P}_A,
+\qquad
+T_{A,\mathrm{prem}} \le \overline{P}_A,
+\]
+\[
+T_{B,\mathrm{prem}} \ge \underline{P}_B,
+\qquad
+T_{B,\mathrm{prem}} \le \overline{P}_B.
+\]
+
+Nonnegativity:
+\[
+x_{m,p} \ge 0
+\qquad \forall m\in M,\; p\in P.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program built in PuLP and solved through \texttt{GUROBI\_CMD}; it is not an exact enumeration or dynamic-programming search.
+    \item There are no explicit finished-goods variables in the code. Stream totals are defined implicitly as sums of the blend-allocation variables:
+    \[
+    T_{A,\mathrm{prem}}=\sum_m x_{m,\mathrm{ProdA\_premium}},\;
+    T_{A,\mathrm{std}}=\sum_m x_{m,\mathrm{ProdA\_standard}},\;
+    T_{B,\mathrm{prem}}=\sum_m x_{m,\mathrm{ProdB\_premium}},\;
+    T_{B,\mathrm{std}}=\sum_m x_{m,\mathrm{ProdB\_standard}}.
+    \]
+    \item The sulfur constraints are written in bilinear-looking ratio form in the business description, but in the implementation they are imposed in the equivalent linear form
+    \[
+    \sum_m s_m x_{m,p} \le \bar{s}_p \sum_m x_{m,p}.
+    \]
+    If a stream total is zero, the corresponding sulfur constraint reduces to $0\le 0$.
+    \item The code does not impose any availability limit on raw materials A, B, or C, and does not impose any overall mass-balance or production target beyond the stream definitions, sulfur constraints, D-supply cap, family demand caps, and premium lower/upper bounds.
+    \item The premium participation requirements are implemented as absolute tonnage bounds, not percentage shares, exactly as coded.
+\end{itemize}

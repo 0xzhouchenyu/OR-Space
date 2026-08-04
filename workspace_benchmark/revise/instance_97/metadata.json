@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_97_revise_business",
+  "original_instance_id": "IndustryOR_97",
+  "revise_description": "Due to new contract tiers, split demand into premium and standard products A/B with tiered selling prices and sulfur limits; revise sulfur constraints, add product-tier balance and update objective using new tier prices.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+4var, +8constr, mod_obj, mod_3data",
+      "counts": {
+        "+variable": 4,
+        "-variable": 0,
+        "+constraint": 8,
+        "-constraint": 0,
+        "modify_constraint": 0,
+        "modify_data": 3
+      },
+      "op_count": 13,
+      "distinct_ops": 4,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 50.0
+  }
+}

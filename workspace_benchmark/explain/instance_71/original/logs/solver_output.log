@@ -1,0 +1,10 @@
+Best assignment: (1, 0), cost=630.0
+  Off-diag perm (0, 1): 340.0
+  Off-diag perm (1, 0): 360.0
+  Transposed c, perm (0, 1): 690.0
+  Transposed c, perm (1, 0): 610.0
+Linear assignment interpretation:
+  Perm (0, 1): 330.0
+  Perm (1, 0): 340.0
+OBJECTIVE_VALUE: 330.0
+Set parameter LicenseID to value 2802670

@@ -1,0 +1,169 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Sales points: \(S=\{\mathrm{SP1},\mathrm{SP2},\mathrm{SP3}\}\) (code: \texttt{sales\_points}).
+    \item Days: \(D=\{1,2,3\}\) (code: \texttt{days}).
+\end{itemize}
+
+\section*{Parameters}
+
+All numerical values are read from \texttt{general\_parameters.csv}.
+
+\begin{itemize}
+    \item Total product to be transported: \(U\) (code/data: \texttt{product\_units}).
+    \item Pollution per trip:
+    \[
+    p^{T}\ \text{(code/data: \texttt{truck\_pollution})},\quad
+    p^{V}\ \text{(code/data: \texttt{van\_pollution})},\quad
+    p^{M}\ \text{(code/data: \texttt{motorcycle\_pollution})},\quad
+    p^{E}\ \text{(code/data: \texttt{electric\_vehicle\_pollution})}.
+    \]
+    \item Capacity per trip:
+    \[
+    c^{T}\ \text{(code/data: \texttt{truck\_capacity})},\quad
+    c^{V}\ \text{(code/data: \texttt{van\_capacity})},\quad
+    c^{M}\ \text{(code/data: \texttt{motorcycle\_capacity})},\quad
+    c^{E}\ \text{(code/data: \texttt{electric\_vehicle\_capacity})}.
+    \]
+    \item Maximum total pollution:
+    \[
+    P^{\max}\ \text{(code/data: \texttt{max\_total\_pollution})}.
+    \]
+    \item Minimum total truck trips over all sales points and days:
+    \[
+    T^{\min}\ \text{(code/data: \texttt{min\_truck\_trips})}.
+    \]
+    \item Sales-point demand share \(\alpha_s\) (code/data: \texttt{sales\_point\_share\_sp1}, \texttt{sales\_point\_share\_sp2}, \texttt{sales\_point\_share\_sp3}), with induced demand
+    \[
+    d_s = \alpha_s U \qquad \forall s\in S
+    \]
+    (code: \texttt{demand\_sp[sp]}).
+    \item Minimum truck-trip share by sales point \(\beta_s\) (code/data: \texttt{min\_truck\_share\_sp1}, \texttt{min\_truck\_share\_sp2}, \texttt{min\_truck\_share\_sp3}).
+    \item Big-\(M\) bounds for the sales-point/day mode gate:
+    \[
+    M^T \text{ (code/data: \texttt{M\_truck\_sp\_day})},\quad
+    M^E \text{ (code/data: \texttt{M\_ev\_sp\_day})},\quad
+    M^V \text{ (code/data: \texttt{M\_van\_sp\_day})},\quad
+    M^M \text{ (code/data: \texttt{M\_moto\_sp\_day})}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each \(s\in S\), \(d\in D\):
+
+\begin{itemize}
+    \item Number of truck trips:
+    \[
+    x^T_{sd}\in \mathbb{Z}_{\ge 0}
+    \qquad \text{(code: \texttt{x\_truck[sp][d]})}.
+    \]
+    \item Number of van trips:
+    \[
+    x^V_{sd}\in \mathbb{Z}_{\ge 0}
+    \qquad \text{(code: \texttt{x\_van[sp][d]})}.
+    \]
+    \item Number of motorcycle trips:
+    \[
+    x^M_{sd}\in \mathbb{Z}_{\ge 0}
+    \qquad \text{(code: \texttt{x\_moto[sp][d]})}.
+    \]
+    \item Number of electric-vehicle trips:
+    \[
+    x^E_{sd}\in \mathbb{Z}_{\ge 0}
+    \qquad \text{(code: \texttt{x\_ev[sp][d]})}.
+    \]
+    \item Binary family-selection gate:
+    \[
+    z_{sd}\in\{0,1\}
+    \qquad \text{(code: \texttt{z\_mode[sp][d]} / \texttt{exclusive\_mode\_sp})}.
+    \]
+    Here \(z_{sd}=1\) permits only the truck/electric-vehicle family, while \(z_{sd}=0\) permits only the van/motorcycle family.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total pollution:
+\[
+\min \sum_{s\in S}\sum_{d\in D}
+\left(
+p^T x^T_{sd}
++ p^V x^V_{sd}
++ p^M x^M_{sd}
++ p^E x^E_{sd}
+\right).
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Demand satisfaction by sales point}
+    \[
+    \sum_{d\in D}
+    \left(
+    c^T x^T_{sd}
+    + c^V x^V_{sd}
+    + c^M x^M_{sd}
+    + c^E x^E_{sd}
+    \right)
+    \ge d_s
+    \qquad \forall s\in S.
+    \]
+
+    \item \textbf{Overall pollution cap}
+    \[
+    \sum_{s\in S}\sum_{d\in D}
+    \left(
+    p^T x^T_{sd}
+    + p^V x^V_{sd}
+    + p^M x^M_{sd}
+    + p^E x^E_{sd}
+    \right)
+    \le P^{\max}.
+    \]
+
+    \item \textbf{Minimum total truck trips}
+    \[
+    \sum_{s\in S}\sum_{d\in D} x^T_{sd} \ge T^{\min}.
+    \]
+
+    \item \textbf{Sales-point/day family gate (truck/EV vs.\ van/motorcycle)}
+    
+    For all \(s\in S\), \(d\in D\),
+    \[
+    x^T_{sd} \le M^T z_{sd},
+    \]
+    \[
+    x^E_{sd} \le M^E z_{sd},
+    \]
+    \[
+    x^V_{sd} \le M^V (1-z_{sd}),
+    \]
+    \[
+    x^M_{sd} \le M^M (1-z_{sd}).
+    \]
+    Thus, on each sales-point/day pair, trips can come only from one of the two families.
+
+    \item \textbf{Minimum truck share by sales point}
+    
+    For all \(s\in S\),
+    \[
+    \sum_{d\in D} x^T_{sd}
+    \ge
+    \beta_s
+    \sum_{d\in D}
+    \left(
+    x^T_{sd}+x^V_{sd}+x^M_{sd}+x^E_{sd}
+    \right).
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program with integer trip-count variables and binary mode-gate variables.
+    \item Sales-point demands are not day-specific in the code: only the total delivered capacity across the three days must meet each sales point's allocated demand \(d_s=\alpha_s U\).
+    \item The business ``gate'' is modeled exactly as in the code by the binary variable \(z_{sd}\) and the four big-\(M\) inequalities above; it is not a surcharge or penalty term.
+    \item The same pollution expression appears both in the objective and in the \texttt{max\_total\_pollution} constraint.
+    \item The code solves the formulation using PuLP with \texttt{GUROBI\_CMD(msg=0)}.
+\end{itemize}

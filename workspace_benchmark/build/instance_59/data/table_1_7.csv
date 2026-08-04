@@ -1,0 +1,6 @@
+Item,A,B,C,Raw Material Cost (Yuan/kg),Monthly Limit (kg)
+A,>=60%,>=15%,,2.00,2000
+B,,,,1.50,2500
+C,<=20%,<=60%,<=50%,1.00,1200
+Processing Fee (Yuan/kg),0.50,0.40,0.30,,
+Selling Price (Yuan/kg),3.40,2.85,2.25,,

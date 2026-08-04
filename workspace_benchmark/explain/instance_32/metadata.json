@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_032",
+  "instance_number": 32,
+  "source_revise_instance": "IndustryOR_32_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model’s LP-relaxation diagnostics together with the original model’s dual report, explain which specific constraints are economically binding and how their marginal values should be interpreted in business terms. You must trace at least one revised shift-level restriction from the business brief (“day/night staffing calendar”, “limited overtime”, or “no more than two workshops should be active in the same shift”) to the exact code variable names and CSV parameter names/values that implement it, and contrast that with one original binding constraint such as `Capacity_D` or `Min_component_3` using its reported slack and `dual_value`. Finally, identify the exact code/model additions that changed the objective from maximizing `z` to minimizing penalties over `x_reg[(w,c,s)]`, `x_ot[(w,c,s)]`, and `shortfall`, quantify the objective change from 2924.1379 to 90.3379, and explain why one cannot linearly extrapolate the LP-relaxation shadow prices to the final MIP schedule."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Maximize_Completed_Products.gurobi.log",
+        "Maximize_Completed_Products.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Shift_Based_Production_Planning.gurobi.log",
+        "Shift_Based_Production_Planning.lp_relaxation.json",
+        "Shift_Based_Production_Planning.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 68.735
+  }
+}

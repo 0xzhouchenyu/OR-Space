@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 3050.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nRon: selected (cost=750.0)\nFred: selected (cost=800.0)\nGinny: selected (cost=1500.0)\nOBJECTIVE_VALUE: 3050.0\n",
+  "stderr": "",
+  "error": null
+}

@@ -1,0 +1,284 @@
+\section*{Sets and Indices}
+
+\[
+T=\{1,\dots,H\}
+\]
+set of weeks in the planning horizon, where \(H\) is \texttt{planning\_horizon\_weeks}.
+
+\[
+P=\{A,B\}, \qquad M=\{M,E\}
+\]
+where \(A\) and \(B\) denote the two motorcycle types, and \(M\) (Manual), \(E\) (Enhanced) denote inspection protocols.
+
+\section*{Parameters}
+
+All numerical values are taken from the CSV data.
+
+For production and process capacities:
+\[
+a^{\mathrm{mfg}}_A,\ a^{\mathrm{asm}}_A,\ a^{\mathrm{asm}}_B
+\]
+manufacturing/assembly hours per unit from \texttt{table\_1.csv}, with \(a^{\mathrm{mfg}}_B=0\) in the data.
+
+\[
+\bar C^{\mathrm{mfg}},\ \bar C^{\mathrm{asm}},\ \bar C^{\mathrm{insp}}
+\]
+weekly in-house capacities for manufacturing, assembly, and inspection.
+
+\[
+\bar C^{\mathrm{ext}}
+\]
+weekly external inspection capacity under Enhanced mode (code data: \texttt{cap\_ext}).
+
+For prices and hourly process costs:
+\[
+p_A,\ p_B
+\]
+selling prices per unit.
+
+\[
+c^{\mathrm{mfg}},\ c^{\mathrm{asm}},\ c^{\mathrm{insp,orig}}
+\]
+hourly costs from the original table for manufacturing, assembly, and inspection.
+
+Inspection-mode-specific unit-hour requirements:
+\[
+\alpha_{A,M},\ \alpha_{B,M},\ \alpha_{A,E},\ \alpha_{B,E}
+\]
+where, e.g., \(\alpha_{A,M}\) is \texttt{insp\_a\_M} and \(\alpha_{B,E}\) is \texttt{insp\_b\_E}.
+
+Inspection-mode-specific costs and fees:
+\[
+c^{\mathrm{insp}}_M,\ c^{\mathrm{insp}}_E,\ c^{\mathrm{ext}}
+\]
+in-house Manual inspection cost, in-house Enhanced inspection cost, and external inspection cost per hour.
+
+\[
+f_M,\ f_E
+\]
+weekly fixed fee for Manual and Enhanced mode (code data: \texttt{mode\_fee\_M}, \texttt{mode\_fee\_E}).
+
+\[
+\rho_M
+\]
+weekly Manual inspection risk penalty (code data field \texttt{risk\_penalty\_M}; the business label refers to \texttt{inspection\_risk\_penalty}, but the implemented code uses \texttt{risk\_penalty\_M}).
+
+Minimum requirements and weights:
+\[
+\Pi^{\min}
+\]
+minimum weekly profit threshold (code: \texttt{min\_weekly\_profit}).
+
+\[
+L_A
+\]
+minimum weekly production of type \(A\) (code: \texttt{min\_type\_a\_production}).
+
+\[
+w^{\mathrm{insp}}
+\]
+inspection idle-time weight (code: \texttt{cost\_insp\_weight}).
+
+\[
+\varepsilon
+\]
+lexicographic tolerance (code: \texttt{idle\_tolerance}).
+
+The code also defines per-unit ``margin'' coefficients using the original inspection-time and original inspection-cost data from \texttt{table\_1.csv}:
+\[
+\pi_A = p_A - \Big(a_A^{\mathrm{mfg}} c^{\mathrm{mfg}} + a_A^{\mathrm{asm}} c^{\mathrm{asm}} + a_{A}^{\mathrm{insp,orig}} c^{\mathrm{insp,orig}}\Big),
+\]
+\[
+\pi_B = p_B - \Big(a_B^{\mathrm{mfg}} c^{\mathrm{mfg}} + a_B^{\mathrm{asm}} c^{\mathrm{asm}} + a_{B}^{\mathrm{insp,orig}} c^{\mathrm{insp,orig}}\Big).
+\]
+
+Big-\(M\) constants used exactly as in the code:
+\[
+M^{\mathrm{insp}}=\bar C^{\mathrm{insp}}+\bar C^{\mathrm{ext}},
+\]
+\[
+M^{\mathrm{prodA}}=\frac{\bar C^{\mathrm{mfg}}}{\max(a_A^{\mathrm{mfg}},10^{-6})},\qquad
+M^{\mathrm{prodB}}=\frac{\bar C^{\mathrm{asm}}}{\max(a_B^{\mathrm{asm}},10^{-6})},
+\]
+\[
+M^{\mathrm{big}}=\max\left\{M^{\mathrm{insp}},M^{\mathrm{prodA}},M^{\mathrm{prodB}},100\right\}.
+\]
+
+\section*{Decision Variables}
+
+For each week \(t\in T\):
+
+\[
+x_{A,t}\in \mathbb Z_+ \quad \text{(code: \texttt{x\_A[t]} / \texttt{x\_A2[t]})}
+\]
+units of Type \(A\) produced.
+
+\[
+x_{B,t}\in \mathbb Z_+ \quad \text{(code: \texttt{x\_B[t]} / \texttt{x\_B2[t]})}
+\]
+units of Type \(B\) produced.
+
+\[
+y_{M,t}\in\{0,1\},\qquad y_{E,t}\in\{0,1\}
+\]
+(code: \texttt{y\_M[t]}, \texttt{y\_E[t]} and stage-2 analogues), indicating Manual or Enhanced inspection selection.
+
+\[
+h_{M,t}\ge 0,\qquad h_{E,t}\ge 0,\qquad h^{\mathrm{ext}}_t\ge 0
+\]
+(code: \texttt{h\_insp\_M[t]}, \texttt{h\_insp\_E[t]}, \texttt{h\_ext[t]} and stage-2 analogues), representing in-house Manual inspection hours, in-house Enhanced inspection hours, and external inspection hours.
+
+\[
+i^{\mathrm{mfg}}_t,\ i^{\mathrm{asm}}_t,\ i^{\mathrm{insp}}_t
+\]
+(code: \texttt{idle\_mfg[t]}, \texttt{idle\_asm[t]}, \texttt{idle\_insp[t]} and stage-2 analogues), idle hours in manufacturing, assembly, and in-house inspection.
+
+\section*{Objective}
+
+The implemented logic is lexicographic and solved in two stages.
+
+\paragraph{Stage 1.} Minimize total weighted idle capacity plus Manual-mode risk penalty:
+\[
+\min \sum_{t\in T}\left(
+c^{\mathrm{mfg}} i^{\mathrm{mfg}}_t
++
+c^{\mathrm{asm}} i^{\mathrm{asm}}_t
++
+w^{\mathrm{insp}} i^{\mathrm{insp}}_t
++
+\rho_M y_{M,t}
+\right).
+\]
+Let the optimal value be \(Z^{\star}_{\mathrm{idle}}\).
+
+\paragraph{Stage 2.} Maximize total two-week profit subject to preserving the stage-1 objective value up to tolerance:
+\[
+\max \sum_{t\in T} \Big[
+p_A x_{A,t}+p_B x_{B,t}
+- c^{\mathrm{mfg}} a_A^{\mathrm{mfg}} x_{A,t}
+- c^{\mathrm{asm}} (a_A^{\mathrm{asm}}x_{A,t}+a_B^{\mathrm{asm}}x_{B,t})
+- c^{\mathrm{insp}}_M h_{M,t}
+- c^{\mathrm{insp}}_E h_{E,t}
+- c^{\mathrm{ext}} h^{\mathrm{ext}}_t
+- f_M y_{M,t}
+- f_E y_{E,t}
+- \rho_M y_{M,t}
+\Big]
+\]
+subject to
+\[
+\sum_{t\in T}\left(
+c^{\mathrm{mfg}} i^{\mathrm{mfg}}_t
++
+c^{\mathrm{asm}} i^{\mathrm{asm}}_t
++
+w^{\mathrm{insp}} i^{\mathrm{insp}}_t
++
+\rho_M y_{M,t}
+\right)
+\le Z^{\star}_{\mathrm{idle}}+\varepsilon.
+\]
+
+\section*{Constraints}
+
+The following constraints hold for every \(t\in T\) in both stages.
+
+\paragraph{Production capacity.}
+\[
+a_A^{\mathrm{mfg}} x_{A,t} \le \bar C^{\mathrm{mfg}}
+\]
+\[
+a_A^{\mathrm{asm}} x_{A,t} + a_B^{\mathrm{asm}} x_{B,t} \le \bar C^{\mathrm{asm}}.
+\]
+
+\paragraph{Minimum production of Type A.}
+\[
+x_{A,t} \ge L_A.
+\]
+
+\paragraph{Inspection mode selection.}
+\[
+y_{M,t}+y_{E,t}\le 1.
+\]
+
+\paragraph{Manual inspection linking.}
+\[
+h_{M,t} \le \alpha_{A,M}x_{A,t}+\alpha_{B,M}x_{B,t}+M^{\mathrm{big}}(1-y_{M,t}),
+\]
+\[
+h_{M,t} \ge \alpha_{A,M}x_{A,t}+\alpha_{B,M}x_{B,t}-M^{\mathrm{big}}(1-y_{M,t}),
+\]
+\[
+h_{M,t} \le M^{\mathrm{insp}} y_{M,t}.
+\]
+
+\paragraph{Enhanced inspection linking.}
+\[
+h_{E,t} \le \alpha_{A,E}x_{A,t}+\alpha_{B,E}x_{B,t}+M^{\mathrm{big}}(1-y_{E,t}),
+\]
+\[
+h_{E,t} \ge \alpha_{A,E}x_{A,t}+\alpha_{B,E}x_{B,t}-M^{\mathrm{big}}(1-y_{E,t}),
+\]
+\[
+h_{E,t} \le (\bar C^{\mathrm{insp}}+\bar C^{\mathrm{ext}}) y_{E,t}.
+\]
+
+\paragraph{External inspection capacity under Enhanced mode.}
+\[
+h^{\mathrm{ext}}_t \le \bar C^{\mathrm{ext}} y_{E,t}.
+\]
+
+\paragraph{In-house inspection capacity.}
+\[
+h_{M,t}+h_{E,t}\le \bar C^{\mathrm{insp}}.
+\]
+
+\paragraph{Idle-time definitions.}
+\[
+i^{\mathrm{mfg}}_t = \bar C^{\mathrm{mfg}} - a_A^{\mathrm{mfg}}x_{A,t},
+\]
+\[
+i^{\mathrm{asm}}_t = \bar C^{\mathrm{asm}} - \left(a_A^{\mathrm{asm}}x_{A,t}+a_B^{\mathrm{asm}}x_{B,t}\right),
+\]
+\[
+i^{\mathrm{insp}}_t = \bar C^{\mathrm{insp}} - (h_{M,t}+h_{E,t}).
+\]
+
+\paragraph{Nonnegativity of idle times.}
+\[
+i^{\mathrm{mfg}}_t\ge 0,\qquad i^{\mathrm{asm}}_t\ge 0,\qquad i^{\mathrm{insp}}_t\ge 0.
+\]
+
+\paragraph{Weekly minimum profit screen used by the code.}
+\[
+\pi_A x_{A,t}+\pi_B x_{B,t}\ge \Pi^{\min}.
+\]
+This is enforced in both stages exactly as written in the code, using the original per-unit margin coefficients \(\pi_A,\pi_B\), not the mode-dependent accounting used in the stage-2 objective.
+
+\section*{Notes on Implementation}
+
+The implemented model is a two-stage lexicographic mixed-integer linear optimization solved by two consecutive MILPs, not by a single weighted objective.
+
+The first stage minimizes
+\[
+\text{idle-time cost} + \text{Manual risk penalty},
+\]
+where the inspection idle-time coefficient is \texttt{cost\_insp\_weight} rather than the original inspection hourly cost from \texttt{table\_1.csv}.
+
+The second stage maximizes total profit over the two weeks while constraining the first-stage objective to remain within \(\texttt{idle\_tolerance}\) of its optimum.
+
+Several implementation details should be preserved exactly:
+
+1. The code allows
+\[
+y_{M,t}+y_{E,t}\le 1
+\]
+rather than \(=1\). Thus, the model does not explicitly force a protocol to be selected each week, even though the business narrative says one protocol must be used.
+
+2. The variable \(h^{\mathrm{ext}}_t\) is costed in stage 2 and bounded by Enhanced-mode capacity, but it is not linked to required inspection workload by any balance equation. Hence external inspection hours can remain zero without preventing Enhanced mode from satisfying the in-house inspection linkage constraints.
+
+3. The weekly minimum-profit constraint uses the precomputed margins \(\pi_A,\pi_B\) based on the original inspection hours and original inspection hourly cost from \texttt{table\_1.csv}; it does not use the revised mode-dependent inspection accounting.
+
+4. Because the stage-2 objective already subtracts \(\rho_M y_{M,t}\), the Manual risk penalty affects both lexicographic priority levels: directly in stage 1 and again as part of profit in stage 2.
+
+5. The model is solved with an MILP solver (\texttt{GUROBI\_CMD} through PuLP compatibility), not by enumeration or dynamic programming.

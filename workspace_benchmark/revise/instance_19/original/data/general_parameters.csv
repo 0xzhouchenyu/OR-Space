@@ -1,0 +1,11 @@
+Parameter_Name,Value,Unit,Context_Description
+cost_per_chair_A,50,USD,Cost of ordering each chair from manufacturer A
+cost_per_chair_B,45,USD,Cost of ordering each chair from manufacturer B
+cost_per_chair_C,40,USD,Cost of ordering each chair from manufacturer C
+chairs_per_order_A,15,chairs,Number of chairs included in each order from manufacturer A
+chairs_per_order_B,10,chairs,Number of chairs included in each order from manufacturer B
+chairs_per_order_C,10,chairs,Number of chairs included in each order from manufacturer C
+min_total_chairs,100,chairs,Minimum total number of chairs the store needs to order
+max_total_chairs,500,chairs,Maximum total number of chairs the store can order
+min_chairs_B_if_A,10,chairs,Minimum number of chairs from manufacturer B if chairs are ordered from manufacturer A
+dependency_B_C,1,boolean,Dependency indicating that if chairs are ordered from manufacturer B, chairs must also be ordered from manufacturer C

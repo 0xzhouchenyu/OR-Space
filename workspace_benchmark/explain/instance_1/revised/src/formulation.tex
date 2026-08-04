@@ -1,0 +1,234 @@
+\section*{Sets and Indices}
+
+\[
+T=\{1,\dots,8\} \quad \text{weeks}
+\]
+
+\[
+P=\{I,II\} \quad \text{product families}
+\]
+
+Training can start only in weeks
+\[
+T^{\text{start}}=\{1,\dots,7\},
+\]
+because the code defines training-start variables only for \(t\le T-1\).
+
+\section*{Parameters}
+
+All parameter values are read from \texttt{general\_parameters.csv} and \texttt{table\_1.csv}.
+
+\[
+S_0 \quad \text{(code: \texttt{S0}) = initial skilled worker count}
+\]
+
+\[
+r_I,\; r_{II} \quad \text{(code: \texttt{rate\_I}, \texttt{rate\_II}) = production rates in kg/hour}
+\]
+
+\[
+H^N \quad \text{(code: \texttt{normal\_hours}) = regular weekly hours per worker}
+\]
+
+\[
+H^{OT} \quad \text{(code: \texttt{overtime\_hours}) = overtime-week hours per overtime skilled worker}
+\]
+
+\[
+c^{tr} \quad \text{(code: \texttt{train\_cap}) = number of trainees produced by one trainer per 2-week class}
+\]
+
+\[
+L \quad \text{(code: \texttt{train\_period}) = training duration in weeks} = 2
+\]
+
+\[
+w^S \quad \text{(code: \texttt{wage\_skilled}) = weekly wage of a skilled worker on regular duty or as trainer}
+\]
+
+\[
+w^{OT} \quad \text{(code: \texttt{wage\_overtime}) = weekly wage of a skilled worker assigned to overtime}
+\]
+
+\[
+w^{TD} \quad \text{(code: \texttt{wage\_trainee\_during}) = weekly wage of a trainee during training}
+\]
+
+\[
+w^{TA} \quad \text{(code: \texttt{wage\_trainee\_after}) = weekly wage of a trained worker after graduation}
+\]
+
+\[
+\gamma_I,\; \gamma_{II} \quad \text{(code: \texttt{comp\_I}, \texttt{comp\_II}) = weekly compensation cost per kg of backlog}
+\]
+
+\[
+G \quad \text{(code: \texttt{new\_worker\_goal}) = required number of newly trained workers by the end of week 8}
+\]
+
+\[
+d_{p,t} \quad \text{weekly demand for product } p \text{ in week } t
+\]
+
+The implementation also uses a big-\(M\) constant
+\[
+M = S_0 H^{OT} + S_0 c^{tr} H^N + 10000
+\]
+(code: \texttt{BIG\_M}).
+
+For compactness, define the code-induced cumulative expressions
+\[
+B_t^{tr} = \sum_{\substack{s\in T^{\text{start}}:\\ s\le t \le s+L-1}} n_s
+\]
+as the number of trainers busy in week \(t\), and
+\[
+G_t^{av} = \sum_{\substack{s\in T^{\text{start}}:\\ s+L \le t}} c^{tr} n_s
+\]
+as the number of graduates available for production in week \(t\).
+
+Also define the number of trainees currently in training in week \(t\):
+\[
+Q_t^{tr} = \sum_{\substack{s\in T^{\text{start}}:\\ s\le t \le s+L-1}} c^{tr} n_s.
+\]
+
+\section*{Decision Variables}
+
+\[
+n_t \in \mathbb{Z}_+ \quad \text{for } t\in T^{\text{start}}
+\]
+(code: \texttt{n\_train[t]}): number of skilled workers who start a training class in week \(t\).
+
+\[
+o_t \in \mathbb{Z}_+ \quad \text{for } t\in T
+\]
+(code: \texttt{n\_overtime[t]}): number of skilled workers assigned to overtime in week \(t\).
+
+For each \(t\in T\), nonnegative hour-allocation variables:
+\[
+h^S_{I,t},\, h^S_{II,t} \ge 0
+\]
+(code: \texttt{h\_I\_s[t]}, \texttt{h\_II\_s[t]}): regular skilled-worker production hours.
+
+\[
+h^{OT}_{I,t},\, h^{OT}_{II,t} \ge 0
+\]
+(code: \texttt{h\_I\_ot[t]}, \texttt{h\_II\_ot[t]}): overtime skilled-worker production hours.
+
+\[
+h^G_{I,t},\, h^G_{II,t} \ge 0
+\]
+(code: \texttt{h\_I\_g[t]}, \texttt{h\_II\_g[t]}): production hours supplied by graduated workers.
+
+\[
+b_{I,t},\, b_{II,t} \ge 0 \quad \text{for } t\in T
+\]
+(code: \texttt{backlog\_I[t]}, \texttt{backlog\_II[t]}): end-of-week backlog for each product.
+
+\[
+y_t \in \{0,1\} \quad \text{for } t\in T
+\]
+(code: \texttt{produce\_I\_flag[t]}): weekly family-selection flag; \(y_t=1\) allows only Food I production, \(y_t=0\) allows only Food II production.
+
+\section*{Objective}
+
+Minimize total 8-week cost:
+\[
+\min \sum_{t\in T}
+\Big[
+(w^S)(S_0-B_t^{tr}-o_t)
++ (w^{OT})o_t
++ (w^S)B_t^{tr}
++ (w^{TD})Q_t^{tr}
++ (w^{TA})G_t^{av}
++ \gamma_I b_{I,t}
++ \gamma_{II} b_{II,t}
+\Big].
+\]
+
+This exactly matches the implemented cost accounting, which separately charges:
+regular skilled-worker wages for available non-overtime skilled workers,
+overtime wages for overtime workers,
+trainer wages for busy trainers,
+trainee wages during training,
+graduate wages after training,
+and weekly compensation on outstanding backlog.
+
+\section*{Constraints}
+
+For all \(t\in T\), overtime cannot exceed available skilled workers:
+\[
+o_t \le S_0 - B_t^{tr}.
+\]
+
+For all \(t\in T\), regular skilled-worker production hours are limited by available non-overtime skilled workers:
+\[
+h^S_{I,t} + h^S_{II,t}
+\le (S_0 - B_t^{tr} - o_t)H^N.
+\]
+
+For all \(t\in T\), overtime production hours are limited by the number of overtime workers:
+\[
+h^{OT}_{I,t} + h^{OT}_{II,t}
+\le o_t H^{OT}.
+\]
+
+For all \(t\in T\), graduate production hours are limited by available graduates:
+\[
+h^G_{I,t} + h^G_{II,t}
+\le G_t^{av} H^N.
+\]
+
+Mutual exclusion of product families in each week, for all \(t\in T\):
+\[
+h^S_{I,t} + h^{OT}_{I,t} + h^G_{I,t} \le M y_t,
+\]
+\[
+h^S_{II,t} + h^{OT}_{II,t} + h^G_{II,t} \le M(1-y_t).
+\]
+
+Thus, in each week, all productive hours from every workforce source are assigned either to Food I only, or to Food II only, or to neither product if all such hours are zero.
+
+For all \(t\in T\), backlog propagation for Food I:
+\[
+b_{I,t} \ge b_{I,t-1} + d_{I,t} - r_I\left(h^S_{I,t}+h^{OT}_{I,t}+h^G_{I,t}\right),
+\]
+with \(b_{I,0}=0\).
+
+For all \(t\in T\), backlog propagation for Food II:
+\[
+b_{II,t} \ge b_{II,t-1} + d_{II,t} - r_{II}\left(h^S_{II,t}+h^{OT}_{II,t}+h^G_{II,t}\right),
+\]
+with \(b_{II,0}=0\).
+
+For all \(t\in T\), trainer load cannot exceed the skilled workforce:
+\[
+S_0 - B_t^{tr} \ge 0.
+\]
+
+Training-goal requirement by the end of week 8:
+\[
+\sum_{\substack{s\in T^{\text{start}}:\\ s+L-1\le 8}} c^{tr} n_s \ge G.
+\]
+
+Since \(L=2\) and \(T^{\text{start}}=\{1,\dots,7\}\), this sums all training starts \(s=1,\dots,7\), including week 7 starts that finish by the end of week 8 but do not contribute productive hours within the horizon.
+
+\section*{Notes on Implementation}
+
+The source code solves this formulation as a mixed-integer linear program using PuLP-style modeling and \texttt{GUROBI\_CMD}.
+
+The model does \emph{not} include explicit shipment variables. Instead, backlog variables satisfy lower-bound recursions
+\[
+b_{p,t} \ge b_{p,t-1}+d_{p,t}-\text{production}_{p,t},
+\]
+and because backlog carries positive cost in the objective, optimal solutions drive these inequalities as tight as beneficial.
+
+The weekly wage terms follow the code literally:
+\[
+(w^S)(S_0-B_t^{tr}-o_t) + (w^{OT})o_t + (w^S)B_t^{tr}
+= (w^S)(S_0-o_t) + (w^{OT})o_t,
+\]
+so trainers are paid as skilled workers, and workers assigned to overtime receive the overtime weekly wage instead of the regular weekly wage.
+
+Graduates become available only from week \(s+L\) onward after a training start in week \(s\), exactly as implemented in \texttt{graduates\_available(t)}. Trainees in classes started in week 7 therefore count toward the end-of-horizon training goal but do not supply production hours in week 8.
+
+The mutual exclusion revision is implemented with a single binary variable \(y_t\) and big-\(M\) constraints that force all production hours in week \(t\) to belong to only one food family.

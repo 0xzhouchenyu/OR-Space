@@ -1,0 +1,66 @@
+{
+  "solver": "gurobi",
+  "model_name": "HiringOptimization",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 38000.0,
+  "objective_bound": 38000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0006849765777587891,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_9_qlm0jn/solver_records/HiringOptimization.gurobi.log",
+  "variables": {
+    "x_F": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_G": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_H": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_I": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_J": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Budget": {
+      "sense": "<=",
+      "slack": 2000.0,
+      "dual_value": null
+    },
+    "MaxEmployees": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "MinSkill": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "MinPMExp": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "MaxOneGJ": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

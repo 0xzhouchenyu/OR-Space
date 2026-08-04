@@ -1,0 +1,412 @@
+{
+  "solver": "gurobi",
+  "model_name": "ParkingSingleUsableSide_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 28.549999999999997,
+  "runtime": 0.00034689903259277344,
+  "variables": {
+    "L_1": {
+      "value": 28.549999999999997,
+      "reduced_cost": 0.0
+    },
+    "L_2": {
+      "value": 28.549999999999997,
+      "reduced_cost": 0.0
+    },
+    "T": {
+      "value": 28.549999999999997,
+      "reduced_cost": 0.0
+    },
+    "a_10_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_10_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_11_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_11_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_12_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_12_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_13_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_13_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_14_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_14_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_15_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_15_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_1_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_1_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_2_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_2_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_3_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_3_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_4_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_4_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_5_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_5_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_6_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_6_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_7_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_7_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_8_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_8_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "a_9_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "a_9_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    },
+    "y_1": {
+      "value": 0.5000000000000001,
+      "reduced_cost": 0.0
+    },
+    "y_2": {
+      "value": 0.4999999999999999,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "exactly_one_usable_side": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "assign_car_1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.0
+    },
+    "assign_car_2": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.25
+    },
+    "assign_car_3": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.5
+    },
+    "assign_car_4": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.05
+    },
+    "assign_car_5": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.2
+    },
+    "assign_car_6": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.6
+    },
+    "assign_car_7": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.85
+    },
+    "assign_car_8": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.75
+    },
+    "assign_car_9": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.6
+    },
+    "assign_car_10": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.25
+    },
+    "assign_car_11": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.15
+    },
+    "assign_car_12": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.65
+    },
+    "assign_car_13": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.9
+    },
+    "assign_car_14": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.3
+    },
+    "assign_car_15": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.5
+    },
+    "link_assignment_to_side_1_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_1_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_2_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_2_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_3_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_3_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_4_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_4_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_5_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_5_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_6_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_6_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_7_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_7_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_8_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_8_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_9_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_9_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_10_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_10_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_11_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_11_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_12_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_12_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_13_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_13_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_14_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_14_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_15_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "link_assignment_to_side_15_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "def_length_1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.5
+    },
+    "cap_side_1": {
+      "sense": "<",
+      "slack": 1.45000000000001,
+      "dual_value": 0.0
+    },
+    "max_side_length_1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.5
+    },
+    "def_length_2": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.5
+    },
+    "cap_side_2": {
+      "sense": "<",
+      "slack": 1.4499999999999957,
+      "dual_value": 0.0
+    },
+    "max_side_length_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.5
+    }
+  }
+}

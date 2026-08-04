@@ -1,0 +1,117 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$ : set of activities, here
+    \[
+    I=\{A,B,C,D,E,F,G\}.
+    \]
+    \item $P \subseteq I \times I$ : set of precedence arcs $(i,j)$, where activity $i$ must finish before activity $j$ can start. The arcs are read from \texttt{table\_1.csv}.
+\end{itemize}
+
+\section*{Parameters}
+
+All numerical values are read from \texttt{general\_parameters.csv} and \texttt{table\_1.csv}.
+
+\begin{itemize}
+    \item $d_i$ : nominal duration of activity $i$ in days (code source: \texttt{dur[a]} from fields \texttt{activity\_A\_duration}, \ldots, \texttt{activity\_G\_duration}).
+    \item $c^{\text{work}}$ : project work cost per day (field \texttt{work\_cost\_per\_day}).
+    \item $c^{\text{mach}}$ : machine rental cost per day (field \texttt{machine\_rental\_cost\_per\_day}).
+    \item $r^{E}$ : duration reduction for activity $E$ if overtime is used (field \texttt{activity\_E\_overtime\_reduction}).
+    \item $c^{E,\text{ot}}$ : fixed overtime premium for accelerating activity $E$ (field \texttt{activity\_E\_overtime\_cost}).
+    \item $c^{E,\text{rev}}$ : fixed follow-up review cost triggered when activity $E$ is accelerated (field \texttt{activity\_E\_followup\_review\_cost}).
+\end{itemize}
+
+For compactness, define the realized duration
+\[
+\tilde d_i =
+\begin{cases}
+d_E - r^E y, & i=E,\\
+d_i, & i\neq E,
+\end{cases}
+\]
+where $y$ is the overtime decision defined below.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $S_i$ (code: \texttt{S[a]}) : start time of activity $i$, with $S_i \ge 0$.
+    \item $T$ (code: \texttt{T}) : project completion surrogate, with $T \ge 0$.
+    \item $y$ (code: \texttt{use\_ot}) : binary variable equal to 1 if overtime is used for activity $E$, and 0 otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model minimizes
+\[
+\min \quad
+c^{\text{work}} T
+\;+\;
+c^{\text{mach}} \bigl(S_B + d_B - S_A\bigr)
+\;+\;
+\bigl(c^{E,\text{ot}} + c^{E,\text{rev}}\bigr)y.
+\]
+
+This exactly matches the code logic:
+\begin{itemize}
+    \item work cost is charged on $T$,
+    \item machine rental cost is charged over the interval from the start of $A$ to the finish of $B$, namely $S_B + d_B - S_A$,
+    \item accelerating activity $E$ is a gate decision: if $y=1$, both the overtime premium and the follow-up review cost are incurred; if $y=0$, neither is incurred.
+\end{itemize}
+
+\section*{Constraints}
+
+\paragraph{Precedence constraints.}
+For every $(i,j)\in P$,
+\[
+S_j \;\ge\; S_i + \tilde d_i.
+\]
+
+Equivalently, for this instance:
+\[
+\begin{aligned}
+S_G &\ge S_A + d_A,\\
+S_D &\ge S_A + d_A,\\
+S_F &\ge S_E + (d_E-r^E y),\\
+S_F &\ge S_G + d_G,\\
+S_C &\ge S_D + d_D,\\
+S_C &\ge S_F + d_F,\\
+S_B &\ge S_F + d_F.
+\end{aligned}
+\]
+
+\paragraph{Completion-time constraints.}
+The code defines $T$ only through the finishing times of activities $C$ and $B$:
+\[
+T \ge S_C + d_C,
+\qquad
+T \ge S_B + d_B.
+\]
+
+\paragraph{Variable domains.}
+\[
+S_i \ge 0 \qquad \forall i\in I,
+\]
+\[
+T \ge 0,
+\]
+\[
+y \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The formulation is a mixed-integer linear program solved by the implementation with \texttt{GUROBI\_CMD}.
+    \item The realized duration of activity $E$ is modeled exactly as in the code:
+    \[
+    \tilde d_E = d_E - r^E y.
+    \]
+    Thus overtime shortens $E$ by 3 days when selected.
+    \item The revision requirement is implemented as a binary-triggered fixed cost, not as a proportional surcharge. In the objective, choosing overtime for $E$ adds
+    \[
+    c^{E,\text{ot}} + c^{E,\text{rev}},
+    \]
+    where the review cost corresponds to the required follow-up safety review.
+    \item The model does not use the parameter \texttt{activity\_E\_followup\_review\_trigger} explicitly; the trigger is encoded directly by charging the review cost whenever \texttt{use\_ot}=1.
+    \item The machine rental term uses $d_B$ (nominal duration of $B$) rather than any project-wide makespan expression, and $T$ is constrained only by activities $B$ and $C$. This is not simplified here; it is written to match the current implementation exactly.
+\end{itemize}

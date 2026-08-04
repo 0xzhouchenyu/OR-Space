@@ -1,0 +1,86 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $R$: set of restaurants, indexed by $r$.
+\end{itemize}
+
+\section*{Parameters}
+
+For each restaurant $r \in R$:
+\begin{itemize}
+    \item $rev_r$: annual revenue in standard operation (from \texttt{Annual\_Revenue}).
+    \item $cost_r$: acquisition cost (from \texttt{Cost}).
+    \item $h^{\mathrm{std}}_r$: staff hours if operated in Standard mode (from \texttt{Standard\_Staff\_Hours}).
+    \item $h^{\mathrm{prem}}_r$: staff hours if operated in Premium mode (from \texttt{Premium\_Staff\_Hours}).
+\end{itemize}
+
+Global parameters:
+\begin{itemize}
+    \item $B$: total investment budget (code/data: \texttt{investment\_budget}).
+    \item $\alpha$: premium revenue uplift fraction (code/data: \texttt{premium\_revenue\_uplift}).
+    \item $c^{\mathrm{up}}$: premium upgrade cost per premium-operated restaurant (code/data: \texttt{premium\_upgrade\_cost}).
+    \item $H$: total staff-hours limit (code/data: \texttt{staff\_hours\_cap}).
+\end{itemize}
+
+Named pairwise restriction:
+\begin{itemize}
+    \item Restaurant \texttt{Restaurant\_D} and Restaurant \texttt{Restaurant\_A} cannot both be acquired.
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each restaurant $r \in R$:
+\begin{itemize}
+    \item $x_r \in \{0,1\}$ (code: \texttt{x[r]}): equals 1 if restaurant $r$ is acquired, 0 otherwise.
+    \item $p_r \in \{0,1\}$ (code: \texttt{p[r]}): equals 1 if restaurant $r$ is operated in Premium mode, 0 otherwise.
+\end{itemize}
+
+Because of the coupling constraint below, Premium is only allowed when the restaurant is acquired. Thus an acquired restaurant with $p_r=0$ is operated in Standard mode, and an acquired restaurant with $p_r=1$ is operated in Premium mode.
+
+\section*{Objective}
+
+Maximize total annual revenue:
+\[
+\max \sum_{r \in R} rev_r \bigl(x_r + \alpha p_r\bigr).
+\]
+
+This matches the implemented logic: acquiring restaurant $r$ contributes $rev_r$, and selecting Premium adds an incremental uplift of $\alpha \, rev_r$.
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Mode coupling}
+    \[
+    p_r \le x_r \qquad \forall r \in R.
+    \]
+
+    \item \textbf{Combined acquisition and upgrade budget}
+    \[
+    \sum_{r \in R} \left(cost_r x_r + c^{\mathrm{up}} p_r\right) \le B.
+    \]
+
+    \item \textbf{Total staff-hours cap}
+    \[
+    \sum_{r \in R} \left[h^{\mathrm{std}}_r (x_r - p_r) + h^{\mathrm{prem}}_r p_r\right] \le H.
+    \]
+    Equivalently, a selected restaurant uses $h^{\mathrm{std}}_r$ hours in Standard mode and $h^{\mathrm{prem}}_r$ hours in Premium mode.
+
+    \item \textbf{Mutual exclusion between Restaurant D and Restaurant A}
+    \[
+    x_{\texttt{Restaurant\_D}} + x_{\texttt{Restaurant\_A}} \le 1.
+    \]
+
+    \item \textbf{Binary restrictions}
+    \[
+    x_r \in \{0,1\}, \quad p_r \in \{0,1\} \qquad \forall r \in R.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a binary linear optimization model solved with a MIP solver interface (\texttt{GUROBI\_CMD} through PuLP compatibility).
+    \item The objective uses only annual revenue and the Premium uplift; it does not subtract acquisition or upgrade costs from the objective. Those costs enter only through the budget constraint.
+    \item The business description says each acquired restaurant must be operated either as Standard or Premium. In the implemented model, this is represented implicitly by $x_r \in \{0,1\}$ and $p_r \le x_r$: if $x_r=1$, then $p_r=0$ means Standard and $p_r=1$ means Premium.
+    \item Parameter names in the data packet corresponding to the revised Premium logic are exactly \texttt{premium\_revenue\_uplift}, \texttt{premium\_upgrade\_cost}, and \texttt{staff\_hours\_cap}.
+\end{itemize}

@@ -1,0 +1,67 @@
+{
+  "solver": "gurobi",
+  "model_name": "Microcomputer_Production2",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 11250.0,
+  "objective_bound": 11250.0,
+  "mip_gap": null,
+  "runtime": 0.0005500316619873047,
+  "node_count": 0.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_mitwfqkg/solver_records/Microcomputer_Production2.gurobi.log",
+  "variables": {
+    "xA_o": {
+      "value": 0.0,
+      "reduced_cost": -20.0
+    },
+    "xA_r": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    },
+    "xB_o": {
+      "value": 0.0,
+      "reduced_cost": -25.0
+    },
+    "xB_r": {
+      "value": 18.333333333333332,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 75.0
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 3.3333333333333357,
+      "dual_value": 0.0
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 30.0,
+      "dual_value": 0.0
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "_C5": {
+      "sense": ">=",
+      "slack": -3.333333333333332,
+      "dual_value": 0.0
+    },
+    "_C6": {
+      "sense": ">=",
+      "slack": -1250.0,
+      "dual_value": 0.0
+    }
+  }
+}

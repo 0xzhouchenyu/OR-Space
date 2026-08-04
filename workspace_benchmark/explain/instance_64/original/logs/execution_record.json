@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 38000.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nHire G: Salary=15000, Skill=3, PM_Exp=2\nHire H: Salary=18000, Skill=4, PM_Exp=2\nHire I: Salary=5000, Skill=1, PM_Exp=5\nOBJECTIVE_VALUE: 38000.0\n",
+  "stderr": "",
+  "error": null
+}

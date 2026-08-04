@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+available_labor_hours,1000,hours,Total available labor hours for manufacturing
+available_inspection_hours,500,hours,Total available inspection hours
+max_demand_high_end,50,units,Maximum market demand for high-end type toys
+max_demand_mid_range,80,units,Maximum market demand for mid-range type toys
+max_demand_low_end,150,units,Maximum market demand for low-end type toys

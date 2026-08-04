@@ -1,0 +1,62 @@
+{
+  "instance_id": "OR_explain_039",
+  "instance_number": 39,
+  "source_revise_instance": "IndustryOR_39_revise_business",
+  "domain": "Transportation_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Transportation_Planning",
+    "question": "Explain why the revised model’s objective increased from 600 to 670 even though the LP relaxation still has objective 640 and zero leasing in the solver diagnostics. Your answer must trace the business ‘gate’ requirement to the exact revised code variables and constraints—specifically identify how `method_active[(m,p)]`, `leasing_used`, and `trips[(m,p)]` implement the revised business rules using named CSV fields such as `demand_peak_units`, `demand_offpeak_units`, `leasing_pollution_per_unit`, and `leasing_fixed_pollution`, and relate them to the notation in `src/formulation.tex` (e.g., \\(x_{m,p}, y_{m,p}, z\\)). Also identify which LP-relaxation constraints are binding with nonzero shadow prices, interpret those marginal values in business terms, and explain why you cannot linearly extrapolate from the LP duals to recover the 70-unit objective increase in the integer optimum."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Transport_motorcycle_large_truck.gurobi.log",
+        "Transport_motorcycle_large_truck.lp_relaxation.json",
+        "Transport_motorcycle_large_truck.solution.json",
+        "Transport_motorcycle_small_truck.gurobi.log",
+        "Transport_motorcycle_small_truck.lp_relaxation.json",
+        "Transport_motorcycle_small_truck.solution.json",
+        "Transport_small_truck_large_truck.gurobi.log",
+        "Transport_small_truck_large_truck.lp_relaxation.json",
+        "Transport_small_truck_large_truck.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Daily_Transport_With_Leasing.gurobi.log",
+        "Daily_Transport_With_Leasing.lp_relaxation.json",
+        "Daily_Transport_With_Leasing.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 56.956111
+  }
+}

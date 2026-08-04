@@ -1,0 +1,73 @@
+{
+  "solver": "gurobi",
+  "model_name": "Investment_With_Liquidity_Penalty",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 948640.0,
+  "objective_bound": 948640.0,
+  "mip_gap": null,
+  "runtime": 0.0004611015319824219,
+  "node_count": 0.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_2r16vxgx/solver_records/Investment_With_Liquidity_Penalty.gurobi.log",
+  "variables": {
+    "reserve_y3": {
+      "value": 80000.0,
+      "reduced_cost": 0.0
+    },
+    "shortfall": {
+      "value": 0.0,
+      "reduced_cost": -0.30000000000000004
+    },
+    "x1_1": {
+      "value": 380000.0,
+      "reduced_cost": 0.0
+    },
+    "x1_2": {
+      "value": 306000.0,
+      "reduced_cost": 0.0
+    },
+    "x1_3": {
+      "value": 607200.0,
+      "reduced_cost": 0.0
+    },
+    "x2": {
+      "value": 120000.0,
+      "reduced_cost": 0.07199999999999984
+    },
+    "x3": {
+      "value": 150000.0,
+      "reduced_cost": 0.48
+    },
+    "x4": {
+      "value": 100000.0,
+      "reduced_cost": 0.19999999999999996
+    }
+  },
+  "constraints": {
+    "Year1_Budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.728
+    },
+    "Year2_Budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.44
+    },
+    "Year3_Cash_Balance": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.2
+    },
+    "Shortfall_Definition": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -0.19999999999999996
+    }
+  }
+}

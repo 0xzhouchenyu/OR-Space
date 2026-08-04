@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 123.8,
+  "stdout": "Set parameter LicenseID to value 2802670\nChicken: 500g, protein=115.0g, cost=$15.0\nBroccoli: 100g, protein=2.8g, cost=$1.2\nSpinach: 100g, protein=2.9g, cost=$1.5\nMushrooms: 100g, protein=3.1g, cost=$2.0\nOBJECTIVE_VALUE: 123.8\n",
+  "stderr": "",
+  "error": null
+}

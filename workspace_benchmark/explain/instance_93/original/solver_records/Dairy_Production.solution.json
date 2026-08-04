@@ -1,0 +1,44 @@
+{
+  "solver": "gurobi",
+  "model_name": "Dairy_Production",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 3360.0,
+  "objective_bound": 3360.0,
+  "mip_gap": null,
+  "runtime": 0.0005199909210205078,
+  "node_count": 0.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_5s6hij97/solver_records/Dairy_Production.gurobi.log",
+  "variables": {
+    "x1": {
+      "value": 20.0,
+      "reduced_cost": 0.0
+    },
+    "x2": {
+      "value": 30.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Milk_Supply": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 48.0
+    },
+    "Labor_Hours": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 2.0
+    },
+    "Type_A_Capacity": {
+      "sense": "<=",
+      "slack": 40.0,
+      "dual_value": 0.0
+    }
+  }
+}

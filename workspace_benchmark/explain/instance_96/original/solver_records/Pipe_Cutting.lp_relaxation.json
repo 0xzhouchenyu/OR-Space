@@ -1,0 +1,216 @@
+{
+  "solver": "gurobi",
+  "model_name": "Pipe_Cutting_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 18.82,
+  "runtime": 0.0004680156707763672,
+  "variables": {
+    "u_1": {
+      "value": 0.2,
+      "reduced_cost": 0.0
+    },
+    "u_2": {
+      "value": 0.0,
+      "reduced_cost": 0.1
+    },
+    "u_3": {
+      "value": 0.0,
+      "reduced_cost": 0.09999999999999998
+    },
+    "u_4": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_0": {
+      "value": -0.0,
+      "reduced_cost": 0.19914893617021256
+    },
+    "y_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_10": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_2": {
+      "value": 4.800000000000001,
+      "reduced_cost": 0.0
+    },
+    "y_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_4": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_5": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_6": {
+      "value": 2.8000000000000007,
+      "reduced_cost": 0.0
+    },
+    "y_7": {
+      "value": 10.2,
+      "reduced_cost": 0.0
+    },
+    "y_8": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "y_9": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z_0": {
+      "value": 0.0,
+      "reduced_cost": 0.1
+    },
+    "z_1": {
+      "value": 0.0,
+      "reduced_cost": -2.7478019859472624e-15
+    },
+    "z_10": {
+      "value": 0.0,
+      "reduced_cost": 7.688294445529209e-15
+    },
+    "z_2": {
+      "value": 0.05106382978723405,
+      "reduced_cost": 0.0
+    },
+    "z_3": {
+      "value": 0.0,
+      "reduced_cost": -1.3183898417423734e-14
+    },
+    "z_4": {
+      "value": 0.0,
+      "reduced_cost": -2.3619994848900205e-14
+    },
+    "z_5": {
+      "value": 0.0,
+      "reduced_cost": 7.688294445529209e-15
+    },
+    "z_6": {
+      "value": 0.0297872340425532,
+      "reduced_cost": 0.0
+    },
+    "z_7": {
+      "value": 0.10851063829787233,
+      "reduced_cost": 0.0
+    },
+    "z_8": {
+      "value": 0.010638297872340425,
+      "reduced_cost": 0.0
+    },
+    "z_9": {
+      "value": 0.0,
+      "reduced_cost": -2.7478019859472624e-15
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.20021276595744675
+    },
+    "_C2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.20021276595744686
+    },
+    "_C3": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.2002127659574468
+    },
+    "_C4": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.20021276595744686
+    },
+    "_C5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C6": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340718
+    },
+    "_C7": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340426
+    },
+    "_C8": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872341829
+    },
+    "_C9": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872342939
+    },
+    "_C10": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872339608
+    },
+    "_C11": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340426
+    },
+    "_C12": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340426
+    },
+    "_C13": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340426
+    },
+    "_C14": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872340718
+    },
+    "_C15": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.0010638297872339608
+    },
+    "_C16": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": -0.1
+    },
+    "_C17": {
+      "sense": ">",
+      "slack": -0.2,
+      "dual_value": 0.0
+    },
+    "_C18": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C19": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.1
+    },
+    "_C20": {
+      "sense": "<",
+      "slack": 3.8000000000000003,
+      "dual_value": 0.0
+    }
+  }
+}

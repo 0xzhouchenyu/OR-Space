@@ -1,0 +1,44 @@
+{
+  "solver": "gurobi",
+  "model_name": "production",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 30500.0,
+  "objective_bound": 30500.0,
+  "mip_gap": null,
+  "runtime": 0.0005178451538085938,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_dyy1tkpu/solver_records/production.gurobi.log",
+  "variables": {
+    "microwave": {
+      "value": 100.0,
+      "reduced_cost": 0.0
+    },
+    "water_heater": {
+      "value": 50.0,
+      "reduced_cost": -160.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": 0.0
+    },
+    "_C2": {
+      "sense": ">=",
+      "slack": -100.0,
+      "dual_value": 0.0
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 7.0
+    }
+  }
+}

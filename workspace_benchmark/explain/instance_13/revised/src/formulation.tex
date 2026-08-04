@@ -1,0 +1,140 @@
+\section*{Sets and Indices}
+
+\[
+C = \{\text{corn},\text{wheat},\text{soybeans},\text{sorghum}\}
+\]
+
+No additional indexing sets are used in the implemented model.
+
+\section*{Parameters}
+
+For each crop \(c \in C\), let \(p_c\) denote profit per acre:
+\[
+p_{\text{corn}}=1500,\quad
+p_{\text{wheat}}=1200,\quad
+p_{\text{soybeans}}=1800,\quad
+p_{\text{sorghum}}=1600.
+\]
+
+Other scalar parameters are:
+\[
+A = 100
+\qquad\text{(total farm area, code: \texttt{total\_area})}
+\]
+\[
+r^{cw} = 2
+\qquad\text{(corn--wheat ratio, code: \texttt{corn\_wheat\_ratio})}
+\]
+\[
+r^{ss} = 0.5
+\qquad\text{(soybeans--sorghum ratio, code: \texttt{soybeans\_sorghum\_ratio})}
+\]
+\[
+r^{ws} = 3
+\qquad\text{(wheat--sorghum ratio, code: \texttt{wheat\_sorghum\_ratio})}
+\]
+\[
+L^{\min}_{\text{corn}} = 20
+\qquad\text{(minimum corn acres, code: \texttt{min\_corn\_acres})}.
+\]
+
+\section*{Decision Variables}
+
+Continuous acreage variables:
+\[
+x_{\text{corn}} \ge 0 \quad \text{(code: \texttt{corn})}
+\]
+\[
+x_{\text{wheat}} \ge 0 \quad \text{(code: \texttt{wheat})}
+\]
+\[
+x_{\text{soybeans}} \ge 0 \quad \text{(code: \texttt{soybeans})}
+\]
+\[
+x_{\text{sorghum}} \ge 0 \quad \text{(code: \texttt{sorghum})}.
+\]
+
+Binary activation variables for the mutual-exclusion logic:
+\[
+y_{\text{corn}} \in \{0,1\}
+\quad \text{(code: \texttt{y\_corn})}
+\]
+\[
+y_{\text{soybeans}} \in \{0,1\}
+\quad \text{(code: \texttt{y\_soybeans})}.
+\]
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+p_{\text{corn}}x_{\text{corn}}
++ p_{\text{wheat}}x_{\text{wheat}}
++ p_{\text{soybeans}}x_{\text{soybeans}}
++ p_{\text{sorghum}}x_{\text{sorghum}}.
+\]
+
+\section*{Constraints}
+
+Total available land:
+\[
+x_{\text{corn}} + x_{\text{wheat}} + x_{\text{soybeans}} + x_{\text{sorghum}} \le A.
+\]
+
+Corn-to-wheat acreage ratio:
+\[
+x_{\text{corn}} \ge r^{cw} x_{\text{wheat}}.
+\]
+
+Soybeans-to-sorghum acreage ratio:
+\[
+x_{\text{soybeans}} \ge r^{ss} x_{\text{sorghum}}.
+\]
+
+Wheat-to-sorghum equality:
+\[
+x_{\text{wheat}} = r^{ws} x_{\text{sorghum}}.
+\]
+
+Minimum corn commitment:
+\[
+x_{\text{corn}} \ge L^{\min}_{\text{corn}}.
+\]
+
+Binary activation for corn:
+\[
+x_{\text{corn}} \le A\, y_{\text{corn}}.
+\]
+
+Binary activation for soybeans:
+\[
+x_{\text{soybeans}} \le A\, y_{\text{soybeans}}.
+\]
+
+Mutual exclusion of corn and soybeans:
+\[
+y_{\text{corn}} + y_{\text{soybeans}} \le 1.
+\]
+
+\section*{Notes on Implementation}
+
+The code solves the above formulation as a mixed-integer linear program using PuLP-compatible modeling objects and a Gurobi backend (\texttt{GUROBI\_CMD}).
+
+The mutual exclusion is implemented exactly through the binary variables and big-\(M\) activation constraints with \(M=A=100\). Because of
+\[
+x_{\text{corn}} \ge 20
+\quad\text{and}\quad
+x_{\text{corn}} \le A y_{\text{corn}},
+\]
+the model forces \(y_{\text{corn}}=1\). Then
+\[
+y_{\text{corn}} + y_{\text{soybeans}} \le 1
+\]
+implies \(y_{\text{soybeans}}=0\), and hence
+\[
+x_{\text{soybeans}} \le 0.
+\]
+So in the implemented model, soybeans are completely excluded whenever the minimum-corn requirement is present.
+
+No integer acreage restrictions are imposed; acreages are continuous nonnegative variables. The wheat--sorghum relationship is modeled as an equality, not an inequality.

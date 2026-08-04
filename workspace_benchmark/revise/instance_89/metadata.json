@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_89_revise_business",
+  "original_instance_id": "IndustryOR_89",
+  "revise_description": "In the stakeholder handoff for this case, the risk reviewer framed the change in business terms rather than as a spreadsheet checklist. The operations lead described this revision as a timing promise, not a quantity tweak. Work, inventory, cash, or capacity that leaves one ledger position should only reappear when the business clock says it has cleared. The liquid-products plan is now a two-week rolling commitment with carry-over inventory. Production, sales, storage, and profit are tracked separately by week for products A and B. A weekly promotion can raise the contribution for a product, but the number of promotions in each week is limited by `max_promotions_per_period`, and storage capacity still applies week by week. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Medium",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+8var, +10constr, mod_3constr, mod_obj, mod_5data",
+      "counts": {
+        "+variable": 8,
+        "-variable": 0,
+        "+constraint": 10,
+        "-constraint": 0,
+        "modify_constraint": 3,
+        "modify_data": 5
+      },
+      "op_count": 27,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 55.555556
+  }
+}

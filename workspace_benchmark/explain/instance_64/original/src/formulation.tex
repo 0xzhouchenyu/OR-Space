@@ -1,0 +1,99 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $C$: set of candidates (from \texttt{table\_1.csv}); here
+    \[
+    C=\{F,G,H,I,J\}.
+    \]
+    \item $c \in C$: candidate index.
+    \item $P \subseteq C$: special conflicting candidate subset for the pairwise hiring restriction; here
+    \[
+    P=\{G,J\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $s_c$: salary of candidate $c$.
+    \item $k_c$: skill level of candidate $c$.
+    \item $e_c$: project management experience of candidate $c$.
+    \item $B$ (code data: \texttt{budget}): company hiring budget.
+    \item $M$ (code data: \texttt{max\_employees}): maximum number of employees that can be hired.
+    \item $K^{\min}$ (code data: \texttt{min\_skill}): minimum required total skill level.
+    \item $E^{\min}$ (code data: \texttt{min\_pm\_exp}): minimum required total project management experience.
+    \item $U_{GJ}$ (code data: \texttt{max\_gj}): maximum number of hires allowed among candidates $G$ and $J$.
+\end{itemize}
+
+For this instance, the candidate-specific values are:
+\[
+\begin{array}{c|ccccc}
+c & F & G & H & I & J \\ \hline
+s_c & 12000 & 15000 & 18000 & 5000 & 10000 \\
+k_c & 2 & 3 & 4 & 1 & 2 \\
+e_c & 1 & 2 & 2 & 5 & 4
+\end{array}
+\]
+and
+\[
+B=40000,\quad M=4,\quad K^{\min}=8,\quad E^{\min}=8,\quad U_{GJ}=1.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_c$ (code: \texttt{x[c]}) for each $c \in C$, where
+    \[
+    x_c=
+    \begin{cases}
+    1 & \text{if candidate } c \text{ is hired},\\
+    0 & \text{otherwise.}
+    \end{cases}
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total salary of the hired team:
+\[
+\min \sum_{c \in C} s_c x_c.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{c \in C} s_c x_c &\le B
+&& \text{(budget)} \\
+\sum_{c \in C} x_c &\le M
+&& \text{(maximum number of hires)} \\
+\sum_{c \in C} k_c x_c &\ge K^{\min}
+&& \text{(minimum total skill)} \\
+\sum_{c \in C} e_c x_c &\ge E^{\min}
+&& \text{(minimum total project management experience)} \\
+x_G + x_J &\le U_{GJ}
+&& \text{(at most one of $G$ and $J$)} \\
+x_c &\in \{0,1\}
+&& \forall c \in C.
+\end{align}
+
+For this instance, the explicit model is:
+\begin{align}
+\min\quad &12000x_F+15000x_G+18000x_H+5000x_I+10000x_J \\
+\text{s.t.}\quad
+&12000x_F+15000x_G+18000x_H+5000x_I+10000x_J \le 40000 \\
+&x_F+x_G+x_H+x_I+x_J \le 4 \\
+&2x_F+3x_G+4x_H+x_I+2x_J \ge 8 \\
+&x_F+2x_G+2x_H+5x_I+4x_J \ge 8 \\
+&x_G+x_J \le 1 \\
+&x_F,x_G,x_H,x_I,x_J \in \{0,1\}.
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implementation in \texttt{current\_heuristic.py} builds exactly the above binary linear optimization model using one binary variable per candidate.
+    \item The objective and the budget constraint use the same salary expression; this is intentional and should be preserved, since the code includes both.
+    \item The special incompatibility restriction is implemented only for candidates \texttt{G} and \texttt{J} via \texttt{x['G'] + x['J'] <= max\_gj}; no other mutual-exclusion structure is modeled.
+    \item The model is solved by a MIP solver through \texttt{prob.solve(GUROBI\_CMD(msg=0))}, i.e., as a standard binary linear program rather than by custom enumeration or dynamic programming.
+    \item Although all parameter values are read as numeric data from CSV files, \texttt{max\_employees} and \texttt{max\_one\_candidate\_g\_j} are explicitly cast to integers in code before being used.
+\end{itemize}

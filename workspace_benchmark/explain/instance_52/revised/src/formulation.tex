@@ -1,0 +1,105 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $T=\{1,\dots,6\}$: 4-hour operating windows / admissible shift-start periods.
+    \item $R=\{\mathrm{driver},\mathrm{crew}\}$: employee roles.
+    \item $N=\{5,6\}$: late-night start periods.
+    \item For each start period $i\in T$, let
+    \[
+    C_i=\{\,((i-1)+k)\bmod 6 +1 : k=0,1\,\}
+    \]
+    be the set of operating windows covered by an 8-hour assignment starting in period $i$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_t$ (code source: \texttt{required[t-1]}): required number of staffed departures in period $t\in T$, from \texttt{table\_1\_2.csv}. For instance 52,
+    \[
+    (d_1,\dots,d_6)=(60,70,60,50,20,30).
+    \]
+    \item $L=2$: number of 4-hour periods covered by one 8-hour shift, implied by \texttt{shift\_duration = 8}.
+    \item $\alpha^{D}$ (code: \texttt{max\_night\_driver\_fraction}) $=0.4$.
+    \item $\alpha^{C}$ (code: \texttt{max\_night\_crew\_fraction}) $=0.5$.
+    \item $O^{\max}$ (code: \texttt{max\_overtime\_shifts}) $=20$.
+    \item $\beta$ (code: \texttt{overtime\_cost\_factor}) $=1.5$.
+    \item \texttt{driver\_rest\_gap}$=2$ and \texttt{crew\_rest\_gap}$=1$ are provided in the data, but are not used explicitly in the implemented optimization model; instead, the code enforces only the role-specific late-night start fraction constraints.
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each $t\in T$:
+\begin{itemize}
+    \item $x_t^{D}$ (code: \texttt{x\_driver[t-1]}): number of regular driver shifts starting in period $t$.
+    \item $x_t^{C}$ (code: \texttt{x\_crew[t-1]}): number of regular crew shifts starting in period $t$.
+    \item $y_t^{D}$ (code: \texttt{y\_driver[t-1]}): number of overtime driver shifts starting in period $t$.
+    \item $y_t^{C}$ (code: \texttt{y\_crew[t-1]}): number of overtime crew shifts starting in period $t$.
+\end{itemize}
+
+All decision variables are nonnegative integers.
+
+\section*{Objective}
+
+Minimize total regular staffing plus overtime staffing weighted by the overtime premium:
+\[
+\min \quad
+\sum_{t\in T} x_t^{D}
++\sum_{t\in T} x_t^{C}
++\beta\left(\sum_{t\in T} y_t^{D}+\sum_{t\in T} y_t^{C}\right).
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Driver coverage in each operating window}
+    \[
+    \sum_{i\in T:\; t\in C_i} \left(x_i^{D}+y_i^{D}\right) \;\ge\; d_t
+    \qquad \forall t\in T.
+    \]
+
+    \item \textbf{Crew coverage in each operating window}
+    \[
+    \sum_{i\in T:\; t\in C_i} \left(x_i^{C}+y_i^{C}\right) \;\ge\; d_t
+    \qquad \forall t\in T.
+    \]
+
+    Because $L=2$, each period $t$ is covered by starts in periods $t$ and $t-1$ modulo 6, so equivalently
+    \[
+    x_t^{D}+y_t^{D}+x_{t-1}^{D}+y_{t-1}^{D}\ge d_t \qquad \forall t\in T,
+    \]
+    \[
+    x_t^{C}+y_t^{C}+x_{t-1}^{C}+y_{t-1}^{C}\ge d_t \qquad \forall t\in T,
+    \]
+    with wrap-around indexing.
+
+    \item \textbf{Maximum late-night fraction for regular driver starts}
+    \[
+    x_5^{D}+x_6^{D} \;\le\; \alpha^{D}\sum_{t\in T} x_t^{D}.
+    \]
+
+    \item \textbf{Maximum late-night fraction for regular crew starts}
+    \[
+    x_5^{C}+x_6^{C} \;\le\; \alpha^{C}\sum_{t\in T} x_t^{C}.
+    \]
+
+    \item \textbf{Total overtime capacity across both roles}
+    \[
+    \sum_{t\in T} y_t^{D}+\sum_{t\in T} y_t^{C} \;\le\; O^{\max}.
+    \]
+
+    \item \textbf{Integrality and nonnegativity}
+    \[
+    x_t^{D},x_t^{C},y_t^{D},y_t^{C}\in \mathbb{Z}_{\ge 0}
+    \qquad \forall t\in T.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved with Gurobi through the PuLP-compatible interface (\texttt{GUROBI\_CMD}).
+    \item Coverage is enforced separately for drivers and crew, using the same demand vector $d_t$ for both roles. Thus each required departure must be covered independently by sufficient driver staffing and sufficient crew staffing.
+    \item Overtime variables $y^D,y^C$ contribute to coverage and to the overtime-capacity constraint, but the late-night fraction constraints apply only to regular starts $x^D,x^C$, exactly as in the code.
+    \item Although the business inputs include \texttt{driver\_rest\_gap} and \texttt{crew\_rest\_gap}, the current implementation does not contain any explicit rest-gap constraints beyond the role-specific late-night fraction limits. The formulation above therefore matches the code exactly rather than adding unused policy constraints.
+    \item The 8-hour shift duration is implemented by setting \texttt{periods\_per\_shift = shift\_duration / 4 = 2}, so every start covers exactly two consecutive 4-hour periods with modular wrap-around from period 6 to period 1.
+\end{itemize}

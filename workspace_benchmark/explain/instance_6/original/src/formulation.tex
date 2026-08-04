@@ -1,0 +1,109 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $P$: set of products, indexed by $p$. In the data, $P=\{\mathrm{I},\mathrm{II},\mathrm{III}\}$.
+    \item $T$: set of quarters, indexed by $t$. In the data, $T=\{1,2,3,4\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_{p,t}$: contract reservation (demand) of product $p$ in quarter $t$.
+    \item $I^{0}$: initial inventory at the beginning of quarter $1$ for each product.
+    \item $I^{\mathrm{end}}$: minimum required ending inventory for each product at the end of quarter $4$.
+    \item $H$: total production hours available in each quarter.
+    \item $a_p$: production hours required per unit of product $p$.
+    \item $c^{\mathrm{delay}}_p$: delay compensation cost per unit of backlog of product $p$ per quarter.
+    \item $c^{\mathrm{inv}}$: inventory holding cost per unit of positive inventory per quarter.
+\end{itemize}
+
+From the CSV files for this instance:
+\[
+I^{0}=0,\qquad I^{\mathrm{end}}=150,\qquad H=15000,
+\]
+\[
+a_{\mathrm{I}}=2,\quad a_{\mathrm{II}}=4,\quad a_{\mathrm{III}}=3,
+\]
+\[
+c^{\mathrm{delay}}_{\mathrm{I}}=20,\quad
+c^{\mathrm{delay}}_{\mathrm{II}}=20,\quad
+c^{\mathrm{delay}}_{\mathrm{III}}=10,
+\qquad
+c^{\mathrm{inv}}=5.
+\]
+
+The demands are
+\[
+\begin{array}{c|cccc}
+p \backslash t & 1 & 2 & 3 & 4\\ \hline
+\mathrm{I}   & 1500 & 1000 & 2000 & 1200\\
+\mathrm{II}  & 1500 & 1500 & 1200 & 1500\\
+\mathrm{III} & 1000 & 2000 & 1500 & 2500
+\end{array}
+\]
+
+\section*{Decision Variables}
+
+For each $p \in P$, $t \in T$:
+
+\begin{itemize}
+    \item $x_{p,t}$ (code: \texttt{x[(p,t)]}): integer production quantity of product $p$ in quarter $t$, with $x_{p,t} \ge 0$.
+    \item $I_{p,t}$ (code: \texttt{inv[(p,t)]}): net end-of-quarter inventory of product $p$ in quarter $t$. This variable is unrestricted in sign.
+    \item $I^+_{p,t}$ (code: \texttt{inv\_pos[(p,t)]}): positive part of net inventory in quarter $t$, with $I^+_{p,t} \ge 0$.
+    \item $I^-_{p,t}$ (code: \texttt{inv\_neg[(p,t)]}): negative part of net inventory in quarter $t$, with $I^-_{p,t} \ge 0$.
+\end{itemize}
+
+Here, negative net inventory represents delayed deliveries/backlog.
+
+\section*{Objective}
+
+Minimize total delay compensation and inventory holding cost over all products and quarters:
+\[
+\min \sum_{p \in P}\sum_{t \in T}
+\left(
+c^{\mathrm{delay}}_p I^-_{p,t}
++
+c^{\mathrm{inv}} I^+_{p,t}
+\right).
+\]
+
+\section*{Constraints}
+
+\begin{align}
+I_{p,1} &= I^{0} + x_{p,1} - d_{p,1}
+&& \forall p \in P \label{bal1}\\
+I_{p,t} &= I_{p,t-1} + x_{p,t} - d_{p,t}
+&& \forall p \in P,\ \forall t \in \{2,3,4\} \label{balt}\\
+I_{p,t} &= I^+_{p,t} - I^-_{p,t}
+&& \forall p \in P,\ \forall t \in T \label{split}\\
+I_{p,4} &\ge I^{\mathrm{end}}
+&& \forall p \in P \label{endinv}\\
+\sum_{p \in P} a_p x_{p,t} &\le H
+&& \forall t \in T \label{hours}\\
+x_{\mathrm{I},2} &\le 0 \label{noq2}
+\end{align}
+
+together with
+\[
+x_{p,t} \in \mathbb{Z}_{\ge 0} \qquad \forall p \in P,\ \forall t \in T,
+\]
+\[
+I^+_{p,t} \ge 0,\qquad I^-_{p,t} \ge 0
+\qquad \forall p \in P,\ \forall t \in T,
+\]
+and $I_{p,t}$ free for all $p,t$.
+
+Because $x_{\mathrm{I},2}\ge 0$ by construction and \eqref{noq2} is imposed, this fixes
+\[
+x_{\mathrm{I},2}=0.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program with integer production variables and continuous inventory/backlog variables.
+    \item Backlog is modeled implicitly through negative inventory: $I_{p,t}<0$ means cumulative unmet demand of product $p$ at the end of quarter $t$.
+    \item The code does not impose complementarity between $I^+_{p,t}$ and $I^-_{p,t}$ explicitly. It only enforces $I_{p,t}=I^+_{p,t}-I^-_{p,t}$ with both nonnegative. Since both components have positive objective coefficients, optimality drives the standard decomposition in which at most one of $I^+_{p,t}, I^-_{p,t}$ is positive.
+    \item The minimum ending inventory requirement is enforced on the net inventory variable $I_{p,4}$ for each product, not separately on $I^+_{p,4}$.
+    \item The model is solved in the code with a MIP solver through \texttt{GUROBI\_CMD(msg=0)}.
+\end{itemize}

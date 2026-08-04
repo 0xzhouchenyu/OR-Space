@@ -1,0 +1,18 @@
+Parameter_Name,Value,Unit,Context_Description
+motorcycle_pollution,40,units,Pollution produced per motorcycle trip
+small_truck_pollution,70,units,Pollution produced per small truck trip
+large_truck_pollution,100,units,Pollution produced per large truck trip
+max_motorcycle_trips,8,trips,Maximum number of motorcycle trips due to road restrictions
+motorcycle_capacity,10,units,Transport capacity per motorcycle trip
+small_truck_capacity,20,units,Transport capacity per small truck trip
+large_truck_capacity,50,units,Transport capacity per large truck trip
+min_transport_requirement,300,units,Original minimum total transport requirement (not used in revised model)
+max_total_trips,20,trips,Maximum total number of trips allowed across both periods
+demand_peak_units,200,units,Minimum transport requirement in the peak period
+demand_offpeak_units,120,units,Minimum transport requirement in the off-peak period
+leasing_capacity,200,units,Maximum total units that can be transported via leasing over the day
+leasing_pollution_per_unit,60,units,Pollution produced per unit transported via leasing
+leasing_fixed_pollution,100,units,Fixed pollution if leasing is used for any positive quantity
+max_leasing_fraction_peak,0.25,ratio,Maximum fraction of peak demand that can be satisfied by leasing
+bigM_leasing,400,units,Big-M parameter for leasing activation linking leasing_used to total leasing
+epsilon,1,units,Minimum total leasing when leasing_used is 1

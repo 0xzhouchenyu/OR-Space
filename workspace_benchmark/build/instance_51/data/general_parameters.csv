@@ -1,0 +1,5 @@
+Parameter_Name,Value,Unit,Context_Description
+shift_start_times,2:00;6:00;10:00;14:00;18:00;22:00,None,Start times for nurse shifts
+shift_duration,8,h,Duration of each nurse shift
+regular_nurse_pay,10,yuan/hour,Hourly pay for regular nurses
+contract_nurse_pay,15,yuan/hour,Hourly pay for contract nurses

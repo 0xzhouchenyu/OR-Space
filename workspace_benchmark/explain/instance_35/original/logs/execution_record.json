@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 14.1,
+  "stdout": "Number of batches: 5\nNumber of vats: 3\nBest permutation (batch order): [2, 4, 5, 3, 1]\nBatch 2: completion times = [2.0, 3.5, 4.5]\nBatch 4: completion times = [4.0, 6.0, 8.0]\nBatch 5: completion times = [6.1, 8.1, 11.1]\nBatch 3: completion times = [9.1, 10.299999999999999, 12.4]\nBatch 1: completion times = [12.1, 13.1, 14.1]\nOptimal makespan: 14.1\nOBJECTIVE_VALUE: 14.1\nSet parameter LicenseID to value 2802670\n",
+  "stderr": "",
+  "error": null
+}

@@ -1,0 +1,69 @@
+{
+  "instance_id": "OR_explain_007",
+  "instance_number": 7,
+  "source_revise_instance": "IndustryOR_7_revise_business",
+  "domain": "Transportation_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Transportation_Planning",
+    "question": "In the revised model, explain exactly why `recovery_Genoa = 1` can be optimal while `adriatic_pool = 0`, and trace that logic across the code, the CSV fields, and the business brief. Your answer must name the code variables `short[p]`, `rec[p]`, `pool`, and at least one shipment variable such as `x[w][p]`/`ship_w_p`; cite the exact CSV columns and parameter values that make Genoa’s local desk activate but keep the Adriatic pooled desk closed; and identify which revised objective terms and new constraints caused the objective to fall from 904590.0 to 749100.0 relative to the original `x[(i,j)]` transportation model in `src/formulation.tex`. Also interpret the LP-relaxation state (`recovery_Genoa = 0.9`, `recovery_Venice = 0.266666...`, `adriatic_pool` reduced cost 25000.0): which constraints are effectively binding, what is the business meaning of those marginal values/slacks, and why would a linear shadow-price extrapolation fail once shortage crosses a grace band or the Adriatic trigger?"
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "table_2.csv",
+        "table_3.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Container_Transportation.gurobi.log",
+        "Container_Transportation.lp_relaxation.json",
+        "Container_Transportation.solution.json",
+        "Container_Transportation_Trucks.gurobi.log",
+        "Container_Transportation_Trucks.lp_relaxation.json",
+        "Container_Transportation_Trucks.solution.json",
+        "Container_Transportation_Trucks_v2.gurobi.log",
+        "Container_Transportation_Trucks_v2.lp_relaxation.json",
+        "Container_Transportation_Trucks_v2.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "table_2.csv",
+        "table_3.csv",
+        "general_parameters.csv",
+        "shortage_penalty.csv"
+      ],
+      "solver_records": [
+        "ContainerRecoveryCost.gurobi.log",
+        "ContainerRecoveryCost.lp_relaxation.json",
+        "ContainerRecoveryCost.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 71.552222
+  }
+}

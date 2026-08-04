@@ -1,0 +1,13 @@
+Parameter_Name,Value,Unit,Context_Description
+num_children,5,,Number of children in the Li family
+max_children_trip,3,,Maximum number of children the Li family can take per day
+min_children_trip,2,,Minimum number of children the Li family has decided to take per day
+cost_alice,1000,USD,Cost to take Alice on the trip per day
+cost_bob,900,USD,Cost to take Bob on the trip per day
+cost_charlie,600,USD,Cost to take Charlie on the trip per day
+cost_diana,500,USD,Cost to take Diana on the trip per day
+cost_ella,700,USD,Cost to take Ella on the trip per day
+max_distinct_children_trip,4,,Maximum number of distinct children allowed over both days
+total_cost_budget,5000,USD,Maximum total net cost allowed over both days (costs minus savings)
+bonus_saving,200,USD,Fixed saving applied once per child if they attend both days
+min_bob_days,1,days,Minimum number of days Bob must attend over the two-day trip

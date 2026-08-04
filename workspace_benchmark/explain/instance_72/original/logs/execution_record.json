@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 135000.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nProperty_1: 0\nProperty_2: 1\nProperty_3: 0\nProperty_4: 1\nOBJECTIVE_VALUE: 135000.0\n",
+  "stderr": "",
+  "error": null
+}

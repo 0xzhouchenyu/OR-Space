@@ -1,0 +1,89 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Candidate set $C$ of all applicants, indexed by $i$ (code: candidates with names used in \texttt{x[c['name']]}).
+    \item Advanced-degree candidate subset
+    \[
+    C^{\mathrm{adv}}=\{i\in C:\text{qualification of }i\text{ is Master's degree or Doctoral degree}\}.
+    \]
+    \item Special equivalent-skill pair
+    \[
+    P=\{A,E\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Salary of candidate $i$: $s_i$ (code: \texttt{c['salary']}).
+    \item Work experience of candidate $i$: $w_i$ (code: \texttt{c['experience']}).
+    \item Maximum number of employees to hire: $U$ (code: \texttt{max\_employees}).
+    \item Minimum number of employees to hire: $L$ (code: \texttt{min\_employees}).
+    \item Budget limit: $B$ (code: \texttt{budget\_limit}).
+    \item Minimum number of advanced-degree candidates required: $M$ (code: \texttt{min\_advanced}).
+    \item Minimum total work experience required: $W$ (code: \texttt{min\_experience}).
+    \item Maximum number selected from the pair $\{A,E\}$: $E^{\max}$ (code: \texttt{max\_equivalent}).
+\end{itemize}
+
+For this instance,
+\[
+C=\{A,B,C,D,E\},\quad
+C^{\mathrm{adv}}=\{B,C\},
+\]
+with data
+\[
+(s_A,s_B,s_C,s_D,s_E)=(8100,20000,21000,3000,8000),
+\]
+\[
+(w_A,w_B,w_C,w_D,w_E)=(3,10,4,3,7),
+\]
+and
+\[
+U=3,\quad L=2,\quad B=35000,\quad M=1,\quad W=12,\quad E^{\max}=1.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Binary hiring decision for candidate $i$:
+    \[
+    x_i \in \{0,1\}\qquad \forall i\in C,
+    \]
+    where $x_i=1$ means candidate $i$ is selected (code: \texttt{x[candidate\_name]}).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total salary of selected candidates:
+\[
+\min \sum_{i\in C} s_i x_i.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{i\in C} x_i &\le U
+&& \text{(maximum number of hires)}\\
+\sum_{i\in C} s_i x_i &\le B
+&& \text{(budget limit)}\\
+\sum_{i\in C^{\mathrm{adv}}} x_i &\ge M
+&& \text{(minimum advanced-degree hires)}\\
+\sum_{i\in C} w_i x_i &\ge W
+&& \text{(minimum total work experience)}\\
+x_A + x_E &\le E^{\max}
+&& \text{(at most one from the equivalent pair)}\\
+\sum_{i\in C} x_i &\ge L
+&& \text{(minimum number of hires)}\\
+x_i &\in \{0,1\}
+&& \forall i\in C.
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implementation constructs exactly the above binary linear optimization model in PuLP, with one binary variable per candidate.
+    \item The advanced-degree subset is created by filtering qualifications equal to \texttt{"Master's degree"} or \texttt{"Doctoral degree"}.
+    \item The equivalent-skill restriction is hard-coded specifically as \texttt{x['A'] + x['E'] <= max\_equivalent}; it is not modeled as a generic set of mutually exclusive pairs.
+    \item The objective and the budget constraint both use the same salary coefficients from the candidate table.
+    \item The model is solved with \texttt{GUROBI\_CMD(msg=0)} through the PuLP-compatible interface.
+\end{itemize}

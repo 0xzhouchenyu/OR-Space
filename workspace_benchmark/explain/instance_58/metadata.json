@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_058",
+  "instance_number": 58,
+  "source_revise_instance": "IndustryOR_58_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain exactly why the objective rises from 240000 in the original model to 510909.0909090909 in the new MIP, and why the LP relaxation reaches 576000 instead. Your answer must trace the autumn pear activity in `area_pears_autumn`, the spring land limit `land_season_spring`, and the diversification binary `v` back to the precise code constraints and the business terms in `docs/business_requirement.md`, while also naming the exact `general_parameters.csv` keys that supply the relevant coefficients and ratios. Then, using the LP-relaxation solver output, identify at least two binding constraints with their shadow prices/slacks, interpret their business meaning, and explain why those marginal values cannot be linearly extrapolated to predict the integer optimum once `y[f]`, `z[f]`, and `v` change regime."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "farm.gurobi.log",
+        "farm.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "farm_two_seasons_water.gurobi.log",
+        "farm_two_seasons_water.lp_relaxation.json",
+        "farm_two_seasons_water.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 44.138889
+  }
+}

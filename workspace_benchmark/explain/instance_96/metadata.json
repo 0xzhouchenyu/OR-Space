@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_096",
+  "instance_number": 96,
+  "source_revise_instance": "IndustryOR_96_revise_business",
+  "domain": "Cutting_Stock / Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Cutting_Stock / Production_Planning",
+    "question": "In the revised two-supplier model, explain precisely why the objective drops from 19.6 to 19.4 relative to the original model by identifying the exact code additions that changed the cost structure and feasible sourcing decisions. Your answer must trace `total_pipes_s1`, `total_pipes_s2`, `y1[p]`, `y2[p]`, `t1_high`, `t1_low`, and at least one of `u1_1`/`u2_1` back to the relevant `general_parameters.csv` fields (including exact names such as `raw_pipe_length_supplier2`, `purchase_cost_per_pipe_supplier1`, `discount_tier1_supplier1_max_qty`, and the supplier-specific pattern-rate columns) and to the business document’s statements about shared demand coverage and supplier-specific pattern libraries. Using the LP-relaxation diagnostics, identify which demand constraints remain binding, interpret the shadow prices economically, and explain why those marginal values cannot be linearly extrapolated to predict the integer revised optimum once the supplier-1 tier discount binaries and pattern-count binaries become active."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Pipe_Cutting.gurobi.log",
+        "Pipe_Cutting.lp_relaxation.json",
+        "Pipe_Cutting.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Two_Supplier_Pipe_Cutting.gurobi.log",
+        "Two_Supplier_Pipe_Cutting.lp_relaxation.json",
+        "Two_Supplier_Pipe_Cutting.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 60.894444
+  }
+}

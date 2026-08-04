@@ -1,0 +1,132 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $R=\{A,B,C\}$: set of raw materials, indexed by $i$.
+    \item $J=\{A,B,C\}$: set of candy brands, indexed by $j$.
+\end{itemize}
+
+\section*{Parameters}
+
+For each raw material $i \in R$ and brand $j \in J$:
+
+\begin{itemize}
+    \item $c_i$: unit cost of raw material $i$ (code: \texttt{raw\_cost[i]}), in Yuan/kg.
+    \item $L_i$: monthly availability limit of raw material $i$ (code: \texttt{limits[i]}), in kg.
+    \item $p_j$: selling price of brand $j$ (code: \texttt{sell\_price[j]}), in Yuan/kg.
+    \item $f_j$: processing fee of brand $j$ (code: \texttt{proc\_fee[j]}), in Yuan/kg.
+\end{itemize}
+
+Composition coefficients implied by the code:
+
+\begin{itemize}
+    \item For brand $A$: raw material $A$ must be at least $60\%$ of production; raw material $C$ must be at most $20\%$.
+    \item For brand $B$: raw material $A$ must be at least $15\%$ of production; raw material $C$ must be at most $60\%$.
+    \item For brand $C$: raw material $C$ must be at most $50\%$ of production.
+\end{itemize}
+
+Using the CSV data, the parameter values are:
+\[
+(c_A,c_B,c_C)=(2.00,1.50,1.00),
+\qquad
+(L_A,L_B,L_C)=(2000,2500,1200),
+\]
+\[
+(f_A,f_B,f_C)=(0.50,0.40,0.30),
+\qquad
+(p_A,p_B,p_C)=(3.40,2.85,2.25).
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ij}$ (code: \texttt{x[i,j]}): kilograms of raw material $i$ used in candy brand $j$, with
+    \[
+    x_{ij} \ge 0 \qquad \forall i \in R,\; j \in J.
+    \]
+    \item $y_j$ (code: \texttt{y[j]}): total kilograms produced of brand $j$, defined by
+    \[
+    y_j = \sum_{i \in R} x_{ij} \qquad \forall j \in J.
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+\sum_{j \in J} p_j y_j
+-
+\sum_{i \in R}\sum_{j \in J} c_i x_{ij}
+-
+\sum_{j \in J} f_j y_j .
+\]
+
+Equivalently, with the implemented data:
+\[
+\max \;
+3.40\,y_A+2.85\,y_B+2.25\,y_C
+-2.00\sum_{j \in J}x_{Aj}
+-1.50\sum_{j \in J}x_{Bj}
+-1.00\sum_{j \in J}x_{Cj}
+-0.50\,y_A-0.40\,y_B-0.30\,y_C.
+\]
+
+\section*{Constraints}
+
+Raw material availability:
+\[
+\sum_{j \in J} x_{ij} \le L_i \qquad \forall i \in R.
+\]
+
+Explicitly:
+\[
+x_{AA}+x_{AB}+x_{AC} \le 2000,
+\]
+\[
+x_{BA}+x_{BB}+x_{BC} \le 2500,
+\]
+\[
+x_{CA}+x_{CB}+x_{CC} \le 1200.
+\]
+
+Brand production definitions:
+\[
+y_A=x_{AA}+x_{BA}+x_{CA},
+\]
+\[
+y_B=x_{AB}+x_{BB}+x_{CB},
+\]
+\[
+y_C=x_{AC}+x_{BC}+x_{CC}.
+\]
+
+Composition constraints implemented in the code:
+\[
+x_{AA} \ge 0.60\, y_A,
+\]
+\[
+x_{AB} \ge 0.15\, y_B,
+\]
+\[
+x_{CA} \le 0.20\, y_A,
+\]
+\[
+x_{CB} \le 0.60\, y_B,
+\]
+\[
+x_{CC} \le 0.50\, y_C.
+\]
+
+Nonnegativity:
+\[
+x_{ij} \ge 0 \qquad \forall i \in R,\; j \in J.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code models only the above constraints. In particular, there are no additional composition equalities or lower/upper bounds on raw material $B$ beyond nonnegativity and supply.
+    \item The variables $y_j$ are not independent optimization variables in the code; they are linear expressions defined as \texttt{lpSum(x[i,j] for i in range(3))}. They are written here as derived variables for clarity.
+    \item The model is a linear program and is solved in the implementation with \texttt{GUROBI\_CMD}.
+    \item Parameter values are hard-coded in \texttt{current\_heuristic.py}, although they match the values shown in the CSV table.
+\end{itemize}

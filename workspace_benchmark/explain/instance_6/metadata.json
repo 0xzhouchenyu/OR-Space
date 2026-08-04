@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_006",
+  "instance_number": 6,
+  "source_revise_instance": "IndustryOR_6_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain precisely why the objective drops from 10755.0 to 10475.0 instead of increasing after adding peak-hour energy charges. Your answer must identify the exact new code variables and objective term(s) added in `src/current_heuristic.py` (including `x_peak[(p,t)]` and `q[(p,t)]`), trace them to the literal business terms and CSV field names `normal_hours_cap_fraction_q*`, `peak_hours_cap_q*`, and `peak_cost_per_hour_q*`, and compare the original and revised solutions using the visible inventory states (e.g., `inv_II_2`, `inv_II_3`) plus at least one binding/slack capacity interpretation from solver output. Also state the business meaning of the relevant marginal values/reduced costs for a zero backlog or inventory variable, and explain why you cannot linearly extrapolate the -280 improvement from one quarter’s shadow-price logic alone."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ProductionScheduling.gurobi.log",
+        "ProductionScheduling.lp_relaxation.json",
+        "ProductionScheduling.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ProductionScheduling_PeakSplit.gurobi.log",
+        "ProductionScheduling_PeakSplit.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 58.435
+  }
+}

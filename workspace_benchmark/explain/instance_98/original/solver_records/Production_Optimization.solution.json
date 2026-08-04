@@ -1,0 +1,44 @@
+{
+  "solver": "gurobi",
+  "model_name": "Production_Optimization",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 137500.0,
+  "objective_bound": 137500.0,
+  "mip_gap": null,
+  "runtime": 0.0004911422729492188,
+  "node_count": 0.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_f8qgwr1u/solver_records/Production_Optimization.gurobi.log",
+  "variables": {
+    "x_A": {
+      "value": 0.0,
+      "reduced_cost": -41.66666666666606
+    },
+    "x_B": {
+      "value": 12.5,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Steel": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": 0.0
+    },
+    "Aluminum": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": 0.0
+    },
+    "Labor": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 458.3333333333333
+    }
+  }
+}

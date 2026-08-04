@@ -1,0 +1,5 @@
+Parameter_Name,Value,Unit,Context_Description
+a1,10,units,Annual production of fighter jets in year 1
+a2,15,units,Annual production of fighter jets in year 2
+training_capacity_per_jet,5,pilots per year,Number of pilots trained per training jet per year
+training_duration,2,years,Duration of training program starting in year 1

@@ -1,0 +1,421 @@
+{
+  "solver": "gurobi",
+  "model_name": "Transportation_Pollution_Minimization_SP_Mode",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 800.0,
+  "objective_bound": 800.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004369974136352539,
+  "node_count": 1.0,
+  "iteration_count": 17.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_17if487c/solver_records/Transportation_Pollution_Minimization_SP_Mode.gurobi.log",
+  "variables": {
+    "ev_trips_SP1_1": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "ev_trips_SP1_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "ev_trips_SP1_3": {
+      "value": 8.0,
+      "reduced_cost": null
+    },
+    "ev_trips_SP2_1": {
+      "value": 8.0,
+      "reduced_cost": null
+    },
+    "ev_trips_SP2_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "ev_trips_SP2_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "ev_trips_SP3_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "ev_trips_SP3_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "ev_trips_SP3_3": {
+      "value": 6.0,
+      "reduced_cost": null
+    },
+    "exclusive_mode_sp_SP1_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "exclusive_mode_sp_SP1_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "exclusive_mode_sp_SP1_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "exclusive_mode_sp_SP2_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "exclusive_mode_sp_SP2_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "exclusive_mode_sp_SP2_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "exclusive_mode_sp_SP3_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "exclusive_mode_sp_SP3_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "exclusive_mode_sp_SP3_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "motorcycle_trips_SP1_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "motorcycle_trips_SP1_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "motorcycle_trips_SP1_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "motorcycle_trips_SP2_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "motorcycle_trips_SP2_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "motorcycle_trips_SP2_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "motorcycle_trips_SP3_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "motorcycle_trips_SP3_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "motorcycle_trips_SP3_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "truck_trips_SP1_1": {
+      "value": 5.0,
+      "reduced_cost": null
+    },
+    "truck_trips_SP1_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "truck_trips_SP1_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "truck_trips_SP2_1": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "truck_trips_SP2_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "truck_trips_SP2_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "truck_trips_SP3_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "truck_trips_SP3_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "truck_trips_SP3_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "van_trips_SP1_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "van_trips_SP1_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "van_trips_SP1_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "van_trips_SP2_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "van_trips_SP2_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "van_trips_SP2_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "van_trips_SP3_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "van_trips_SP3_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "van_trips_SP3_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Demand_SP1": {
+      "sense": ">=",
+      "slack": -440.0,
+      "dual_value": null
+    },
+    "Demand_SP2": {
+      "sense": ">=",
+      "slack": -50.0,
+      "dual_value": null
+    },
+    "Demand_SP3": {
+      "sense": ">=",
+      "slack": -10.0,
+      "dual_value": null
+    },
+    "Max_Total_Pollution": {
+      "sense": "<=",
+      "slack": 1200.0,
+      "dual_value": null
+    },
+    "Min_Total_Truck_Trips": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Truck_Mode_SP1_1": {
+      "sense": "<=",
+      "slack": 15.0,
+      "dual_value": null
+    },
+    "EV_Mode_SP1_1": {
+      "sense": "<=",
+      "slack": 17.0,
+      "dual_value": null
+    },
+    "Van_Mode_SP1_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Moto_Mode_SP1_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Truck_Mode_SP1_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "EV_Mode_SP1_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Van_Mode_SP1_2": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "Moto_Mode_SP1_2": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "Truck_Mode_SP1_3": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "EV_Mode_SP1_3": {
+      "sense": "<=",
+      "slack": 12.0,
+      "dual_value": null
+    },
+    "Van_Mode_SP1_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Moto_Mode_SP1_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Truck_Mode_SP2_1": {
+      "sense": "<=",
+      "slack": 18.0,
+      "dual_value": null
+    },
+    "EV_Mode_SP2_1": {
+      "sense": "<=",
+      "slack": 12.0,
+      "dual_value": null
+    },
+    "Van_Mode_SP2_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Moto_Mode_SP2_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Truck_Mode_SP2_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "EV_Mode_SP2_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Van_Mode_SP2_2": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "Moto_Mode_SP2_2": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "Truck_Mode_SP2_3": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "EV_Mode_SP2_3": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "Van_Mode_SP2_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Moto_Mode_SP2_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Truck_Mode_SP3_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "EV_Mode_SP3_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Van_Mode_SP3_1": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "Moto_Mode_SP3_1": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "Truck_Mode_SP3_2": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "EV_Mode_SP3_2": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "Van_Mode_SP3_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Moto_Mode_SP3_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Truck_Mode_SP3_3": {
+      "sense": "<=",
+      "slack": 19.0,
+      "dual_value": null
+    },
+    "EV_Mode_SP3_3": {
+      "sense": "<=",
+      "slack": 14.0,
+      "dual_value": null
+    },
+    "Van_Mode_SP3_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Moto_Mode_SP3_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Min_Truck_Share_SP1": {
+      "sense": ">=",
+      "slack": -0.20000000000000018,
+      "dual_value": null
+    },
+    "Min_Truck_Share_SP2": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Min_Truck_Share_SP3": {
+      "sense": ">=",
+      "slack": -0.29999999999999993,
+      "dual_value": null
+    }
+  }
+}

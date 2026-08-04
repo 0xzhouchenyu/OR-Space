@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_048",
+  "instance_number": 48,
+  "source_revise_instance": "IndustryOR_48_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the optimum switches from the original profit-maximizing plan to the market-share plan with objective 30.0, and identify the exact code changes responsible for that switch. Your answer must trace the revised binding/nonbinding constraints from the solver JSON back to the mathematical statements in `src/formulation.tex` and the exact CSV columns/parameter values they use: name the code variables (`xA_r`, `xA_o`, `xB_r`, `xB_o`, `total_profit`, `total_A`, `total_B`), the relevant column names in `table_1.csv`, and the parameter names/values from `general_parameters.csv` (including `min_weekly_profit=10000`, `process_I_hours=150`, and `process_II_max_overtime=30`). Also interpret the shadow prices/slacks for `_C1`, `_C3`, and `_C5` in business terms, and explain why using the dual value of `_C1` to linearly extrapolate beyond a small RHS change would be unreliable once the active basis changes under the revised objective."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Microcomputer_Production2.gurobi.log",
+        "Microcomputer_Production2.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Microcomputer_Production_Market_Share.gurobi.log",
+        "Microcomputer_Production_Market_Share.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 73.801111
+  }
+}

@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
-    "score_explain", ROOT / "evaluation/explain/score_explain.py"
+    "score_explain", ROOT / "evaluation_programs/explain/score_explain.py"
 )
 assert SPEC and SPEC.loader
 SCORE_EXPLAIN = importlib.util.module_from_spec(SPEC)
@@ -47,4 +47,3 @@ class ExplainScorerTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

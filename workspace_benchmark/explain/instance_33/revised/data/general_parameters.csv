@@ -1,0 +1,12 @@
+Parameter_Name,Value,Unit,Context_Description
+num_diamonds,3,,Number of diamonds in the inheritance
+value_per_diamond,12000,USD,Value of each diamond
+num_jack_russell_dogs,2,,Number of Jack Russell racing dogs
+value_per_jack_russell_dog,3000,USD,Value of each Jack Russell racing dog
+jack_russell_condition,,must not be separated,Condition that the Jack Russell racing dogs must not be separated
+son1_min_share,0.5,,Minimum fraction of total value that son 1 must receive in total ownership
+high_value_threshold,15000,USD,Threshold above which an item is considered high value for concentration limits
+max_high_value_items_per_son,3,,Maximum number of high value items one son may own (immediate plus deferred)
+deferred_diamonds_per_son,1,,Maximum number of deferred diamond items per son
+immediate_tax_weight,1.0,,Weight applied to imbalance in immediate inheritance values
+total_tax_weight,0.2,,Weight applied to imbalance in total inheritance values

@@ -1,0 +1,1 @@
+Haus Toys can manufacture and sell toy trucks, toy airplanes, toy boats, and toy trains. The goal is to determine how many types of toys Haus Toys should manufacture to maximize profits. Please refer to the corresponding CSV files in the data folder for specific parameter values.

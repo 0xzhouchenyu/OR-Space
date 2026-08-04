@@ -1,0 +1,1 @@
+A person has a certain amount of funds and several investment options available over the next three years. The goal is to determine an investment plan that maximizes the total principal and interest at the end of the third year. Please refer to the corresponding CSV files in the data folder for specific parameter values.

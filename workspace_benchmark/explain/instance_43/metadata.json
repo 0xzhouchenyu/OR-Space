@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_043",
+  "instance_number": 43,
+  "source_revise_instance": "IndustryOR_43_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain exactly how the business rule “using both warehouses on the same day now costs 700 yuan once for the shared dispatch closeout” is implemented and why it raises the optimal integer objective from 6800 to 16500 even though the truck counts remain `trucks_from_A = 10` and `trucks_from_B = 30`. Your answer must name the code variables and linking constraints that force this fee, cite the exact CSV column names and parameter values for the 700-yuan reconciliation fee and the warehouse-B overflow gate, and use the LP-relaxation diagnostics to identify which constraints are binding/nonbinding (including slack/dual values for `_C2`, `_C3`, and `_C6`) and interpret their business meaning. Finally, compare original vs revised code and pinpoint the exact added objective terms/constraints responsible for the 9700 cost increase, including why the LP shadow prices cannot be linearly extrapolated to predict the mixed-integer revised cost change."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MinFreightCost.gurobi.log",
+        "MinFreightCost.lp_relaxation.json",
+        "MinFreightCost.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MinFreightFixedOverflowCost.gurobi.log",
+        "MinFreightFixedOverflowCost.lp_relaxation.json",
+        "MinFreightFixedOverflowCost.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 77.027778
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "solver": "gurobi",
+  "model_name": "Container_Transportation_Trucks_v2_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 904590.0,
+  "runtime": 0.0002810955047607422,
+  "variables": {
+    "t3_Lamezia_Ancona": {
+      "value": -0.0,
+      "reduced_cost": 18600.0
+    },
+    "t3_Lamezia_Bari": {
+      "value": 1.5,
+      "reduced_cost": 0.0
+    },
+    "t3_Lamezia_Genoa": {
+      "value": -0.0,
+      "reduced_cost": 24900.0
+    },
+    "t3_Lamezia_Naples": {
+      "value": 13.5,
+      "reduced_cost": 0.0
+    },
+    "t3_Lamezia_Venice": {
+      "value": -0.0,
+      "reduced_cost": 28800.0
+    },
+    "t3_Perugia_Ancona": {
+      "value": -0.0,
+      "reduced_cost": 300.0
+    },
+    "t3_Perugia_Bari": {
+      "value": -0.0,
+      "reduced_cost": 33240.0
+    },
+    "t3_Perugia_Genoa": {
+      "value": 3.5,
+      "reduced_cost": 0.0
+    },
+    "t3_Perugia_Naples": {
+      "value": -0.0,
+      "reduced_cost": 17100.0
+    },
+    "t3_Perugia_Venice": {
+      "value": 2.5,
+      "reduced_cost": 0.0
+    },
+    "t3_Pescara_Ancona": {
+      "value": 12.0,
+      "reduced_cost": 0.0
+    },
+    "t3_Pescara_Bari": {
+      "value": -0.0,
+      "reduced_cost": 15840.0
+    },
+    "t3_Pescara_Genoa": {
+      "value": -0.0,
+      "reduced_cost": 16800.0
+    },
+    "t3_Pescara_Naples": {
+      "value": -0.0,
+      "reduced_cost": 9000.0
+    },
+    "t3_Pescara_Venice": {
+      "value": -0.0,
+      "reduced_cost": 6900.0
+    },
+    "t3_Rome_Ancona": {
+      "value": 0.5,
+      "reduced_cost": 0.0
+    },
+    "t3_Rome_Bari": {
+      "value": -0.0,
+      "reduced_cost": 16140.0
+    },
+    "t3_Rome_Genoa": {
+      "value": 6.5,
+      "reduced_cost": 0.0
+    },
+    "t3_Rome_Naples": {
+      "value": 3.0,
+      "reduced_cost": 0.0
+    },
+    "t3_Rome_Venice": {
+      "value": -0.0,
+      "reduced_cost": 3900.0
+    },
+    "t3_Taranto_Ancona": {
+      "value": -0.0,
+      "reduced_cost": 21060.0
+    },
+    "t3_Taranto_Bari": {
+      "value": 9.0,
+      "reduced_cost": 0.0
+    },
+    "t3_Taranto_Genoa": {
+      "value": -0.0,
+      "reduced_cost": 35460.0
+    },
+    "t3_Taranto_Naples": {
+      "value": -0.0,
+      "reduced_cost": 10260.0
+    },
+    "t3_Taranto_Venice": {
+      "value": -0.0,
+      "reduced_cost": 27660.0
+    },
+    "t3_Verona_Ancona": {
+      "value": -0.0,
+      "reduced_cost": 25200.0
+    },
+    "t3_Verona_Bari": {
+      "value": -0.0,
+      "reduced_cost": 58740.0
+    },
+    "t3_Verona_Genoa": {
+      "value": -0.0,
+      "reduced_cost": 8100.0
+    },
+    "t3_Verona_Naples": {
+      "value": -0.0,
+      "reduced_cost": 50700.0
+    },
+    "t3_Verona_Venice": {
+      "value": 5.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -15060.0
+    },
+    "_C2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -8310.0
+    },
+    "_C3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -4560.0
+    },
+    "_C4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -8460.0
+    },
+    "_C5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7140.0
+    },
+    "_C6": {
+      "sense": "<",
+      "slack": 10.0,
+      "dual_value": 0.0
+    },
+    "_C7": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 19710.0
+    },
+    "_C8": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 18510.0
+    },
+    "_C9": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 13110.0
+    },
+    "_C10": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 11160.0
+    },
+    "_C11": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 9990.0
+    }
+  }
+}

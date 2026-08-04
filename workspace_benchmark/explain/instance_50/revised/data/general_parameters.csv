@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+warehouse_capacity,500,units,Maximum warehouse capacity
+initial_stock,200,units,Stock at the end of June
+fixed_order_cost,500,dollars,Fixed cost incurred if any purchase is made in a month
+august_bulk_order_threshold,300,units,August order volume that can be handled by the ordinary receiving slot
+august_bulk_receiving_fee,1000,dollars,One-time receiving cost if August purchases exceed the ordinary slot

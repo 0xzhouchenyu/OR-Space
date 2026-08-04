@@ -1,0 +1,9 @@
+Parameter_Name,Value,Unit,Context_Description
+min_coal_yard_A,80,tons,Minimum monthly dispatch requirement for coal yard A
+min_coal_yard_B_adjusted,55,tons,Adjusted minimum monthly dispatch requirement for coal yard B during temporary route suspension
+residential_area_1_demand,55,tons,Monthly coal demand for residential area 1
+residential_area_2_demand,75,tons,Monthly coal demand for residential area 2
+residential_area_3_demand,50,tons,Monthly coal demand for residential area 3
+min_share_area3_from_A,0.7,fraction,Minimum share of residential area 3 demand that must be supplied by coal yard A
+area3_A_staging_threshold,40,tons,Residential Area 3 tonnage from Coal Yard A that fits the ordinary staging lane
+area3_A_excess_staging_cost,3,cost_per_ton,Extra handling cost for each ton from Coal Yard A to Area 3 above the ordinary staging lane

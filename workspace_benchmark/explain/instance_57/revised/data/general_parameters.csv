@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+standard_width_1,1,meters,Standard width of rolls produced by the mill
+standard_width_2,2,meters,Standard width of rolls produced by the mill
+pattern_setup_penalty,300,sq_meters,Penalty area added for each unique cutting pattern used
+wide_roll_threshold_width,2,meters,Standard roll width at which the extra edge-trim allowance applies
+wide_roll_extra_setup_penalty,80,sq_meters,Additional setup-equivalent waste for each used pattern on a wide standard roll

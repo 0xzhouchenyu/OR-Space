@@ -1,0 +1,102 @@
+\section*{Sets and Indices}
+
+\[
+T=\{7,8,9,10,11,12\}
+\]
+set of months (code/data field: \texttt{Month}), ordered chronologically.
+
+For each month \(t\in T\), let \(\operatorname{pred}(t)\) denote the previous month in this order; for \(t=7\), the predecessor stock is the given initial stock.
+
+\section*{Parameters}
+
+\begin{align*}
+C^{\text{wh}} & \quad \text{warehouse capacity (data: \texttt{warehouse\_capacity})},\\
+I_0 & \quad \text{initial stock at the end of June (data: \texttt{initial\_stock})},\\
+F & \quad \text{fixed order cost incurred if any purchase is made in a month (data: \texttt{fixed\_order\_cost})},\\
+\theta^{\text{Aug}} & \quad \text{August ordinary receiving limit (data: \texttt{august\_bulk\_order\_threshold})},\\
+G^{\text{Aug}} & \quad \text{one-time August receiving fee if the limit is crossed (data: \texttt{august\_bulk\_receiving\_fee})},\\
+c_t^{\text{buy}} & \quad \text{unit purchase price in month \(t\) (data field: \texttt{Buy})},\\
+c_t^{\text{sell}} & \quad \text{unit selling price in month \(t\) (data field: \texttt{Sell})}.
+\end{align*}
+
+In this instance, the implementation uses \(C^{\text{wh}}\) itself as the big-\(M\) constant in the purchase-activation constraints.
+
+\section*{Decision Variables}
+
+For each \(t\in T\):
+\begin{align*}
+b_t &\ge 0 \qquad \text{quantity purchased in month \(t\) (code: \texttt{buy[t]}),}\\
+s_t &\ge 0 \qquad \text{quantity sold in month \(t\) (code: \texttt{sell[t]}),}\\
+I_t &\in [0,C^{\text{wh}}] \qquad \text{end-of-month stock in month \(t\) (code: \texttt{stock[t]}),}\\
+y_t &\in \{0,1\} \qquad \text{purchase indicator for month \(t\) (code: \texttt{buy\_bin[t]}).}
+\end{align*}
+
+Additionally,
+\[
+z^{\text{Aug}} \in \{0,1\}
+\qquad
+\text{August bulk-receiving indicator (code: \texttt{august\_bulk}).}
+\]
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \sum_{t\in T}\left(c_t^{\text{sell}} s_t - c_t^{\text{buy}} b_t - F y_t\right) - G^{\text{Aug}} z^{\text{Aug}}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Inventory balance.}
+For \(t=7\):
+\[
+I_7 = I_0 + b_7 - s_7.
+\]
+
+For each \(t\in T\setminus\{7\}\):
+\[
+I_t = I_{\operatorname{pred}(t)} + b_t - s_t.
+\]
+
+\paragraph{Warehouse capacity immediately after purchasing.}
+For \(t=7\):
+\[
+I_0 + b_7 \le C^{\text{wh}}.
+\]
+
+For each \(t\in T\setminus\{7\}\):
+\[
+I_{\operatorname{pred}(t)} + b_t \le C^{\text{wh}}.
+\]
+
+\paragraph{Monthly fixed-order gate.}
+For each \(t\in T\):
+\[
+b_t \le C^{\text{wh}}\, y_t.
+\]
+
+This enforces \(y_t=1\) whenever \(b_t>0\), thereby charging the fixed order cost only when a positive purchase occurs.
+
+\paragraph{August bulk-receiving gate.}
+For month \(t=8\):
+\[
+b_8 \le \theta^{\text{Aug}} + C^{\text{wh}}\, z^{\text{Aug}}.
+\]
+
+Hence, if \(b_8 \le \theta^{\text{Aug}}\), then \(z^{\text{Aug}}\) may remain \(0\); if \(b_8 > \theta^{\text{Aug}}\), the model must set \(z^{\text{Aug}}=1\) and incur the one-time fee \(G^{\text{Aug}}\).
+
+\paragraph{Domains.}
+\[
+b_t \ge 0,\quad s_t \ge 0,\quad 0\le I_t \le C^{\text{wh}},\quad y_t\in\{0,1\}\qquad \forall t\in T,
+\]
+\[
+z^{\text{Aug}} \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The source code formulates and solves this model as a mixed-integer linear program with Gurobi through PuLP-compatible wrappers.
+
+The August rule is implemented as a binary gate, not as a proportional surcharge: exceeding \texttt{august\_bulk\_order\_threshold} in August activates the binary variable \texttt{august\_bulk} and subtracts the one-time fee \texttt{august\_bulk\_receiving\_fee} in the objective. This matches the business description of a threshold-triggered receiving slot.
+
+No explicit demand bounds, sales caps, or terminal stock requirements are imposed in the code. Sales are limited only indirectly through the inventory-balance equations and nonnegativity of stock. The warehouse logic is also exactly as coded: there is both an upper bound on end-of-month stock \(I_t\) and a separate constraint limiting inventory immediately after buying and before selling.

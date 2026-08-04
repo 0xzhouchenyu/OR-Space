@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_024",
+  "instance_number": 24,
+  "source_revise_instance": "IndustryOR_24_revise_business",
+  "domain": "Transportation_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Transportation_Planning",
+    "question": "In the revised model, explain exactly why the optimal objective drops from 1000 to 800 even though the business brief adds destination-by-day structure and a new gate rule. Trace the change through the code by naming the original variable/constraint (`x_truck`, `Min_Truck_Trips`) and the revised replacements (`x_truck[sp][d]`, `Min_Total_Truck_Trips`, `z_mode[sp][d]` / `exclusive_mode_sp`), and tie them to the exact `general_parameters.csv` fields and values, especially `min_truck_trips` and `max_total_pollution`, plus the sales-point share fields. Then use the LP-relaxation diagnostics to identify which original and revised constraints are binding or slack, interpret the shadow price on the truck-minimum constraint in business terms, and explain why that marginal value cannot be linearly extrapolated after the revision with the binary mode gate and per-sales-point/day structure."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Transportation_Pollution_Minimization.gurobi.log",
+        "Transportation_Pollution_Minimization.lp_relaxation.json",
+        "Transportation_Pollution_Minimization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Transportation_Pollution_Minimization_SP_Mode.gurobi.log",
+        "Transportation_Pollution_Minimization_SP_Mode.lp_relaxation.json",
+        "Transportation_Pollution_Minimization_SP_Mode.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 65.243889
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 3160500.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nJuly Product_I: produce=30000, inv=0, demand=30000\nJuly Product_II: produce=15000, inv=0, demand=15000\n  Own WH: 0, Ext WH: 0\nAugust Product_I: produce=45000, inv=15000, demand=30000\nAugust Product_II: produce=15000, inv=0, demand=15000\n  Own WH: 3000, Ext WH: 0\nSeptember Product_I: produce=105000, inv=90000, demand=30000\nSeptember Product_II: produce=15000, inv=0, demand=15000\n  Own WH: 15000, Ext WH: 3000\nOctober Product_I: produce=70000, inv=60000, demand=100000\nOctober Product_II: produce=50000, inv=0, demand=50000\n  Own WH: 12000, Ext WH: 0\nNovember Product_I: produce=70000, inv=30000, demand=100000\nNovember Product_II: produce=50000, inv=0, demand=50000\n  Own WH: 6000, Ext WH: 0\nDecember Product_I: produce=70000, inv=0, demand=100000\nDecember Product_II: produce=50000, inv=0, demand=50000\n  Own WH: 0, Ext WH: 0\nOBJECTIVE_VALUE: 3160500.0\n",
+  "stderr": "",
+  "error": null
+}

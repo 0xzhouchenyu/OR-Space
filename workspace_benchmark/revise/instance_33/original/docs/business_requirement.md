@@ -1,0 +1,1 @@
+A wealthy noble passed away, leaving an inheritance consisting of various valuable items. The inheritance must be shared between two sons. The goal is to formulate a mathematical program and solve it using COPTPY to minimize the difference in value between the two parts. Please refer to the corresponding CSV files in the data folder for specific parameter values.

@@ -1,0 +1,10 @@
+{
+  "instance_id": "IndustryOR_39",
+  "difficulty": "Easy",
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 72.222222
+  }
+}

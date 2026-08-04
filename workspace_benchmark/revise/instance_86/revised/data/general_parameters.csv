@@ -1,0 +1,12 @@
+Parameter_Name,Value,Unit,Context_Description
+max_grains,400000,lbs,Maximum monthly availability of grains
+price_per_lb_grains,0.2,USD,Price per pound of grains
+max_meat,300000,lbs,Maximum monthly availability of meat
+price_per_lb_meat,0.5,USD,Price per pound of meat
+line_fixed_cost,8000,USD,One-time monthly charge for the co-packing line if used
+line_capacity_packs,120000,packs,Total monthly throughput limit on the shared co-packing line when active
+min_batch_packs,20000,packs,Minimum combined production if line is active
+min_yummies,15000,packs,Contractual minimum monthly Yummies production if line is active
+retailer_rebate_yummies_threshold,50000,packs,Yummies shelf-reset threshold for the fixed allowance
+retailer_rebate_min_meaties,40000,packs,Meaties pairing threshold for the fixed allowance
+retailer_rebate_fixed,12000,USD,Fixed shelf-reset allowance when both product thresholds are met

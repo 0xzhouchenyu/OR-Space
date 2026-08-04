@@ -1,0 +1,137 @@
+\section*{Sets and Indices}
+
+Let
+\[
+M = \{A,B,C\}
+\]
+be the set of manufacturers.
+
+No additional indexing sets are used in the implementation.
+
+\section*{Parameters}
+
+For each manufacturer \(m \in M\):
+\begin{itemize}
+    \item \(c_m\): cost per chair.
+    \item \(q_m\): chairs per order.
+    \item \(U_m\): upper bound on the number of orders, computed in code as
+    \[
+    U_m = \left\lfloor \frac{\texttt{max\_total}}{q_m} \right\rfloor + 1.
+    \]
+\end{itemize}
+
+Using the provided data:
+\[
+c_A = 50,\quad c_B = 45,\quad c_C = 40,
+\]
+\[
+q_A = 15,\quad q_B = 10,\quad q_C = 10.
+\]
+
+Global parameters:
+\begin{itemize}
+    \item \(L\): minimum total chairs required (\texttt{min\_total\_chairs}), with \(L=100\).
+    \item \(U\): maximum total chairs allowed (\texttt{max\_total\_chairs}), with \(U=500\).
+    \item \(r_{BA}\): minimum number of chairs from manufacturer \(B\) if manufacturer \(A\) is used (\texttt{min\_chairs\_B\_if\_A}), with \(r_{BA}=10\).
+    \item \(M^{\text{big}}\): big-\(M\) constant used for linking, defined in code as
+    \[
+    M^{\text{big}} = U + 1 = 501.
+    \]
+\end{itemize}
+
+The order upper bounds used by the code are therefore
+\[
+U_A = \left\lfloor \frac{500}{15} \right\rfloor + 1 = 34,\qquad
+U_B = \left\lfloor \frac{500}{10} \right\rfloor + 1 = 51,\qquad
+U_C = \left\lfloor \frac{500}{10} \right\rfloor + 1 = 51.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_A\) (code: \texttt{x\_A}), \(x_B\) (code: \texttt{x\_B}), \(x_C\) (code: \texttt{x\_C}): integer number of orders placed with manufacturers \(A,B,C\), respectively.
+    \[
+    x_m \in \mathbb{Z}_{\ge 0}, \qquad x_m \le U_m \quad \forall m \in M.
+    \]
+    \item \(y_A\) (code: \texttt{y\_A}), \(y_B\) (code: \texttt{y\_B}), \(y_C\) (code: \texttt{y\_C}): binary indicators equal to 1 if the corresponding manufacturer is used.
+    \[
+    y_m \in \{0,1\} \quad \forall m \in M.
+    \]
+\end{itemize}
+
+The code also defines implied chair quantities:
+\[
+\text{chairs}_A = q_A x_A,\qquad \text{chairs}_B = q_B x_B,\qquad \text{chairs}_C = q_C x_C.
+\]
+
+\section*{Objective}
+
+Minimize total purchasing cost:
+\[
+\min \; c_A q_A x_A + c_B q_B x_B + c_C q_C x_C.
+\]
+
+With the given data, this is
+\[
+\min \; 50\cdot 15\,x_A + 45\cdot 10\,x_B + 40\cdot 10\,x_C.
+\]
+
+\section*{Constraints}
+
+Total chairs must lie within the required interval:
+\[
+q_A x_A + q_B x_B + q_C x_C \ge L,
+\]
+\[
+q_A x_A + q_B x_B + q_C x_C \le U.
+\]
+
+Binary--integer linking constraints used in the code:
+\[
+x_A \le M^{\text{big}} y_A,\qquad x_A \ge y_A,
+\]
+\[
+x_B \le M^{\text{big}} y_B,\qquad x_B \ge y_B,
+\]
+\[
+x_C \le M^{\text{big}} y_C,\qquad x_C \ge y_C.
+\]
+
+Dependency from \(A\) to \(B\): if manufacturer \(A\) is used, then at least \(r_{BA}\) chairs must be ordered from \(B\):
+\[
+q_B x_B \ge r_{BA}\, y_A.
+\]
+
+Dependency from \(B\) to \(C\): if manufacturer \(B\) is used, then manufacturer \(C\) must also be used:
+\[
+y_B \le y_C.
+\]
+
+Variable domains:
+\[
+x_A \in \mathbb{Z}_{\ge 0},\; x_B \in \mathbb{Z}_{\ge 0},\; x_C \in \mathbb{Z}_{\ge 0},
+\]
+\[
+x_A \le U_A,\; x_B \le U_B,\; x_C \le U_C,
+\]
+\[
+y_A,y_B,y_C \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The implementation builds this model as a mixed-integer linear program in PuLP and solves it with Gurobi via \texttt{GUROBI\_CMD}. The linking formulation is exactly as coded: both
+\[
+x_m \le M^{\text{big}} y_m
+\quad\text{and}\quad
+x_m \ge y_m
+\]
+are imposed for each manufacturer \(m\), so \(y_m=1\) forces at least one order, and \(x_m=0\) forces \(y_m=0\).
+
+The chair quantities \(\text{chairs}_A,\text{chairs}_B,\text{chairs}_C\) are not separate optimization variables in the code; they are linear expressions \(q_m x_m\). The objective uses cost per chair multiplied by these expressions, so the effective cost per order is \(c_m q_m\).
+
+The upper bounds \(U_A,U_B,U_C\) are taken directly from the code logic
+\[
+\left\lfloor \frac{U}{q_m} \right\rfloor + 1,
+\]
+even though the total-chair bound already limits feasible orders.

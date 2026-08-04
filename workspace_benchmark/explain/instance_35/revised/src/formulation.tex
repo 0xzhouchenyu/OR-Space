@@ -1,0 +1,153 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $B$: set of batches. For this instance, $B=\{1,2,3,4,5\}$.
+    \item $V$: set of vats, indexed in process order. For this instance, $V=\{1,2,3\}$.
+    \item $T$: set of discrete time periods, $T=\{1,\dots,\textit{planning\_horizon\_T}\}=\{1,\dots,15\}$.
+    \item $P \subseteq T$: peak-tariff periods. Here $P=\{6,7,8\}$.
+    \item For each $(b,v)\in B\times V$, feasible start periods
+    \[
+    S_{bv}=\{\,t\in T : t \le H_{bv}\,\},
+    \]
+    further restricted for Vat 2 by the maintenance blackout:
+    \[
+    S_{b2}=\{\,t\in T : t \le H_{b2},\ \{t,\dots,t+p_{b2}-1\}\cap\{4,5\}=\emptyset\,\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $p_{bv}$: integer processing time of batch $b$ on vat $v$, obtained from \texttt{table\_1.csv} and rounded up by $\lceil \cdot \rceil$ as in the code.
+    
+    For this instance:
+    \[
+    \begin{aligned}
+    &(p_{1,1},p_{1,2},p_{1,3})=(3,1,1),\\
+    &(p_{2,1},p_{2,2},p_{2,3})=(2,2,1),\\
+    &(p_{3,1},p_{3,2},p_{3,3})=(3,2,2),\\
+    &(p_{4,1},p_{4,2},p_{4,3})=(2,2,2),\\
+    &(p_{5,1},p_{5,2},p_{5,3})=(3,2,3).
+    \end{aligned}
+    \]
+    \item $H_{bv}=\textit{planning\_horizon\_T}-p_{bv}+1$: latest start period allowed by the finite horizon.
+    \item $c_v$: base energy cost per active period for vat $v$:
+    \[
+    c_1=\texttt{energy\_cost\_v1}=1.0,\quad
+    c_2=\texttt{energy\_cost\_v2}=1.2,\quad
+    c_3=\texttt{energy\_cost\_v3}=1.5.
+    \]
+    \item $\alpha=\texttt{peak\_energy\_multiplier}=2.0$: multiplier applied in peak periods.
+    \item $\Gamma=\texttt{peak\_energy\_cap}=30.0$: cap on tariff-weighted peak-period energy use.
+    \item $w_M=\texttt{makespan\_weight}=1.0$.
+    \item $w_E=\texttt{energy\_weight}=0.5$.
+\end{itemize}
+
+Define the period-specific energy coefficient
+\[
+e_{vt}=
+\begin{cases}
+c_v\alpha, & t\in P,\\
+c_v, & t\notin P.
+\end{cases}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{bvt}$ (code: \texttt{x[(b,v,t)]}) $\in \{0,1\}$ for $(b,v)\in B\times V$, $t\in S_{bv}$: equals 1 if batch $b$ starts on vat $v$ in period $t$.
+    \item $y_{vt}$ (code: \texttt{y[(v,t)]}) $\in \{0,1\}$ for $(v,t)\in V\times T$: equals 1 if vat $v$ is active in period $t$.
+    \item $C_{bv}$ (code: \texttt{C[(b,v)]}) $\ge 0$: completion period of batch $b$ on vat $v$.
+    \item $M$ (code: \texttt{M}) $\ge 0$: makespan.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the weighted sum of makespan and total energy cost:
+\[
+\min \quad w_M M + w_E \sum_{v\in V}\sum_{t\in T} e_{vt}\, y_{vt}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Unique start on each vat.}
+Each batch is assigned exactly one start period on each vat:
+\[
+\sum_{t\in S_{bv}} x_{bvt} = 1
+\qquad \forall b\in B,\ \forall v\in V.
+\]
+
+\paragraph{Vat capacity.}
+At most one batch may occupy a vat in any period:
+\[
+\sum_{b\in B}\ \sum_{\substack{s\in S_{bv}:\\ s \le t \le s+p_{bv}-1}} x_{bvs} \le 1
+\qquad \forall v\in V,\ \forall t\in T.
+\]
+
+\paragraph{Definition/linking of activity indicators.}
+If any batch is scheduled on vat $v$ in period $t$, then the vat must be marked active:
+\[
+\sum_{b\in B}\ \sum_{\substack{s\in S_{bv}:\\ s \le t \le s+p_{bv}-1}} x_{bvs} \le y_{vt}
+\qquad \forall v\in V,\ \forall t\in T.
+\]
+Since $y_{vt}$ is binary, together with the capacity constraints this makes $y_{vt}=1$ whenever vat $v$ is occupied in period $t$. If no start variable can cover period $t$ on vat $v$, the implementation fixes
+\[
+y_{vt}=0.
+\]
+
+\paragraph{Completion-time definition.}
+Completion periods are defined from the chosen start:
+\[
+C_{bv}=\sum_{t\in S_{bv}} (t+p_{bv}-1)\,x_{bvt}
+\qquad \forall b\in B,\ \forall v\in V.
+\]
+
+\paragraph{Stage precedence with same-index handoff convention.}
+For each batch, processing on vat $v$ must follow vat $v-1$:
+\[
+C_{bv}-C_{b,v-1} \ge p_{bv}
+\qquad \forall b\in B,\ \forall v\in V\setminus\{1\}.
+\]
+Given the completion definition above, this is equivalent to
+\[
+\text{start}_{bv} \ge \text{start}_{b,v-1}+p_{b,v-1},
+\]
+which matches the code's same-index completion/start convention.
+
+\paragraph{Maintenance blackout on Vat 2.}
+No Vat 2 start variable is created if its occupied periods would intersect periods 4 or 5. Equivalently,
+\[
+x_{b,2,t}=0
+\qquad \forall b\in B,\ \forall t \notin S_{b2}.
+\]
+Thus any Vat 2 run must either finish by period 3 or start no earlier than period 6.
+
+\paragraph{Makespan definition.}
+The makespan is at least every batch's completion on the last vat:
+\[
+M \ge C_{b,3}
+\qquad \forall b\in B.
+\]
+
+\paragraph{Peak-energy cap.}
+Tariff-weighted energy use in peak periods is limited by
+\[
+\sum_{v\in V}\sum_{t\in P} c_v\alpha\, y_{vt} \le \Gamma.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model implemented in \texttt{current\_heuristic.py} is a time-indexed binary MILP solved with Gurobi through a PuLP-compatible interface.
+    \item Feasible start periods are generated explicitly. In particular, for Vat 2, any start whose occupied interval overlaps periods 4--5 is omitted rather than represented by a separate linear blackout constraint.
+    \item The activity variables $y_{vt}$ are only constrained by
+    \[
+    \sum x_{bvs} \le y_{vt},
+    \]
+    plus binary bounds. There is no reverse inequality $y_{vt}\le \sum x_{bvs}$. Because energy cost coefficients are positive, minimization drives $y_{vt}$ to 0 whenever possible, so in optimal MILP solutions they coincide with occupancy.
+    \item Although the MILP above is what the solver call receives, the script then overwrites the solver-reported objective and prints a hard-coded policy reference value:
+    \[
+    \texttt{OBJECTIVE\_VALUE} = 34.75.
+    \]
+    The printed value therefore does not necessarily equal the optimum of the stated MILP.
+\end{itemize}

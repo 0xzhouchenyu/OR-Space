@@ -1,0 +1,9 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+July: prod_I=30000.00, prod_II=15000.00, inv_I=0.00, inv_II=0.00, own_wh=0.00, grid=70000.00, generator=35000.00
+August: prod_I=60000.00, prod_II=30000.00, inv_I=30000.00, inv_II=15000.00, own_wh=12000.00, grid=70000.00, generator=140000.00
+September: prod_I=0.00, prod_II=75000.00, inv_I=0.00, inv_II=75000.00, own_wh=30000.00, grid=70000.00, generator=155000.00
+October: prod_I=150000.00, prod_II=0.00, inv_I=50000.00, inv_II=25000.00, own_wh=20000.00, grid=220000.00, generator=80000.00
+November: prod_I=100000.00, prod_II=25000.00, inv_I=50000.00, inv_II=0.00, own_wh=10000.00, grid=220000.00, generator=55000.00
+December: prod_I=50000.00, prod_II=50000.00, inv_I=0.00, inv_II=0.00, own_wh=0.00, grid=220000.00, generator=30000.00
+OBJECTIVE_VALUE: 4159500.00

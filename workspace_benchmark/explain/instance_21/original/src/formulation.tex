@@ -1,0 +1,109 @@
+\section*{Sets and Indices}
+
+Let the supplier set be
+\[
+S=\{A,B,C\}.
+\]
+No additional indexing sets are used in the implementation.
+
+\section*{Parameters}
+
+For each supplier \(s\in S\):
+\begin{itemize}
+    \item \(c_s\): cost per table from supplier \(s\).
+    \item \(q_s\): number of tables in one order from supplier \(s\).
+\end{itemize}
+
+Using the provided data:
+\[
+c_A=120,\quad c_B=110,\quad c_C=100,
+\]
+\[
+q_A=20,\quad q_B=15,\quad q_C=15.
+\]
+
+Global parameters:
+\begin{itemize}
+    \item \(L\) (code: \texttt{min\_tables}): minimum total number of tables required, \(L=150\).
+    \item \(U\) (code: \texttt{max\_tables}): maximum total number of tables allowed, \(U=600\).
+    \item \(R_{BA}\) (code: \texttt{min\_b\_if\_a}): minimum number of tables from supplier \(B\) if supplier \(A\) is used, \(R_{BA}=30\).
+    \item \(\delta_{BC}\) (code: \texttt{b\_requires\_c}): indicator for whether using supplier \(B\) requires using supplier \(C\); here \(\delta_{BC}=1\).
+    \item \(M\) (code: \texttt{M}): big-\(M\) constant used to link order and activation variables, \(M=1000\).
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_A\) (code: \texttt{x\_a} / \texttt{orders\_a}): integer number of orders placed with supplier \(A\).
+    \item \(x_B\) (code: \texttt{x\_b} / \texttt{orders\_b}): integer number of orders placed with supplier \(B\).
+    \item \(x_C\) (code: \texttt{x\_c} / \texttt{orders\_c}): integer number of orders placed with supplier \(C\).
+    \item \(y_A\) (code: \texttt{y\_a}): binary variable equal to 1 if supplier \(A\) is used.
+    \item \(y_B\) (code: \texttt{y\_b}): binary variable equal to 1 if supplier \(B\) is used.
+\end{itemize}
+
+Domains:
+\[
+x_A,x_B,x_C \in \mathbb{Z}_{\ge 0},\qquad y_A,y_B\in\{0,1\}.
+\]
+
+\section*{Objective}
+
+Minimize total purchasing cost:
+\[
+\min \; c_A q_A x_A + c_B q_B x_B + c_C q_C x_C.
+\]
+
+With the instance data, this is
+\[
+\min \; 120\cdot 20\,x_A + 110\cdot 15\,x_B + 100\cdot 15\,x_C.
+\]
+
+\section*{Constraints}
+
+Total number of tables must lie within the allowed range:
+\[
+q_A x_A + q_B x_B + q_C x_C \ge L,
+\]
+\[
+q_A x_A + q_B x_B + q_C x_C \le U.
+\]
+
+Binary--integer linking for supplier \(A\):
+\[
+x_A \le M y_A,
+\]
+\[
+x_A \ge y_A.
+\]
+
+Binary--integer linking for supplier \(B\):
+\[
+x_B \le M y_B,
+\]
+\[
+x_B \ge y_B.
+\]
+
+If supplier \(A\) is used, then at least \(R_{BA}\) tables must be ordered from supplier \(B\):
+\[
+q_B x_B \ge R_{BA}\, y_A.
+\]
+
+If supplier \(B\) is used, then supplier \(C\) must also be used:
+\[
+x_C \ge y_B,
+\]
+since \(\delta_{BC}=1\) in this instance and the code adds this constraint conditionally only when that parameter is nonzero.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model uses integer numbers of \emph{orders}, not direct table quantities. Table totals are therefore \(q_s x_s\).
+    \item The objective multiplies the cost per table by the order size and then by the number of orders, exactly as
+    \[
+    c_s q_s x_s.
+    \]
+    \item Activation binaries are created only for suppliers \(A\) and \(B\). There is no binary variable for supplier \(C\); the logic ``\(B\) requires \(C\)'' is implemented as \(x_C \ge y_B\), which forces at least one order from \(C\) whenever \(B\) is used.
+    \item The lower linking constraints \(x_A \ge y_A\) and \(x_B \ge y_B\) ensure that if a binary is 1 then at least one corresponding order is placed; together with \(x_A \le M y_A\) and \(x_B \le M y_B\), they make \(y_A\) and \(y_B\) indicate whether suppliers \(A\) and \(B\) are used.
+    \item The model is solved as a mixed-integer linear program using \texttt{GUROBI\_CMD(msg=0)} through the PuLP-compatible interface.
+\end{itemize}

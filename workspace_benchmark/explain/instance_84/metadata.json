@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_084",
+  "instance_number": 84,
+  "source_revise_instance": "IndustryOR_84_revise_business",
+  "domain": "Workforce_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Workforce_Planning",
+    "question": "In the revised role-based model, explain exactly why the objective increased from 23000.0 to 25000.0 even though the hired people stayed B and D. You must trace the added cost term from the business brief phrase about managers through the exact `general_parameters.csv` field name and value, the code variables `y_manager[name]` / `x[name]`, and the specific linking and manager-count constraints that force B to be a manager rather than a specialist; then use the LP-relaxation slacks/dual values to identify which revised constraints are binding and interpret their business marginal values. Finally, explain why you cannot linearly extrapolate those shadow prices to larger changes in the manager requirements, referring to the binary role assignment structure and the one-way directionality note in the revised brief."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Recruitment.gurobi.log",
+        "Recruitment.lp_relaxation.json",
+        "Recruitment.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Recruitment_Role_Based.gurobi.log",
+        "Recruitment_Role_Based.lp_relaxation.json",
+        "Recruitment_Role_Based.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 66.46
+  }
+}

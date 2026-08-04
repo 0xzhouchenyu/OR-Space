@@ -1,0 +1,76 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $F$: set of available feed types, indexed by $f$.
+    \item In this instance, $F=\{1,2,3,4,5\}$, corresponding to the \texttt{Feed} column in \texttt{table\_1.csv}.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $c_f$: price per kg of feed $f$ (code data field: \texttt{Price\_Y\_per\_kg}).
+    \item $p_f$: protein content of feed $f$ in grams per kg (code data field: \texttt{Protein\_g}).
+    \item $m_f$: mineral content of feed $f$ in grams per kg (code data field: \texttt{Minerals\_g}).
+    \item $v_f$: vitamin content of feed $f$ in mg per kg (code data field: \texttt{Vitamins\_mg}).
+    \item $P^{\min}$: minimum daily protein requirement in grams (code: \texttt{min\_protein}); here $P^{\min}=700$.
+    \item $M^{\min}$: minimum daily minerals requirement in grams (code: \texttt{min\_minerals}); here $M^{\min}=30$.
+    \item $V^{\min}$: minimum daily vitamins requirement in mg (code: \texttt{min\_vitamins}); here $V^{\min}=100$.
+\end{itemize}
+
+Using the CSV data, the feed-specific parameters are:
+\[
+\begin{array}{c|ccccc}
+f & 1 & 2 & 3 & 4 & 5\\
+\hline
+p_f & 3 & 2 & 1 & 6 & 18\\
+m_f & 1 & 0.5 & 0.2 & 2 & 0.5\\
+v_f & 0.5 & 1 & 0.2 & 2 & 0.8\\
+c_f & 0.2 & 0.7 & 0.4 & 0.3 & 0.8
+\end{array}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_f \ge 0$: amount of feed $f$ to use, in kg (code: \texttt{x[f]}).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total feed cost:
+\[
+\min \sum_{f \in F} c_f x_f.
+\]
+
+For this instance,
+\[
+\min \; 0.2x_1 + 0.7x_2 + 0.4x_3 + 0.3x_4 + 0.8x_5.
+\]
+
+\section*{Constraints}
+
+Nutritional requirements must be satisfied:
+
+\begin{align*}
+\sum_{f \in F} p_f x_f &\ge P^{\min} &&\text{(protein requirement)},\\
+\sum_{f \in F} m_f x_f &\ge M^{\min} &&\text{(minerals requirement)},\\
+\sum_{f \in F} v_f x_f &\ge V^{\min} &&\text{(vitamins requirement)},\\
+x_f &\ge 0 \qquad \forall f \in F. &&\text{(nonnegativity)}
+\end{align*}
+
+For this instance, explicitly:
+\begin{align*}
+3x_1 + 2x_2 + x_3 + 6x_4 + 18x_5 &\ge 700,\\
+x_1 + 0.5x_2 + 0.2x_3 + 2x_4 + 0.5x_5 &\ge 30,\\
+0.5x_1 + x_2 + 0.2x_3 + 2x_4 + 0.8x_5 &\ge 100,\\
+x_1,x_2,x_3,x_4,x_5 &\ge 0.
+\end{align*}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code builds exactly the continuous linear program above using PuLP-compatible syntax and solves it with \texttt{GUROBI\_CMD(msg=0)}.
+    \item Variables are continuous and nonnegative; there are no integrality, upper-bound, blending-ratio, or logical constraints.
+    \item The parameter names in the code are \texttt{min\_protein}, \texttt{min\_minerals}, and \texttt{min\_vitamins}, loaded from \texttt{general\_parameters.csv}.
+    \item Feed indices are taken directly from the \texttt{Feed} column and used as keys in the variable dictionary \texttt{x}.
+\end{itemize}

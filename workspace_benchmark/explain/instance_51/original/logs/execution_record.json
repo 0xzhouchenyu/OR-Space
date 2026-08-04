@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 4240.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nShift 0: Regular=10, Contract=0\nShift 1: Regular=11, Contract=0\nShift 2: Regular=14, Contract=0\nShift 3: Regular=6, Contract=0\nShift 4: Regular=12, Contract=0\nShift 5: Regular=0, Contract=0\nOBJECTIVE_VALUE: 4240.0\n",
+  "stderr": "",
+  "error": null
+}

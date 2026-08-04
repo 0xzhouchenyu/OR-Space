@@ -1,0 +1,7 @@
+A certain restaurant operates around the clock, and the number of waiters needed in 24 hours is specified in the corresponding CSV files. Each waiter works continuously for 8 hours a day. The goal is to find the minimum number of waiters that meet the specified conditions and represent this problem as a linear programming model. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the site coordinator framed the change in business terms rather than as a spreadsheet checklist. The risk review no longer accepts a plan that is only good in the central case. The same front-office choices have to make sense across the cases in the data pack, while the case-specific consequences settle afterward. Restaurant HR now treats a compliant waiter tour as one 8-hour block made of two adjacent 4-hour windows, with one peak window and one off-peak window. Coverage in every 4-hour window must still meet the demand floor, total staffing spend must stay within `waiter_budget`, and the schedule is judged by the resulting `service_quality_score`. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

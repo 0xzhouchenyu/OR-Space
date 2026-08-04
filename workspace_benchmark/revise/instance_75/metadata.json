@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_75_revise_business",
+  "original_instance_id": "IndustryOR_75",
+  "revise_description": "In the stakeholder handoff for this case, the risk reviewer framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The chemical plant now faces a safety rule on high-throughput operation and disposable byproduct C. At most one reaction stage may use the high-throughput setting in the period, and disposal of C follows the threshold `threshold_c` before the higher disposal burden applies. Product A and B output still competes for the two process stages. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+2var, +4constr, mod_4constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 2,
+        "-variable": 0,
+        "+constraint": 4,
+        "-constraint": 0,
+        "modify_constraint": 4,
+        "modify_data": 1
+      },
+      "op_count": 11,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 88.888889
+  }
+}

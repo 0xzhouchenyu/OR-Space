@@ -1,0 +1,21 @@
+Parameter_Name,Value,Unit,Context_Description
+technical_prep_time_A,1,hours,Technical preparation time required per unit of product A
+labor_time_A,10,hours,Direct labor time required per unit of product A
+materials_A,3,kg,Materials required per unit of product A
+technical_prep_time_B,2,hours,Technical preparation time required per unit of product B
+labor_time_B,4,hours,Direct labor time required per unit of product B
+materials_B,2,kg,Materials required per unit of product B
+technical_prep_time_C,1,hours,Technical preparation time required per unit of product C
+labor_time_C,5,hours,Direct labor time required per unit of product C
+materials_C,1,kg,Materials required per unit of product C
+available_technical_prep_time,100,hours,Total available technical preparation time
+available_labor_time,700,hours,Total available regular labor time
+available_materials,400,kg,Total available materials
+overtime_cap_hours,120,hours,Maximum additional overtime labor hours available per period
+overtime_cost_per_hour,0.5,profit_units_per_hour,Cost coefficient subtracted from objective per overtime hour used
+packaging_cap_units,180,packaging_units,Shared packaging line throughput capacity per period
+pack_units_A,2,packaging_units_per_unit,Packaging consumption per unit of product A
+pack_units_B,1,packaging_units_per_unit,Packaging consumption per unit of product B
+pack_units_C,1,packaging_units_per_unit,Packaging consumption per unit of product C
+overtime_second_review_threshold,100,hours,Overtime labor covered by the first workforce review
+overtime_second_review_fee,10,profit_units,One-time burden if overtime labor exceeds the first review threshold

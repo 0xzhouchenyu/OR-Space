@@ -1,0 +1,9 @@
+Parameter_Name,Value,Unit,Context_Description
+profit_per_acre_corn,1500,dollars,Profit per acre for planting corn
+profit_per_acre_wheat,1200,dollars,Profit per acre for planting wheat
+profit_per_acre_soybeans,1800,dollars,Profit per acre for planting soybeans
+profit_per_acre_sorghum,1600,dollars,Profit per acre for planting sorghum
+total_farm_area,100,acres,Total area of Tom and Jerry's farm
+corn_wheat_ratio,2,None,Land area used for planting corn must be at least twice the land area used for planting wheat
+soybeans_sorghum_ratio,0.5,None,Land area used for planting soybeans must be at least half the land area used for planting sorghum
+wheat_sorghum_ratio,3,None,Land area used for planting wheat must be three times the land area used for planting sorghum

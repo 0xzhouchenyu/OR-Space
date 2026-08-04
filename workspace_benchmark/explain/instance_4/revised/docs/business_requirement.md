@@ -1,0 +1,7 @@
+A farmer needs to decide how many cows, sheep, and chickens to raise in order to achieve maximum profit. The farmer must consider selling prices, feed costs, manure production, and constraints related to cleaning capacity, farm size, and customer demand. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the service manager framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The farm can now operate either under its normal daily setup or under the county-approved expanded setup. The expanded setup opens the premium animal program, changes effective capacity and manure burden through `premium_capacity_multiplier` and `premium_manure_multiplier`, uses `expansion_land_increase` beyond `base_land_usage`, and carries the daily charge `expansion_cost`. Premium animals are only credible when the expanded arrangement is actually in use. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

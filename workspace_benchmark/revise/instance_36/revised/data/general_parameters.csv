@@ -1,0 +1,9 @@
+Parameter_Name,Value,Unit,Context_Description
+num_customers,20,customers,Total number of customers in the planning file
+max_trucks,5,trucks,Legacy fleet size parameter retained from the original instance
+truck_capacity,200,units,Maximum capacity of each truck
+fixed_service_time,90,minutes,Fixed service time required at each customer location
+depot_coordinates,"(40,50)",coordinates,Coordinates of the central depot
+depot_time_window_start,0,minutes,Start of the operating time window for the central depot
+depot_time_window_end,1236,minutes,End of the operating time window for the central depot
+inhouse_truck_limit,3,trucks,Maximum number of company trucks allowed to operate under the low-emission zone rule

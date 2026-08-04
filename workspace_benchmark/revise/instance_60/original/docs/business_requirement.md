@@ -1,0 +1,1 @@
+A traveling salesman must visit 7 customers at 7 different locations. The problem involves determining the optimal visiting order starting and ending at location 1 to minimize the travel distance. Please refer to the corresponding CSV files in the data folder for specific parameter values.

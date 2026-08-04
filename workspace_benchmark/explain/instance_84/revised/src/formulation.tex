@@ -1,0 +1,111 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$: set of candidates, indexed by $i$.
+    \item $A \subseteq I$: candidates whose qualification is Master's or Doctoral degree.
+    \item $E^\ast = \{A,E\}$: the specific pair of equivalent candidates referenced by the data.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $s_i$: base salary of candidate $i$.
+    \item $w_i$: work experience (years) of candidate $i$.
+    \item $\textit{max\_employees}$: maximum number of hired candidates.
+    \item $\textit{min\_employees}$: minimum number of hired candidates.
+    \item $\textit{budget\_limit}$: maximum total base salary allowed.
+    \item $\textit{min\_advanced\_degree\_candidates}$: minimum number of hired candidates from set $A$.
+    \item $\textit{min\_work\_experience}$: minimum total work experience across all hired candidates.
+    \item $\textit{max\_equivalent\_candidates}$: maximum number selected from pair $E^\ast$.
+    \item $\textit{min\_managers}$: minimum number of hired managers.
+    \item $\textit{max\_managers}$: maximum number of hired managers.
+    \item $\textit{min\_manager\_experience}$: minimum total work experience across hired managers.
+    \item $\textit{manager\_bonus\_per\_candidate}$: fixed additional cost for each hired manager.
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each candidate $i \in I$:
+\begin{itemize}
+    \item $x_i$ (code: \texttt{x[name]}) $=1$ if candidate $i$ is hired in any role, and $0$ otherwise.
+    \item $m_i$ (code: \texttt{y\_manager[name]}) $=1$ if candidate $i$ is hired as a Manager, and $0$ otherwise.
+    \item $r_i$ (code: \texttt{y\_specialist[name]}) $=1$ if candidate $i$ is hired as a Specialist, and $0$ otherwise.
+\end{itemize}
+
+All variables are binary.
+
+\section*{Objective}
+
+Minimize total effective staffing cost:
+\[
+\min \sum_{i\in I} s_i x_i
+\;+\;
+\textit{manager\_bonus\_per\_candidate}\sum_{i\in I} m_i.
+\]
+
+\section*{Constraints}
+
+Role assignment and hiring linkage:
+\[
+m_i + r_i = x_i
+\qquad \forall i \in I.
+\]
+
+Total hires:
+\[
+\sum_{i\in I} x_i \le \textit{max\_employees},
+\]
+\[
+\sum_{i\in I} x_i \ge \textit{min\_employees}.
+\]
+
+Base-salary budget:
+\[
+\sum_{i\in I} s_i x_i \le \textit{budget\_limit}.
+\]
+
+Advanced-degree hiring requirement:
+\[
+\sum_{i\in A} x_i \ge \textit{min\_advanced\_degree\_candidates}.
+\]
+
+Minimum total work experience across all hires:
+\[
+\sum_{i\in I} w_i x_i \ge \textit{min\_work\_experience}.
+\]
+
+Equivalent-candidate restriction:
+\[
+\sum_{i\in E^\ast} x_i \le \textit{max\_equivalent\_candidates}.
+\]
+
+Manager headcount limits:
+\[
+\sum_{i\in I} m_i \ge \textit{min\_managers},
+\]
+\[
+\sum_{i\in I} m_i \le \textit{max\_managers}.
+\]
+
+Minimum total manager experience:
+\[
+\sum_{i\in I} w_i m_i \ge \textit{min\_manager\_experience}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a binary linear optimization model solved with Gurobi through PuLP compatibility (\texttt{GUROBI\_CMD}).
+    \item The budget constraint applies only to base salaries, exactly as implemented:
+    \[
+    \sum_{i\in I} s_i x_i \le \textit{budget\_limit},
+    \]
+    while manager bonuses appear only in the objective and do not consume budget.
+    \item The role logic is exactly one-way through the equality
+    \[
+    m_i + r_i = x_i,
+    \]
+    so a hired candidate must be assigned to exactly one of the two roles, and an unhired candidate is assigned to neither.
+    \item The manager experience requirement is implemented as an aggregate lower bound on the total experience of all managerial hires, not as a per-candidate experience floor, even though the business brief describes managers as needing \texttt{min\_manager\_experience}.
+    \item The only explicit equivalent-candidate restriction implemented is for candidates \texttt{A} and \texttt{E}; no reverse or additional implication is added beyond what is directly coded.
+\end{itemize}

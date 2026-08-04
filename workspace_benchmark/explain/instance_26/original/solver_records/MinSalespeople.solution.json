@@ -1,0 +1,75 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinSalespeople",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 53.0,
+  "objective_bound": 53.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0015368461608886719,
+  "node_count": 1.0,
+  "iteration_count": 5.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_r30h5fpy/solver_records/MinSalespeople.gurobi.log",
+  "variables": {
+    "x_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1": {
+      "value": 15.0,
+      "reduced_cost": null
+    },
+    "x_2": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "x_3": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "x_4": {
+      "value": 8.0,
+      "reduced_cost": null
+    },
+    "x_5": {
+      "value": 10.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "demand_0": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_5": {
+      "sense": ">=",
+      "slack": -6.0,
+      "dual_value": null
+    }
+  }
+}

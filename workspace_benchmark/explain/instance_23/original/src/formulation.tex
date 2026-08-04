@@ -1,0 +1,97 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $P$: set of products, indexed by $i$.
+    \item In this instance,
+    \[
+    P=\{\text{Shirt},\text{Short-sleeve},\text{Casual Cloth}\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $a_i^{\text{lab}}$: labor required per unit of product $i$.
+    \item $a_i^{\text{mat}}$: material required per unit of product $i$.
+    \item $p_i$: selling price per unit of product $i$.
+    \item $c_i^{\text{var}}$: variable cost per unit of product $i$.
+    \item $u_i = p_i - c_i^{\text{var}}$: unit contribution profit of product $i$ (code: \texttt{unit\_profit[i]}).
+    \item $L$: available labor per week (code: \texttt{available\_labor}).
+    \item $M$: available material per week (code: \texttt{available\_material}).
+    \item $F_i$: weekly fixed cost associated with the equipment for product $i$.
+    \item $F^{\text{tot}}=\sum_{i\in P} F_i$ (code: \texttt{total\_fixed}).
+\end{itemize}
+
+For this instance, the data are:
+\[
+L=1500,\qquad M=1600,
+\]
+and
+\[
+\begin{array}{c|cccccc}
+i & a_i^{\text{lab}} & a_i^{\text{mat}} & p_i & c_i^{\text{var}} & u_i & F_i\\
+\hline
+\text{Shirt} & 3 & 4 & 120 & 60 & 60 & 2000\\
+\text{Short-sleeve} & 2 & 3 & 80 & 40 & 40 & 1500\\
+\text{Casual Cloth} & 6 & 6 & 180 & 80 & 100 & 1000
+\end{array}
+\]
+so that
+\[
+F^{\text{tot}}=2000+1500+1000=4500.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_i$ (code: \texttt{x[i]}): integer number of units of product $i$ to produce during the week.
+\end{itemize}
+
+Variable domain:
+\[
+x_i \in \mathbb{Z}_{\ge 0}\qquad \forall i\in P.
+\]
+
+\section*{Objective}
+
+Maximize weekly profit:
+\[
+\max \sum_{i\in P} u_i x_i - F^{\text{tot}}.
+\]
+
+For this instance, equivalently,
+\[
+\max\; 60x_{\text{Shirt}} + 40x_{\text{Short-sleeve}} + 100x_{\text{Casual Cloth}} - 4500.
+\]
+
+\section*{Constraints}
+
+Labor availability:
+\[
+\sum_{i\in P} a_i^{\text{lab}} x_i \le L.
+\]
+
+Material availability:
+\[
+\sum_{i\in P} a_i^{\text{mat}} x_i \le M.
+\]
+
+For this instance:
+\[
+3x_{\text{Shirt}} + 2x_{\text{Short-sleeve}} + 6x_{\text{Casual Cloth}} \le 1500,
+\]
+\[
+4x_{\text{Shirt}} + 3x_{\text{Short-sleeve}} + 6x_{\text{Casual Cloth}} \le 1600.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model in \texttt{current\_heuristic.py} is a linear integer program solved with Gurobi through the PuLP-compatible interface.
+    \item Production quantities are required to be nonnegative integers; there are no binary setup variables.
+    \item All fixed costs are subtracted unconditionally in the objective, regardless of whether any units of the corresponding product are produced. This matches the code comment: the equipment already exists, so the model always deducts
+    \[
+    F^{\text{tot}}=\sum_{i\in P} F_i.
+    \]
+    \item Therefore, the formulation does \emph{not} model product-specific activation decisions or avoid fixed costs when a product is not produced.
+\end{itemize}

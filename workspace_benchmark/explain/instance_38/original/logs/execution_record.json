@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 14.0,
+  "stdout": "Number of products: 3\nNumber of machines: 3\nProcessing times: [[2, 3, 1], [4, 2, 3], [3, 5, 2]]\nSequence [1, 2, 3]: makespan = 16\nSequence [1, 3, 2]: makespan = 15\nSequence [2, 1, 3]: makespan = 16\nSequence [2, 3, 1]: makespan = 16\nSequence [3, 1, 2]: makespan = 16\nSequence [3, 2, 1]: makespan = 14\n\nOptimal sequence: [3, 2, 1]\nOptimal makespan: 14\nOBJECTIVE_VALUE: 14\nSet parameter LicenseID to value 2802670\n",
+  "stderr": "",
+  "error": null
+}

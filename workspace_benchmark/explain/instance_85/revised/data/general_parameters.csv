@@ -1,0 +1,12 @@
+Parameter_Name,Value,Unit,Context_Description
+machine_time_available,40,hours,Total machine time available in the next working week
+craftsman_regular_time_available,25,hours,Regular craftsman time available
+craftsman_overtime_available,10,hours,Overtime craftsman time available
+machine_time_cost,10,GBP_per_hour,Cost of machine time per hour
+craftsman_time_cost,2,GBP_per_hour,Cost of regular craftsman time per hour
+craftsman_overtime_cost,7,GBP_per_hour,Cost of craftsman overtime per hour
+revenue_product_X,20,GBP_per_batch,Revenue generated for each batch of product X sold
+revenue_product_Y,30,GBP_per_batch,Revenue generated for each batch of product Y sold
+min_batches_product_X,10,batches,Minimum number of batches of product X required by contract
+product_Y_QA_threshold,60,batches,Product Y batches that can pass through the ordinary finishing QA desk
+product_Y_QA_fee,10,GBP,One-time QA burden if Product Y batches exceed the ordinary finishing desk

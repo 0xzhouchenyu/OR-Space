@@ -1,0 +1,27 @@
+Nodes: ['A', 'B', 'C', 'D', 'E']
+Bandwidth matrix loaded: 25 entries
+Paths A->C: 8
+  A -> E -> D -> C, min_bw = 25
+  A -> E -> D -> B -> C, min_bw = 30
+  A -> E -> B -> D -> C, min_bw = 25
+  A -> E -> B -> C, min_bw = 51
+  A -> C, min_bw = 85
+  A -> B -> E -> D -> C, min_bw = 25
+  A -> B -> D -> C, min_bw = 25
+  A -> B -> C, min_bw = 70
+Paths C->E: 9
+  C -> E, min_bw = 80
+  C -> D -> E, min_bw = 84
+  C -> D -> B -> E, min_bw = 30
+  C -> D -> B -> A -> E, min_bw = 30
+  C -> D -> A -> E, min_bw = 65
+  C -> D -> A -> B -> E, min_bw = 34
+  C -> A -> E, min_bw = 60
+  C -> A -> B -> E, min_bw = 34
+  C -> A -> B -> D -> E, min_bw = 60
+
+Best path: A -> C -> D -> E
+Maximum bandwidth: 84
+
+OBJECTIVE_VALUE: 84
+Set parameter LicenseID to value 2802670

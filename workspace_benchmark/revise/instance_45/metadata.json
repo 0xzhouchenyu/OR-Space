@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_45_revise_business",
+  "original_instance_id": "IndustryOR_45",
+  "revise_description": "In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. At the latest operating review, the business owner rejected treating this as a cosmetic rerun. The plan has to follow the commercial interpretation below, with the data-pack labels read literally. The workforce agreement now has a second review tier. The first 100 overtime labor hours are covered by the ordinary overtime arrangement; going beyond 100 hours adds a one-time 10-unit review burden to the production plan. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+2var, +3constr, mod_1constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 2,
+        "-variable": 0,
+        "+constraint": 3,
+        "-constraint": 0,
+        "modify_constraint": 1,
+        "modify_data": 1
+      },
+      "op_count": 8,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 72.222222
+  }
+}

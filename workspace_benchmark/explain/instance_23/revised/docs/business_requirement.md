@@ -1,0 +1,7 @@
+Hongdou Clothing Factory uses three special equipment to produce shirts, short-sleeved shirts, and casual clothes respectively. The labor, material usage, selling price, and variable cost of each product, as well as the available labor, material, and fixed costs, are provided in the corresponding CSV files in the data folder. Please refer to these files for specific parameter values. The task is to design a weekly production plan for the factory to maximize its profit.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. Hongdou's weekly clothing plan now separates ordinary sales from promotional commitments. A product line that opens still pays its equipment cost, but its units may serve the regular segment or the promotional segment, each with the corresponding commercial terms in the CSV files. Sales will only treat a product as present in a segment if that segment clears its product-specific minimum batch size. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

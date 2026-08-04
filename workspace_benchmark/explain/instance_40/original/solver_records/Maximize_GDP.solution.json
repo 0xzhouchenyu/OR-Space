@@ -1,0 +1,62 @@
+{
+  "solver": "gurobi",
+  "model_name": "Maximize_GDP",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 36288567.03694583,
+  "objective_bound": 36288567.03694583,
+  "mip_gap": null,
+  "runtime": 0.0005919933319091797,
+  "node_count": 0.0,
+  "iteration_count": 1.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage__usnsird/solver_records/Maximize_GDP.gurobi.log",
+  "variables": {
+    "x_electronics": {
+      "value": 6200.0275561047565,
+      "reduced_cost": 0.0
+    },
+    "x_engine": {
+      "value": 39666.42951134001,
+      "reduced_cost": 0.0
+    },
+    "x_plastic": {
+      "value": 5001.262588075119,
+      "reduced_cost": 0.0
+    },
+    "x_steel": {
+      "value": 32795.39640224808,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Domestic_Demand_steel": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -57.58985858533492
+    },
+    "Domestic_Demand_engine": {
+      "sense": ">=",
+      "slack": -38798.48343009175,
+      "dual_value": 0.0
+    },
+    "Domestic_Demand_electronics": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -109.21722899843161
+    },
+    "Domestic_Demand_plastic": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -326.2867956810846
+    },
+    "Labor_Limit": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 43.72116510475401
+    }
+  }
+}

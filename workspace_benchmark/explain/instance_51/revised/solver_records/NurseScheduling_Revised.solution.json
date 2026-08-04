@@ -1,0 +1,116 @@
+{
+  "solver": "gurobi",
+  "model_name": "NurseScheduling_Revised",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 4400.0,
+  "objective_bound": 4400.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0027980804443359375,
+  "node_count": 1.0,
+  "iteration_count": 6.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ovv_jp0z/solver_records/NurseScheduling_Revised.gurobi.log",
+  "variables": {
+    "x_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_1": {
+      "value": 21.0,
+      "reduced_cost": null
+    },
+    "x_3": {
+      "value": 16.0,
+      "reduced_cost": null
+    },
+    "x_4": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "x_5": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "y_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_2": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "y_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "demand_0": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_1": {
+      "sense": ">=",
+      "slack": -6.0,
+      "dual_value": null
+    },
+    "demand_2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_5": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "min_regular_daytime_1": {
+      "sense": ">=",
+      "slack": -13.0,
+      "dual_value": null
+    },
+    "min_regular_daytime_2": {
+      "sense": ">=",
+      "slack": -13.0,
+      "dual_value": null
+    },
+    "min_regular_daytime_3": {
+      "sense": ">=",
+      "slack": -8.0,
+      "dual_value": null
+    },
+    "min_regular_daytime_4": {
+      "sense": ">=",
+      "slack": -10.0,
+      "dual_value": null
+    },
+    "contract_cap": {
+      "sense": "<=",
+      "slack": 16.0,
+      "dual_value": null
+    }
+  }
+}

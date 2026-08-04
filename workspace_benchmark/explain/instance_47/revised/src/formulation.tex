@@ -1,0 +1,149 @@
+\section*{Sets and Indices}
+
+\[
+C=\{\text{Soybean},\text{Corn},\text{Wheat}\}
+\]
+set of crop activities, indexed by \(c\).
+
+\section*{Parameters}
+
+All parameter values are read from the CSV files.
+
+For crops \(c\in C\):
+\begin{itemize}
+\item \(a^{AW}_c\): autumn/winter labor requirement per hectare (from \texttt{table\_1.csv}, row \texttt{Person-days (Autumn/Winter)}).
+\item \(a^{SS}_c\): spring/summer labor requirement per hectare (from \texttt{table\_1.csv}, row \texttt{Person-days (Spring/Summer)}).
+\item \(r_c\): annual net income per hectare (from \texttt{table\_1.csv}, row \texttt{Annual Net Income (Yuan/hectare)}).
+\end{itemize}
+
+Scalar parameters from \texttt{general\_parameters.csv}:
+\begin{itemize}
+\item \(L\) (\texttt{land\_area}): total land available.
+\item \(F\) (\texttt{funds\_available}): total funds available.
+\item \(H^{AW}\) (\texttt{labor\_autumn\_winter}): available autumn/winter labor.
+\item \(H^{SS}\) (\texttt{labor\_spring\_summer}): available spring/summer labor.
+\item \(w^{AW}\) (\texttt{external\_work\_rate\_autumn\_winter}): earnings per person-day of outside work in autumn/winter.
+\item \(w^{SS}\) (\texttt{external\_work\_rate\_spring\_summer}): earnings per person-day of outside work in spring/summer.
+\item \(k^D\) (\texttt{investment\_per\_dairy\_cow}): investment per dairy cow.
+\item \(k^P\) (\texttt{investment\_per\_chicken}): investment per chicken.
+\item \(\ell^D\) (\texttt{land\_per\_dairy\_cow}): land required per dairy cow.
+\item \(h^{AW,D}\) (\texttt{labor\_autumn\_winter\_per\_dairy\_cow}): autumn/winter labor per dairy cow.
+\item \(h^{SS,D}\) (\texttt{labor\_spring\_summer\_per\_dairy\_cow}): spring/summer labor per dairy cow.
+\item \(p^D\) (\texttt{net\_income\_per\_dairy\_cow}): annual net income per dairy cow.
+\item \(h^{AW,P}\) (\texttt{labor\_autumn\_winter\_per\_chicken}): autumn/winter labor per chicken.
+\item \(h^{SS,P}\) (\texttt{labor\_spring\_summer\_per\_chicken}): spring/summer labor per chicken.
+\item \(p^P\) (\texttt{net\_income\_per\_chicken}): annual net income per chicken.
+\item \(\overline P\) (\texttt{max\_chickens}): maximum chicken capacity.
+\item \(\overline D\) (\texttt{max\_dairy\_cows}): maximum dairy-cow capacity.
+\item \(f^{\text{coop}}\) (\texttt{fixed\_cost\_chicken\_setup}): fixed chicken setup/biosecurity cost if the coop is opened.
+\item \(\underline P\) (\texttt{min\_chickens\_if\_coop\_open}): minimum flock size if the coop is opened.
+\item \(T\) (\texttt{second\_biosecurity\_threshold}): threshold above which the second review can be triggered.
+\item \(f^{\text{large}}\) (\texttt{second\_biosecurity\_cost}): additional cost for the larger-flock review.
+\item \(\tau^{AW}\) (\texttt{biosecurity\_training\_aw\_days}): autumn/winter training labor consumed if the coop is opened.
+\item \(\tau^{SS}\) (\texttt{biosecurity\_training\_ss\_days}): spring/summer training labor consumed if the coop is opened.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+\item \(x_c\) (code: \texttt{x[c]}) \(\ge 0\): hectares allocated to crop \(c\).
+\item \(y\) (code: \texttt{cows}) with \(0 \le y \le \overline D\): number of dairy cows.
+\item \(z\) (code: \texttt{chickens}) with \(0 \le z \le \overline P\): number of chickens.
+\item \(o^{AW}\) (code: \texttt{aw\_out}) \(\ge 0\): autumn/winter outside-work days sold.
+\item \(o^{SS}\) (code: \texttt{ss\_out}) \(\ge 0\): spring/summer outside-work days sold.
+\item \(b\) (code: \texttt{coop}) \(\in \{0,1\}\): 1 if the chicken coop is opened, 0 otherwise.
+\item \(g\) (code: \texttt{large}) \(\in \{0,1\}\): 1 if the larger-flock review/inspection cost is activated, 0 otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize annual net income:
+\[
+\max \;
+\sum_{c\in C} r_c x_c
++ p^D y
++ p^P z
++ w^{AW} o^{AW}
++ w^{SS} o^{SS}
+- f^{\text{coop}} b
+- f^{\text{large}} g .
+\]
+
+\section*{Constraints}
+
+Land balance:
+\[
+\sum_{c\in C} x_c + \ell^D y \le L .
+\]
+
+Funds balance:
+\[
+k^D y + k^P z \le F .
+\]
+
+Autumn/winter labor balance:
+\[
+\sum_{c\in C} a^{AW}_c x_c
++ h^{AW,D} y
++ h^{AW,P} z
++ \tau^{AW} b
++ o^{AW}
+\le H^{AW}.
+\]
+
+Spring/summer labor balance:
+\[
+\sum_{c\in C} a^{SS}_c x_c
++ h^{SS,D} y
++ h^{SS,P} z
++ \tau^{SS} b
++ o^{SS}
+\le H^{SS}.
+\]
+
+Coop-opening gate and minimum meaningful flock:
+\[
+z \le \overline P\, b,
+\]
+\[
+z \ge \underline P\, b.
+\]
+
+Large-flock review trigger as implemented:
+\[
+z \le T + \overline P\, g,
+\]
+\[
+g \le b.
+\]
+
+Variable domains:
+\[
+x_c \ge 0 \quad (\forall c\in C), \qquad
+0 \le y \le \overline D, \qquad
+0 \le z \le \overline P,
+\]
+\[
+o^{AW}\ge 0,\qquad o^{SS}\ge 0,\qquad
+b\in\{0,1\},\qquad g\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+This is the exact mixed-integer linear optimization model implemented in \texttt{current\_heuristic.py}.
+
+The poultry logic is modeled as a binary gate, not as a smooth per-bird surcharge:
+\begin{itemize}
+\item If \(b=0\), then \(z=0\).
+\item If \(b=1\), then the flock must satisfy \(z\ge \underline P\), and the fixed setup cost \(f^{\text{coop}}\) is incurred.
+\item Opening the coop also consumes fixed seasonal training labor \(\tau^{AW}\) and \(\tau^{SS}\), which reduces labor available for crops, dairy, and outside work.
+\item The second biosecurity step is represented by binary variable \(g\) and cost \(f^{\text{large}}\).
+\end{itemize}
+
+The large-flock rule is written exactly as in the code:
+\[
+z \le T + \overline P\, g,\qquad g \le b.
+\]
+Thus, if \(g=0\), then \(z\le T\); if \(z>T\), feasibility requires \(g=1\), which activates the additional inspection cost. The formulation does not include a converse lower-bound implication forcing \(g=1\) whenever \(z>T\); rather, that implication follows through feasibility of the first inequality.
+
+The model is solved with a MIP solver through \texttt{pulp.GUROBI\_CMD(msg=0)}. Continuous production and labor variables are not restricted to be integral in the implementation.

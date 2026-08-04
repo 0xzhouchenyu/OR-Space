@@ -1,0 +1,93 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $C$: set of children that may be taken on the trip, with
+    \[
+    C=\{\text{Harry},\text{Hermione},\text{Ron},\text{Fred},\text{George},\text{Ginny}\}.
+    \]
+    \item $c \in C$: index for a child.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $k^{\max}$: maximum number of children allowed on the trip (code: \texttt{max\_children}). For this instance, $k^{\max}=4$.
+    \item $k^{\min}$: minimum number of children to be taken (code: \texttt{min\_children}). For this instance, $k^{\min}=3$.
+    \item $\mathrm{cost}_c$: trip cost for child $c$ (code: \texttt{costs[child]}), with values
+    \[
+    \mathrm{cost}_{\text{Harry}}=1200,\quad
+    \mathrm{cost}_{\text{Hermione}}=1650,\quad
+    \mathrm{cost}_{\text{Ron}}=750,\quad
+    \mathrm{cost}_{\text{Fred}}=800,\quad
+    \mathrm{cost}_{\text{George}}=800,\quad
+    \mathrm{cost}_{\text{Ginny}}=1500.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_c \in \{0,1\}$ for each $c \in C$ (code: \texttt{x[child]}), where
+    \[
+    x_c=
+    \begin{cases}
+    1 & \text{if child } c \text{ is selected for the trip},\\
+    0 & \text{otherwise.}
+    \end{cases}
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the total cost of the selected children:
+\[
+\min \sum_{c \in C} \mathrm{cost}_c\, x_c.
+\]
+
+\section*{Constraints}
+
+Ginny must be included:
+\[
+x_{\text{Ginny}} = 1.
+\]
+
+Minimum and maximum number of children:
+\[
+\sum_{c \in C} x_c \le k^{\max},
+\]
+\[
+\sum_{c \in C} x_c \ge k^{\min}.
+\]
+
+Harry and Fred cannot both be taken:
+\[
+x_{\text{Harry}} + x_{\text{Fred}} \le 1.
+\]
+
+Harry and George cannot both be taken:
+\[
+x_{\text{Harry}} + x_{\text{George}} \le 1.
+\]
+
+If George is taken, Fred must also be taken:
+\[
+x_{\text{George}} \le x_{\text{Fred}}.
+\]
+
+If George is taken, Hermione must also be taken:
+\[
+x_{\text{George}} \le x_{\text{Hermione}}.
+\]
+
+Binary restrictions:
+\[
+x_c \in \{0,1\} \qquad \forall c \in C.
+\]
+
+\section*{Notes on Implementation}
+
+The implementation in \texttt{current\_heuristic.py} builds exactly the above binary linear optimization model using PuLP-compatible modeling objects and solves it with \texttt{GUROBI\_CMD(msg=0)}.
+
+Child costs are read from \texttt{data/table\_1.csv}, while cardinality and logical-rule parameters are read from \texttt{data/general\_parameters.csv}. The set $C$ is created from the keys of the cost table, and the decision variables are indexed directly by child names.
+
+The logical business rules are implemented through the linear constraints shown above; no additional cuts, reformulations, or search heuristics are added in the code.

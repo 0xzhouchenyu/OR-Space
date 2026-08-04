@@ -1,0 +1,56 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinimizeFeedCost",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 32.43589743589744,
+  "objective_bound": 32.43589743589744,
+  "mip_gap": null,
+  "runtime": 0.000598907470703125,
+  "node_count": 0.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_s4nzjvfk/solver_records/MinimizeFeedCost.gurobi.log",
+  "variables": {
+    "x_1": {
+      "value": 0.0,
+      "reduced_cost": 0.059615384615384626
+    },
+    "x_2": {
+      "value": 0.0,
+      "reduced_cost": 0.5935897435897435
+    },
+    "x_3": {
+      "value": 0.0,
+      "reduced_cost": 0.3525641025641026
+    },
+    "x_4": {
+      "value": 39.74358974358974,
+      "reduced_cost": 0.0
+    },
+    "x_5": {
+      "value": 25.641025641025642,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "ProteinRequirement": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 0.043589743589743594
+    },
+    "MineralsRequirement": {
+      "sense": ">=",
+      "slack": -62.30769230769229,
+      "dual_value": 0.0
+    },
+    "VitaminsRequirement": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 0.019230769230769225
+    }
+  }
+}

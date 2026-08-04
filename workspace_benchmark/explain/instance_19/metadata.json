@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_019",
+  "instance_number": 19,
+  "source_revise_instance": "IndustryOR_19_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, the objective increases from 4000.0 to 4150.0 even though the chosen quantity still comes entirely from manufacturer C. Trace exactly which new code variables and constraints force this change by linking the revised optimal solution (`orders_C_regular`, `y_C_regular`) back to the business brief and the parameter names in `general_parameters.csv`; name the exact CSV fields and the code expressions that add the extra cost. Then, using the LP relaxation diagnostics, identify which chair-total constraint is binding and its shadow price, explain the business meaning of that marginal value, and explain why you cannot linearly extrapolate that dual value to predict the full 150.0 revised-vs-original objective jump."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "FurnitureOrder.gurobi.log",
+        "FurnitureOrder.lp_relaxation.json",
+        "FurnitureOrder.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "FurnitureOrder.gurobi.log",
+        "FurnitureOrder.lp_relaxation.json",
+        "FurnitureOrder.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 59.156111
+  }
+}

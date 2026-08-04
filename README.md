@@ -38,17 +38,17 @@ against the corresponding solver API.
 
 ## Repository contents
 
-This repository is the complete research release. Participant workspaces and
-evaluation references are available from the
-[OR-Space dataset](https://huggingface.co/datasets/Chenyu-Zhou/OR-Space); this
-repository additionally contains benchmark construction code, paper snapshots,
-and model-run evidence.
+This repository is the complete research release. It contains participant
+workspaces, evaluation references and programs, benchmark construction code,
+paper snapshots, and representative model-run evidence.
 
 ```text
 .
 ├── 01_build/ ... 06_static_diff/  Benchmark construction and analysis code
-├── evaluation/                    Build, Revise, and Explain evaluators
-├── benchmark_metadata/            Workspace index and empirical difficulty labels
+├── workspace_benchmark/           Build, Revise, and Explain workspaces
+├── evaluation/                    Task references and Explain rubrics
+├── evaluation_programs/           Build, Revise, and Explain evaluators
+├── supporting_files/              Metadata, task splits, and visual assets
 ├── results/                       Machine-readable paper-result snapshots
 ├── baseline_outputs/gurobi/       Representative Gurobi traces for two models
 ├── tools/                         Packaging and release-validation utilities
@@ -62,27 +62,25 @@ stored scores, checksums, and provenance are retained where available. See
 [`baseline_outputs/gurobi/`](baseline_outputs/gurobi/) for archive structure and
 the row-level Revise protocol audit.
 
-## Dataset quick start
+## Quick start
 
 ```bash
-pip install -U huggingface_hub pandas
-huggingface-cli download Chenyu-Zhou/OR-Space \
-  --repo-type dataset --local-dir OR-Space
+git clone https://github.com/0xzhouchenyu/OR-Space.git
+cd OR-Space
+python evaluation_programs/validate_dataset.py
 ```
 
 ```python
 import pandas as pd
 
-index = pd.read_csv(
-    "OR-Space/supporting_files/metadata/workspace_index.csv"
-)
+index = pd.read_csv("supporting_files/metadata/workspace_index.csv")
 print(index.groupby(["task_type", "difficulty"]).size())
 ```
 
-Participant-visible task data are organized as:
+The benchmark release is organized as:
 
 ```text
-OR-Space/
+.
 ├── workspace_benchmark/
 │   ├── build/
 │   ├── revise/
@@ -103,15 +101,16 @@ executable pass rates; Explain uses the empirical mean rubric score. Boundaries
 approximate tertiles without splitting tied scores. The released distributions
 are Build 35/32/33, Revise 39/30/31, and Explain 33/33/34 for
 Easy/Medium/Hard. See
-[`benchmark_metadata/difficulty_methodology.md`](benchmark_metadata/difficulty_methodology.md)
-and [`benchmark_metadata/empirical_difficulty.csv`](benchmark_metadata/empirical_difficulty.csv).
+[`supporting_files/metadata/difficulty_methodology.md`](supporting_files/metadata/difficulty_methodology.md)
+and [`supporting_files/metadata/empirical_difficulty.csv`](supporting_files/metadata/empirical_difficulty.csv).
 
 ## Evaluation and results
 
-[`evaluation/`](evaluation/) provides runnable scorers. The Explain release
-includes normalized exact checks, semantic checklist judgments, evidence
-verification, the judge prompt and schema, and the final 35/35/20/10 rubric
-with an unsupported-claim penalty of up to 12 points.
+[`evaluation_programs/`](evaluation_programs/) provides runnable scorers, while
+[`evaluation/`](evaluation/) contains task references and Explain rubrics. The
+Explain release includes normalized exact checks, semantic checklist judgments,
+evidence verification, the judge prompt and schema, and the final 35/35/20/10
+rubric with an unsupported-claim penalty of up to 12 points.
 
 [`results/table2_main_results.csv`](results/table2_main_results.csv) is the
 18-model main-table snapshot. Its Revise-code values are preserved exactly as
@@ -124,6 +123,7 @@ before interpreting that column as Pass@1.
 
 ```bash
 python tools/validate_public_release.py
+python evaluation_programs/validate_dataset.py
 python -m unittest discover -s tests
 ```
 

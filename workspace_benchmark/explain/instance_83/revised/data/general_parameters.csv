@@ -1,0 +1,16 @@
+Parameter_Name,Value,Unit,Context_Description
+waiter_work_hours,8,hours,Each waiter works continuously for 8 hours a day
+peak_0,0,dimensionless,Peak indicator for period 0 (2-6): 1 if peak, 0 if off-peak
+peak_1,1,dimensionless,Peak indicator for period 1 (6-10): 1 if peak, 0 if off-peak
+peak_2,1,dimensionless,Peak indicator for period 2 (10-14): 1 if peak, 0 if off-peak
+peak_3,0,dimensionless,Peak indicator for period 3 (14-18): 1 if peak, 0 if off-peak
+peak_4,1,dimensionless,Peak indicator for period 4 (18-22): 1 if peak, 0 if off-peak
+peak_5,0,dimensionless,Peak indicator for period 5 (22-2): 1 if peak, 0 if off-peak
+quality_0,1,quality points per waiter,Service quality weight for period 0 (2-6)
+quality_1,2,quality points per waiter,Service quality weight for period 1 (6-10)
+quality_2,2,quality points per waiter,Service quality weight for period 2 (10-14)
+quality_3,1,quality points per waiter,Service quality weight for period 3 (14-18)
+quality_4,3,quality points per waiter,Service quality weight for period 4 (18-22)
+quality_5,1,quality points per waiter,Service quality weight for period 5 (22-2)
+waiter_cost_per_shift,1,monetary units per shift,Cost of assigning one waiter to a full 8-hour shift
+waiter_budget,30,monetary units per day,Maximum total wage cost allowed per day

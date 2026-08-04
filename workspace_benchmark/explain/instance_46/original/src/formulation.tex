@@ -1,0 +1,116 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$: set of students, indexed by $i$. In this instance, $I=\{1,2,3,4,5,6\}$.
+    \item $D$: set of weekdays, indexed by $d$. In this instance,
+    \[
+    D=\{\text{Monday},\text{Tuesday},\text{Wednesday},\text{Thursday},\text{Friday}\}.
+    \]
+    \item $G \subseteq I$: set of graduate students. In the implemented model,
+    \[
+    G=\{5,6\},
+    \]
+    and the remaining students $I\setminus G=\{1,2,3,4\}$ are treated as undergraduates.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $w_i$ (code: \texttt{wage[i]}): hourly wage of student $i$ in CNY/hour.
+    \item $a_{id}$ (code: \texttt{avail[i,d]}): maximum number of hours student $i$ is available to work on day $d$.
+    \item $H$ (code: \texttt{hours\_per\_day}): required staffed hours per day. From 8:00 AM to 10:00 PM,
+    \[
+    H=14.
+    \]
+    \item $L^{U}$ (code: \texttt{min\_undergrad}): minimum weekly hours for each undergraduate student, with value
+    \[
+    L^{U}=8.
+    \]
+    \item $L^{G}$ (code: \texttt{min\_grad}): minimum weekly hours for each graduate student, with value
+    \[
+    L^{G}=7.
+    \]
+    \item $S^{\max}$ (code: \texttt{max\_shifts}): maximum number of days/shifts a student may work during the week, with value
+    \[
+    S^{\max}=2.
+    \]
+    \item $M^{\max}$ (code: \texttt{max\_students\_day}): maximum number of students scheduled on any day, with value
+    \[
+    M^{\max}=3.
+    \]
+    \item $\ell_i$: minimum weekly hours required for student $i$, defined exactly as in the code by
+    \[
+    \ell_i=
+    \begin{cases}
+    L^{G}, & i \in G,\\
+    L^{U}, & i \in I\setminus G.
+    \end{cases}
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{id}$ (code: \texttt{x[i,d]}): continuous hours assigned to student $i$ on day $d$.
+    \item $y_{id}$ (code: \texttt{y[i,d]}): binary variable equal to 1 if student $i$ is scheduled on day $d$, and 0 otherwise.
+\end{itemize}
+
+The domains are
+\[
+0 \le x_{id} \le a_{id} \qquad \forall i\in I,\ d\in D,
+\]
+\[
+y_{id}\in\{0,1\} \qquad \forall i\in I,\ d\in D.
+\]
+
+\section*{Objective}
+
+Minimize total wage cost:
+\[
+\min \sum_{i\in I}\sum_{d\in D} w_i\,x_{id}.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Daily coverage:}
+    \[
+    \sum_{i\in I} x_{id} = H
+    \qquad \forall d\in D.
+    \]
+
+    \item \textbf{Linking hours and day assignment:}
+    \[
+    x_{id} \le a_{id}\,y_{id}
+    \qquad \forall i\in I,\ d\in D.
+    \]
+
+    \item \textbf{Maximum number of shifts per student per week:}
+    \[
+    \sum_{d\in D} y_{id} \le S^{\max}
+    \qquad \forall i\in I.
+    \]
+
+    \item \textbf{Maximum number of students scheduled per day:}
+    \[
+    \sum_{i\in I} y_{id} \le M^{\max}
+    \qquad \forall d\in D.
+    \]
+
+    \item \textbf{Minimum weekly hours per student:}
+    \[
+    \sum_{d\in D} x_{id} \ge \ell_i
+    \qquad \forall i\in I.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program with continuous $x_{id}$ and binary $y_{id}$.
+    \item The code uses the weekday set \{\texttt{Monday}, \texttt{Tuesday}, \texttt{Wednesday}, \texttt{Thursday}, \texttt{Friday}\} only.
+    \item The graduate/undergraduate split is not read from data; it is hard-coded as students 5 and 6 being graduate students, while students 1--4 are undergraduates.
+    \item The variable $y_{id}$ is only linked by the upper bound $x_{id}\le a_{id}y_{id}$. Hence, if $a_{id}>0$, the model permits $y_{id}=1$ with $x_{id}=0$; there is no lower-bound linking constraint forcing positive hours when a student is marked scheduled.
+    \item The business statement says exactly one student must be on duty at all times, but the implemented model does not enforce single-person coverage by time period. Instead, it enforces only that the total assigned hours across all students equal 14 on each day.
+    \item The model is solved with \texttt{GUROBI\_CMD} through PuLP compatibility code.
+\end{itemize}

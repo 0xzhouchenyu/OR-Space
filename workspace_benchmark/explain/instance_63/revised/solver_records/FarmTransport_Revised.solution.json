@@ -1,0 +1,89 @@
+{
+  "solver": "gurobi",
+  "model_name": "FarmTransport_Revised",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 1745.0,
+  "objective_bound": 1745.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0017650127410888672,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ivvo0x1_/solver_records/FarmTransport_Revised.gurobi.log",
+  "variables": {
+    "bike_trips": {
+      "value": 19.0,
+      "reduced_cost": null
+    },
+    "cart_trips": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "horse_trips": {
+      "value": 8.0,
+      "reduced_cost": null
+    },
+    "pollution_permit": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "use_bike": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "use_cart": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "use_horse": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": -10.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 360.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 9960.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 9992.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 9981.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

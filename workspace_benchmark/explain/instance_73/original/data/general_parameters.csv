@@ -1,0 +1,9 @@
+Parameter_Name,Value,Unit,Context_Description
+num_children,5,,Number of children in the Li family
+max_children_trip,3,,Maximum number of children the Li family can take on the trip
+min_children_trip,2,,Minimum number of children the Li family has decided to take on the trip
+cost_alice,1000,USD,Cost to take Alice on the trip
+cost_bob,900,USD,Cost to take Bob on the trip
+cost_charlie,600,USD,Cost to take Charlie on the trip
+cost_diana,500,USD,Cost to take Diana on the trip
+cost_ella,700,USD,Cost to take Ella on the trip

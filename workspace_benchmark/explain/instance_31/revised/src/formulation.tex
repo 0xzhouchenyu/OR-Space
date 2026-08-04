@@ -1,0 +1,145 @@
+\section*{Sets and Indices}
+
+\[
+P=\{\mathrm{I},\mathrm{II},\mathrm{III}\}
+\]
+set of products.
+
+\[
+E=\{A1,A2,B1,B2,B3\}
+\]
+set of all equipment.
+
+For each product \(p\in P\), let \(E^A_p\subseteq E\) be the allowed stage-A equipment and \(E^B_p\subseteq E\) be the allowed stage-B equipment, using the compatibility named in \texttt{general\_parameters.csv}:
+\[
+E^A_{\mathrm{I}}=\{A1,A2\},\quad
+E^A_{\mathrm{II}}=\{A1,A2\},\quad
+E^A_{\mathrm{III}}=\{A2\},
+\]
+\[
+E^B_{\mathrm{I}}=\{B1,B2,B3\},\quad
+E^B_{\mathrm{II}}=\{B1\},\quad
+E^B_{\mathrm{III}}=\{B2\}.
+\]
+
+Let
+\[
+X=\{(e,p): e\in E^A_p \text{ or } e\in E^B_p\}
+\]
+be the set of equipment-product pairs for which a production variable is created.
+
+\section*{Parameters}
+
+For each \((e,p)\in X\):
+\begin{itemize}
+\item \(t_{ep}\): processing time per unit on equipment \(e\) for product \(p\) (code data: \texttt{proc\_time[(e,p)]}).
+\end{itemize}
+
+For each \(e\in E\):
+\begin{itemize}
+\item \(H_e\): available machine hours (code data: \texttt{capacity[e]}).
+\item \(c_e\): processing cost per machine hour (code data: \texttt{cost\_rate[e]}).
+\item \(F_e\): fixed setup cost if equipment \(e\) is active (code data: \texttt{setup\_cost[e]}).
+\end{itemize}
+
+For each \(p\in P\):
+\begin{itemize}
+\item \(r_p\): unit selling price (code data: \texttt{price[p]}).
+\item \(m_p\): raw material cost per unit (code data: \texttt{raw\_cost[p]}).
+\end{itemize}
+
+Additional parameter:
+\begin{itemize}
+\item \(K^{\mathrm{cal}}\): one-time joint calibration fee for simultaneous activation of \(A2\) and \(B2\) (code data: \texttt{params['A2\_B2\_joint\_calibration\_fee']}); in this instance \(K^{\mathrm{cal}}=100\).
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each \((e,p)\in X\):
+\[
+x_{ep}\ge 0
+\qquad\text{(code: \texttt{x[(e,p)]})}
+\]
+units of product \(p\) processed on equipment \(e\).
+
+For each \(e\in E\):
+\[
+y_e\in\{0,1\}
+\qquad\text{(code: \texttt{y[e]})}
+\]
+equals 1 if equipment \(e\) is active.
+
+Additional binary variable:
+\[
+z^{\mathrm{cal}}\in\{0,1\}
+\qquad\text{(code: \texttt{joint\_calibration})}
+\]
+equals 1 iff the joint \(A2\)-\(B2\) calibration charge is triggered.
+
+For each \(p\in P\), define the total production quantity
+\[
+q_p=\sum_{e\in E^A_p} x_{ep}
+\qquad\text{(code expression: \texttt{total[p]})}.
+\]
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+\sum_{p\in P} r_p q_p
+-\sum_{p\in P} m_p q_p
+-\sum_{(e,p)\in X} c_e\, t_{ep}\, x_{ep}
+-\sum_{e\in E} F_e y_e
+-K^{\mathrm{cal}} z^{\mathrm{cal}}.
+\]
+
+\section*{Constraints}
+
+Stage flow balance for each product \(p\in P\):
+\[
+\sum_{e\in E^A_p} x_{ep}
+=
+\sum_{e\in E^B_p} x_{ep}.
+\]
+
+Equipment capacity for each \(e\in E\):
+\[
+\sum_{p:(e,p)\in X} t_{ep} x_{ep} \le H_e.
+\]
+
+Activation gate for each \(e\in E\):
+\[
+\sum_{p:(e,p)\in X} t_{ep} x_{ep} \le H_e\, y_e.
+\]
+
+Joint calibration trigger constraints:
+\[
+z^{\mathrm{cal}} \ge y_{A2}+y_{B2}-1,
+\]
+\[
+z^{\mathrm{cal}} \le y_{A2},
+\]
+\[
+z^{\mathrm{cal}} \le y_{B2}.
+\]
+
+Variable domains:
+\[
+x_{ep}\ge 0 \quad \forall (e,p)\in X,
+\qquad
+y_e\in\{0,1\}\quad \forall e\in E,
+\qquad
+z^{\mathrm{cal}}\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program solved by the code with \texttt{GUROBI\_CMD}. The formulation uses binary activation variables as gates: an equipment's fixed setup cost is incurred only when its activation variable is 1, and production on that equipment is forbidden when the activation variable is 0 through the constraint
+\[
+\text{used hours}\le H_e y_e.
+\]
+
+The joint calibration rule between \texttt{A2} and \texttt{B2} is also modeled as a gate rather than a proportional surcharge. The binary variable \texttt{joint\_calibration} is forced to equal 1 exactly when both \texttt{y['A2']} and \texttt{y['B2']} are 1, and then a single fee \texttt{A2\_B2\_joint\_calibration\_fee} is subtracted once in the objective.
+
+Only compatible equipment-product pairs appearing in the code are created as \(x_{ep}\) variables; incompatible pairs are omitted rather than included with explicit zero constraints. The total quantity \(q_p\) is not an independent decision variable in the code, but a linear expression equal to the stage-A flow for product \(p\); by flow balance this also equals the stage-B flow.

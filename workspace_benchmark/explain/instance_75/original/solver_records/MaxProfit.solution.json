@@ -1,0 +1,57 @@
+{
+  "solver": "gurobi",
+  "model_name": "MaxProfit",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 57.0,
+  "objective_bound": 57.0,
+  "mip_gap": null,
+  "runtime": 0.0004119873046875,
+  "node_count": 0.0,
+  "iteration_count": 1.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_5d7_v9r1/solver_records/MaxProfit.gurobi.log",
+  "variables": {
+    "cDisposed": {
+      "value": 5.666666666666666,
+      "reduced_cost": 0.0
+    },
+    "cSold": {
+      "value": 5.0,
+      "reduced_cost": 0.0
+    },
+    "xA": {
+      "value": 0.0,
+      "reduced_cost": -0.0
+    },
+    "xB": {
+      "value": 5.333333333333333,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Process1Time": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 2.0
+    },
+    "Process2Time": {
+      "sense": "<=",
+      "slack": 2.666666666666668,
+      "dual_value": 0.0
+    },
+    "ByproductBalance": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -2.0
+    },
+    "MaxCSales": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 5.0
+    }
+  }
+}

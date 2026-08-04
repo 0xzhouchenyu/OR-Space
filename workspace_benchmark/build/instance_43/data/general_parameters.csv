@@ -1,0 +1,12 @@
+Parameter_Name,Value,Unit,Context_Description
+min_raw_material_A,240,pieces,Minimum required raw material A per day
+min_raw_material_B,80,kg,Minimum required raw material B per day
+min_raw_material_C,120,tons,Minimum required raw material C per day
+warehouse_A_truck_capacity_A,4,pieces,Raw material A transported per truck from warehouse A
+warehouse_A_truck_capacity_B,2,kg,Raw material B transported per truck from warehouse A
+warehouse_A_truck_capacity_C,6,tons,Raw material C transported per truck from warehouse A
+warehouse_A_truck_cost,200,yuan,Freight cost per truck from warehouse A
+warehouse_B_truck_capacity_A,7,pieces,Raw material A transported per truck from warehouse B
+warehouse_B_truck_capacity_B,2,kg,Raw material B transported per truck from warehouse B
+warehouse_B_truck_capacity_C,2,tons,Raw material C transported per truck from warehouse B
+warehouse_B_truck_cost,160,yuan,Freight cost per truck from warehouse B

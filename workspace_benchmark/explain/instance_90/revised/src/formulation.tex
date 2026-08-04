@@ -1,0 +1,137 @@
+\section*{Sets and Indices}
+
+There are no nontrivial index sets in the implemented model. The three package types are:
+\[
+\{A,B,C\}.
+\]
+
+\section*{Parameters}
+
+All parameter names below correspond directly to fields in \texttt{general\_parameters.csv}.
+
+\[
+\begin{aligned}
+&S &&= \texttt{shirts\_inventory} &&\text{total shirts available},\\
+&P &&= \texttt{pants\_inventory} &&\text{total pants available},\\
+&L &&= \texttt{labor\_hours\_total} &&\text{total packaging labor budget}.
+\end{aligned}
+\]
+
+For each package \(k\in\{A,B,C\}\):
+\[
+\begin{aligned}
+&r_k &&= \text{package revenue per unit} 
+&&\text{from }\texttt{package\_a\_price},\texttt{package\_b\_price},\texttt{package\_c\_price},\\
+&s_k &&= \text{shirts used per unit}
+&&\text{from }\texttt{package\_a\_shirts},\texttt{package\_b\_shirts},\texttt{package\_c\_shirts},\\
+&p_k &&= \text{pants used per unit}
+&&\text{from }\texttt{package\_a\_pants},\texttt{package\_b\_pants},\texttt{package\_c\_pants},\\
+&\ell_k &&= \text{labor hours per unit}
+&&\text{from }\texttt{labor\_hours\_per\_A},\texttt{labor\_hours\_per\_B},\texttt{labor\_hours\_per\_C},\\
+&m_k &&= \text{minimum campaign batch if launched}
+&&\text{from }\texttt{min\_campaign\_batch\_a},\texttt{min\_campaign\_batch\_b},\texttt{min\_campaign\_batch\_c},\\
+&F_k &&= \text{activation cost if launched}
+&&\text{from }\texttt{activation\_cost\_a},\texttt{activation\_cost\_b},\texttt{activation\_cost\_c},\\
+&M_k &&= \text{linking upper bound}
+&&\text{from }\texttt{bigM\_a},\texttt{bigM\_b},\texttt{bigM\_c}.
+\end{aligned}
+\]
+
+Display-review gate parameters:
+\[
+\begin{aligned}
+&T_B &&= \texttt{package\_b\_review\_threshold},\\
+&C_B &&= \texttt{package\_b\_review\_charge},\\
+&T_C &&= \texttt{package\_c\_review\_threshold},\\
+&C_C &&= \texttt{package\_c\_review\_charge}.
+\end{aligned}
+\]
+
+For this instance, the business brief states that the Package C deluxe-display review is a gate: up to \(T_C=27\) units of Package C incur no extra review charge, while exceeding that level triggers a one-time charge \(C_C=30\).
+
+\section*{Decision Variables}
+
+\[
+x_A \text{ (code: \texttt{x\_a})},\quad
+x_B \text{ (code: \texttt{x\_b})},\quad
+x_C \text{ (code: \texttt{x\_c})}
+\]
+are nonnegative integer numbers of packages sold.
+
+\[
+y_A \text{ (code: \texttt{y\_a})},\quad
+y_B \text{ (code: \texttt{y\_b})},\quad
+y_C \text{ (code: \texttt{y\_c})}
+\]
+are binary campaign-activation variables, where \(y_k=1\) indicates that package \(k\) is launched.
+
+\[
+z_B \text{ (code: \texttt{review\_b})},\quad
+z_C \text{ (code: \texttt{review\_c})}
+\]
+are binary review-charge indicators for Packages B and C.
+
+\section*{Objective}
+
+Maximize net revenue:
+\[
+\max \;
+r_A x_A + r_B x_B + r_C x_C
+- F_A y_A - F_B y_B - F_C y_C
+- C_B z_B - C_C z_C .
+\]
+
+\section*{Constraints}
+
+Inventory and labor capacities:
+\[
+s_A x_A + s_B x_B + s_C x_C \le S,
+\]
+\[
+p_A x_A + p_B x_B + p_C x_C \le P,
+\]
+\[
+\ell_A x_A + \ell_B x_B + \ell_C x_C \le L.
+\]
+
+Campaign launch linking and minimum-batch gates:
+\[
+x_A \le M_A y_A,\qquad x_A \ge m_A y_A,
+\]
+\[
+x_B \le M_B y_B,\qquad x_B \ge m_B y_B,
+\]
+\[
+x_C \le M_C y_C,\qquad x_C \ge m_C y_C.
+\]
+
+Package B review gate:
+\[
+x_B \le T_B + M_B z_B.
+\]
+
+Package C deluxe-display review gate:
+\[
+x_C \le T_C + M_C z_C.
+\]
+
+Integrality and binary restrictions:
+\[
+x_A,x_B,x_C \in \mathbb{Z}_{\ge 0},
+\qquad
+y_A,y_B,y_C,z_B,z_C \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The formulation above matches the implemented mixed-integer linear model in \texttt{current\_heuristic.py}.
+
+The review-charge logic is implemented as a one-way gate, not as a full logical equivalence. Specifically, the constraints
+\[
+x_B \le T_B + M_B z_B,\qquad x_C \le T_C + M_C z_C
+\]
+guarantee that if \(x_B>T_B\) then \(z_B=1\), and if \(x_C>T_C\) then \(z_C=1\), thereby triggering the corresponding one-time charges in the objective. However, the code does not include reverse constraints such as \(x_B \ge T_B+1\) when \(z_B=1\) or \(x_C \ge T_C+1\) when \(z_C=1\). Thus \(z_B=1\) or \(z_C=1\) is allowed even when the associated threshold is not exceeded, though optimality will generally avoid paying an unnecessary charge.
+
+Likewise, there are no explicit constraints of the form \(z_B \le y_B\) or \(z_C \le y_C\); the implemented model relies on the objective and the upper-threshold constraints only.
+
+The model is solved as a MILP by the solver interface \texttt{GUROBI\_CMD(msg=0)} through PuLP-compatible syntax.

@@ -1,0 +1,7 @@
+Two steel furnaces at a steel plant each use two methods of steelmaking simultaneously. The first method and the second method have different time and cost requirements. Each furnace produces a fixed amount of steel regardless of the method used. Additionally, there is a minimum production requirement within a specified time frame. Please refer to the corresponding CSV files in the data folder for specific parameter values. The goal is to allocate these two methods to minimize fuel expenses, and this problem can be formulated as a linear programming model.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the planning lead framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The furnace supervisor added a refractory cooldown rule for off-peak running. A furnace may handle up to 2 off-peak batches normally; if the same furnace takes more than 2 off-peak batches, that furnace carries a 20-dollar cooldown burden. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

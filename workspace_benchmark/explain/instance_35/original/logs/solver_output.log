@@ -1,0 +1,11 @@
+Number of batches: 5
+Number of vats: 3
+Best permutation (batch order): [2, 4, 5, 3, 1]
+Batch 2: completion times = [2.0, 3.5, 4.5]
+Batch 4: completion times = [4.0, 6.0, 8.0]
+Batch 5: completion times = [6.1, 8.1, 11.1]
+Batch 3: completion times = [9.1, 10.299999999999999, 12.4]
+Batch 1: completion times = [12.1, 13.1, 14.1]
+Optimal makespan: 14.1
+OBJECTIVE_VALUE: 14.1
+Set parameter LicenseID to value 2802670

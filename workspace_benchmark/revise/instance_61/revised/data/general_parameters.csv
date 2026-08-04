@@ -1,0 +1,16 @@
+Parameter_Name,Value,Unit,Context_Description
+required_units,2000,units,Total number of units of the product that need to be produced
+energy_budget_peak,15000,kWh,Maximum total electricity consumption allowed in the peak period for all devices combined
+energy_budget_offpeak,18000,kWh,Maximum total electricity consumption allowed in the off-peak period for all devices combined
+energy_per_unit_A,5,kWh per unit,Electricity used to produce one unit on device A
+energy_per_unit_B,4,kWh per unit,Electricity used to produce one unit on device B
+energy_per_unit_C,6,kWh per unit,Electricity used to produce one unit on device C
+energy_per_unit_D,3,kWh per unit,Electricity used to produce one unit on device D
+startup_energy_A,500,kWh,Electricity consumed to start device A in a period
+startup_energy_B,450,kWh,Electricity consumed to start device B in a period
+startup_energy_C,400,kWh,Electricity consumed to start device C in a period
+startup_energy_D,350,kWh,Electricity consumed to start device D in a period
+startup_cost,150,CNY per startup,Monetary cost incurred each time a device is started in a period
+startup_budget,1500,CNY,Maximum total monetary budget available for all device startups over both periods
+energy_price_peak,1.5,CNY per kWh,Electricity price in the peak period
+energy_price_offpeak,0.8,CNY per kWh,Electricity price in the off-peak period

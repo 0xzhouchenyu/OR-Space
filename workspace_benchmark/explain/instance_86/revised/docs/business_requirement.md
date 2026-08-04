@@ -1,0 +1,7 @@
+Healthy Pet Foods Company produces two types of dog food: Meaties and Yummies. Each type of dog food requires specific raw materials, has a selling price, and incurs variable costs. The company faces constraints on the availability of grains, meat, and production capacity for Meaties. Additionally, the company aims to maximize profit. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The co-packing line is still a monthly on/off decision, but the retailer has added a shelf-reset allowance. Healthy Pet earns `retailer_rebate_fixed` only when Yummies reaches `retailer_rebate_yummies_threshold` and Meaties also reaches `retailer_rebate_min_meaties`; either condition missing means the allowance is not paid. Ingredient limits, line capacity, minimum run size, Yummies service commitment, and the monthly line charge remain in force. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

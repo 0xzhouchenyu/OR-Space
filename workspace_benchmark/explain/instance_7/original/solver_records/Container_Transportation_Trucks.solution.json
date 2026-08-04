@@ -1,0 +1,196 @@
+{
+  "solver": "gurobi",
+  "model_name": "Container_Transportation_Trucks",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 478680.0,
+  "objective_bound": 478680.0,
+  "mip_gap": 0.0,
+  "runtime": 0.002647876739501953,
+  "node_count": 1.0,
+  "iteration_count": 14.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_053horhl/solver_records/Container_Transportation_Trucks.gurobi.log",
+  "variables": {
+    "t_Lamezia_Ancona": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Lamezia_Bari": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "t_Lamezia_Genoa": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Lamezia_Naples": {
+      "value": 15.0,
+      "reduced_cost": null
+    },
+    "t_Lamezia_Venice": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Perugia_Ancona": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Perugia_Bari": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Perugia_Genoa": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "t_Perugia_Naples": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Perugia_Venice": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "t_Pescara_Ancona": {
+      "value": 12.0,
+      "reduced_cost": null
+    },
+    "t_Pescara_Bari": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Pescara_Genoa": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Pescara_Naples": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Pescara_Venice": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "t_Rome_Ancona": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "t_Rome_Bari": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Rome_Genoa": {
+      "value": 7.0,
+      "reduced_cost": null
+    },
+    "t_Rome_Naples": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "t_Rome_Venice": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Taranto_Ancona": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Taranto_Bari": {
+      "value": 9.0,
+      "reduced_cost": null
+    },
+    "t_Taranto_Genoa": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Taranto_Naples": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "t_Taranto_Venice": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Verona_Ancona": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Verona_Bari": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Verona_Genoa": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "t_Verona_Naples": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t_Verona_Venice": {
+      "value": 5.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 6.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    }
+  }
+}

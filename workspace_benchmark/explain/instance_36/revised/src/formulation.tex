@@ -1,0 +1,145 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $N = \{1,\dots,20\}$: set of all customers.
+    \item $N^{\mathrm{act}} = \{i \in N : \texttt{Mandatory\_External}_i = 0\}$: customers eligible for in-house service.
+    \item $N^{\mathrm{for}} = \{i \in N : \texttt{Mandatory\_External}_i = 1\}$: customers forced to be outsourced. For this instance,
+    \[
+    N^{\mathrm{for}} = \{12,16\}.
+    \]
+    \item $V = \{0\} \cup N^{\mathrm{act}}$: depot-and-customer node set used by the in-house routing model, where node $0$ is the depot.
+    \item $A = \{(i,j)\in V\times V : i\neq j\}$: directed arc set for in-house routing.
+    \item Indices $i,j \in V$, with customer indices restricted as needed to $N^{\mathrm{act}}$ or $N$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $q_i$: demand of customer $i$.
+    \item $[a_i,b_i]$: hard time window for node $i$. For the depot, $[a_0,b_0] = [\texttt{depot\_time\_window\_start}, \texttt{depot\_time\_window\_end}] = [0,1236]$.
+    \item $s_i$: service duration at node $i$, with $s_0=0$.
+    \item $Q$: truck capacity (\texttt{truck\_capacity}).
+    \item $K$: maximum number of in-house trucks allowed (\texttt{inhouse\_truck\_limit}); here $K=3$.
+    \item $c_i^{\mathrm{out}}$: outsourcing cost (\texttt{Outsource\_Cost}) for customer $i$.
+    \item $\ell_i \in \{0,1\}$: mandatory external indicator (\texttt{Mandatory\_External}) for customer $i$.
+    \item $(x_i^{\mathrm{coord}},y_i^{\mathrm{coord}})$: coordinates of node $i$, with depot coordinates given by \texttt{depot\_coordinates}.
+    \item $d_{ij}$: Euclidean travel distance between nodes $i$ and $j$,
+    \[
+    d_{ij} = \sqrt{(x_i^{\mathrm{coord}}-x_j^{\mathrm{coord}})^2 + (y_i^{\mathrm{coord}}-y_j^{\mathrm{coord}})^2}, \qquad (i,j)\in A.
+    \]
+    \item $M$: big-$M$ constant used in time propagation, defined in the code as
+    \[
+    M = b_0 + \max_{h\in V} s_h + \max_{p\neq q,\; p,q\in \{0\}\cup N} d_{pq}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ij}$ (code: \texttt{x[i,j]}) $\in \{0,1\}$ for $(i,j)\in A$: equals $1$ if an in-house truck traverses arc $(i,j)$.
+    \item $y_i$ (code: \texttt{y[i]}) $\in \{0,1\}$ for $i\in N^{\mathrm{act}}$: equals $1$ if eligible customer $i$ is outsourced, and $0$ if served by an in-house truck.
+    \item $t_i$ (code: \texttt{t[i]}) $\ge 0$ for $i\in V$: service start time at node $i$ in the in-house schedule.
+    \item $u_i$ (code: \texttt{u[i]}) $\ge 0$ for $i\in V$: cumulative load variable used by the implemented capacity/subtour propagation constraints.
+\end{itemize}
+
+For forced-external customers, the code fixes an auxiliary value
+\[
+z_i^{\mathrm{force}} = 1 \qquad \forall i\in N^{\mathrm{for}},
+\]
+and adds the corresponding outsourcing cost as a constant in the objective.
+
+\section*{Objective}
+
+Minimize total in-house travel distance plus outsourcing payments:
+\[
+\min \;
+\sum_{(i,j)\in A} d_{ij} x_{ij}
+\;+\;
+\sum_{i\in N^{\mathrm{act}}} c_i^{\mathrm{out}} y_i
+\;+\;
+\sum_{i\in N^{\mathrm{for}}} c_i^{\mathrm{out}} z_i^{\mathrm{force}}.
+\]
+
+Since $z_i^{\mathrm{force}}=1$ for all $i\in N^{\mathrm{for}}$, the last term is a constant equal to the total outsourcing cost of mandatory-external customers.
+
+\section*{Constraints}
+
+\paragraph{In-house fleet-size limit at the depot.}
+\[
+\sum_{j\in N^{\mathrm{act}}} x_{0j} \le K,
+\]
+\[
+\sum_{i\in N^{\mathrm{act}}} x_{i0} \le K.
+\]
+
+\paragraph{Exactly one arrangement for each eligible customer.}
+For each $j\in N^{\mathrm{act}}$,
+\[
+\sum_{i\in V:\, i\neq j} x_{ij} = 1 - y_j,
+\]
+\[
+\sum_{k\in V:\, k\neq j} x_{jk} = 1 - y_j.
+\]
+Thus each eligible customer is either outsourced ($y_j=1$ and no incident in-house arcs) or visited exactly once by an in-house route ($y_j=0$ and one incoming plus one outgoing arc).
+
+\paragraph{Forced outsourcing consistency.}
+The implemented model includes the tautological constraint
+\[
+\sum_{i\in N^{\mathrm{for}}} 1 = |N^{\mathrm{for}}|,
+\]
+which does not affect feasibility but corresponds to the code path handling mandatory-external customers outside the routing set.
+
+\paragraph{Node time-window bounds.}
+For each $i\in V$,
+\[
+t_i \ge a_i,
+\qquad
+t_i \le b_i.
+\]
+
+\paragraph{Time propagation on used in-house arcs.}
+For each $(i,j)\in A$ with $j\neq 0$,
+\[
+t_j \ge t_i + s_i + d_{ij} - M(1-x_{ij}).
+\]
+
+\paragraph{Capacity variable lower/upper bounds for eligible customers.}
+For each $i\in N^{\mathrm{act}}$,
+\[
+u_i \ge q_i,
+\]
+\[
+u_i \le Q(1-y_i).
+\]
+
+\paragraph{Load propagation on used customer-to-customer arcs.}
+For each $(i,j)\in A$ with $i\neq 0$ and $j\neq 0$,
+\[
+u_j \ge u_i + q_j - Q(1-x_{ij}).
+\]
+
+\paragraph{Variable domains.}
+\[
+x_{ij}\in\{0,1\} \qquad \forall (i,j)\in A,
+\]
+\[
+y_i\in\{0,1\} \qquad \forall i\in N^{\mathrm{act}},
+\]
+\[
+t_i\ge 0 \qquad \forall i\in V,
+\]
+\[
+u_i\ge 0 \qquad \forall i\in V.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented routing graph excludes all mandatory-external customers from $V$ entirely. Hence customers $12$ and $16$ do not appear in any in-house arc or timing/capacity constraint; their outsourcing costs are added as constants.
+    \item The model uses \texttt{inhouse\_truck\_limit} rather than the legacy \texttt{max\_trucks}; therefore at most three in-house routes can depart from and return to the depot.
+    \item The service durations are read customer-by-customer from \texttt{table\_1.csv}; although the data are uniform here, the formulation follows the code and treats them as node-specific.
+    \item The time propagation constraint is imposed only for arcs with $j\neq 0$. There is no corresponding propagation into the depot, so return-time feasibility is represented only indirectly through the depot time-window bound on $t_0$ and the rest of the constraints.
+    \item Likewise, the load propagation constraints are imposed only on customer-to-customer arcs ($i\neq 0$, $j\neq 0$). There is no explicit initialization of load on depot-departing arcs in the code beyond the bounds on $u_i$.
+    \item No explicit subtour-elimination constraints other than the time and load propagation structure are added.
+    \item The model is solved as a mixed-integer linear program through the PuLP-compatible interface with a Gurobi backend.
+\end{itemize}

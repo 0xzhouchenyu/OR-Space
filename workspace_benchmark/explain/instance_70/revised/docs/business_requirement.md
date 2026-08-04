@@ -1,0 +1,7 @@
+The Traveling Salesman Problem (TSP) involves a salesman departing from a certain city, visiting other cities to sell merchandise, and returning to the original starting city while visiting each city exactly once. The distances between the cities are provided in a separate CSV file. Please refer to the corresponding CSV files in the data folder for specific parameter values. The goal is to determine the optimal route that minimizes the total distance traveled. An integer programming model can be formulated to solve this problem.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the planning lead framed the change in business terms rather than as a spreadsheet checklist. The dispatch office is treating activity as something that must be earned by an actual working day, route, crew, or group. A closed day or unused group should stay quiet; an opened one carries the commitments in the memo. The hazardous-material inspector added one scheduled checkpoint: if the vehicle moves directly from city 2 to city 3, that leg carries an inspection stop costing 4 distance-equivalent units. The start at city 1, the end at city 4, and the direct 1-to-3 prohibition remain unchanged. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

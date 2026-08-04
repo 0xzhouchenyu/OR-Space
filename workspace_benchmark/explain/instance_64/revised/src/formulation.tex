@@ -1,0 +1,173 @@
+\section*{Sets and Indices}
+
+\[
+C=\{F,G,H,I,J\}
+\]
+set of candidates, indexed by \(c\).
+
+\section*{Parameters}
+
+For each candidate \(c \in C\):
+\[
+s_c \text{ : base salary (code: \texttt{salary[c]})}
+\]
+\[
+q_c \text{ : skill level (code: \texttt{skill[c]})}
+\]
+\[
+m_c \text{ : project management experience (code: \texttt{pm[c]})}
+\]
+
+Global parameters:
+\[
+B = 40000
+\]
+company budget on net hiring cost (code: \texttt{budget});
+
+\[
+E^{\max} = 4
+\]
+maximum number of hires (code: \texttt{max\_emp});
+
+\[
+Q^{\min} = 8
+\]
+minimum total skill level (code: \texttt{min\_skill});
+
+\[
+M^{\min} = 8
+\]
+minimum total project management experience (code: \texttt{min\_pm});
+
+\[
+\gamma = 1
+\]
+maximum number hired from \(\{G,J\}\) (code: \texttt{max\_gj});
+
+\[
+\pi^{L} = 3000
+\]
+salary premium for each Lead (code: \texttt{lead\_prem});
+
+\[
+L^{\min} = 1
+\]
+minimum number of Leads (code: \texttt{min\_leads});
+
+\[
+\beta = 2000
+\]
+benefit per counted mentorship pair (code: \texttt{mentor\_bonus});
+
+\[
+P^{\max} = 2
+\]
+maximum counted mentorship pairs (code: \texttt{max\_pairs}).
+
+Candidate-specific values from \texttt{table\_1.csv}:
+\[
+\begin{array}{c|ccccc}
+c & F & G & H & I & J\\ \hline
+s_c & 12000 & 15000 & 18000 & 5000 & 10000\\
+q_c & 2 & 3 & 4 & 1 & 2\\
+m_c & 1 & 2 & 2 & 5 & 4
+\end{array}
+\]
+
+\section*{Decision Variables}
+
+For each \(c \in C\):
+\[
+x_c \in \{0,1\}
+\]
+equals 1 if candidate \(c\) is hired (code: \texttt{x[c]}),
+
+\[
+\ell_c \in \{0,1\}
+\]
+equals 1 if candidate \(c\) is assigned role Lead (code: \texttt{lead[c]}),
+
+\[
+e_c \in \{0,1\}
+\]
+equals 1 if candidate \(c\) is assigned role Engineer (code: \texttt{eng[c]}).
+
+In addition,
+\[
+p \in \{0,1,2\}
+\]
+number of counted mentorship pairs (code: \texttt{p}).
+
+\section*{Objective}
+
+Minimize total net hiring cost:
+\[
+\min \quad \sum_{c\in C} s_c x_c \;+\; \pi^{L}\sum_{c\in C}\ell_c \;-\; \beta p.
+\]
+
+\section*{Constraints}
+
+Role assignment for each hired candidate:
+\[
+\ell_c + e_c = x_c \qquad \forall c \in C.
+\]
+
+Maximum team size:
+\[
+\sum_{c\in C} x_c \le E^{\max}.
+\]
+
+Minimum total skill:
+\[
+\sum_{c\in C} q_c x_c \ge Q^{\min}.
+\]
+
+Minimum total project management experience:
+\[
+\sum_{c\in C} m_c x_c \ge M^{\min}.
+\]
+
+Conflict restriction between \(G\) and \(J\):
+\[
+x_G + x_J \le \gamma.
+\]
+
+Minimum number of Leads:
+\[
+\sum_{c\in C} \ell_c \ge L^{\min}.
+\]
+
+Mentorship-pair counting capacity:
+\[
+p \le \sum_{c\in C} \ell_c,
+\]
+\[
+p \le \sum_{c\in C} e_c.
+\]
+
+Budget on net cost:
+\[
+\sum_{c\in C} s_c x_c \;+\; \pi^{L}\sum_{c\in C}\ell_c \;-\; \beta p \le B.
+\]
+
+Variable domains:
+\[
+x_c,\ell_c,e_c \in \{0,1\}\qquad \forall c\in C,
+\]
+\[
+0 \le p \le P^{\max}, \qquad p \in \mathbb{Z}.
+\]
+
+\section*{Notes on Implementation}
+
+The implementation solves this model as a mixed-integer linear optimization problem using PuLP with a Gurobi backend.
+
+The mentorship variable \(p\) is not defined through explicit Lead--Engineer pair variables. Instead, it is a single integer count capped by:
+\[
+p \le P^{\max},\qquad
+p \le \#\text{Leads},\qquad
+p \le \#\text{Engineers}.
+\]
+Because the objective subtracts \(\beta p\) and the same expression is also constrained by the budget, the optimizer will choose \(p\) as large as allowed by these bounds in any optimal solution.
+
+The role equation \(\ell_c + e_c = x_c\) exactly matches the code logic: if \(x_c=1\), candidate \(c\) must be assigned to exactly one of Lead or Engineer; if \(x_c=0\), both role variables must be 0.

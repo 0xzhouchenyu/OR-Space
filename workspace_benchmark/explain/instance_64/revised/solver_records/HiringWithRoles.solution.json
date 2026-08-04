@@ -1,0 +1,150 @@
+{
+  "solver": "gurobi",
+  "model_name": "HiringWithRoles",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 39000.0,
+  "objective_bound": 39000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0006799697875976562,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_boa0aj1s/solver_records/HiringWithRoles.gurobi.log",
+  "variables": {
+    "eng_F": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "eng_G": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "eng_H": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "eng_I": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "eng_J": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "lead_F": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "lead_G": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "lead_H": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "lead_I": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "lead_J": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "pairs": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_F": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_G": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_H": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_I": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_J": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Role_F": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Role_G": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Role_H": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Role_I": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Role_J": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MaxEmployees": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "MinSkill": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "MinPM": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "MaxOneGJ": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MinLeads": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "PairLeadCap": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "PairEngCap": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "Budget": {
+      "sense": "<=",
+      "slack": 1000.0,
+      "dual_value": null
+    }
+  }
+}

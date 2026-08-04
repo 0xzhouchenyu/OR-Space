@@ -1,0 +1,7 @@
+A furniture store is considering ordering chairs from three different manufacturers to minimize the total cost of the order. The store has specific constraints on the number of chairs per order, the total number of chairs required, and dependencies between manufacturers. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the risk reviewer framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The chair purchase now has to follow the supplier reliability policy. For each manufacturer used this period, procurement must choose either the regular channel or the express channel, never both for the same supplier. The chosen channel brings its own fixed fee from the `fixed_fee_*` parameters, and all orders together must respect `weekly_order_budget` while meeting the required chair quantity. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

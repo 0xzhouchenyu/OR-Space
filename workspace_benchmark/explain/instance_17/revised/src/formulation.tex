@@ -1,0 +1,122 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I=\{1,\dots,n\}$: set of key target parts (here $n=4$), indexed by $i$.
+    \item $S=\{A,B\}$: aircraft-availability scenarios, indexed by $s$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_i$: distance from the airport to part $i$ (from \texttt{Distance\_from\_Airport\_km}).
+    \item $p_i^H$: probability that one heavy bomb destroys part $i$ (from \texttt{Probability\_of\_Destruction\_per\_Heavy\_Bomb[i]}).
+    \item $p_i^L$: probability that one light bomb destroys part $i$ (from \texttt{Probability\_of\_Destruction\_per\_Light\_Bomb[i]}).
+    \item $H^{\max}$: heavy-bomb inventory limit (code/data: \texttt{max\_heavy\_bombs}).
+    \item $L^{\max}$: light-bomb inventory limit (code/data: \texttt{max\_light\_bombs}).
+    \item $F^{\max}$: total fuel limit (code/data: \texttt{fuel\_limit}).
+    \item $K$: minimum number of parts that must be destroyed for mission success (code/data: \texttt{min\_parts\_destroyed}).
+    \item $M_A, M_B$: scenario-specific sortie capacities (code/data: \texttt{max\_sorties\_A}, \texttt{max\_sorties\_B}).
+    \item $\omega_A, \omega_B$: scenario probabilities (code/data: \texttt{scenario\_prob\_A}, \texttt{scenario\_prob\_B}).
+    \item $\eta_H,\eta_L,\eta_E$: fuel efficiencies for loaded-heavy, loaded-light, and empty return flight legs (code/data: \texttt{fuel\_efficiency\_heavy\_bomb}, \texttt{fuel\_efficiency\_light\_bomb}, \texttt{fuel\_efficiency\_empty}).
+    \item $\tau$: takeoff/landing fuel per sortie (code/data: \texttt{fuel\_takeoff\_landing}).
+    \item $o_A,o_B$: scenario-specific per-sortie fuel overheads (code/data: \texttt{sortie\_fuel\_overhead\_A}, \texttt{sortie\_fuel\_overhead\_B}).
+\end{itemize}
+
+For each part $i$, the code computes base fuel per sortie as
+\[
+\bar f_i^H = \frac{d_i}{\eta_H} + \frac{d_i}{\eta_E} + \tau,
+\qquad
+\bar f_i^L = \frac{d_i}{\eta_L} + \frac{d_i}{\eta_E} + \tau,
+\]
+and scenario-specific sortie fuel as
+\[
+f_{iA}^H=\bar f_i^H+o_A,\quad f_{iB}^H=\bar f_i^H+o_B,
+\qquad
+f_{iA}^L=\bar f_i^L+o_A,\quad f_{iB}^L=\bar f_i^L+o_B.
+\]
+
+The implemented search also uses the scenario-robust sortie cap
+\[
+M = \min\{M_A,M_B\}.
+\]
+
+For exact enumeration, the code imposes per-part upper bounds based on negligible marginal gain:
+\[
+U_i^H =
+\begin{cases}
+\left\lfloor \dfrac{\log(0.001)}{\log(1-p_i^H)} \right\rfloor + 1, & p_i^H>0,\\[1ex]
+0, & p_i^H=0,
+\end{cases}
+\qquad
+U_i^L =
+\begin{cases}
+\left\lfloor \dfrac{\log(0.001)}{\log(1-p_i^L)} \right\rfloor + 1, & p_i^L>0,\\[1ex]
+0, & p_i^L=0.
+\end{cases}
+\]
+These are search bounds, not business constraints.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_i^H \in \mathbb{Z}_{\ge 0}$: number of heavy-bomb sorties assigned to part $i$ (code: \texttt{xH[i]}).
+    \item $x_i^L \in \mathbb{Z}_{\ge 0}$: number of light-bomb sorties assigned to part $i$ (code: \texttt{xL[i]}).
+\end{itemize}
+
+Derived quantities evaluated from a candidate allocation:
+\[
+q_i(x)=1-(1-p_i^H)^{x_i^H}(1-p_i^L)^{x_i^L},
+\]
+the destruction probability of part $i$ (code logic: \texttt{prob\_destroy\_part}).
+
+Let
+\[
+P_{\mathrm{succ}}(x)
+=
+\sum_{\substack{T\subseteq I\\|T|\ge K}}
+\left(\prod_{i\in T} q_i(x)\right)
+\left(\prod_{i\notin T} (1-q_i(x))\right),
+\]
+the probability that at least $K$ parts are destroyed, assuming independent part-destruction events (code logic: \texttt{prob\_at\_least\_k}).
+
+\section*{Objective}
+
+The code solves
+\[
+\max_{x^H,x^L}\;
+\omega_A\,P_{\mathrm{succ}}(x)+\omega_B\,P_{\mathrm{succ}}(x).
+\]
+Because the same precommitted allocation is used in both scenarios and combat effectiveness does not depend on scenario,
+\[
+\omega_A\,P_{\mathrm{succ}}(x)+\omega_B\,P_{\mathrm{succ}}(x)
+=
+(\omega_A+\omega_B)P_{\mathrm{succ}}(x),
+\]
+but the implemented objective is written and evaluated in the weighted-scenario form above.
+
+\section*{Constraints}
+
+The candidate plan must satisfy all of the following:
+
+\begin{align}
+\sum_{i\in I} x_i^H &\le H^{\max}, \\
+\sum_{i\in I} x_i^L &\le L^{\max}, \\
+\sum_{i\in I} (x_i^H+x_i^L) &\le M = \min\{M_A,M_B\}, \\
+\sum_{i\in I} \left(f_{iA}^H x_i^H + f_{iA}^L x_i^L\right) &\le F^{\max}, \\
+\sum_{i\in I} \left(f_{iB}^H x_i^H + f_{iB}^L x_i^L\right) &\le F^{\max}, \\
+0 \le x_i^H &\le U_i^H \qquad \forall i\in I, \\
+0 \le x_i^L &\le U_i^L \qquad \forall i\in I, \\
+x_i^H, x_i^L &\in \mathbb{Z}_{\ge 0} \qquad \forall i\in I.
+\end{align}
+
+The upper bounds $U_i^H,U_i^L$ match the implemented search domain; they restrict enumeration to allocations beyond which the code treats additional bombs on the same part as unnecessary.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is not passed to an LP/MIP solver. The code performs a depth-first exact enumeration over integer allocations $(x_i^H,x_i^L)$ within the search bounds above.
+    \item Feasibility is checked by the function \texttt{robust\_feasible}: inventories must be respected, total sorties must not exceed $\min\{M_A,M_B\}$, and the same allocation must satisfy the fuel limit under both scenario-specific fuel profiles.
+    \item The objective value is computed exactly for each feasible allocation by first evaluating each $q_i(x)$ and then computing $P_{\mathrm{succ}}(x)$ via a dynamic program for the probability of at least $K$ successes among independent Bernoulli events with probabilities $q_i(x)$.
+    \item During enumeration, the code also uses pruning based on the tighter per-sortie fuel coefficient $\max\{f_{iA}^H,f_{iB}^H\}$ for heavy bombs and $\max\{f_{iA}^L,f_{iB}^L\}$ for light bombs. This is a search acceleration device only; the actual feasibility test remains the two explicit fuel constraints above.
+    \item Since the damage model is identical in scenarios $A$ and $B$, scenario probabilities affect only the reported weighted objective expression, not the ranking of feasible plans when $\omega_A+\omega_B$ is constant.
+\end{itemize}

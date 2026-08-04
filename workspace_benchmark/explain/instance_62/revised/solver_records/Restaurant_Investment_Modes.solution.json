@@ -1,0 +1,88 @@
+{
+  "solver": "gurobi",
+  "model_name": "Restaurant_Investment_Modes",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 105000.0,
+  "objective_bound": 105000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0041751861572265625,
+  "node_count": 1.0,
+  "iteration_count": 5.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ay45wvkt/solver_records/Restaurant_Investment_Modes.gurobi.log",
+  "variables": {
+    "p_Restaurant_A": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "p_Restaurant_B": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "p_Restaurant_C": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "p_Restaurant_D": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_Restaurant_A": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Restaurant_B": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_Restaurant_C": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Restaurant_D": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Mode_Coupling_Restaurant_A": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Mode_Coupling_Restaurant_B": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "Mode_Coupling_Restaurant_C": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Mode_Coupling_Restaurant_D": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Budget": {
+      "sense": "<=",
+      "slack": 100000.0,
+      "dual_value": null
+    },
+    "Staff_Hours": {
+      "sense": "<=",
+      "slack": 2000.0,
+      "dual_value": null
+    },
+    "D_A_Exclusion": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

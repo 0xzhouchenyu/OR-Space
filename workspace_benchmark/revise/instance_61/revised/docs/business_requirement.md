@@ -1,0 +1,7 @@
+A product can be processed on any one of four devices: A, B, C, or D. The preparation completion costs, unit production costs, and maximum processing capacities for each device are provided in the corresponding CSV files in the data folder. If 2000 units of the product need to be produced, how can the total cost be minimized? Please establish a mathematical model.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the risk reviewer framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The device-production day now has peak and off-peak energy windows plus startup budgets. Every device-period combination that is brought into service consumes startup energy and startup spend, while unit production uses period-specific electricity. The 2000-unit commitment still has to be completed within device capacities and the separate `energy_budget_peak`, `energy_budget_offpeak`, and `startup_budget` limits. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

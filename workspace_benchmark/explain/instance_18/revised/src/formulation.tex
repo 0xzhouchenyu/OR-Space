@@ -1,0 +1,150 @@
+\section*{Sets and Indices}
+
+No explicit index sets are used in the implemented model. The formulation distinguishes:
+\[
+s \in \{\text{day},\text{night}\}, \qquad
+p \in \{\text{clothing},\text{curtain}\}.
+\]
+
+\section*{Parameters}
+
+All parameter names below correspond directly to fields in \texttt{general\_parameters.csv}.
+
+\[
+W \;=\; \texttt{weekly\_production\_time}
+\]
+total regular production hours that must be assigned across the two shifts.
+
+\[
+r \;=\; \texttt{fabric\_production\_rate}
+\]
+fabric output rate in meters per hour, common to both products.
+
+\[
+D^{\text{cloth}} \;=\; \texttt{min\_clothing\_fabric\_sales}, \qquad
+D^{\text{curt}} \;=\; \texttt{min\_curtain\_fabric\_sales}
+\]
+minimum weekly sales requirements in meters.
+
+The code converts these sales requirements to required production hours:
+\[
+H^{\text{cloth}} = \frac{D^{\text{cloth}}}{r}, \qquad
+H^{\text{curt}} = \frac{D^{\text{curt}}}{r}.
+\]
+
+Shift regular-hour capacities:
+\[
+C^{R}_{\text{day}} = \texttt{day\_shift\_regular\_capacity}, \qquad
+C^{R}_{\text{night}} = \texttt{night\_shift\_regular\_capacity}.
+\]
+
+Shift overtime limits:
+\[
+C^{O}_{\text{day}} = \texttt{day\_overtime\_limit}, \qquad
+C^{O}_{\text{night}} = \texttt{night\_overtime\_limit}.
+\]
+
+Shift overtime penalties:
+\[
+\pi_{\text{day}} = \texttt{day\_overtime\_penalty}, \qquad
+\pi_{\text{night}} = \texttt{night\_overtime\_penalty}.
+\]
+
+Minimum regular-hour utilization ratios:
+\[
+\alpha_{\text{day}} = \texttt{day\_min\_utilization\_ratio}, \qquad
+\alpha_{\text{night}} = \texttt{night\_min\_utilization\_ratio}.
+\]
+
+\section*{Decision Variables}
+
+Regular hours by shift:
+\[
+R_{\text{day}} \ge 0 \quad \text{(code: \texttt{day\_regular\_hours})}, \qquad
+R_{\text{night}} \ge 0 \quad \text{(code: \texttt{night\_regular\_hours})}.
+\]
+
+Overtime hours by shift:
+\[
+O_{\text{day}} \in [0,C^{O}_{\text{day}}] \quad \text{(code: \texttt{day\_overtime\_hours})},
+\]
+\[
+O_{\text{night}} \in [0,C^{O}_{\text{night}}] \quad \text{(code: \texttt{night\_overtime\_hours})}.
+\]
+
+Production hours allocated by shift and product:
+\[
+x_{\text{day,cloth}} \ge 0 \quad \text{(code: \texttt{day\_clothing\_hours})},
+\qquad
+x_{\text{night,cloth}} \ge 0 \quad \text{(code: \texttt{night\_clothing\_hours})},
+\]
+\[
+x_{\text{day,curt}} \ge 0 \quad \text{(code: \texttt{day\_curtain\_hours})},
+\qquad
+x_{\text{night,curt}} \ge 0 \quad \text{(code: \texttt{night\_curtain\_hours})}.
+\]
+
+\section*{Objective}
+
+Minimize total overtime penalty:
+\[
+\min \; \pi_{\text{day}} O_{\text{day}} + \pi_{\text{night}} O_{\text{night}}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Regular-hour balance and capacity.}
+\[
+R_{\text{day}} + R_{\text{night}} = W,
+\]
+\[
+R_{\text{day}} \le C^{R}_{\text{day}},
+\qquad
+R_{\text{night}} \le C^{R}_{\text{night}}.
+\]
+
+\paragraph{Minimum utilization by shift.}
+\[
+R_{\text{day}} \ge \alpha_{\text{day}}(R_{\text{day}} + R_{\text{night}}),
+\]
+\[
+R_{\text{night}} \ge \alpha_{\text{night}}(R_{\text{day}} + R_{\text{night}}).
+\]
+
+\paragraph{Shift production capacity including overtime.}
+\[
+x_{\text{day,cloth}} + x_{\text{day,curt}} \le R_{\text{day}} + O_{\text{day}},
+\]
+\[
+x_{\text{night,cloth}} + x_{\text{night,curt}} \le R_{\text{night}} + O_{\text{night}}.
+\]
+
+\paragraph{Minimum production requirements.}
+\[
+x_{\text{day,cloth}} + x_{\text{night,cloth}} \ge H^{\text{cloth}},
+\]
+\[
+x_{\text{day,curt}} + x_{\text{night,curt}} \ge H^{\text{curt}}.
+\]
+
+\paragraph{Nonnegativity and bounds.}
+\[
+R_{\text{day}},R_{\text{night}},x_{\text{day,cloth}},x_{\text{night,cloth}},x_{\text{day,curt}},x_{\text{night,curt}} \ge 0,
+\]
+\[
+0 \le O_{\text{day}} \le C^{O}_{\text{day}}, \qquad
+0 \le O_{\text{night}} \le C^{O}_{\text{night}}.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a linear program solved with \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+
+The formulation intentionally matches the code exactly:
+\begin{itemize}
+\item \texttt{weekly\_production\_time} is enforced as the sum of \emph{regular} day and night hours only.
+\item Overtime is introduced only through the shift production-capacity constraints, with separate limits and penalties for the two shifts.
+\item Product profits (\texttt{clothing\_fabric\_profit}, \texttt{curtain\_fabric\_profit}) and the legacy parameter \texttt{max\_overtime} are loaded from data but are not used in the implemented optimization model.
+\item The sales requirements are converted to required production hours via division by \texttt{fabric\_production\_rate}, and the demand constraints are imposed as lower bounds on total production hours by product.
+\item There is no explicit equality forcing all available regular or overtime capacity to be used; only the listed balance, utilization, capacity, and minimum-demand constraints are enforced.
+\end{itemize}

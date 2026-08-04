@@ -1,0 +1,181 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+\item $I$: set of inheritance items, indexed by $i$.
+\item $H \subseteq I$: items whose value exceeds the high-value threshold, i.e., high-value items.
+\item $D \subseteq I$: diamond items.
+\item $J \subseteq I$: Jack Russell racing dogs. In this instance, the code applies the dog-coupling constraints only if $|J|=2$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+\item $v_i \in \mathbb{R}_{+}$: value of item $i$ from \texttt{table\_1.csv}.
+\item $V^{\mathrm{tot}}=\sum_{i\in I} v_i$: total estate value.
+\item $\alpha \in [0,1]$: minimum total ownership share for son 1 (\texttt{son1\_min\_share}).
+\item $\tau^{H} \in \mathbb{R}_{+}$: high-value threshold (\texttt{high\_value\_threshold}).
+\item $K^{H}\in \mathbb{Z}_{+}$: maximum number of high-value items per son (\texttt{max\_high\_value\_items\_per\_son}).
+\item $K^{D}\in \mathbb{Z}_{+}$: maximum number of deferred diamonds per son (\texttt{deferred\_diamonds\_per\_son}).
+\item $w^{\mathrm{imm}}\in \mathbb{R}_{+}$: weight on immediate-value imbalance (\texttt{immediate\_tax\_weight}).
+\item $w^{\mathrm{tot}}\in \mathbb{R}_{+}$: weight on total-value imbalance (\texttt{total\_tax\_weight}).
+\end{itemize}
+
+The sets are instantiated from the data exactly as in the code:
+\[
+H=\{i\in I: v_i>\tau^{H}\},\qquad
+D=\{i\in I: \text{``Diamond'' appears in the item name}\},
+\]
+\[
+J=\{i\in I: \text{``Jack Russell'' appears in the item name}\}.
+\]
+
+\section*{Decision Variables}
+
+For each item $i\in I$:
+\begin{itemize}
+\item $x^{\mathrm{imm},1}_i\in\{0,1\}$ (code: \texttt{x\_immediate\_s1[i]}): 1 if item $i$ is transferred immediately to son 1.
+\item $x^{\mathrm{imm},2}_i\in\{0,1\}$ (code: \texttt{x\_immediate\_s2[i]}): 1 if item $i$ is transferred immediately to son 2.
+\item $x^{\mathrm{def}}_i\in\{0,1\}$ (code: \texttt{x\_deferred[i]}): 1 if item $i$ is deferred.
+\item $x^{\mathrm{own},1}_i\in\{0,1\}$ (code: \texttt{x\_owner\_s1[i]}): 1 if son 1 is the eventual owner of item $i$.
+\item $x^{\mathrm{own},2}_i\in\{0,1\}$ (code: \texttt{x\_owner\_s2[i]}): 1 if son 2 is the eventual owner of item $i$.
+\item $y^{\mathrm{def},1}_i\in\{0,1\}$ (code: \texttt{y\_deferred\_s1[i]}): 1 if item $i$ is both deferred and eventually owned by son 1.
+\item $y^{\mathrm{def},2}_i\in\{0,1\}$ (code: \texttt{y\_deferred\_s2[i]}): 1 if item $i$ is both deferred and eventually owned by son 2.
+\end{itemize}
+
+Aggregate continuous variables:
+\begin{itemize}
+\item $\Delta^{\mathrm{imm}}\ge 0$ (code: \texttt{diff\_immediate}): absolute imbalance in immediate-transfer value.
+\item $\Delta^{\mathrm{tot}}\ge 0$ (code: \texttt{diff\_total}): absolute imbalance in total ownership value.
+\item $z\ge 0$ (code: \texttt{tax\_weighted\_diff}): weighted objective value.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the weighted sum of the immediate-value imbalance and the total-value imbalance:
+\[
+\min z
+\]
+with
+\[
+z = w^{\mathrm{imm}} \Delta^{\mathrm{imm}} + w^{\mathrm{tot}} \Delta^{\mathrm{tot}}.
+\]
+
+\section*{Constraints}
+
+\paragraph{1. Each item has exactly one eventual owner.}
+\[
+x^{\mathrm{own},1}_i + x^{\mathrm{own},2}_i = 1
+\qquad \forall i\in I.
+\]
+
+\paragraph{2. Each item is either immediate to son 1, immediate to son 2, or deferred.}
+\[
+x^{\mathrm{imm},1}_i + x^{\mathrm{imm},2}_i + x^{\mathrm{def}}_i = 1
+\qquad \forall i\in I.
+\]
+
+\paragraph{3. Immediate transfer must be consistent with eventual ownership.}
+\[
+x^{\mathrm{imm},1}_i \le x^{\mathrm{own},1}_i
+\qquad \forall i\in I,
+\]
+\[
+x^{\mathrm{imm},2}_i \le x^{\mathrm{own},2}_i
+\qquad \forall i\in I.
+\]
+
+\paragraph{4. Jack Russell dogs must not be separated.}
+If $J=\{j_1,j_2\}$, then
+\[
+x^{\mathrm{imm},1}_{j_1}=x^{\mathrm{imm},1}_{j_2},
+\qquad
+x^{\mathrm{imm},2}_{j_1}=x^{\mathrm{imm},2}_{j_2},
+\]
+\[
+x^{\mathrm{def}}_{j_1}=x^{\mathrm{def}}_{j_2},
+\qquad
+x^{\mathrm{own},1}_{j_1}=x^{\mathrm{own},1}_{j_2},
+\qquad
+x^{\mathrm{own},2}_{j_1}=x^{\mathrm{own},2}_{j_2}.
+\]
+
+\paragraph{5. High-value concentration limit.}
+\[
+\sum_{i\in H} x^{\mathrm{own},1}_i \le K^{H},
+\qquad
+\sum_{i\in H} x^{\mathrm{own},2}_i \le K^{H}.
+\]
+
+\paragraph{6. Linearization for deferred diamonds by son.}
+For each diamond $i\in D$,
+\[
+y^{\mathrm{def},1}_i \le x^{\mathrm{def}}_i,\qquad
+y^{\mathrm{def},1}_i \le x^{\mathrm{own},1}_i,\qquad
+y^{\mathrm{def},1}_i \ge x^{\mathrm{def}}_i + x^{\mathrm{own},1}_i - 1,
+\]
+\[
+y^{\mathrm{def},2}_i \le x^{\mathrm{def}}_i,\qquad
+y^{\mathrm{def},2}_i \le x^{\mathrm{own},2}_i,\qquad
+y^{\mathrm{def},2}_i \ge x^{\mathrm{def}}_i + x^{\mathrm{own},2}_i - 1.
+\]
+For each non-diamond $i\in I\setminus D$,
+\[
+y^{\mathrm{def},1}_i = 0,\qquad y^{\mathrm{def},2}_i = 0.
+\]
+
+\paragraph{7. Deferred-diamond limits.}
+\[
+\sum_{i\in I} y^{\mathrm{def},1}_i \le K^{D},
+\qquad
+\sum_{i\in I} y^{\mathrm{def},2}_i \le K^{D}.
+\]
+
+\paragraph{8. Minimum total ownership share for son 1.}
+Let
+\[
+V^{\mathrm{own}}_1=\sum_{i\in I} v_i x^{\mathrm{own},1}_i.
+\]
+Then
+\[
+V^{\mathrm{own}}_1 \ge \alpha V^{\mathrm{tot}}.
+\]
+
+\paragraph{9. Immediate and total values.}
+The code uses
+\[
+V^{\mathrm{imm}}_1=\sum_{i\in I} v_i x^{\mathrm{imm},1}_i,\qquad
+V^{\mathrm{imm}}_2=\sum_{i\in I} v_i x^{\mathrm{imm},2}_i,
+\]
+\[
+V^{\mathrm{own}}_2=\sum_{i\in I} v_i x^{\mathrm{own},2}_i.
+\]
+
+\paragraph{10. Absolute imbalance in immediate transfers.}
+\[
+\Delta^{\mathrm{imm}} \ge V^{\mathrm{imm}}_1 - V^{\mathrm{imm}}_2,
+\qquad
+\Delta^{\mathrm{imm}} \ge V^{\mathrm{imm}}_2 - V^{\mathrm{imm}}_1.
+\]
+
+\paragraph{11. Absolute imbalance in total ownership.}
+\[
+\Delta^{\mathrm{tot}} \ge V^{\mathrm{own}}_1 - V^{\mathrm{own}}_2,
+\qquad
+\Delta^{\mathrm{tot}} \ge V^{\mathrm{own}}_2 - V^{\mathrm{own}}_1.
+\]
+
+\paragraph{12. Weighted-difference definition.}
+\[
+z = w^{\mathrm{imm}} \Delta^{\mathrm{imm}} + w^{\mathrm{tot}} \Delta^{\mathrm{tot}}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+\item The implemented model is a binary mixed-integer linear optimization model solved through the PuLP-compatible interface with \texttt{GUROBI\_CMD(msg=0)}.
+\item The formulation intentionally distinguishes immediate transfer variables from eventual ownership variables. Deferred items still have exactly one eventual owner through $x^{\mathrm{own},1}_i,x^{\mathrm{own},2}_i$.
+\item The high-value limit is applied to eventual ownership counts, not to immediate transfers.
+\item The deferred-diamond limit is enforced per son via the auxiliary variables $y^{\mathrm{def},1}_i,y^{\mathrm{def},2}_i$, which represent the conjunction of deferred status and that son's ownership.
+\item The Jack Russell coupling is implemented only when exactly two such dogs are detected in the data; then their immediate assignment, deferred status, and ownership must all match.
+\item The objective does not minimize the raw difference in total values alone; it minimizes the weighted sum of two absolute imbalances exactly as defined in the code.
+\end{itemize}

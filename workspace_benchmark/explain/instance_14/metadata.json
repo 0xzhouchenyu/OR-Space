@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_014",
+  "instance_number": 14,
+  "source_revise_instance": "IndustryOR_14_revise_business",
+  "domain": "Meal_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Meal_Planning",
+    "question": "Using the revised LP-relaxation output and the revised code/formulation, explain why the optimal objective drops from 123.8 in the original model to 58.0 in the revised model. Your answer must identify the exact revised decision variables and constraints that force the solution to use `lunch_0`, `lunch_5`, `lunch_7`, `dinner_0`, `dinner_5`, `dinner_7` (map the item indices back to exact `Item` names and cite the relevant CSV columns and parameter values such as `Protein_Content_per_100g`, `Type`, `min_vegetable_types=2`, `max_meal_units=3`, and the two exact 300g meal-balance equations). Then diagnose the LP state by naming at least one binding constraint family and one nonbinding global nutrition/budget family from solver output, interpret the corresponding slack/shadow-price business meaning, and explain why you cannot linearly extrapolate that marginal value to predict protein gains from relaxing meal-size or vegetable-count requirements in the integer model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "dinner.gurobi.log",
+        "dinner.lp_relaxation.json",
+        "dinner.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "daily_meals.gurobi.log",
+        "daily_meals.lp_relaxation.json",
+        "daily_meals.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 67.08
+  }
+}

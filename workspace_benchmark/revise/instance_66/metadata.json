@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_66_revise_business",
+  "original_instance_id": "IndustryOR_66",
+  "revise_description": "In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. The operations lead described this revision as a timing promise, not a quantity tweak. Work, inventory, cash, or capacity that leaves one ledger position should only reappear when the business clock says it has cleared. The two-period toy season now has a fatigue carryover. Period-1 overtime above `period1_overtime_fatigue_threshold` reduces period-2 regular labor by `period2_labor_recovery_loss`, and heavy total overtime above `overtime_review_threshold` brings the seasonal safety review cost `seasonal_safety_review_fee`. Period-specific demand and inspection limits remain separate. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Medium",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+6var, +8constr, mod_4constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 6,
+        "-variable": 0,
+        "+constraint": 8,
+        "-constraint": 0,
+        "modify_constraint": 4,
+        "modify_data": 1
+      },
+      "op_count": 19,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 61.111111
+  }
+}

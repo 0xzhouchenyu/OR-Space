@@ -1,0 +1,94 @@
+{
+  "solver": "gurobi",
+  "model_name": "FarmProfit_Revised",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 34800.0,
+  "objective_bound": 34800.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0019288063049316406,
+  "node_count": 1.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_rpj23v69/solver_records/FarmProfit_Revised.gurobi.log",
+  "variables": {
+    "chickens_premium": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "chickens_regular": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "cows_premium": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "cows_regular": {
+      "value": 86.0,
+      "reduced_cost": null
+    },
+    "sheep_premium": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "sheep_regular": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "z_expand": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": -76.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 44.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 11.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 150.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 150.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": null
+    }
+  }
+}

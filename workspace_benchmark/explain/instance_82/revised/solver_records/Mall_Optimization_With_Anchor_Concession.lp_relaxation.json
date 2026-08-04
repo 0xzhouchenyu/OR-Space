@@ -1,0 +1,104 @@
+{
+  "solver": "gurobi",
+  "model_name": "Mall_Optimization_With_Anchor_Concession_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 23.167934782608697,
+  "runtime": 0.0003001689910888672,
+  "variables": {
+    "catering_third_store_security": {
+      "value": 0.0,
+      "reduced_cost": -0.7
+    },
+    "x_0_1": {
+      "value": 0.0,
+      "reduced_cost": -0.7750000000000015
+    },
+    "x_0_2": {
+      "value": 0.0,
+      "reduced_cost": -0.1875000000000009
+    },
+    "x_0_3": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_1_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_1_2": {
+      "value": 1.0,
+      "reduced_cost": 0.4625000000000008
+    },
+    "x_2_1": {
+      "value": 0.0,
+      "reduced_cost": -0.40000000000000213
+    },
+    "x_2_2": {
+      "value": 0.6277173913043477,
+      "reduced_cost": 0.0
+    },
+    "x_2_3": {
+      "value": 0.37228260869565233,
+      "reduced_cost": 0.0
+    },
+    "x_3_0": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_4_1": {
+      "value": 0.0,
+      "reduced_cost": -0.5500000000000025
+    },
+    "x_4_2": {
+      "value": 1.0,
+      "reduced_cost": 0.42499999999999805
+    },
+    "x_4_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.762500000000002
+    },
+    "_C2": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.8625000000000009
+    },
+    "_C3": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 3.200000000000004
+    },
+    "_C4": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "_C5": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.3250000000000037
+    },
+    "_C6": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0028260869565217375
+    },
+    "_C7": {
+      "sense": ">",
+      "slack": -1.3722826086956523,
+      "dual_value": 0.0
+    },
+    "_C8": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    }
+  }
+}

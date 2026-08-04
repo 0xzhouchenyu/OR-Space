@@ -1,0 +1,182 @@
+{
+  "solver": "gurobi",
+  "model_name": "Daily_Transport_With_Leasing_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 640.0,
+  "runtime": 0.0004029273986816406,
+  "variables": {
+    "leasing_units_offpeak": {
+      "value": 0.0,
+      "reduced_cost": 58.0
+    },
+    "leasing_units_peak": {
+      "value": 0.0,
+      "reduced_cost": 58.0
+    },
+    "leasing_used": {
+      "value": 0.0,
+      "reduced_cost": 100.0
+    },
+    "method_active_large_truck_offpeak": {
+      "value": 0.12,
+      "reduced_cost": 0.0
+    },
+    "method_active_large_truck_peak": {
+      "value": 0.2,
+      "reduced_cost": 0.0
+    },
+    "method_active_motorcycle_offpeak": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "method_active_motorcycle_peak": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "method_active_small_truck_offpeak": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "method_active_small_truck_peak": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "trips_large_truck_offpeak": {
+      "value": 2.4,
+      "reduced_cost": 0.0
+    },
+    "trips_large_truck_peak": {
+      "value": 4.0,
+      "reduced_cost": 0.0
+    },
+    "trips_motorcycle_offpeak": {
+      "value": -0.0,
+      "reduced_cost": 20.0
+    },
+    "trips_motorcycle_peak": {
+      "value": -0.0,
+      "reduced_cost": 20.0
+    },
+    "trips_small_truck_offpeak": {
+      "value": -0.0,
+      "reduced_cost": 30.0
+    },
+    "trips_small_truck_peak": {
+      "value": -0.0,
+      "reduced_cost": 30.0
+    }
+  },
+  "constraints": {
+    "Peak_Demand": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 2.0
+    },
+    "Offpeak_Demand": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 2.0
+    },
+    "Motorcycle_Trip_Limit": {
+      "sense": "<",
+      "slack": 8.0,
+      "dual_value": 0.0
+    },
+    "Total_Trip_Limit": {
+      "sense": "<",
+      "slack": 13.600000000000001,
+      "dual_value": 0.0
+    },
+    "Trip_UB_motorcycle_peak": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Trip_LB_motorcycle_peak": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Trip_UB_motorcycle_offpeak": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Trip_LB_motorcycle_offpeak": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Trip_UB_small_truck_peak": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Trip_LB_small_truck_peak": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Trip_UB_small_truck_offpeak": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Trip_LB_small_truck_offpeak": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Trip_UB_large_truck_peak": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Trip_LB_large_truck_peak": {
+      "sense": ">",
+      "slack": -3.8,
+      "dual_value": 0.0
+    },
+    "Trip_UB_large_truck_offpeak": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Trip_LB_large_truck_offpeak": {
+      "sense": ">",
+      "slack": -2.28,
+      "dual_value": 0.0
+    },
+    "Active_Method_Limit_peak": {
+      "sense": "<",
+      "slack": 1.8,
+      "dual_value": 0.0
+    },
+    "Active_Method_Limit_offpeak": {
+      "sense": "<",
+      "slack": 1.88,
+      "dual_value": 0.0
+    },
+    "Leasing_Capacity": {
+      "sense": "<",
+      "slack": 200.0,
+      "dual_value": 0.0
+    },
+    "Leasing_UB_Activation": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Leasing_LB_Activation": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Leasing_Peak_Share_Limit": {
+      "sense": "<",
+      "slack": 50.0,
+      "dual_value": 0.0
+    }
+  }
+}

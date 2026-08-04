@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_034",
+  "instance_number": 34,
+  "source_revise_instance": "IndustryOR_34_revise_business",
+  "domain": "Container_Loading",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Container_Loading",
+    "question": "In the revised model, explain exactly how the business statement “any container carrying Goods E has a reduced maximum weight capacity of 45 tons” is implemented from document to CSV to code to math, and why this change raises the optimal objective from 7 to 8 containers. Your answer must name the revised code variables and constraints involved (including the new binary and the modified capacity row), the exact CSV column names and parameter values used, and at least one concrete revised solution variable showing a container with E present. Then, using the LP-relaxation diagnostics, discuss which revised constraints are binding versus slack for an E-container, what the shadow-price interpretation would mean in business terms for tightening/relaxing the fragile-E capacity or the D-minimum rule, and why a linear marginal extrapolation from the LP relaxation cannot be trusted to predict the integer objective beyond a local change."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ContainerMinimization.gurobi.log",
+        "ContainerMinimization.lp_relaxation.json",
+        "ContainerMinimization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ContainerMinimization.gurobi.log",
+        "ContainerMinimization.lp_relaxation.json",
+        "ContainerMinimization.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 76.777778
+  }
+}

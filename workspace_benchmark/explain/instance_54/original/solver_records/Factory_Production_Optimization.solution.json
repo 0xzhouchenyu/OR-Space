@@ -1,0 +1,48 @@
+{
+  "solver": "gurobi",
+  "model_name": "Factory_Production_Optimization",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 135.26666666666668,
+  "objective_bound": 135.26666666666668,
+  "mip_gap": null,
+  "runtime": 0.0005588531494140625,
+  "node_count": 0.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_kbvq4zat/solver_records/Factory_Production_Optimization.gurobi.log",
+  "variables": {
+    "x_I": {
+      "value": 22.533333333333335,
+      "reduced_cost": 0.0
+    },
+    "x_II": {
+      "value": 23.200000000000003,
+      "reduced_cost": 0.0
+    },
+    "x_III": {
+      "value": 7.333333333333331,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Equipment_A_capacity": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.029999999999999957
+    },
+    "Equipment_B_capacity": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.26666666666666666
+    },
+    "Equipment_C_capacity": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.04666666666666666
+    }
+  }
+}

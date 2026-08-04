@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_56_revise_business",
+  "original_instance_id": "IndustryOR_56",
+  "revise_description": "To reflect diversified channels and financing, split buying into regular and fast modes with capacity and premium, add a credit line with interest and limit, enforce minimum inventory by month using new parameters buy_fast_capacity, fast_purchase_premium_ratio, credit_limit, monthly_interest_rate, min_inventory_month_m, and update objective to final funds minus initial funds minus total interest.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Medium",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+4var, +10constr, mod_7constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 4,
+        "-variable": 0,
+        "+constraint": 10,
+        "-constraint": 0,
+        "modify_constraint": 7,
+        "modify_data": 1
+      },
+      "op_count": 23,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 66.666667
+  }
+}

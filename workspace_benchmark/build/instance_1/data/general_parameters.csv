@@ -1,0 +1,15 @@
+Parameter_Name,Value,Unit,Context_Description
+skilled_worker_count,50,,Current number of skilled workers
+food_I_production_rate,10,kg/h,Production rate of food I per skilled worker
+food_II_production_rate,6,kg/h,Production rate of food II per skilled worker
+worker_weekly_hours,40,h,Weekly working hours per worker
+training_capacity,3,workers,Number of trainees a skilled worker can train in two weeks
+training_period,2,weeks,Duration of training period
+skilled_worker_weekly_wage,360,yuan,Weekly wage of a skilled worker
+trainee_weekly_wage_during_training,120,yuan,Weekly wage of a trainee during training period
+trainee_weekly_wage_after_training,240,yuan,Weekly wage of a trainee after training period
+skilled_worker_overtime_hours,60,h,Weekly working hours for skilled workers working overtime
+skilled_worker_overtime_wage,540,yuan,Weekly wage for skilled workers working overtime
+compensation_fee_food_I,0.5,yuan/kg,Compensation fee for delayed delivery of food I per kg per week
+compensation_fee_food_II,0.6,yuan/kg,Compensation fee for delayed delivery of food II per kg per week
+new_worker_training_goal,50,workers,Number of new workers to be trained by the end of the 8th week

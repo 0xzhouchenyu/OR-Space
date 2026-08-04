@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 2924.1,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nWorkshop A, Component 2: 100.00 hours -> 1500.00 units\nWorkshop B, Component 1: 88.28 hours -> 1324.14 units\nWorkshop B, Component 2: 61.72 hours -> 617.24 units\nWorkshop C, Component 1: 80.00 hours -> 1600.00 units\nWorkshop D, Component 2: 53.79 hours -> 806.90 units\nWorkshop D, Component 3: 146.21 hours -> 2924.14 units\nTotal Component 1: 2924.14 units\nTotal Component 2: 2924.14 units\nTotal Component 3: 2924.14 units\n\nOBJECTIVE_VALUE: 2924.1\n",
+  "stderr": "",
+  "error": null
+}

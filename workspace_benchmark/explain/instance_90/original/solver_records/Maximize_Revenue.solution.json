@@ -1,0 +1,49 @@
+{
+  "solver": "gurobi",
+  "model_name": "Maximize_Revenue",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 3600.0,
+  "objective_bound": 3600.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0006160736083984375,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_fzgukkn5/solver_records/Maximize_Revenue.gurobi.log",
+  "variables": {
+    "Package_A": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "Package_B": {
+      "value": 60.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Shirts_Inventory": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Pants_Inventory": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Min_Package_A": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Min_Package_B": {
+      "sense": ">=",
+      "slack": -50.0,
+      "dual_value": null
+    }
+  }
+}

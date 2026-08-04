@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+available_labor,1500,units,Available labor per week
+available_material,1600,units,Available material per week
+fixed_cost_shirts,2000,monetary units,Weekly fixed cost for special equipment producing shirts
+fixed_cost_short_sleeves,1500,monetary units,Weekly fixed cost for special equipment producing short-sleeved shirts
+fixed_cost_casual_clothes,1000,monetary units,Weekly fixed cost for special equipment producing casual clothes

@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_090",
+  "instance_number": 90,
+  "source_revise_instance": "IndustryOR_90_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain exactly why the optimal objective changes from 3600.0 to 3960.0 by tracing the new Package C gate from the business brief into the code and data: identify the precise CSV fields, their values, and the code variables/constraints that implement the rule that up to 27 Package C units avoid the one-time 30-pound review charge. Using the revised MIP solution and LP-relaxation diagnostics, state which revised constraints involving `x_c`, `y_c`, and `review_c` are binding or slack at the optimum, interpret the marginal meaning of the relevant shadow prices/slacks, and explain why you cannot linearly extrapolate the LP dual information to conclude what happens if Package C is increased beyond 27."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Maximize_Revenue.gurobi.log",
+        "Maximize_Revenue.lp_relaxation.json",
+        "Maximize_Revenue.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Promo_With_Display_Review.gurobi.log",
+        "Promo_With_Display_Review.lp_relaxation.json",
+        "Promo_With_Display_Review.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 73.516111
+  }
+}

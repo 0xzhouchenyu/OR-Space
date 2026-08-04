@@ -1,0 +1,205 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Manufacturers: $I = \{A,B,C\}$.
+    \item Channels: $K = \{\mathrm{regular}, \mathrm{express}\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+For each manufacturer $i \in I$:
+\begin{itemize}
+    \item Per-chair purchasing cost $c_i$:
+    \[
+    c_A=\texttt{cost\_per\_chair\_A},\quad
+    c_B=\texttt{cost\_per\_chair\_B},\quad
+    c_C=\texttt{cost\_per\_chair\_C}.
+    \]
+    \item Chairs obtained per order $q_i$:
+    \[
+    q_A=\texttt{chairs\_per\_order\_A},\quad
+    q_B=\texttt{chairs\_per\_order\_B},\quad
+    q_C=\texttt{chairs\_per\_order\_C}.
+    \]
+    \item Fixed fee by channel $f_{ik}$:
+    \[
+    f_{A,\mathrm{regular}}=\texttt{fixed\_fee\_A\_regular},\;
+    f_{A,\mathrm{express}}=\texttt{fixed\_fee\_A\_express},
+    \]
+    \[
+    f_{B,\mathrm{regular}}=\texttt{fixed\_fee\_B\_regular},\;
+    f_{B,\mathrm{express}}=\texttt{fixed\_fee\_B\_express},
+    \]
+    \[
+    f_{C,\mathrm{regular}}=\texttt{fixed\_fee\_C\_regular},\;
+    f_{C,\mathrm{express}}=\texttt{fixed\_fee\_C\_express}.
+    \]
+\end{itemize}
+
+Global parameters:
+\begin{itemize}
+    \item Minimum and maximum total chairs:
+    \[
+    L=\texttt{min\_total\_chairs},\qquad U=\texttt{max\_total\_chairs}.
+    \]
+    \item Minimum chairs from $B$ if any order is placed with $A$:
+    \[
+    m_{BA}=\texttt{min\_chairs\_B\_if\_A}.
+    \]
+    \item Dependency flag:
+    \[
+    d_{BC}=\texttt{dependency\_B\_C}.
+    \]
+    If $d_{BC}\neq 0$, using manufacturer $B$ requires using manufacturer $C$.
+    \item Budget on active manufacturer-channel combinations:
+    \[
+    W=\texttt{weekly\_order\_budget}.
+    \]
+\end{itemize}
+
+Big-$M$ order bounds used in the implementation:
+\[
+M_A=\left\lfloor \frac{U}{q_A}\right\rfloor + 1,\qquad
+M_B=\left\lfloor \frac{U}{q_B}\right\rfloor + 1,\qquad
+M_C=\left\lfloor \frac{U}{q_C}\right\rfloor + 1.
+\]
+
+\section*{Decision Variables}
+
+For each manufacturer $i\in I$ and channel $k\in K$:
+\begin{itemize}
+    \item Integer number of orders $x_{ik}$:
+    \[
+    x_{A,\mathrm{regular}} \;(\text{code: \texttt{orders\_A\_regular}}),\;
+    x_{A,\mathrm{express}} \;(\text{code: \texttt{orders\_A\_express}}),
+    \]
+    \[
+    x_{B,\mathrm{regular}} \;(\text{code: \texttt{orders\_B\_regular}}),\;
+    x_{B,\mathrm{express}} \;(\text{code: \texttt{orders\_B\_express}}),
+    \]
+    \[
+    x_{C,\mathrm{regular}} \;(\text{code: \texttt{orders\_C\_regular}}),\;
+    x_{C,\mathrm{express}} \;(\text{code: \texttt{orders\_C\_express}}),
+    \]
+    with $x_{ik}\in \mathbb{Z}_{\ge 0}$.
+    \item Binary activation variable $y_{ik}$:
+    \[
+    y_{A,\mathrm{regular}} \;(\text{code: \texttt{y\_A\_regular}}),\;
+    y_{A,\mathrm{express}} \;(\text{code: \texttt{y\_A\_express}}),
+    \]
+    \[
+    y_{B,\mathrm{regular}} \;(\text{code: \texttt{y\_B\_regular}}),\;
+    y_{B,\mathrm{express}} \;(\text{code: \texttt{y\_B\_express}}),
+    \]
+    \[
+    y_{C,\mathrm{regular}} \;(\text{code: \texttt{y\_C\_regular}}),\;
+    y_{C,\mathrm{express}} \;(\text{code: \texttt{y\_C\_express}}),
+    \]
+    with $y_{ik}\in \{0,1\}$.
+\end{itemize}
+
+Define total chairs purchased from each manufacturer:
+\[
+z_A = q_A(x_{A,\mathrm{regular}}+x_{A,\mathrm{express}}),
+\]
+\[
+z_B = q_B(x_{B,\mathrm{regular}}+x_{B,\mathrm{express}}),
+\]
+\[
+z_C = q_C(x_{C,\mathrm{regular}}+x_{C,\mathrm{express}}).
+\]
+
+\section*{Objective}
+
+Minimize total purchasing and fixed-channel cost:
+\[
+\min\;
+c_A z_A + c_B z_B + c_C z_C
++ f_{A,\mathrm{regular}}y_{A,\mathrm{regular}} + f_{A,\mathrm{express}}y_{A,\mathrm{express}}
++ f_{B,\mathrm{regular}}y_{B,\mathrm{regular}} + f_{B,\mathrm{express}}y_{B,\mathrm{express}}
++ f_{C,\mathrm{regular}}y_{C,\mathrm{regular}} + f_{C,\mathrm{express}}y_{C,\mathrm{express}}.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Link orders to channel activation.} For each manufacturer-channel pair:
+    \[
+    x_{A,\mathrm{regular}} \le M_A y_{A,\mathrm{regular}},\qquad
+    x_{A,\mathrm{regular}} \ge y_{A,\mathrm{regular}},
+    \]
+    \[
+    x_{A,\mathrm{express}} \le M_A y_{A,\mathrm{express}},\qquad
+    x_{A,\mathrm{express}} \ge y_{A,\mathrm{express}},
+    \]
+    \[
+    x_{B,\mathrm{regular}} \le M_B y_{B,\mathrm{regular}},\qquad
+    x_{B,\mathrm{regular}} \ge y_{B,\mathrm{regular}},
+    \]
+    \[
+    x_{B,\mathrm{express}} \le M_B y_{B,\mathrm{express}},\qquad
+    x_{B,\mathrm{express}} \ge y_{B,\mathrm{express}},
+    \]
+    \[
+    x_{C,\mathrm{regular}} \le M_C y_{C,\mathrm{regular}},\qquad
+    x_{C,\mathrm{regular}} \ge y_{C,\mathrm{regular}},
+    \]
+    \[
+    x_{C,\mathrm{express}} \le M_C y_{C,\mathrm{express}},\qquad
+    x_{C,\mathrm{express}} \ge y_{C,\mathrm{express}}.
+    \]
+
+    \item \textbf{At most one channel per manufacturer.}
+    \[
+    y_{A,\mathrm{regular}} + y_{A,\mathrm{express}} \le 1,
+    \]
+    \[
+    y_{B,\mathrm{regular}} + y_{B,\mathrm{express}} \le 1,
+    \]
+    \[
+    y_{C,\mathrm{regular}} + y_{C,\mathrm{express}} \le 1.
+    \]
+
+    \item \textbf{Weekly channel budget.}
+    \[
+    y_{A,\mathrm{regular}} + y_{A,\mathrm{express}}
+    + y_{B,\mathrm{regular}} + y_{B,\mathrm{express}}
+    + y_{C,\mathrm{regular}} + y_{C,\mathrm{express}}
+    \le W.
+    \]
+
+    \item \textbf{Total chair requirement.}
+    \[
+    z_A + z_B + z_C \ge L,
+    \]
+    \[
+    z_A + z_B + z_C \le U.
+    \]
+
+    \item \textbf{Conditional minimum chairs from $B$ if $A$ is used.}
+    \[
+    z_B \ge m_{BA}\bigl(y_{A,\mathrm{regular}} + y_{A,\mathrm{express}}\bigr).
+    \]
+
+    \item \textbf{Dependency of $B$ on $C$} (included only when $\texttt{dependency\_B\_C}\neq 0$ in the data):
+    \[
+    y_{B,\mathrm{regular}} + y_{B,\mathrm{express}}
+    \le
+    y_{C,\mathrm{regular}} + y_{C,\mathrm{express}}.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved with \texttt{GUROBI\_CMD} through a PuLP-compatible interface, not a heuristic search despite the file name.
+    \item The business rule described as a ``gate'' is modeled with binary activation variables and fixed fees: a fixed fee \texttt{fixed\_fee\_*} is charged iff the corresponding manufacturer-channel pair is active.
+    \item The supplier reliability policy is represented exactly as in code by the mutual-exclusion constraints
+    \(
+    y_{i,\mathrm{regular}} + y_{i,\mathrm{express}} \le 1
+    \),
+    so a manufacturer can be unused or used in exactly one of the two channels, never both.
+    \item The quantity limit named \texttt{weekly\_order\_budget} is applied exactly as coded to the number of active manufacturer-channel combinations, i.e., to \(\sum_{i,k} y_{ik}\), not to the number of orders or total spend.
+    \item The lower linking constraints \(x_{ik}\ge y_{ik}\) force at least one order whenever a channel is activated; combined with \(x_{ik}\le M_i y_{ik}\), they ensure \(y_{ik}=1\) if and only if that channel is used.
+    \item The upper bounds \(M_i=\lfloor U/q_i\rfloor+1\) match the code exactly.
+\end{itemize}

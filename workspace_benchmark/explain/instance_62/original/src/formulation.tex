@@ -1,0 +1,94 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $R$: set of candidate restaurants, indexed by $r$.
+    \item In this instance,
+    \[
+    R=\{\text{Restaurant\_A},\text{Restaurant\_B},\text{Restaurant\_C},\text{Restaurant\_D}\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $c_r$: investment cost of restaurant $r$.
+    \item $v_r$: annual revenue of restaurant $r$.
+    \item $B$ (code: \texttt{budget}): total investment budget.
+\end{itemize}
+
+Using the provided data:
+\[
+B = 6{,}000{,}000.
+\]
+
+For each restaurant:
+\[
+\begin{array}{c|cc}
+r & v_r & c_r \\
+\hline
+\text{Restaurant\_A} & 15{,}000 & 1{,}600{,}000 \\
+\text{Restaurant\_B} & 40{,}000 & 2{,}500{,}000 \\
+\text{Restaurant\_C} & 30{,}000 & 1{,}800{,}000 \\
+\text{Restaurant\_D} & 50{,}000 & 3{,}000{,}000 \\
+\end{array}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_r$ (code: \texttt{x[r['name']]}): binary variable equal to $1$ if restaurant $r$ is purchased, and $0$ otherwise.
+\end{itemize}
+
+Thus,
+\[
+x_r \in \{0,1\} \qquad \forall r \in R.
+\]
+
+\section*{Objective}
+
+Maximize total annual revenue:
+\[
+\max \sum_{r \in R} v_r x_r.
+\]
+
+For this instance:
+\[
+\max\;
+15000\,x_{\text{Restaurant\_A}}
++40000\,x_{\text{Restaurant\_B}}
++30000\,x_{\text{Restaurant\_C}}
++50000\,x_{\text{Restaurant\_D}}.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{r \in R} c_r x_r &\le B
+&& \text{(budget)} \\
+x_{\text{Restaurant\_D}} + x_{\text{Restaurant\_A}} &\le 1
+&& \text{(D--A exclusion)} \\
+x_r &\in \{0,1\}
+&& \forall r \in R.
+\end{align}
+
+For this instance, the budget constraint is:
+\[
+1600000\,x_{\text{Restaurant\_A}}
++2500000\,x_{\text{Restaurant\_B}}
++1800000\,x_{\text{Restaurant\_C}}
++3000000\,x_{\text{Restaurant\_D}}
+\le 6000000.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a binary linear optimization problem in PuLP-compatible syntax and solved with \texttt{GUROBI\_CMD(msg=0)}.
+    \item Restaurant data are loaded from \texttt{table\_1.csv} into records with fields \texttt{name}, \texttt{revenue}, and \texttt{cost}; the budget is loaded from \texttt{general\_parameters.csv} under \texttt{investment\_budget}.
+    \item The exclusion constraint between Restaurant D and Restaurant A is added only if both keys \texttt{'Restaurant\_D'} and \texttt{'Restaurant\_A'} are present in the loaded data. For this instance, both are present, so the constraint
+    \[
+    x_{\text{Restaurant\_D}} + x_{\text{Restaurant\_A}} \le 1
+    \]
+    is part of the solved model.
+    \item The code does not use the CSV parameter \texttt{restaurant\_d\_a\_constraint} numerically; instead, the D--A exclusion is hard-coded through the conditional check described above.
+\end{itemize}

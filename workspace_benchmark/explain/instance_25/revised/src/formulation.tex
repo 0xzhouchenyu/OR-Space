@@ -1,0 +1,108 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Years are represented by start times $t \in \{0,1,2\}$.
+    \item One-year investment starts are allowed at $t \in \{0,1,2\}$.
+    \item Two-year investment starts are allowed at $t \in \{0,1\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+All numerical values are taken from \texttt{general\_parameters.csv}.
+
+\begin{itemize}
+    \item Initial funds $W$ (code/data: \texttt{initial\_investment}).
+    \item One-year return rate $r_1$ (code/data: \texttt{return\_rate\_option\_1}).
+    \item Two-year return rate $r_2$ (code/data: \texttt{return\_rate\_option\_2}).
+    \item Planning horizon $H=3$ years (code/data: \texttt{planning\_horizon}).
+    \item Minimum reserve required at end of year 1, $\underline{R}_1$ (code/data: \texttt{min\_reserve\_year1}).
+    \item Minimum reserve required at end of year 2, $\underline{R}_2$ (code/data: \texttt{min\_reserve\_year2}).
+    \item Maximum amount that may be started in the two-year product in any eligible start year, $\overline{X}^{(2)}$ (code/data: \texttt{max\_option2\_start}).
+    \item Late-settlement deduction fraction applied to the two-year product started at year 0, $\delta$ (code/data: \texttt{option2\_year0\_late\_settlement\_rate}).
+\end{itemize}
+
+The implemented cash-flow factors are:
+\[
+1+r_1 \quad \text{for a one-year placement,}
+\]
+\[
+1+r_2 \quad \text{for a two-year placement,}
+\]
+and, specifically for the year-0 two-year placement that settles only after the year-2 reinvestment decision,
+\[
+(1+r_2)(1-\delta).
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{01}$ (code: \texttt{x01}): amount invested at year 0 in the one-year option.
+    \item $x_{02}$ (code: \texttt{x02}): amount invested at year 0 in the two-year option.
+    \item $x_{11}$ (code: \texttt{x11}): amount invested at year 1 in the one-year option.
+    \item $x_{12}$ (code: \texttt{x12}): amount invested at year 1 in the two-year option.
+    \item $x_{21}$ (code: \texttt{x21}): amount invested at year 2 in the one-year option.
+    \item $c_0$ (code: \texttt{c0}): cash carried from year 0 into the year-1 allocation step.
+    \item $R_1$ (code: \texttt{reserve1}): reserve held at the end of year 1.
+    \item $R_2$ (code: \texttt{reserve2}): reserve held at the end of year 2.
+    \item $T$ (code: \texttt{terminal}): terminal wealth at the end of year 3.
+\end{itemize}
+
+All decision variables are continuous and nonnegative. In addition,
+\[
+R_1 \ge \underline{R}_1, \qquad R_2 \ge \underline{R}_2.
+\]
+
+\section*{Objective}
+
+Maximize terminal wealth:
+\[
+\max \; T.
+\]
+
+\section*{Constraints}
+
+Initial allocation at year 0:
+\[
+x_{01} + x_{02} + c_0 = W.
+\]
+
+Year-1 allocation balance: cash available consists of the carryover from year 0 and the matured proceeds of the year-0 one-year investment:
+\[
+x_{11} + x_{12} + R_1 = c_0 + x_{01}(1+r_1).
+\]
+
+Year-2 allocation balance: only the year-1 reserve and the matured proceeds of the year-1 one-year investment are available before the year-2 cut-off; the year-0 two-year investment is explicitly excluded from this balance because it settles late:
+\[
+x_{21} + R_2 = R_1 + x_{11}(1+r_1).
+\]
+
+Per-start exposure limits on the two-year product:
+\[
+x_{02} \le \overline{X}^{(2)},
+\]
+\[
+x_{12} \le \overline{X}^{(2)}.
+\]
+
+Terminal wealth definition:
+\[
+T = R_2 + x_{21}(1+r_1) + x_{12}(1+r_2) + x_{02}(1+r_2)(1-\delta).
+\]
+
+Nonnegativity and reserve floors:
+\[
+x_{01},x_{02},x_{11},x_{12},x_{21},c_0,T \ge 0,
+\]
+\[
+R_1 \ge \underline{R}_1,\qquad R_2 \ge \underline{R}_2.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model implemented in \texttt{current\_heuristic.py} is a linear program solved with \texttt{GUROBI\_CMD}.
+    \item The timing revision is represented exactly by omitting the matured proceeds of $x_{02}$ from the year-2 allocation constraint and adding them only in the terminal wealth equation.
+    \item The code applies the late-settlement deduction \texttt{option2\_year0\_late\_settlement\_rate} only to the year-0 two-year investment $x_{02}$.
+    \item Although the business description says the two-year product has duration in multiples of two years, within the implemented 3-year horizon the code only models starts at years 0 and 1, with the year-1 start maturing at the terminal date and the year-0 start maturing after the year-2 reinvestment cut-off.
+    \item No integer restrictions, fixed charges, or additional policy constraints are present beyond the reserve floors and the per-start cap on the two-year product.
+\end{itemize}

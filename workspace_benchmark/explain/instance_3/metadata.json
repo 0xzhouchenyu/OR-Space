@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_003",
+  "instance_number": 3,
+  "source_revise_instance": "IndustryOR_3_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain precisely why the objective drops from 10,350,000 in the original solve to 10,300,000 in the revised solve by tracing the April–June contract logic across files. Your answer must name the exact new code variables (`P_reg[t]`, `P_ot[t]`, `C[t]`, `z[t]`), the exact CSV parameters `contract_min_units=15000` and `contract_bigM=60000`, and the `Demand_Forecast` values for April, May, and June; then identify which revised constraints become binding in those months from the solver records (including slack/value interpretation for `C_3`, `C_4`, `C_5`) and give the business meaning of their shadow-price-like marginal effect using the LP relaxation. Finally, compare against the original model’s single production-capacity constraint and explain which exact code additions/modifications force more workforce retention or inventory repositioning, and why you cannot linearly extrapolate the marginal value of tightening or loosening the 15,000-unit contract floor in this MIP."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "FoldableTableProduction.gurobi.log",
+        "FoldableTableProduction.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "FoldableTableProduction_Contract.gurobi.log",
+        "FoldableTableProduction_Contract.lp_relaxation.json",
+        "FoldableTableProduction_Contract.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 61.213333
+  }
+}

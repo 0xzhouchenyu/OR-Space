@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_73_revise_business",
+  "original_instance_id": "IndustryOR_73",
+  "revise_description": "To reflect new parental rules and budget control, introduce a two-day trip with separate day-1 and day-2 child selections plus a bonus indicator per child for attending both days. Add daily min/max and relationship constraints for each day, enforce that Charlie and Diana appear only on day 2, limit total distinct children over both days by max_distinct_children_trip, cap total cost by total_cost_budget, and require at least min_bob_days days for Bob. Objective now minimizes total two-day cost minus total bonus_saving applied to children present on both days.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+10var, +9constr, mod_6constr, mod_obj, mod_4data",
+      "counts": {
+        "+variable": 10,
+        "-variable": 0,
+        "+constraint": 9,
+        "-constraint": 0,
+        "modify_constraint": 6,
+        "modify_data": 4
+      },
+      "op_count": 30,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 72.222222
+  }
+}

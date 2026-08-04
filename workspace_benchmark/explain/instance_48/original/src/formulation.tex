@@ -1,0 +1,132 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Product models $m \in M = \{A,B\}$.
+    \item Processes $p \in P = \{\mathrm{I},\mathrm{II}\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter values below are taken from the CSV files used by the implementation.
+
+\begin{itemize}
+    \item Process-I hours required per unit:
+    \[
+    a^{\mathrm{I}}_A = 4, \qquad a^{\mathrm{I}}_B = 6.
+    \]
+    \item Process-II hours required per unit:
+    \[
+    a^{\mathrm{II}}_A = 3, \qquad a^{\mathrm{II}}_B = 2.
+    \]
+    \item Regular weekly Process-II capacity:
+    \[
+    C^{\mathrm{II}} = 70.
+    \]
+    \item Required exact weekly Process-I usage:
+    \[
+    H^{\mathrm{I}} = 150.
+    \]
+    \item Maximum allowable Process-II overtime:
+    \[
+    O^{\max} = 30.
+    \]
+    \item Unit profit under regular production:
+    \[
+    \pi_A = 300, \qquad \pi_B = 450.
+    \]
+    \item Profit reduction for units produced in Process-II overtime:
+    \[
+    \delta_A = 20, \qquad \delta_B = 25.
+    \]
+    Hence overtime-unit profits are
+    \[
+    \pi^{o}_A = \pi_A - \delta_A = 280, \qquad
+    \pi^{o}_B = \pi_B - \delta_B = 425.
+    \]
+    \item Minimum weekly profit requirement:
+    \[
+    \Pi^{\min} = 10000.
+    \]
+    \item Minimum production requirements:
+    \[
+    L_A = 10, \qquad L_B = 15.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x^r_A$ (code: \texttt{xA\_r}): units of model A produced using regular Process-II capacity.
+    \item $x^o_A$ (code: \texttt{xA\_o}): units of model A produced using overtime Process-II capacity.
+    \item $x^r_B$ (code: \texttt{xB\_r}): units of model B produced using regular Process-II capacity.
+    \item $x^o_B$ (code: \texttt{xB\_o}): units of model B produced using overtime Process-II capacity.
+\end{itemize}
+
+All variables are continuous and nonnegative:
+\[
+x^r_A, x^o_A, x^r_B, x^o_B \ge 0.
+\]
+
+For convenience, total production is
+\[
+X_A = x^r_A + x^o_A, \qquad X_B = x^r_B + x^o_B,
+\]
+corresponding in code to \texttt{total\_A} and \texttt{total\_B}.
+
+\section*{Objective}
+
+Maximize total weekly profit:
+\[
+\max \; Z
+=
+\pi_A x^r_A + \pi_B x^r_B + \pi^o_A x^o_A + \pi^o_B x^o_B,
+\]
+i.e.,
+\[
+\max \; Z
+=
+300x^r_A + 450x^r_B + 280x^o_A + 425x^o_B.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+a^{\mathrm{I}}_A (x^r_A + x^o_A) + a^{\mathrm{I}}_B (x^r_B + x^o_B) &= H^{\mathrm{I}}
+&& \text{(exact Process-I usage)} \\
+a^{\mathrm{II}}_A x^r_A + a^{\mathrm{II}}_B x^r_B &\le C^{\mathrm{II}}
+&& \text{(regular Process-II capacity)} \\
+a^{\mathrm{II}}_A x^o_A + a^{\mathrm{II}}_B x^o_B &\le O^{\max}
+&& \text{(Process-II overtime limit)} \\
+x^r_A + x^o_A &\ge L_A
+&& \text{(minimum production of A)} \\
+x^r_B + x^o_B &\ge L_B
+&& \text{(minimum production of B)} \\
+\pi_A x^r_A + \pi_B x^r_B + \pi^o_A x^o_A + \pi^o_B x^o_B &\ge \Pi^{\min}
+&& \text{(minimum weekly profit).}
+\end{align}
+
+Substituting the numerical values, the implemented model is
+\begin{align}
+4(x^r_A + x^o_A) + 6(x^r_B + x^o_B) &= 150, \\
+3x^r_A + 2x^r_B &\le 70, \\
+3x^o_A + 2x^o_B &\le 30, \\
+x^r_A + x^o_A &\ge 10, \\
+x^r_B + x^o_B &\ge 15, \\
+300x^r_A + 450x^r_B + 280x^o_A + 425x^o_B &\ge 10000.
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The source code first sketches an alternative nonlinear overtime formulation using total production and an overtime variable \texttt{ot}, but that model is not solved.
+    \item The implemented and solved model is the second formulation, which splits each product into regular-capacity and overtime-capacity production for Process II.
+    \item Overtime is modeled implicitly through the variables $x^o_A$ and $x^o_B$ and the constraint
+    \[
+    3x^o_A + 2x^o_B \le 30,
+    \]
+    rather than through a separate overtime-hours decision variable in the final solved model.
+    \item Process I is enforced as an equality, exactly matching \texttt{process\_I\_hours}, not merely as an upper bound.
+    \item The variables are continuous in the implementation; no integrality restrictions are imposed.
+    \item The minimum-profit requirement is included explicitly as a constraint even though the same expression is maximized in the objective.
+    \item The model is solved as a linear program via PuLP with the GUROBI command interface (\texttt{pulp.GUROBI\_CMD}).
+\end{itemize}

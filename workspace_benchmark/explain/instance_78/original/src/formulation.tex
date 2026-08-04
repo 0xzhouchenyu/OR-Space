@@ -1,0 +1,90 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $R$ : set of clerk roles. In this instance,
+    \[
+    R=\{\mathrm{FT},\mathrm{PT}\},
+    \]
+    where $\mathrm{FT}$ denotes full-time clerks and $\mathrm{PT}$ denotes part-time clerks.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $G$ : monthly sales goal in pairs (code: \texttt{sales\_goal}).
+    \item $n_r$ : number of clerks of role $r$ employed by the store. In the implemented code, if no employee-count column is present in the CSV, the defaults are
+    \[
+    n_{\mathrm{FT}}=5,\qquad n_{\mathrm{PT}}=4
+    \]
+    (code: \texttt{num\_ft}, \texttt{num\_pt}).
+    \item $H_r$ : regular monthly working hours per clerk of role $r$ from the CSV column \texttt{Monthly\_Working\_Hours}.
+    \item $s_r$ : sales volume in pairs per hour for role $r$ from the CSV column \texttt{Sales\_Volume\_Pairs\_Per\_Hour}.
+    \item $w_r$ : regular wage per hour for role $r$ from the CSV column \texttt{Wage\_Yuan\_Per\_Hour}. This parameter is read from data but not used in the implemented optimization model.
+    \item $o_r$ : overtime pay per hour for role $r$ from the CSV column \texttt{Overtime\_Pay\_Yuan\_Per\_Hour}. This parameter is read from data but not used in the implemented optimization model.
+    \item $p$ : profit per pair sold from \texttt{profit\_per\_pair}. This parameter is not used in the implemented optimization model.
+    \item $N$ : total sales achievable under full regular employment, computed as
+    \[
+    N=\sum_{r\in R} n_r H_r s_r
+    \]
+    (code: \texttt{total\_normal\_sales}).
+\end{itemize}
+
+For this instance, using the provided table values,
+\[
+H_{\mathrm{FT}}=160,\quad s_{\mathrm{FT}}=5,\qquad
+H_{\mathrm{PT}}=80,\quad s_{\mathrm{PT}}=2,
+\]
+so
+\[
+N=n_{\mathrm{FT}} \cdot 160 \cdot 5 + n_{\mathrm{PT}} \cdot 80 \cdot 2.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $y_r \ge 0$ : overtime hours assigned to role $r$ in aggregate over the month (code: \texttt{y\_ft}, \texttt{y\_pt} for $r=\mathrm{FT},\mathrm{PT}$).
+\end{itemize}
+
+Explicitly,
+\[
+y_{\mathrm{FT}} \ge 0,\qquad y_{\mathrm{PT}} \ge 0.
+\]
+
+\section*{Objective}
+
+Minimize total overtime hours:
+\[
+\min \; y_{\mathrm{FT}} + y_{\mathrm{PT}}.
+\]
+
+\section*{Constraints}
+
+Monthly sales goal must be met after accounting for regular-hours sales and overtime sales:
+\[
+s_{\mathrm{FT}}\, y_{\mathrm{FT}} + s_{\mathrm{PT}}\, y_{\mathrm{PT}} \;\ge\; G - N.
+\]
+
+Nonnegativity:
+\[
+y_{\mathrm{FT}} \ge 0,\qquad y_{\mathrm{PT}} \ge 0.
+\]
+
+Using the instance data and the code defaults $n_{\mathrm{FT}}=5$, $n_{\mathrm{PT}}=4$,
+\[
+N=5\cdot160\cdot5+4\cdot80\cdot2=4640,
+\]
+and with $G=5500$ the implemented constraint becomes
+\[
+5y_{\mathrm{FT}}+2y_{\mathrm{PT}} \ge 860.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model solved in the code is exactly a continuous linear program with only two decision variables: aggregate overtime hours for full-time and part-time clerks.
+    \item The code assumes ``full employment'' by always counting all available full-time and part-time clerks in the baseline sales computation $N$. No decision variable controls hiring, assignment, or whether clerks are employed.
+    \item Although the business description mentions profit, wages, overtime pay, and multiple goals, the implemented model ignores all of these except the monthly sales goal and the role-specific sales rates. In particular, \texttt{profit\_per\_pair}, regular wages, and overtime pay do not appear in either the objective or the constraints.
+    \item Overtime is modeled in aggregate by role, not per individual clerk, and there are no upper bounds on overtime hours.
+    \item If the CSV contains a column whose name suggests employee counts (matching keywords such as \texttt{num}, \texttt{clerks}, \texttt{employees}, \texttt{count}, etc.), the code uses those values for $n_{\mathrm{FT}}$ and $n_{\mathrm{PT}}$; otherwise it uses the defaults $5$ and $4$.
+    \item The LP is solved with a standard LP/MIP solver interface (\texttt{GUROBI\_CMD} through PuLP compatibility), not by enumeration or dynamic programming.
+\end{itemize}

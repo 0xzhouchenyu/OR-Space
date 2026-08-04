@@ -1,0 +1,5 @@
+Parameter_Name,Value,Unit,Context_Description
+num_participants,30,,Number of participants attending the party
+num_cars,15,,Number of cars arriving at the party
+max_length_one_side,60,meters,Maximum length of cars allowed on the single street side designated for party parking
+available_party_side_count,1,,Number of street sides allowed to host party cars under the resident-access rule

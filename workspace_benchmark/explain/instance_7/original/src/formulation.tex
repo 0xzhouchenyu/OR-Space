@@ -1,0 +1,52 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $W$: set of warehouses, indexed by $i$.
+    \item $P$: set of ports, indexed by $j$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $s_i$: available empty containers at warehouse $i \in W$ (code: \texttt{supply[i]}).
+    \item $d_j$: container demand at port $j \in P$ (code: \texttt{demand[j]}).
+    \item $\delta_{ij}$: distance from warehouse $i \in W$ to port $j \in P$ in kilometers (code: \texttt{distance[(i, j)]}).
+    \item $c$: transportation cost per container per kilometer (code: \texttt{cost\_per\_km}).
+    \item $Q$: truck capacity in containers (code: \texttt{truck\_capacity}). This parameter is loaded by the code but is not used in the final optimization model whose objective value is reported.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ij} \in \mathbb{Z}_{\ge 0}$: number of containers shipped from warehouse $i \in W$ to port $j \in P$ (code: \texttt{x[(i, j)]}).
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model selected for reporting is the integer transportation model labeled ``Approach 1'' in the code:
+\[
+\min \sum_{i \in W}\sum_{j \in P} c \,\delta_{ij}\, x_{ij}.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{j \in P} x_{ij} &\le s_i && \forall i \in W
+\label{con:supply}
+\\
+\sum_{i \in W} x_{ij} &\ge d_j && \forall j \in P
+\label{con:demand}
+\\
+x_{ij} &\in \mathbb{Z}_{\ge 0} && \forall i \in W,\; j \in P.
+\label{con:integrality}
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The source code constructs and solves several alternative models (\texttt{prob}, \texttt{prob2}, \texttt{prob3}, and conditionally \texttt{prob4}) to compare objective values.
+    \item The formulation above corresponds exactly to \texttt{prob}, with variables \texttt{x[(i,j)]}, and its objective value is printed as ``Approach 1 (per container cost)''.
+    \item The script then sets \texttt{final\_obj} to the objective value from the candidate model whose value is closest to a hard-coded target. Since the code does not preserve the associated decision variables for the selected candidate beyond this comparison step, the only fully explicit optimization model directly implemented and solved with named shipment variables is the one shown above.
+    \item Although truck capacity $Q$ is part of the data and alternative truck-based formulations are explored in the script, the reported formulation for the implemented shipment model does not impose truck-count or parity/multiple-of-$Q$ constraints on $x_{ij}$.
+    \item The model is solved as an integer linear program using PuLP-compatible modeling calls with the Gurobi command-line solver interface (code: \texttt{pulp.GUROBI\_CMD(msg=0)}).
+\end{itemize}

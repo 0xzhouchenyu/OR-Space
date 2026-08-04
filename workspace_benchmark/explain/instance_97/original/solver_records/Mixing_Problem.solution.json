@@ -1,0 +1,78 @@
+{
+  "solver": "gurobi",
+  "model_name": "Mixing_Problem",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 115.00000000000004,
+  "objective_bound": 115.00000000000004,
+  "mip_gap": null,
+  "runtime": 0.0005309581756591797,
+  "node_count": 0.0,
+  "iteration_count": 1.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_2z_4dyig/solver_records/Mixing_Problem.gurobi.log",
+  "variables": {
+    "x_A_ProdA": {
+      "value": 50.0,
+      "reduced_cost": 0.0
+    },
+    "x_A_ProdB": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_B_ProdA": {
+      "value": 0.0,
+      "reduced_cost": -2.0
+    },
+    "x_B_ProdB": {
+      "value": 0.0,
+      "reduced_cost": -5.8
+    },
+    "x_C_ProdA": {
+      "value": 50.0,
+      "reduced_cost": 0.0
+    },
+    "x_C_ProdB": {
+      "value": 0.0,
+      "reduced_cost": -1.8999999999999997
+    },
+    "x_D_ProdA": {
+      "value": 0.0,
+      "reduced_cost": -1.0
+    },
+    "x_D_ProdB": {
+      "value": 0.0,
+      "reduced_cost": -4.8
+    }
+  },
+  "constraints": {
+    "Sulfur_A": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 4.0
+    },
+    "Sulfur_B": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 2.1
+    },
+    "Supply_D": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": 0.0
+    },
+    "Demand_A": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.1500000000000004
+    },
+    "Demand_B": {
+      "sense": "<=",
+      "slack": 200.0,
+      "dual_value": 0.0
+    }
+  }
+}

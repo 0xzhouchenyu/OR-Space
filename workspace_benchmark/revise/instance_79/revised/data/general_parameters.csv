@@ -1,0 +1,23 @@
+Parameter_Name,Value,Unit,Context_Description
+sell_price_table,200,USD,Selling price for each table
+sell_price_chair,50,USD,Selling price for each chair
+sell_price_bookshelf,150,USD,Selling price for each bookshelf
+manufacturing_cost_table,120,USD,Manufacturing cost for each table
+manufacturing_cost_chair,20,USD,Manufacturing cost for each chair
+manufacturing_cost_bookshelf,90,USD,Manufacturing cost for each bookshelf
+warehouse_space_table,5,square meters,Warehouse space occupied by each table
+warehouse_space_chair,2,square meters,Warehouse space occupied by each chair
+warehouse_space_bookshelf,3,square meters,Warehouse space occupied by each bookshelf
+max_warehouse_space,500,square meters,Maximum warehouse space available
+min_tables,10,items,Minimum number of tables to produce
+min_bookshelves,20,items,Minimum number of bookshelves to produce
+max_total_items,200,items,Maximum total number of items the factory can produce
+labor_hours_table,4,labor-hours per item,Labor hours required to produce one table
+labor_hours_chair,1,labor-hours per item,Labor hours required to produce one chair
+labor_hours_bookshelf,3,labor-hours per item,Labor hours required to produce one bookshelf
+max_labor_hours_month_regular,400,labor-hours,Maximum available regular labor hours in the month
+max_labor_hours_month_rush,150,labor-hours,Maximum available rush labor hours in the month
+max_rush_items_month,40,items,Maximum total number of rush-mode items in the month
+rush_profit_bonus_table,20,USD per item,Additional profit earned per rush table
+rush_profit_bonus_chair,10,USD per item,Additional profit earned per rush chair
+rush_profit_bonus_bookshelf,15,USD per item,Additional profit earned per rush bookshelf

@@ -1,0 +1,92 @@
+{
+  "solver": "gurobi",
+  "model_name": "Transportation_Problem_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 685.0,
+  "runtime": 0.0003769397735595703,
+  "variables": {
+    "x_1_1": {
+      "value": 100.0,
+      "reduced_cost": 0.0
+    },
+    "x_1_2": {
+      "value": 0.0,
+      "reduced_cost": 2.0
+    },
+    "x_2_1": {
+      "value": 0.0,
+      "reduced_cost": 2.0
+    },
+    "x_2_2": {
+      "value": 100.0,
+      "reduced_cost": 0.0
+    },
+    "y_1_1": {
+      "value": 0.0,
+      "reduced_cost": 4.0
+    },
+    "y_1_2": {
+      "value": 100.0,
+      "reduced_cost": 0.0
+    },
+    "y_2_1": {
+      "value": 80.0,
+      "reduced_cost": 0.0
+    },
+    "y_2_2": {
+      "value": 20.0,
+      "reduced_cost": 0.0
+    },
+    "z_1": {
+      "value": 1.0,
+      "reduced_cost": -105.00000000000003
+    },
+    "z_2": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Supply_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Supply_2": {
+      "sense": "<",
+      "slack": 50.0,
+      "dual_value": 0.0
+    },
+    "Demand_1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 2.15
+    },
+    "Demand_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 5.15
+    },
+    "FlowBalance_1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 3.1500000000000004
+    },
+    "FlowBalance_2": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 1.15
+    },
+    "Capacity_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -1.1500000000000004
+    },
+    "Capacity_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.15
+    }
+  }
+}

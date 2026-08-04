@@ -1,0 +1,613 @@
+{
+  "solver": "gurobi",
+  "model_name": "factory_training_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 218722.5,
+  "runtime": 0.0008258819580078125,
+  "variables": {
+    "bII_1": {
+      "value": 0.0,
+      "reduced_cost": 0.6
+    },
+    "bII_2": {
+      "value": 0.0,
+      "reduced_cost": 0.2250000000000002
+    },
+    "bII_3": {
+      "value": 0.0,
+      "reduced_cost": 0.6
+    },
+    "bII_4": {
+      "value": 0.0,
+      "reduced_cost": 0.50625
+    },
+    "bII_5": {
+      "value": 0.0,
+      "reduced_cost": 0.8874999999999998
+    },
+    "bII_6": {
+      "value": 0.0,
+      "reduced_cost": 0.48125000000000007
+    },
+    "bII_7": {
+      "value": 3200.0,
+      "reduced_cost": 0.0
+    },
+    "bII_8": {
+      "value": 6400.0,
+      "reduced_cost": 0.0
+    },
+    "bI_1": {
+      "value": 0.0,
+      "reduced_cost": 0.5
+    },
+    "bI_2": {
+      "value": 0.0,
+      "reduced_cost": 0.27500000000000013
+    },
+    "bI_3": {
+      "value": 0.0,
+      "reduced_cost": 0.5
+    },
+    "bI_4": {
+      "value": 0.0,
+      "reduced_cost": 0.44375
+    },
+    "bI_5": {
+      "value": 0.0,
+      "reduced_cost": 0.6725
+    },
+    "bI_6": {
+      "value": 0.0,
+      "reduced_cost": 0.42874999999999996
+    },
+    "bI_7": {
+      "value": 0.0,
+      "reduced_cost": 0.14
+    },
+    "bI_8": {
+      "value": 0.0,
+      "reduced_cost": 0.14
+    },
+    "hIIg_1": {
+      "value": 0.0,
+      "reduced_cost": 1.7763568394002505e-15
+    },
+    "hIIg_2": {
+      "value": 0.0,
+      "reduced_cost": 1.7763568394002505e-15
+    },
+    "hIIg_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "hIIg_4": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "hIIg_5": {
+      "value": 1450.0,
+      "reduced_cost": 0.0
+    },
+    "hIIg_6": {
+      "value": 1600.0,
+      "reduced_cost": 0.0
+    },
+    "hIIg_7": {
+      "value": 1466.6666666666667,
+      "reduced_cost": 0.0
+    },
+    "hIIg_8": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "hIIot_1": {
+      "value": 812.4999999999999,
+      "reduced_cost": 0.0
+    },
+    "hIIot_2": {
+      "value": 749.9999999999995,
+      "reduced_cost": 0.0
+    },
+    "hIIot_3": {
+      "value": 0.0,
+      "reduced_cost": 0.75
+    },
+    "hIIot_4": {
+      "value": 0.0,
+      "reduced_cost": 0.75
+    },
+    "hIIot_5": {
+      "value": 0.0,
+      "reduced_cost": 0.9375
+    },
+    "hIIot_6": {
+      "value": 0.0,
+      "reduced_cost": 0.36249999999999893
+    },
+    "hIIot_7": {
+      "value": 0.0,
+      "reduced_cost": 0.5999999999999996
+    },
+    "hIIot_8": {
+      "value": 0.0,
+      "reduced_cost": 1.7999999999999998
+    },
+    "hIIs_1": {
+      "value": 187.50000000000014,
+      "reduced_cost": 0.0
+    },
+    "hIIs_2": {
+      "value": 450.00000000000045,
+      "reduced_cost": 0.0
+    },
+    "hIIs_3": {
+      "value": 1400.0,
+      "reduced_cost": 0.0
+    },
+    "hIIs_4": {
+      "value": 1800.0,
+      "reduced_cost": 0.0
+    },
+    "hIIs_5": {
+      "value": 350.0,
+      "reduced_cost": 0.0
+    },
+    "hIIs_6": {
+      "value": 400.0,
+      "reduced_cost": 0.0
+    },
+    "hIIs_7": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "hIIs_8": {
+      "value": 1466.6666666666667,
+      "reduced_cost": 0.0
+    },
+    "hIg_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "hIg_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "hIg_3": {
+      "value": 812.5,
+      "reduced_cost": 0.0
+    },
+    "hIg_4": {
+      "value": 1150.0,
+      "reduced_cost": 0.0
+    },
+    "hIg_5": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "hIg_6": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "hIg_7": {
+      "value": 133.3333333333332,
+      "reduced_cost": 0.0
+    },
+    "hIg_8": {
+      "value": 1600.0,
+      "reduced_cost": 0.0
+    },
+    "hIot_1": {
+      "value": 0.0,
+      "reduced_cost": -1.7763568394002505e-15
+    },
+    "hIot_2": {
+      "value": 1000.0,
+      "reduced_cost": 0.0
+    },
+    "hIot_3": {
+      "value": 0.0,
+      "reduced_cost": 0.75
+    },
+    "hIot_4": {
+      "value": 0.0,
+      "reduced_cost": 0.75
+    },
+    "hIot_5": {
+      "value": 0.0,
+      "reduced_cost": 0.9375
+    },
+    "hIot_6": {
+      "value": 0.0,
+      "reduced_cost": 0.36249999999999893
+    },
+    "hIot_7": {
+      "value": 0.0,
+      "reduced_cost": 0.5999999999999996
+    },
+    "hIot_8": {
+      "value": 0.0,
+      "reduced_cost": 1.7999999999999998
+    },
+    "hIs_1": {
+      "value": 1000.0,
+      "reduced_cost": 0.0
+    },
+    "hIs_2": {
+      "value": 0.0,
+      "reduced_cost": -1.7763568394002505e-15
+    },
+    "hIs_3": {
+      "value": 387.5,
+      "reduced_cost": 0.0
+    },
+    "hIs_4": {
+      "value": 50.0,
+      "reduced_cost": 0.0
+    },
+    "hIs_5": {
+      "value": 1600.0,
+      "reduced_cost": 0.0
+    },
+    "hIs_6": {
+      "value": 1600.0,
+      "reduced_cost": 0.0
+    },
+    "hIs_7": {
+      "value": 1866.6666666666667,
+      "reduced_cost": 0.0
+    },
+    "hIs_8": {
+      "value": 400.0,
+      "reduced_cost": 0.0
+    },
+    "n_ot_1": {
+      "value": 13.541666666666664,
+      "reduced_cost": 0.0
+    },
+    "n_ot_2": {
+      "value": 29.16666666666666,
+      "reduced_cost": 0.0
+    },
+    "n_ot_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "n_ot_4": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "n_ot_5": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "n_ot_6": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "n_ot_7": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "n_ot_8": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "n_train_1": {
+      "value": 6.770833333333333,
+      "reduced_cost": 0.0
+    },
+    "n_train_2": {
+      "value": 2.8125,
+      "reduced_cost": 0.0
+    },
+    "n_train_3": {
+      "value": 2.5,
+      "reduced_cost": 0.0
+    },
+    "n_train_4": {
+      "value": 1.25,
+      "reduced_cost": 0.0
+    },
+    "n_train_5": {
+      "value": -0.0,
+      "reduced_cost": 276.0
+    },
+    "n_train_6": {
+      "value": -0.0,
+      "reduced_cost": 460.5
+    },
+    "n_train_7": {
+      "value": 3.3333333333333335,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "ot_limit_1": {
+      "sense": "<",
+      "slack": 29.6875,
+      "dual_value": 0.0
+    },
+    "skilled_normal_hours_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -8.999999999999998
+    },
+    "skilled_ot_hours_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -8.999999999999998
+    },
+    "grad_hours_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -9.0
+    },
+    "backlog_I_1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.8999999999999999
+    },
+    "backlog_II_1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.4999999999999998
+    },
+    "ot_limit_2": {
+      "sense": "<",
+      "slack": 11.250000000000004,
+      "dual_value": 0.0
+    },
+    "skilled_normal_hours_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -8.999999999999998
+    },
+    "skilled_ot_hours_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -8.999999999999998
+    },
+    "grad_hours_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -9.0
+    },
+    "backlog_I_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.8999999999999999
+    },
+    "backlog_II_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.4999999999999998
+    },
+    "ot_limit_3": {
+      "sense": "<",
+      "slack": 44.6875,
+      "dual_value": 0.0
+    },
+    "skilled_normal_hours_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -6.75
+    },
+    "skilled_ot_hours_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7.5
+    },
+    "grad_hours_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -6.75
+    },
+    "backlog_I_3": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.675
+    },
+    "backlog_II_3": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.125
+    },
+    "ot_limit_4": {
+      "sense": "<",
+      "slack": 46.25,
+      "dual_value": 0.0
+    },
+    "skilled_normal_hours_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -6.75
+    },
+    "skilled_ot_hours_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7.5
+    },
+    "grad_hours_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -6.75
+    },
+    "backlog_I_4": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.675
+    },
+    "backlog_II_4": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.125
+    },
+    "ot_limit_5": {
+      "sense": "<",
+      "slack": 48.75,
+      "dual_value": 0.0
+    },
+    "skilled_normal_hours_5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -6.1875
+    },
+    "skilled_ot_hours_5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7.125
+    },
+    "grad_hours_5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -6.1875
+    },
+    "backlog_I_5": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.61875
+    },
+    "backlog_II_5": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.03125
+    },
+    "ot_limit_6": {
+      "sense": "<",
+      "slack": 50.0,
+      "dual_value": 0.0
+    },
+    "skilled_normal_hours_6": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7.9125
+    },
+    "skilled_ot_hours_6": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -8.274999999999999
+    },
+    "grad_hours_6": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7.9125
+    },
+    "backlog_I_6": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.79125
+    },
+    "backlog_II_6": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.3187499999999999
+    },
+    "ot_limit_7": {
+      "sense": "<",
+      "slack": 46.666666666666664,
+      "dual_value": 0.0
+    },
+    "skilled_normal_hours_7": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7.199999999999999
+    },
+    "skilled_ot_hours_7": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7.799999999999999
+    },
+    "grad_hours_7": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7.199999999999999
+    },
+    "backlog_I_7": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.72
+    },
+    "backlog_II_7": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.2
+    },
+    "ot_limit_8": {
+      "sense": "<",
+      "slack": 46.666666666666664,
+      "dual_value": 0.0
+    },
+    "skilled_normal_hours_8": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -3.5999999999999996
+    },
+    "skilled_ot_hours_8": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -5.3999999999999995
+    },
+    "grad_hours_8": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -3.5999999999999996
+    },
+    "backlog_I_8": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.36
+    },
+    "backlog_II_8": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.6
+    },
+    "enough_skilled_1": {
+      "sense": ">",
+      "slack": -43.229166666666664,
+      "dual_value": 0.0
+    },
+    "enough_skilled_2": {
+      "sense": ">",
+      "slack": -40.416666666666664,
+      "dual_value": 0.0
+    },
+    "enough_skilled_3": {
+      "sense": ">",
+      "slack": -44.6875,
+      "dual_value": 0.0
+    },
+    "enough_skilled_4": {
+      "sense": ">",
+      "slack": -46.25,
+      "dual_value": 0.0
+    },
+    "enough_skilled_5": {
+      "sense": ">",
+      "slack": -48.75,
+      "dual_value": 0.0
+    },
+    "enough_skilled_6": {
+      "sense": ">",
+      "slack": -50.0,
+      "dual_value": 0.0
+    },
+    "enough_skilled_7": {
+      "sense": ">",
+      "slack": -46.666666666666664,
+      "dual_value": 0.0
+    },
+    "enough_skilled_8": {
+      "sense": ">",
+      "slack": -46.666666666666664,
+      "dual_value": 0.0
+    },
+    "training_goal": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 384.0
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_11_revise_business",
+  "original_instance_id": "IndustryOR_11",
+  "revise_description": "In the stakeholder handoff for this case, the service manager framed the change in business terms rather than as a spreadsheet checklist. Finance is asking for the same physical plan to be read under a different accounting story. The important issue is where the money belongs in the operating ledger, not simply whether the number appears somewhere. The motorcycle plant is now planning two weeks under a supplier-quality review. Each week must use one inspection protocol, Manual or Enhanced, with its own inspection hours, costs, and weekly fee. Leadership first wants to protect paid capacity from sitting idle while avoiding the riskier Manual protocol through `inspection_risk_penalty`; only after that priority is settled should the two-week production profit decide among tied plans. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+4var, +7constr, mod_6constr, mod_obj, mod_2data",
+      "counts": {
+        "+variable": 4,
+        "-variable": 0,
+        "+constraint": 7,
+        "-constraint": 0,
+        "modify_constraint": 6,
+        "modify_data": 2
+      },
+      "op_count": 18,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 50.0
+  }
+}

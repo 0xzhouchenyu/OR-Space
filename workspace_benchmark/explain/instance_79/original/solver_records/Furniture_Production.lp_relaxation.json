@@ -1,0 +1,44 @@
+{
+  "solver": "gurobi",
+  "model_name": "Furniture_Production_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 9800.0,
+  "runtime": 0.00034999847412109375,
+  "variables": {
+    "bookshelves": {
+      "value": 150.0,
+      "reduced_cost": 0.0
+    },
+    "chairs": {
+      "value": -0.0,
+      "reduced_cost": -10.0
+    },
+    "tables": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Warehouse_Space": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 20.0
+    },
+    "Min_Tables": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -20.0
+    },
+    "Min_Bookshelves": {
+      "sense": ">",
+      "slack": -130.0,
+      "dual_value": 0.0
+    },
+    "Max_Total_Items": {
+      "sense": "<",
+      "slack": 40.0,
+      "dual_value": 0.0
+    }
+  }
+}

@@ -1,0 +1,16 @@
+Parameter_Name,Value,Unit,Context_Description
+available_labor,1500,units,Available labor per week
+available_material,1600,units,Available material per week
+fixed_cost_shirts,2000,monetary units,Weekly fixed cost for special equipment producing shirts
+fixed_cost_short_sleeves,1500,monetary units,Weekly fixed cost for special equipment producing short-sleeved shirts
+fixed_cost_casual_clothes,1000,monetary units,Weekly fixed cost for special equipment producing casual clothes
+segment_regular_discount,1.0,dimensionless,Price multiplier for regular segment (applied to base selling price)
+segment_promo_discount,0.9,dimensionless,Price multiplier for promotional segment (applied to base selling price)
+segment_promo_labor_cap,600,units,Maximum labor allocated to promotional segment per week
+segment_promo_material_cap,600,units,Maximum material allocated to promotional segment per week
+min_batch_shirts,50,units,Minimum total weekly production of shirts across all segments when shirt equipment is activated
+min_batch_short_sleeves,50,units,Minimum total weekly production of short-sleeved shirts across all segments when short-sleeve equipment is activated
+min_batch_casual_clothes,30,units,Minimum total weekly production of casual clothes across all segments when casual clothes equipment is activated
+max_prod_shirts,400,units,Maximum total weekly production of shirts across all segments (big-M upper bound)
+max_prod_short_sleeves,500,units,Maximum total weekly production of short-sleeved shirts across all segments (big-M upper bound)
+max_prod_casual_clothes,300,units,Maximum total weekly production of casual clothes across all segments (big-M upper bound)

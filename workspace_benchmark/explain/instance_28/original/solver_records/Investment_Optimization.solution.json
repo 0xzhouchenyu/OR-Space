@@ -1,0 +1,60 @@
+{
+  "solver": "gurobi",
+  "model_name": "Investment_Optimization",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 580000.0,
+  "objective_bound": 580000.0,
+  "mip_gap": null,
+  "runtime": 0.000576019287109375,
+  "node_count": 0.0,
+  "iteration_count": 1.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_t4pljjaj/solver_records/Investment_Optimization.gurobi.log",
+  "variables": {
+    "a1": {
+      "value": 166666.6666666667,
+      "reduced_cost": 0.0
+    },
+    "a2": {
+      "value": 0.0,
+      "reduced_cost": -0.06000000000000011
+    },
+    "a3": {
+      "value": 99999.99999999999,
+      "reduced_cost": 0.0
+    },
+    "b1": {
+      "value": 133333.3333333333,
+      "reduced_cost": 0.0
+    },
+    "c2": {
+      "value": 200000.0,
+      "reduced_cost": 0.10000000000000009
+    },
+    "d3": {
+      "value": 100000.0,
+      "reduced_cost": 0.19999999999999996
+    }
+  },
+  "constraints": {
+    "Year1_budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.29999999999999993
+    },
+    "Year2_budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.30000000000000004
+    },
+    "Year3_budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.19999999999999996
+    }
+  }
+}

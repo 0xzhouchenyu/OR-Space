@@ -1,0 +1,123 @@
+{
+  "solver": "gurobi",
+  "model_name": "ToyManufacturing_Revised",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 720.0,
+  "objective_bound": 720.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0009360313415527344,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_uykfw8i8/solver_records/ToyManufacturing_Revised.gurobi.log",
+  "variables": {
+    "building_blocks": {
+      "value": 60.0,
+      "reduced_cost": null
+    },
+    "dolls": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "model_cars": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "robots": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_blocks": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_car": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_doll": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_robot": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 620.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 9940.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 59.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

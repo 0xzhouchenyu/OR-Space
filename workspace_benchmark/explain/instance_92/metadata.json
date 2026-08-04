@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_092",
+  "instance_number": 92,
+  "source_revise_instance": "IndustryOR_92_revise_business",
+  "domain": "Transport_Allocation",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Transport_Allocation",
+    "question": "In the revised model, explain why the optimal solution changes from 4 buses and 5 minibuses at OBJECTIVE_VALUE 6200.0 to 6 buses and 3 minibuses at OBJECTIVE_VALUE 6600.0 by tracing the exact code additions `prob += x >= 2 * y, \"EscortPolicy\"` and `prob += y >= 1, \"MinMinibus\"` back to the business requirement and the CSV parameters `bus_rental_cost`, `minibus_rental_cost`, `bus_capacity`, `minibus_capacity`, `num_students`, and `num_drivers`. Using the LP relaxation output, identify which constraints are binding (`slack = 0.0`) and which are not, then interpret the marginal values/dual values of `StudentCapacity` (15.714285714285714) and `EscortPolicy` (14.285714285714278) in business terms, including why a simple linear extrapolation from those shadow prices cannot be used to predict the integer optimum exactly. Finally, quantify the cost impact of the revised constraints relative to the original model and explain which added constraint is responsible for forcing the solution away from the original 4-bus/5-minibus plan."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "SchoolTrip.gurobi.log",
+        "SchoolTrip.lp_relaxation.json",
+        "SchoolTrip.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "SchoolTrip.gurobi.log",
+        "SchoolTrip.lp_relaxation.json",
+        "SchoolTrip.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 83.853333
+  }
+}

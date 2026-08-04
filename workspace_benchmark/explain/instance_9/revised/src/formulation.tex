@@ -1,0 +1,103 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $T$: set of toy types, indexed by $t$. In this instance,
+    \[
+    T=\{\text{truck},\ \text{airplane},\ \text{boat},\ \text{train}\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+For each $t \in T$:
+\begin{itemize}
+    \item $p_t$: profit per unit (\texttt{Profit\_Per\_Unit}).
+    \item $w_t$: wood required per unit (\texttt{Wood\_Required\_Per\_Unit}).
+    \item $s_t$: steel required per unit (\texttt{Steel\_Required\_Per\_Unit}).
+\end{itemize}
+
+Global parameters from \texttt{general\_parameters.csv}:
+\begin{itemize}
+    \item $W$: available wood (\texttt{available\_wood}).
+    \item $S$: available steel (\texttt{available\_steel}).
+    \item $b$: premium profit bonus per unit (\texttt{profit\_premium\_bonus}).
+    \item $\alpha$: premium steel multiplier (\texttt{premium\_steel\_factor}).
+    \item $C^P$: premium shift capacity (\texttt{premium\_shift\_capacity}).
+    \item $M$: big-$M$ constant used in the implementation, fixed at
+    \[
+    M=1000.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each $t \in T$:
+\begin{itemize}
+    \item $x^S_t \ge 0$ (code: \texttt{xS[t]}): units of toy $t$ produced on the standard shift.
+    \item $x^P_t \ge 0$ (code: \texttt{xP[t]}): units of toy $t$ produced on the premium shift.
+    \item $y^S_t \in \{0,1\}$ (code: \texttt{yS[t]}): equals 1 if toy $t$ is assigned to the standard shift.
+    \item $y^P_t \in \{0,1\}$ (code: \texttt{yP[t]}): equals 1 if toy $t$ is assigned to the premium shift.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \sum_{t \in T} p_t x^S_t + \sum_{t \in T} (p_t + b)x^P_t.
+\]
+
+\section*{Constraints}
+
+Resource limits:
+\[
+\sum_{t \in T} w_t(x^S_t + x^P_t) \le W,
+\]
+\[
+\sum_{t \in T} s_t x^S_t + \sum_{t \in T} \alpha s_t x^P_t \le S,
+\]
+\[
+\sum_{t \in T} x^P_t \le C^P.
+\]
+
+Single-shift assignment per toy type:
+\[
+y^S_t + y^P_t \le 1 \qquad \forall t \in T.
+\]
+
+Linking production to shift-selection binaries:
+\[
+x^S_t \le M y^S_t \qquad \forall t \in T,
+\]
+\[
+x^P_t \le M y^P_t \qquad \forall t \in T.
+\]
+
+Business logic across toy types:
+\[
+(y^S_{\text{truck}} + y^P_{\text{truck}}) + (y^S_{\text{train}} + y^P_{\text{train}}) \le 1,
+\]
+\[
+y^S_{\text{boat}} + y^P_{\text{boat}} \le y^S_{\text{airplane}} + y^P_{\text{airplane}},
+\]
+\[
+x^S_{\text{boat}} + x^P_{\text{boat}} \le x^S_{\text{train}} + x^P_{\text{train}}.
+\]
+
+Variable domains:
+\[
+x^S_t, x^P_t \ge 0 \qquad \forall t \in T,
+\]
+\[
+y^S_t, y^P_t \in \{0,1\} \qquad \forall t \in T.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a mixed-integer linear program and solved with \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+    \item The formulation uses separate production variables for standard and premium shifts, and binary variables to ensure that any toy type produced is assigned to at most one shift during the planning period.
+    \item The premium shift earns an additive per-unit bonus \texttt{profit\_premium\_bonus}, uses steel at the multiplied rate \texttt{premium\_steel\_factor}, and is capped by \texttt{premium\_shift\_capacity}, exactly as coded.
+    \item The truck--train exclusion and boat--airplane dependency are enforced on the binary shift-assignment indicators aggregated across both shifts, while the boat--train relation is enforced on total produced quantities aggregated across both shifts.
+    \item The implementation does not impose integrality on production quantities; only the shift-assignment variables are binary.
+    \item The big-$M$ value is not inferred from data bounds in code; it is fixed to $1000$.
+\end{itemize}

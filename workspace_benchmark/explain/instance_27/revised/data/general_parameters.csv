@@ -1,0 +1,14 @@
+Parameter_Name,Value,Unit,Context_Description
+raw_material_cost_product_I,0.25,Yuan/Unit,Raw material cost for Product I
+raw_material_cost_product_II,0.35,Yuan/Unit,Raw material cost for Product II
+raw_material_cost_product_III,0.50,Yuan/Unit,Raw material cost for Product III
+unit_price_product_I,1.25,Yuan/Unit,Sale price per unit of Product I
+unit_price_product_II,2.00,Yuan/Unit,Sale price per unit of Product II
+unit_price_product_III,2.80,Yuan/Unit,Sale price per unit of Product III
+shared_labor_hours,8000,operator-hours,Total skilled operator-hours available in shared pool
+labor_coeff_A1,0.6,op-hours/machine-hour,Labor consumption coefficient for A1
+labor_coeff_A2,0.5,op-hours/machine-hour,Labor consumption coefficient for A2
+labor_coeff_B1,0.7,op-hours/machine-hour,Labor consumption coefficient for B1
+labor_coeff_B2,0.4,op-hours/machine-hour,Labor consumption coefficient for B2
+labor_coeff_B3,0.8,op-hours/machine-hour,Labor consumption coefficient for B3
+b2_activation_fee,120,Yuan,One-time activation fee if B2 is used

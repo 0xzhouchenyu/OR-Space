@@ -1,0 +1,10 @@
+Set parameter LicenseID to value 2802670
+  A1 -> Product_I: 1200.0000 units
+  A2 -> Product_I: 230.0493 units
+  A2 -> Product_II: 500.0000 units
+  A2 -> Product_III: 324.1379 units
+  B1 -> Product_II: 500.0000 units
+  B2 -> Product_I: 858.6207 units
+  B2 -> Product_III: 324.1379 units
+  B3 -> Product_I: 571.4286 units
+OBJECTIVE_VALUE: 1146.5665

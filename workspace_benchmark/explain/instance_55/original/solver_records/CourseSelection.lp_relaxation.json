@@ -1,0 +1,75 @@
+{
+  "solver": "gurobi",
+  "model_name": "CourseSelection_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 3.428571428571429,
+  "runtime": 0.0003380775451660156,
+  "variables": {
+    "x_Calculus": {
+      "value": 0.14285714285714288,
+      "reduced_cost": 0.0
+    },
+    "x_Computer_Programming": {
+      "value": 0.7142857142857143,
+      "reduced_cost": 0.0
+    },
+    "x_Computer_Simulation": {
+      "value": 0.7142857142857143,
+      "reduced_cost": 0.0
+    },
+    "x_Data_Structures": {
+      "value": 0.5714285714285714,
+      "reduced_cost": 0.0
+    },
+    "x_Forecasting": {
+      "value": 0.14285714285714282,
+      "reduced_cost": 0.0
+    },
+    "x_Management_Statistics": {
+      "value": 0.14285714285714288,
+      "reduced_cost": 0.0
+    },
+    "x_Operations_Research": {
+      "value": 1.0,
+      "reduced_cost": -0.2857142857142858
+    }
+  },
+  "constraints": {
+    "Min_Mathematics": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.4285714285714286
+    },
+    "Min_Computer_Science": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.5714285714285714
+    },
+    "Min_Operations_Research": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.8571428571428572
+    },
+    "Prereq_Computer_Simulation_needs_Computer_Programming": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.4285714285714286
+    },
+    "Prereq_Data_Structures_needs_Computer_Programming": {
+      "sense": "<",
+      "slack": 0.1428571428571429,
+      "dual_value": 0.0
+    },
+    "Prereq_Management_Statistics_needs_Calculus": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.5714285714285714
+    },
+    "Prereq_Forecasting_needs_Management_Statistics": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.2857142857142858
+    }
+  }
+}

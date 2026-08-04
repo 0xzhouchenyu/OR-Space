@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_016",
+  "instance_number": 16,
+  "source_revise_instance": "IndustryOR_16_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain exactly how the February “ordinary unloading slot / special receiving crew” business rule is implemented across the business brief, CSV data, code, and math formulation, and use the LP relaxation diagnostics to interpret its marginal value. Your answer must name the exact code variable `month2_bulk`, the exact constraint name `month2_bulk_receiving_trigger`, the exact CSV field names `month2_bulk_receiving_threshold` and `month2_bulk_receiving_fee`, and the parameter values 300 and 600; then explain why the LP relaxation shows `month2_bulk_receiving = 0.4`, binding slack 0, and dual value 1.2, but why that shadow-price-style interpretation cannot be linearly extrapolated to the integer optimum. Finally, compare the original and revised objectives (4100 vs 2800) and pinpoint which added objective terms and linkage constraints in `src/current_heuristic.py` caused the solution to switch from `purchase_1 = 300, purchase_2 = 500` to `purchase_1 = 0, purchase_2 = 300`, including the business motivation and the total 1300 Yuan impact."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Maximize_Profit.gurobi.log",
+        "Maximize_Profit.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Maximize_Profit.gurobi.log",
+        "Maximize_Profit.lp_relaxation.json",
+        "Maximize_Profit.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 65.281667
+  }
+}

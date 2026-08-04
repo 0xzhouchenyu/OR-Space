@@ -1,0 +1,61 @@
+{
+  "solver": "gurobi",
+  "model_name": "ProductMix_OvertimeReview",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 440.0,
+  "objective_bound": 440.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0019161701202392578,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_i3hhofam/solver_records/ProductMix_OvertimeReview.gurobi.log",
+  "variables": {
+    "Overtime_Hours": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "Product_A": {
+      "value": 100.0,
+      "reduced_cost": null
+    },
+    "Product_B": {
+      "value": 48.0,
+      "reduced_cost": null
+    },
+    "overtime_review": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "product_A_senior_batch": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 40.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

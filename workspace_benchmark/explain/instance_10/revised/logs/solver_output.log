@@ -1,0 +1,9 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+  Small store at A serves ['C']
+  Small store at B serves ['B', 'H', 'I']
+  Small store at D serves ['D', 'J']
+  Small store at E serves ['A', 'E', 'G']
+  Small store at F serves ['F', 'J', 'K']
+  Small store at L serves ['J', 'K', 'L']
+OBJECTIVE_VALUE: 6.0

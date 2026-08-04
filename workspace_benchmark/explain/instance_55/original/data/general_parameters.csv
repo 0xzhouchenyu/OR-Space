@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+min_courses_required,2,,Minimum number of courses required in each category
+prerequisite_computer_simulation,Computer Programming,,Prerequisite for Computer Simulation
+prerequisite_data_structures,Computer Programming,,Prerequisite for Data Structures
+prerequisite_management_statistics,Calculus,,Prerequisite for Management Statistics
+prerequisite_forecasting,Management Statistics,,Prerequisite for Forecasting

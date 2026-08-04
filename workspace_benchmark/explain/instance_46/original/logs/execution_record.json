@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 715.6999999999999,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\n  Student 1 on Monday: 6.0h\n  Student 1 on Friday: 7.0h\n  Student 2 on Tuesday: 6.0h\n  Student 2 on Wednesday: 8.0h\n  Student 3 on Tuesday: 8.0h\n  Student 3 on Friday: 5.0h\n  Student 4 on Monday: 5.0h\n  Student 4 on Wednesday: 6.0h\n  Student 5 on Monday: 3.0h\n  Student 5 on Thursday: 8.0h\n  Student 6 on Thursday: 6.0h\n  Student 6 on Friday: 2.0h\nOBJECTIVE_VALUE: 715.6999999999999\n",
+  "stderr": "",
+  "error": null
+}

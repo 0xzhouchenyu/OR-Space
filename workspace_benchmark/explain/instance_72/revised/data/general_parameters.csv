@@ -1,0 +1,10 @@
+Parameter_Name,Value,Unit,Context_Description
+budget,7000000,,The total budget available for the Li family to invest in properties.
+property_4_excludes_property_3,1,,If Property 4 is purchased, Property 3 cannot be purchased.
+scen_1_prob,0.6,,Probability of scenario 1 (normal rental market conditions).
+scen_2_prob,0.4,,Probability of scenario 2 (downside rental market conditions), equal to 1 - scen_1_prob.
+scen_1_risky_multiplier,1.5,,Income multiplier applied to risky portion in scenario 1.
+scen_2_risky_multiplier,0.5,,Income multiplier applied to risky portion in scenario 2.
+total_risky_budget,3500000,,Maximum total acquisition cost of properties that host any risky tenants.
+per_property_risky_cap,0.8,,Maximum fraction of any single property that may be allocated to risky tenants.
+max_risky_properties,2,,Maximum number of properties that may have any risky tenants.

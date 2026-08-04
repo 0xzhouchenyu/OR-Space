@@ -1,0 +1,117 @@
+\section*{Sets and Indices}
+
+There are no nontrivial sets or indices in the implemented model. The decision is over three animal types:
+\[
+\{\text{cow},\text{sheep},\text{chicken}\}.
+\]
+
+\section*{Parameters}
+
+All parameter values are loaded from \texttt{general\_parameters.csv}.
+
+\begin{align*}
+p_{\mathrm{cow}} &= \text{selling price per cow (code: \texttt{cow\_price})},\\
+p_{\mathrm{sheep}} &= \text{selling price per sheep (code: \texttt{sheep\_price})},\\
+p_{\mathrm{chicken}} &= \text{selling price per chicken (code: \texttt{chicken\_price})},\\[4pt]
+f_{\mathrm{cow}} &= \text{feed cost per cow (code: \texttt{cow\_feed})},\\
+f_{\mathrm{sheep}} &= \text{feed cost per sheep (code: \texttt{sheep\_feed})},\\
+f_{\mathrm{chicken}} &= \text{feed cost per chicken (code: \texttt{chicken\_feed})},\\[4pt]
+m_{\mathrm{cow}} &= \text{manure produced per cow (code: \texttt{cow\_manure})},\\
+m_{\mathrm{sheep}} &= \text{manure produced per sheep (code: \texttt{sheep\_manure})},\\
+m_{\mathrm{chicken}} &= \text{manure produced per chicken (code: \texttt{chicken\_manure})},\\[4pt]
+M^{\max} &= \text{maximum manure cleaning capacity (code: \texttt{max\_manure})},\\
+C^{\max} &= \text{maximum allowed chickens (code: \texttt{max\_chickens})},\\
+L_{\mathrm{cow}} &= \text{minimum required cows (code: \texttt{min\_cows})},\\
+L_{\mathrm{sheep}} &= \text{minimum required sheep (code: \texttt{min\_sheep})},\\
+A^{\max} &= \text{maximum total number of animals (code: \texttt{max\_total})}.
+\end{align*}
+
+For this instance, the net profit coefficients used in the objective are
+\[
+p_{\mathrm{cow}}-f_{\mathrm{cow}}=400,\qquad
+p_{\mathrm{sheep}}-f_{\mathrm{sheep}}=120,\qquad
+p_{\mathrm{chicken}}-f_{\mathrm{chicken}}=3.
+\]
+
+\section*{Decision Variables}
+
+\begin{align*}
+x_{\mathrm{cow}} &\in \mathbb{Z}_{\ge 0} && \text{number of cows (code: \texttt{cows})},\\
+x_{\mathrm{sheep}} &\in \mathbb{Z}_{\ge 0} && \text{number of sheep (code: \texttt{sheep})},\\
+x_{\mathrm{chicken}} &\in \mathbb{Z}_{\ge 0} && \text{number of chickens (code: \texttt{chickens})}.
+\end{align*}
+
+The implementation imposes variable bounds directly:
+\[
+x_{\mathrm{cow}} \ge L_{\mathrm{cow}},\qquad
+x_{\mathrm{sheep}} \ge L_{\mathrm{sheep}},\qquad
+0 \le x_{\mathrm{chicken}} \le C^{\max}.
+\]
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+(p_{\mathrm{cow}}-f_{\mathrm{cow}})\,x_{\mathrm{cow}}
++ (p_{\mathrm{sheep}}-f_{\mathrm{sheep}})\,x_{\mathrm{sheep}}
++ (p_{\mathrm{chicken}}-f_{\mathrm{chicken}})\,x_{\mathrm{chicken}}.
+\]
+
+For the given data, this is
+\[
+\max \; 400x_{\mathrm{cow}} + 120x_{\mathrm{sheep}} + 3x_{\mathrm{chicken}}.
+\]
+
+\section*{Constraints}
+
+Manure-capacity limit:
+\[
+m_{\mathrm{cow}}x_{\mathrm{cow}}
++ m_{\mathrm{sheep}}x_{\mathrm{sheep}}
++ m_{\mathrm{chicken}}x_{\mathrm{chicken}}
+\le M^{\max}.
+\]
+
+For this instance:
+\[
+10x_{\mathrm{cow}} + 5x_{\mathrm{sheep}} + 3x_{\mathrm{chicken}} \le 800.
+\]
+
+Total-animal limit:
+\[
+x_{\mathrm{cow}} + x_{\mathrm{sheep}} + x_{\mathrm{chicken}} \le A^{\max}.
+\]
+
+For this instance:
+\[
+x_{\mathrm{cow}} + x_{\mathrm{sheep}} + x_{\mathrm{chicken}} \le 100.
+\]
+
+Integrality and bounds:
+\[
+x_{\mathrm{cow}},x_{\mathrm{sheep}},x_{\mathrm{chicken}} \in \mathbb{Z},
+\]
+\[
+x_{\mathrm{cow}} \ge L_{\mathrm{cow}},\qquad
+x_{\mathrm{sheep}} \ge L_{\mathrm{sheep}},\qquad
+0 \le x_{\mathrm{chicken}} \le C^{\max}.
+\]
+
+For this instance:
+\[
+x_{\mathrm{cow}} \ge 10,\qquad x_{\mathrm{sheep}} \ge 20,\qquad 0 \le x_{\mathrm{chicken}} \le 50.
+\]
+
+\section*{Notes on Implementation}
+
+The code builds this model as a mixed-integer linear program using PuLP-compatible syntax with Gurobi as the solver backend (\texttt{pulp.GUROBI\_CMD(msg=0)}).
+
+Two implementation details are important for faithfully reconstructing the model:
+
+\begin{itemize}
+\item The minimum-demand requirements for cows and sheep are enforced as variable lower bounds, not as separately named constraints.
+\item There is no explicit upper bound on cows or sheep other than the manure-capacity and total-animal constraints.
+\end{itemize}
+
+No additional business rules are modeled beyond the objective, the manure-capacity constraint, the total-animal constraint, and the stated integrality/bound conditions.

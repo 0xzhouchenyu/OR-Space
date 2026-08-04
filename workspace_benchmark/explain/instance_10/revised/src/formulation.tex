@@ -1,0 +1,79 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+  \item $J$: set of candidate store locations / residential areas, indexed by $j$.
+  \item $I$: set of residential areas that must be covered, indexed by $i$.
+  \item For each $j \in J$, let $C_j \subseteq I$ be the set of residential areas listed in \texttt{Residential\_Areas\_within\_800m\_Radius} for location $j$ in \texttt{table\_1.csv}.
+\end{itemize}
+
+In this instance, the code constructs
+\[
+I = \bigcup_{j \in J} C_j,
+\]
+so the required coverage set is exactly the union of all listed coverage sets.
+
+\section*{Parameters}
+
+\begin{itemize}
+  \item $c^{S}$: cost of opening a Small-format store (code/data: \texttt{small\_cost}).
+  \item $c^{L}$: cost of opening a Large-format store (code/data: \texttt{large\_cost}).
+  \item $u^{S}$: maximum number of residential areas that a Small-format store may serve (code/data: \texttt{small\_cap\_areas}).
+  \item $U^{L}$: maximum number of Large-format stores allowed (code/data: \texttt{max\_large\_stores}).
+  \item $M$: minimum required neighborhood-counter footprint (code/data: \texttt{minimum\_neighborhood\_counters}).
+  \item $\gamma$: counter credit contributed by each Small-format store (code/data: \texttt{small\_store\_counter\_credit}).
+  \item $|C_j|$: number of residential areas in the coverage list of location $j$; this is used in the implemented Large-store capacity expression.
+\end{itemize}
+
+For instance 10, the data give
+\[
+c^{S}=1,\quad c^{L}=2,\quad u^{S}=3,\quad U^{L}=1,\quad M=6,\quad \gamma=1.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+  \item $s_j$ (code: \texttt{s[j]}) $\in \{0,1\}$: equals 1 if a Small-format store is opened at location $j$.
+  \item $l_j$ (code: \texttt{l[j]}) $\in \{0,1\}$: equals 1 if a Large-format store is opened at location $j$.
+  \item $a_{ji}$ (code: \texttt{a[(j,i)]}) $\in \{0,1\}$ for $j \in J,\ i \in C_j$: equals 1 if residential area $i$ is assigned to store location $j$.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total opening cost:
+\[
+\min \sum_{j \in J} \left(c^{S} s_j + c^{L} l_j\right).
+\]
+
+\section*{Constraints}
+
+\begin{align}
+s_j + l_j &\le 1 && \forall j \in J
+&& \text{(at most one store format per location)} \\
+a_{ji} &\le s_j + l_j && \forall j \in J,\ \forall i \in C_j
+&& \text{(assignment only to an opened store)} \\
+\sum_{i \in C_j} a_{ji} &\le u^{S} s_j + |C_j|\, l_j && \forall j \in J
+&& \text{(Small-store capacity; Large uses full listed coverage size)} \\
+\sum_{j \in J:\ i \in C_j} a_{ji} &\ge 1 && \forall i \in I
+&& \text{(every residential area must be covered)} \\
+\sum_{j \in J} l_j &\le U^{L}
+&& \text{(cap on Large-format stores)} \\
+\gamma \sum_{j \in J} s_j &\ge M
+&& \text{(minimum neighborhood-counter promise).}
+\end{align}
+
+Because the business brief specifies directional interpretation only, no reverse implication is added beyond the implemented constraints. In particular, opening a store does not force any assignment, except indirectly through the global coverage constraints.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+  \item The model is implemented as a binary mixed-integer linear program in \texttt{current\_heuristic.py} and solved with \texttt{GUROBI\_CMD}.
+  \item The coverage relation is taken exactly from \texttt{table\_1.csv}: for each candidate location $j$, assignments are only allowed to areas $i \in C_j$ parsed from \texttt{Residential\_Areas\_within\_800m\_Radius}.
+  \item The code does not use \texttt{distance\_limit} directly in constraints; that parameter is reflected only through the precomputed coverage sets in the CSV.
+  \item Large-format stores are not given a separate explicit capacity parameter. Instead, the implementation bounds their assignments by $|C_j|$, which is nonbinding relative to the available assignment variables and therefore allows assignment to any area in their listed coverage set.
+  \item The neighborhood-counter requirement is implemented exactly as
+  \[
+  \texttt{small\_store\_counter\_credit} \times \sum_j s_j \ge \texttt{minimum\_neighborhood\_counters}.
+  \]
+  For this instance, that means at least $6$ Small-format stores must be opened.
+  \item Since coverage is enforced through assignment variables $a_{ji}$, a residential area may be assigned to more than one opened store; the model requires at least one such assignment, not exactly one.
+\end{itemize}

@@ -1,0 +1,10 @@
+Parameter_Name,Value,Unit,Context_Description
+available_steel,200,kg,Total steel available for production
+available_aluminum,300,kg,Total aluminum available for production
+available_labor,300,hours,Total labor hours available for production
+overtime_pay,100,yuan/hour,Cost of worker overtime per hour
+max_overtime,30,hours,Maximum overtime allowed
+overtime_review_threshold,20,hours,Overtime level covered by normal supervisor approval
+overtime_review_fee,5000,yuan,Fixed safety review fee if overtime exceeds the threshold
+product_A_line_audit_threshold,29,units,Product A volume that can run under the ordinary line audit
+product_A_line_audit_fee,1000,yuan,One-time line audit cost if Product A volume exceeds the ordinary line-audit threshold

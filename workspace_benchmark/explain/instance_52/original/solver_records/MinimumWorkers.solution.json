@@ -1,0 +1,75 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinimumWorkers",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 150.0,
+  "objective_bound": 150.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004112958908081055,
+  "node_count": 1.0,
+  "iteration_count": 4.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_23gidmvz/solver_records/MinimumWorkers.gurobi.log",
+  "variables": {
+    "x_1": {
+      "value": 60.0,
+      "reduced_cost": null
+    },
+    "x_2": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "x_3": {
+      "value": 50.0,
+      "reduced_cost": null
+    },
+    "x_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_5": {
+      "value": 30.0,
+      "reduced_cost": null
+    },
+    "x_6": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Demand_period_1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Demand_period_2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Demand_period_3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Demand_period_4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Demand_period_5": {
+      "sense": ">=",
+      "slack": -10.0,
+      "dual_value": null
+    },
+    "Demand_period_6": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

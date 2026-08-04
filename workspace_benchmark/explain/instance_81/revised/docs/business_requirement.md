@@ -1,0 +1,7 @@
+On Danzig Street, vehicles can park on both sides of the street. Mr. Edmonds, who lives at No. 1, is organizing a party with about 30 participants, and they will arrive in 15 cars. The lengths of the cars are provided in a separate data file. Mr. Edmonds wants to arrange parking on both sides of the street to minimize the total length of the street occupied by his friends' vehicles. Additionally, there is a constraint that cars on one side of the street cannot occupy more than a certain length. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the service manager framed the change in business terms rather than as a spreadsheet checklist. The dispatch office is treating activity as something that must be earned by an actual working day, route, crew, or group. A closed day or unused group should stay quiet; an opened one carries the commitments in the memo. Danzig Street now has a resident-access arrangement for the event. One entire side of the street must remain clear for neighbors and emergency access, so the party cars can use only the other side. The usable side still has to respect its parking-length limit after accounting for the listed car lengths. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

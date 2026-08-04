@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 32.43589743589744,
+  "stdout": "Set parameter LicenseID to value 2802670\nFeed 1: 0.000000 kg\nFeed 2: 0.000000 kg\nFeed 3: 0.000000 kg\nFeed 4: 39.743590 kg\nFeed 5: 25.641026 kg\nOBJECTIVE_VALUE: 32.43589743589744\n",
+  "stderr": "",
+  "error": null
+}

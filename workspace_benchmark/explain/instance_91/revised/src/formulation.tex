@@ -1,0 +1,150 @@
+\section*{Sets and Indices}
+
+There are no nontrivial index sets in the implemented model. The decision is over two products:
+\[
+\{\mathrm{A},\mathrm{B}\}.
+\]
+
+\section*{Parameters}
+
+All numerical values are read from \texttt{general\_parameters.csv}.
+
+\[
+p_A \;=\; \text{profit per unit of product A}
+\quad\text{(code field: \texttt{profit\_product\_A})}
+\]
+\[
+p_B \;=\; \text{profit per unit of product B}
+\quad\text{(code field: \texttt{profit\_product\_B})}
+\]
+\[
+a_A \;=\; \text{assembly time per unit of A, in minutes}
+\quad\text{(code field: \texttt{assembly\_time\_A})}
+\]
+\[
+a_B \;=\; \text{assembly time per unit of B, in minutes}
+\quad\text{(code field: \texttt{assembly\_time\_B})}
+\]
+\[
+T \;=\; \text{regular machine working time, in hours}
+\quad\text{(code field: \texttt{machine\_working\_time})}
+\]
+\[
+H^{\max} \;=\; \text{maximum overtime hours}
+\quad\text{(code field: \texttt{max\_overtime\_hours})}
+\]
+\[
+c^O \;=\; \text{overtime penalty per hour}
+\quad\text{(code field: \texttt{overtime\_penalty\_per\_hour})}
+\]
+\[
+\bar H \;=\; \text{overtime review threshold, in hours}
+\quad\text{(code field: \texttt{overtime\_review\_threshold\_hours})}
+\]
+\[
+f^R \;=\; \text{fixed overtime review fee}
+\quad\text{(code field: \texttt{overtime\_review\_fee})}
+\]
+\[
+\bar A \;=\; \text{Product A senior batch threshold}
+\quad\text{(code field: \texttt{product\_A\_senior\_batch\_threshold})}
+\]
+\[
+f^S \;=\; \text{fixed Product A senior batch fee}
+\quad\text{(code field: \texttt{product\_A\_senior\_batch\_fee})}
+\]
+
+The production-ratio field \texttt{production\_ratio\_A\_to\_B} is parsed as two numbers:
+\[
+(r_A,r_B) \;=\; \text{ratio coefficients extracted from the string}
+\quad\text{(code: \texttt{ratio\_A}, \texttt{ratio\_B})}.
+\]
+In this instance, the code enforces
+\[
+r_B A - r_A B \le 0.
+\]
+
+The implementation also uses a fixed big-\(M\) constant
+\[
+M = 10000
+\]
+directly in the Product A senior-batch gating constraint.
+
+\section*{Decision Variables}
+
+\[
+A \ge 0
+\quad\text{Product A production quantity}
+\quad\text{(code: \texttt{A})}
+\]
+\[
+B \ge 0
+\quad\text{Product B production quantity}
+\quad\text{(code: \texttt{B})}
+\]
+\[
+O \in [0,H^{\max}]
+\quad\text{overtime hours used}
+\quad\text{(code: \texttt{O})}
+\]
+\[
+y^R \in \{0,1\}
+\quad\text{indicator for overtime review fee}
+\quad\text{(code: \texttt{review})}
+\]
+\[
+y^S \in \{0,1\}
+\quad\text{indicator for Product A senior batch fee}
+\quad\text{(code: \texttt{product\_A\_senior\_batch})}
+\]
+
+\section*{Objective}
+
+The implemented model maximizes net profit:
+\[
+\max \;
+p_A A + p_B B - c^O O - f^R y^R - f^S y^S.
+\]
+
+\section*{Constraints}
+
+Machine-time capacity with overtime:
+\[
+a_A A + a_B B \;\le\; 60T + 60O.
+\]
+
+Production-ratio constraint exactly as coded:
+\[
+r_B A - r_A B \;\le\; 0.
+\]
+
+Overtime review gate:
+\[
+O \;\le\; \bar H + H^{\max} y^R.
+\]
+Thus, if \(y^R=0\), overtime is limited to \(\bar H\); if \(y^R=1\), overtime may increase up to the variable bound \(H^{\max}\), and the fixed fee \(f^R\) is charged in the objective.
+
+Product A senior-batch gate:
+\[
+A \;\le\; \bar A + M y^S,
+\qquad M=10000.
+\]
+Thus, if \(y^S=0\), then \(A \le \bar A\); producing more than \(\bar A\) units of A requires \(y^S=1\), which triggers the fixed fee \(f^S\) in the objective.
+
+Domain constraints:
+\[
+A \ge 0,\qquad B \ge 0,\qquad 0 \le O \le H^{\max},
+\qquad y^R \in \{0,1\},\qquad y^S \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The source code formulates and solves a mixed-integer linear program with a MIP solver interface (\texttt{GUROBI\_CMD} through \texttt{pulp} compatibility).
+
+The business revision is implemented as a binary gate, not as a proportional surcharge: exceeding the overtime review threshold activates a one-time review fee through \(y^R\), and exceeding the Product A threshold activates a one-time senior-batch fee through \(y^S\).
+
+The Product A senior-assembler rule is implemented only in the one-way implication
+\[
+A > \bar A \;\Rightarrow\; y^S=1
+\]
+via the constraint \(A \le \bar A + My^S\). There is no reverse constraint forcing \(A>\bar A\) when \(y^S=1\). Likewise, the overtime-review binary is not explicitly forced to \(1\) unless needed to allow \(O>\bar H\). This matches the current code exactly and should not be tightened or reformulated in the documentation.

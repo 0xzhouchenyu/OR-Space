@@ -1,0 +1,147 @@
+\section*{Sets and Indices}
+
+No nontrivial index sets are used in the implemented model, since there are only two vehicle types represented by separate scalar decision variables.
+
+\section*{Parameters}
+
+\[
+S = 400
+\qquad\text{(code data: \texttt{num\_students})}
+\]
+Total number of students to be transported.
+
+\[
+B^{\max} = 10
+\qquad\text{(code data: \texttt{num\_buses})}
+\]
+Maximum number of buses available.
+
+\[
+Q^B = 50
+\qquad\text{(code data: \texttt{bus\_capacity})}
+\]
+Capacity of one bus.
+
+\[
+M^{\max} = 8
+\qquad\text{(code data: \texttt{num\_minibuses})}
+\]
+Maximum number of minibuses available.
+
+\[
+Q^M = 40
+\qquad\text{(code data: \texttt{minibus\_capacity})}
+\]
+Capacity of one minibus.
+
+\[
+D = 9
+\qquad\text{(code data: \texttt{num\_drivers})}
+\]
+Total number of available drivers.
+
+\[
+c^B = 800
+\qquad\text{(code data: \texttt{bus\_rental\_cost})}
+\]
+Rental cost of one bus.
+
+\[
+c^M = 600
+\qquad\text{(code data: \texttt{minibus\_rental\_cost})}
+\]
+Rental cost of one minibus.
+
+\section*{Decision Variables}
+
+\[
+x \in \mathbb{Z}
+\qquad\text{(code: \texttt{x})}
+\]
+Number of buses rented/used.
+
+\[
+y \in \mathbb{Z}
+\qquad\text{(code: \texttt{y})}
+\]
+Number of minibuses rented/used.
+
+The code also imposes bounds
+\[
+0 \le x \le B^{\max}, \qquad 0 \le y \le M^{\max}.
+\]
+
+\section*{Objective}
+
+Minimize total vehicle rental cost:
+\[
+\min \; c^B x + c^M y .
+\]
+
+For the given instance,
+\[
+\min \; 800x + 600y.
+\]
+
+\section*{Constraints}
+
+\paragraph{Student transportation capacity.}
+The total seating capacity of the selected vehicles must cover all students:
+\[
+Q^B x + Q^M y \ge S.
+\]
+For the given instance,
+\[
+50x + 40y \ge 400.
+\]
+
+\paragraph{Driver limit.}
+Each vehicle requires one driver, and the total number of drivers is limited:
+\[
+x + y \le D.
+\]
+For the given instance,
+\[
+x + y \le 9.
+\]
+
+\paragraph{Vehicle availability bounds.}
+The number of selected vehicles cannot exceed availability:
+\[
+0 \le x \le B^{\max},
+\]
+\[
+0 \le y \le M^{\max}.
+\]
+
+\paragraph{Integrality.}
+Vehicle counts must be integer:
+\[
+x, y \in \mathbb{Z}.
+\]
+
+\section*{Notes on Implementation}
+
+The implementation in \texttt{current\_heuristic.py} builds this model as a mixed-integer linear program with two integer variables, using:
+\begin{itemize}
+\item \texttt{x = LpVariable("buses", lowBound=0, upBound=num\_buses, cat='Integer')}
+\item \texttt{y = LpVariable("minibuses", lowBound=0, upBound=num\_minibuses, cat='Integer')}
+\end{itemize}
+
+The objective and constraints are added exactly as:
+\[
+\min \; \texttt{bus\_rental\_cost}\cdot x + \texttt{minibus\_rental\_cost}\cdot y,
+\]
+subject to
+\[
+\texttt{bus\_capacity}\cdot x + \texttt{minibus\_capacity}\cdot y \ge \texttt{num\_students},
+\]
+\[
+x+y \le \texttt{num\_drivers}.
+\]
+
+The model is solved by the external MILP solver invoked through
+\[
+\texttt{prob.solve(pulp.GUROBI\_CMD(msg=0))}.
+\]
+No additional valid inequalities, reformulations, or search logic are present in the code.

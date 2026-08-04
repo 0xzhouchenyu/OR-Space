@@ -1,0 +1,97 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $M$ : set of machines, with $M=\{A,B,C\}$.
+    \item $P$ : set of part types, with $P=\{1,2,\dots,10\}$.
+    \item Indices:
+    \begin{itemize}
+        \item $m \in M$ for machines,
+        \item $p \in P$ for parts.
+    \end{itemize}
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $c_{mp}$ : processing cost of assigning part $p$ to machine $m$ (code data: \texttt{cost[(m,p)]}), from \texttt{table\_1.csv}.
+    \item $d_m$ : one-time setup cost incurred if machine $m$ is used at least once (code data: \texttt{d[m]}), where
+    \[
+    d_A=100,\quad d_B=135,\quad d_C=200.
+    \]
+    \item $C^{\max}$ : maximum number of part types that may be assigned to machine $C$ (code data: \texttt{max\_C}), with
+    \[
+    C^{\max}=3.
+    \]
+    \item $T$ : overtime threshold on the number of assigned part types for any machine (code data: \texttt{ot\_threshold}), with
+    \[
+    T=4.
+    \]
+    \item $\pi^{OT}$ : fixed overtime penalty incurred when the overtime indicator is activated for a machine (code data: \texttt{ot\_penalty}), with
+    \[
+    \pi^{OT}=120.
+    \]
+    \item $|P|=10$ : number of parts; this value is used explicitly in the overtime-linking constraint as the big-$M$ constant in the code.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{mp}$ (code: \texttt{x[(m,p)]}) $\in \{0,1\}$: equals $1$ if part $p$ is assigned to machine $m$, and $0$ otherwise.
+    \item $y_m$ (code: \texttt{y[m]}) $\in \{0,1\}$: equals $1$ if machine $m$ is used by at least one part, and $0$ otherwise.
+    \item $z_m$ (code: \texttt{z[m]}) $\in \{0,1\}$: equals $1$ if machine $m$ is marked as exceeding the overtime threshold in the implemented formulation, and $0$ otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total processing cost, setup cost, and overtime penalties:
+\[
+\min \;
+\sum_{m \in M}\sum_{p \in P} c_{mp} x_{mp}
+\;+\;
+\sum_{m \in M} d_m y_m
+\;+\;
+\sum_{m \in M} \pi^{OT} z_m.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{m \in M} x_{mp} &= 1 && \forall p \in P
+\label{eq:assign}
+\\
+x_{mp} &\le y_m && \forall m \in M,\; \forall p \in P
+\label{eq:use_link}
+\\
+\sum_{p \in P} x_{mp} &\le T + |P|\, z_m && \forall m \in M
+\label{eq:overtime_link}
+\\
+x_{A,1} + x_{A,2} &= 1
+\label{eq:part12}
+\\
+x_{A,3} &= 1
+\label{eq:part3}
+\\
+x_{B,4} &= 1
+\label{eq:part4}
+\\
+x_{C,5} &= 1
+\label{eq:part5}
+\\
+\sum_{p \in P} x_{C,p} &\le C^{\max}
+\label{eq:capC}
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item Constraint \eqref{eq:assign} enforces that each of the 10 parts is processed on exactly one machine.
+    \item Constraint \eqref{eq:use_link} is the only link from assignments to setup activation, so $y_m$ is forced to $1$ whenever any part is assigned to machine $m$.
+    \item The business rule relating parts 1 and 2 is implemented in the code exactly as
+    \[
+    x_{A,1}+x_{A,2}=1,
+    \]
+    which is equivalent to requiring that exactly one of parts 1 and 2 is assigned to machine $A$; it does not otherwise distinguish between machines $B$ and $C$.
+    \item The overtime logic is implemented only through \eqref{eq:overtime_link}. This guarantees that if more than $T$ parts are assigned to machine $m$, then $z_m$ must be $1$. However, the converse is not enforced: the model permits $z_m=1$ even when the machine does not exceed the threshold. Because $z_m$ is penalized positively in the objective, the optimizer will avoid such choices unless necessary.
+    \item There is no lower-bound linking constraint such as $\sum_{p} x_{mp} \ge (T+1) z_m$ in the implemented model; the formulation above intentionally matches the code exactly.
+    \item The model is solved as a binary linear optimization problem using the Gurobi command interface through PuLP compatibility.
+\end{itemize}

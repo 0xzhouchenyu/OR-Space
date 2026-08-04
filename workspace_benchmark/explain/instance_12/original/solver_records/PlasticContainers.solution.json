@@ -1,0 +1,189 @@
+{
+  "solver": "gurobi",
+  "model_name": "PlasticContainers",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 43200.0,
+  "objective_bound": 43200.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004890918731689453,
+  "node_count": 1.0,
+  "iteration_count": 8.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_r7udvxkh/solver_records/PlasticContainers.gurobi.log",
+  "variables": {
+    "x_0_0": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "x_1_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_1": {
+      "value": 550.0,
+      "reduced_cost": null
+    },
+    "x_2_2": {
+      "value": 700.0,
+      "reduced_cost": null
+    },
+    "x_3_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_3_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_3_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_3_3": {
+      "value": 900.0,
+      "reduced_cost": null
+    },
+    "x_4_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_4_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_4_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_4_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_4_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_5_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_5_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_5_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_5_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_5_4": {
+      "value": 400.0,
+      "reduced_cost": null
+    },
+    "x_5_5": {
+      "value": 300.0,
+      "reduced_cost": null
+    },
+    "y_0": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_5": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "demand_0": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_5": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "setup_0": {
+      "sense": "<=",
+      "slack": 2850.0,
+      "dual_value": null
+    },
+    "setup_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "setup_2": {
+      "sense": "<=",
+      "slack": 2100.0,
+      "dual_value": null
+    },
+    "setup_3": {
+      "sense": "<=",
+      "slack": 2450.0,
+      "dual_value": null
+    },
+    "setup_4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "setup_5": {
+      "sense": "<=",
+      "slack": 2650.0,
+      "dual_value": null
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_083",
+  "instance_number": 83,
+  "source_revise_instance": "IndustryOR_83_revise_business",
+  "domain": "Workforce_Scheduling",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Workforce_Scheduling",
+    "question": "Using the revised model only, explain why `BudgetConstraint` is the economically active driver of the LP relaxation while some `MinCoverage_*` rows are binding but have zero or negative dual values. Your answer must trace one binding coverage row and the budget row all the way back to the exact code objects (`y[(i,p)]`, `waiters_in_period[j]`, `coverage[(i,p,j)]`, `pattern_indices[i]`) and the exact CSV/business fields (`Time`, `Minimum_Number_of_Waiters_Needed`, `peak_1`, `peak_2`, `waiter_budget`, `waiter_cost_per_shift`, and `service_quality_score`). Then compare original vs revised and identify the exact code additions that changed the objective from `lpSum(x)` with variables `x[i]` to service-quality maximization, and quantify why the objective increased by 76.0 even though the revised business brief also mentions multi-case robustness that the code did not actually implement."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Restaurant_Waiters.gurobi.log",
+        "Restaurant_Waiters.lp_relaxation.json",
+        "Restaurant_Waiters.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Restaurant_Waiters_Service_Quality.gurobi.log",
+        "Restaurant_Waiters_Service_Quality.lp_relaxation.json",
+        "Restaurant_Waiters_Service_Quality.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 48.871111
+  }
+}

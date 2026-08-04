@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_077",
+  "instance_number": 77,
+  "source_revise_instance": "IndustryOR_77_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model and its LP-relaxation diagnostics, explain why the objective increased from 1005.0 to 1025.0 even though `overtime_penalty=120` in `general_parameters.csv`. Your answer must trace the exact code additions `z[m]` and `lpSum(x[(m, p)] for p in parts) <= ot_threshold + len(parts) * z[m]` back to the business rule in `docs/business_requirement.md`, name the CSV parameter columns and values (`overtime_threshold=4`, `overtime_penalty=120`, `max_parts_on_C=3`), and identify which machine is effectively at the overtime boundary in the revised optimal solution using the specific assignment variables `x_A_1`, `x_B_6`, `x_B_7`, `x_C_10`, etc. Then, interpreting the LP-relaxation state, discuss which revised constraints are binding versus slack, what the shadow price/business marginal meaning would be for the machine-load/overtime threshold if it were read from the relaxation, and why that marginal interpretation cannot be linearly extrapolated to claim that changing the threshold by 1 type would simply change the MIP objective by the same amount."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MachineAssignment.gurobi.log",
+        "MachineAssignment.lp_relaxation.json",
+        "MachineAssignment.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MachineAssignment.gurobi.log",
+        "MachineAssignment.lp_relaxation.json",
+        "MachineAssignment.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 61.118333
+  }
+}
