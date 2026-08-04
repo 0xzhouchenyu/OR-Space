@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate OR-Space paper snapshots, Explain rubrics, and staged workspaces."""
+"""Validate OR-Space model archives, metadata, and staged workspaces."""
 
 from __future__ import annotations
 
@@ -25,28 +25,7 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
         return [json.loads(line) for line in handle if line.strip()]
 
 
-def validate_results(repo: Path, errors: list[str]) -> None:
-    with (repo / "results/table2_main_results.csv").open(newline="", encoding="utf-8") as handle:
-        main = list(csv.DictReader(handle))
-    with (repo / "results/gurobi/revise_code.csv").open(newline="", encoding="utf-8") as handle:
-        revise = list(csv.DictReader(handle))
-    if len(main) != 18 or len(revise) != 18:
-        errors.append(f"Expected 18 Table 2 rows; main={len(main)}, revise={len(revise)}")
-    main_by_model = {row["model"]: row for row in main}
-    if len(main_by_model) != len(main):
-        errors.append("Duplicate model in Table 2 snapshot")
-    for row in revise:
-        model = row["model"]
-        if model not in main_by_model:
-            errors.append(f"Revise snapshot model missing from Table 2: {model}")
-            continue
-        expected = float(main_by_model[model]["revise_code_gurobi_pass_at_1_percent"])
-        observed = float(row["pass_at_1_percent"])
-        if expected != observed:
-            errors.append(f"Revise/Table 2 mismatch for {model}: {observed} != {expected}")
-        if int(row["total"]) != 100 or int(row["passed"]) != int(observed):
-            errors.append(f"Invalid 100-instance aggregate for {model}")
-
+def validate_model_archives(repo: Path, errors: list[str]) -> None:
     with (repo / "baseline_outputs/gurobi/model_index.csv").open(
         newline="", encoding="utf-8"
     ) as handle:
@@ -64,21 +43,13 @@ def validate_results(repo: Path, errors: list[str]) -> None:
     protocol_by_model = {row["paper_model"]: row for row in protocol}
     if set(archive_by_model) != {"gpt-5.4", "deepseek-v4-flash"}:
         errors.append(f"Unexpected public Gurobi archive set: {sorted(archive_by_model)}")
-    if set(protocol_by_model) != set(main_by_model):
-        errors.append("Revise protocol and Table 2 model sets differ")
     expected_status = {
         "gemini-3.1-pro": "not_pass_at_1",
         "claude-opus-4-6": "not_pass_at_1",
         "claude-sonnet-4.5": "not_pass_at_1",
         "gemini-3-flash": "recovery_composite",
     }
-    for model, table_row in main_by_model.items():
-        if model not in protocol_by_model:
-            continue
-        audit = protocol_by_model[model]
-        published = float(table_row["revise_code_gurobi_pass_at_1_percent"])
-        if float(audit["published_revise_score"]) != published:
-            errors.append(f"Revise protocol/Table 2 mismatch for {model}")
+    for model, audit in protocol_by_model.items():
         if model in archive_by_model and audit["release_mode"] != archive_by_model[model]["revise_release_mode"]:
             errors.append(f"Revise release mode mismatch for {model}")
         expected = expected_status.get(model, "pass_at_1")
@@ -251,7 +222,7 @@ def main() -> int:
     parser.add_argument("--participant-root", type=Path)
     args = parser.parse_args()
     errors: list[str] = []
-    validate_results(args.repo, errors)
+    validate_model_archives(args.repo, errors)
     validate_release_metadata(args.repo, errors)
     scan_secrets(args.repo, errors)
     if args.rubrics:

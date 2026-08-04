@@ -49,8 +49,6 @@ hf repos tag create Chenyu-Zhou/OR-Space neurips2026-submission \
   - `build-revise-explain_workspaces.zip` is tracked with LFS.
   - `explain_rubrics/rubrics.jsonl` contains 100 complete rubrics.
   - `oracle/build_revise_objectives.csv` contains 200 references.
-  - `paper_results/table2_main_results.csv` and
-    `paper_results/gurobi_revise_code.csv` agree exactly.
 
 ## 3. Package Hygiene and Visibility
 

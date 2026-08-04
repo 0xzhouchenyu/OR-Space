@@ -53,8 +53,7 @@ paper metrics, stored checks, and Revise-code release mode.
 ## Revise-code result provenance
 
 Both public trace archives restore the historical first-call Revise-code run.
-The 18-model aggregate paper snapshot remains in `results/`; its row-level
-classification is documented in
+Row-level Revise-code release metadata are documented in
 [`revise_code_protocol.csv`](revise_code_protocol.csv):
 
 - `gemini-3.1-pro`, `claude-opus-4-6`, and `claude-sonnet-4.5` use conservative

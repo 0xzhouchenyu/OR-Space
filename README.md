@@ -44,12 +44,11 @@ paper snapshots, and representative model-run evidence.
 
 ```text
 .
-├── 01_build/ ... 06_static_diff/  Benchmark construction and analysis code
+├── 01_build/ ...                  Benchmark construction and analysis code
 ├── workspace_benchmark/           Build, Revise, and Explain workspaces
 ├── evaluation/                    Task references and Explain rubrics
 ├── evaluation_programs/           Build, Revise, and Explain evaluators
 ├── supporting_files/              Metadata, task splits, and visual assets
-├── results/                       Machine-readable paper-result snapshots
 ├── baseline_outputs/gurobi/       Representative Gurobi traces for two models
 ├── tools/                         Packaging and release-validation utilities
 └── tests/                         Evaluator tests
@@ -104,7 +103,7 @@ Easy/Medium/Hard. See
 [`supporting_files/metadata/difficulty_methodology.md`](supporting_files/metadata/difficulty_methodology.md)
 and [`supporting_files/metadata/empirical_difficulty.csv`](supporting_files/metadata/empirical_difficulty.csv).
 
-## Evaluation and results
+## Evaluation and model traces
 
 [`evaluation_programs/`](evaluation_programs/) provides runnable scorers, while
 [`evaluation/`](evaluation/) contains task references and Explain rubrics. The
@@ -112,12 +111,8 @@ Explain release includes normalized exact checks, semantic checklist judgments,
 evidence verification, the judge prompt and schema, and the final 35/35/20/10
 rubric with an unsupported-claim penalty of up to 12 points.
 
-[`results/table2_main_results.csv`](results/table2_main_results.csv) is the
-18-model main-table snapshot. Its Revise-code values are preserved exactly as
-reported. Because several released Revise rows use conservative repeated runs
-or infrastructure recovery rather than an ordinary first call, consult
-[`baseline_outputs/gurobi/revise_code_protocol.csv`](baseline_outputs/gurobi/revise_code_protocol.csv)
-before interpreting that column as Pass@1.
+Representative model traces and their release metadata are documented under
+[`baseline_outputs/gurobi/`](baseline_outputs/gurobi/).
 
 ## Validation
 
