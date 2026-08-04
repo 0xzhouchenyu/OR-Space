@@ -1,3 +1,3 @@
-paper_model,artifact_model,archive,archive_bytes,archive_sha256,build_rows,build_passed,build_code_files,revise_code_rows,revise_code_passed,revise_code_files,revise_release_mode,explain_rows,explain_answer_files,explain_stored_mean,explain_table2_mean
-gpt-5.4,gpt-5.4,models/gpt-5.4.zip,1966997,92d8694055bfb2022d398aa75936866610ba5c93adaf08f0126132759a98af10,100,59,100,100,85,100,restored_historical_first_call,100,100,88.37,86.52
-deepseek-v4-flash,deepseek-v4-flash,models/deepseek-v4-flash.zip,1843625,e36479b04e883f359ca2aad2b8be937ec2cf66d212610f177faa1e02ce611ed1,100,54,100,100,70,100,restored_historical_first_call,100,100,77.79,77.77
+model,archive,archive_bytes,archive_sha256,build_rows,build_code_files,revise_code_rows,revise_code_files,explain_rows,explain_answer_files
+gpt-5.4,models/gpt-5.4.zip,1966837,8c5b8777d53034694eb448a7ad6fafd6008c9375c851fc75e50f8fd8f6909c49,100,100,100,100,100,100
+deepseek-v4-flash,models/deepseek-v4-flash.zip,1843467,55cab43aa50fe43fa3218142a6368b0d684858675eca13e25f704dba642f0ce4,100,100,100,100,100,100

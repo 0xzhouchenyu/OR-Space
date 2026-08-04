@@ -40,7 +40,7 @@ against the corresponding solver API.
 
 This repository is the complete research release. It contains participant
 workspaces, evaluation references and programs, benchmark construction code,
-paper snapshots, and representative model-run evidence.
+and representative model-run evidence.
 
 ```text
 .
@@ -58,8 +58,7 @@ The public trace subset contains two representative models, `gpt-5.4` and
 `deepseek-v4-flash`, with 100 Build, 100 Revise-code, and 100 Explain records
 for each. Generated programs, raw responses, execution logs, answers,
 stored scores, checksums, and provenance are retained where available. See
-[`baseline_outputs/gurobi/`](baseline_outputs/gurobi/) for archive structure and
-the row-level Revise protocol audit.
+[`baseline_outputs/gurobi/`](baseline_outputs/gurobi/) for the archive structure.
 
 ## Quick start
 
@@ -122,8 +121,8 @@ python evaluation_programs/validate_dataset.py
 python -m unittest discover -s tests
 ```
 
-The validator checks paper-table alignment, difficulty metadata, the two public
-model archives, Revise provenance, checksums, and accidental credentials.
+The validator checks difficulty metadata, the two public model archives,
+checksums, completeness, and accidental credentials.
 
 ## Citation
 

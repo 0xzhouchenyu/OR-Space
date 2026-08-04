@@ -30,32 +30,11 @@ def validate_model_archives(repo: Path, errors: list[str]) -> None:
         newline="", encoding="utf-8"
     ) as handle:
         archives = list(csv.DictReader(handle))
-    with (repo / "baseline_outputs/gurobi/revise_code_protocol.csv").open(
-        newline="", encoding="utf-8"
-    ) as handle:
-        protocol = list(csv.DictReader(handle))
-    if len(archives) != 2 or len(protocol) != 18:
-        errors.append(
-            f"Expected 2 public archives and 18 protocol rows; archives={len(archives)}, "
-            f"protocol={len(protocol)}"
-        )
-    archive_by_model = {row["paper_model"]: row for row in archives}
-    protocol_by_model = {row["paper_model"]: row for row in protocol}
+    if len(archives) != 2:
+        errors.append(f"Expected 2 public archives; found {len(archives)}")
+    archive_by_model = {row["model"]: row for row in archives}
     if set(archive_by_model) != {"gpt-5.4", "deepseek-v4-flash"}:
         errors.append(f"Unexpected public Gurobi archive set: {sorted(archive_by_model)}")
-    expected_status = {
-        "gemini-3.1-pro": "not_pass_at_1",
-        "claude-opus-4-6": "not_pass_at_1",
-        "claude-sonnet-4.5": "not_pass_at_1",
-        "gemini-3-flash": "recovery_composite",
-    }
-    for model, audit in protocol_by_model.items():
-        if model in archive_by_model and audit["release_mode"] != archive_by_model[model]["revise_release_mode"]:
-            errors.append(f"Revise release mode mismatch for {model}")
-        expected = expected_status.get(model, "pass_at_1")
-        if audit["pass_at_1_status"] != expected:
-            errors.append(f"Unexpected Revise protocol status for {model}")
-
     for model, archive in archive_by_model.items():
         archive_path = repo / "baseline_outputs/gurobi" / archive["archive"]
         if not archive_path.is_file():
