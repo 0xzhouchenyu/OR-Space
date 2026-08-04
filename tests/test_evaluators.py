@@ -44,6 +44,18 @@ class ExplainScorerTests(unittest.TestCase):
         self.assertEqual(result["coverage"], {"hits": 3, "total": 3})
         self.assertEqual(result["score"], 90.0)
 
+    def test_hallucination_penalty_range(self) -> None:
+        judgment = {
+            "hallucination_penalty": {"score": 20, "reason": ""},
+        }
+        self.assertEqual(
+            SCORE_EXPLAIN._dimension(judgment, "hallucination_penalty", 20.0),
+            20.0,
+        )
+        judgment["hallucination_penalty"]["score"] = 20.1
+        with self.assertRaises(ValueError):
+            SCORE_EXPLAIN._dimension(judgment, "hallucination_penalty", 20.0)
+
 
 if __name__ == "__main__":
     unittest.main()

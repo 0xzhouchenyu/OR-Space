@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the public OR-Space Hugging Face dataset."""
+"""Validate the self-contained OR-Space benchmark dataset."""
 
 from __future__ import annotations
 
@@ -133,11 +133,6 @@ def main() -> int:
                 continue
             if CJK.search(text):
                 errors.append(f"Non-English CJK text remains in {path.relative_to(ROOT)}")
-
-    forbidden = ("baseline_outputs", "paper_results", "supplementary_code")
-    for name in forbidden:
-        if (ROOT / name).exists():
-            errors.append(f"Forbidden release directory exists: {name}")
 
     if errors:
         print("Dataset validation FAILED")

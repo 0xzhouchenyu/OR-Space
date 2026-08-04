@@ -32,7 +32,7 @@
     "reasoningScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 35}}}]},
     "groundingScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 20}}}]},
     "qualityScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 10}}}]},
-    "penaltyScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 12}}}]},
+    "penaltyScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 20}}}]},
     "scored": {
       "type": "object",
       "required": ["score", "reason"],

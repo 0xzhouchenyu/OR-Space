@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="figs/logo.png" width="96" alt="OR-Space logo">
+  <img src="supporting_files/assets/or_space_logo.png" width="96" alt="OR-Space logo">
 </p>
 
 # OR-Space
@@ -16,7 +16,7 @@ and evaluation targets instead of flattening the optimization problem into one
 prompt.
 
 <p align="center">
-  <img src="figs/main.png" width="860" alt="Overview of the OR-Space Build, Revise, and Explain benchmark">
+  <img src="supporting_files/assets/or_space_overview.png" width="860" alt="Overview of the OR-Space Build, Revise, and Explain benchmark">
 </p>
 
 ## Anonymous Review Artifact
@@ -89,7 +89,7 @@ workspace_benchmark/
 ## What This Repo Contains
 
 This repository contains the participant dataset, generation utilities,
-runnable evaluators, and machine-readable result snapshots used by the paper.
+runnable evaluators, and representative model traces.
 
 ```text
 .
@@ -99,14 +99,10 @@ runnable evaluators, and machine-readable result snapshots used by the paper.
   evaluation/               Evaluator-only references for all three tasks
   evaluation_programs/      Public executable scoring programs
   supporting_files/         Index, difficulty labels, split, and documentation
-  figs/                     Project-page figures
   01_build/                 Build workspace generation utilities
   02_revise_modeling/       Revise workspace generation utilities
   03_revise_business/       Business-voice rewriting utilities
-  04_difficulty_judge/      Difficulty judging utilities
-  05_business_quality_rubric/
-  06_static_diff/           Static revision-diff analysis
-  results/                  Machine-readable paper table snapshots
+  baseline_outputs/gurobi/  Representative traces for two models
   tools/                    Participant staging and release validation
   tests/                    Evaluator smoke tests
 ```
@@ -134,7 +130,7 @@ See [`evaluation_programs/`](evaluation_programs/) for runnable scorers and
 includes deterministic normalized entity checks, criterion-level semantic
 judgments, verified workspace evidence, the independent judge prompt and JSON
 schema, and aggregation into the paper's 35/35/20/10 rubric with an unsupported-
-claim penalty of up to 12 points.
+claim penalty of up to 20 points.
 
 Validate the complete anonymous snapshot with:
 
@@ -142,19 +138,8 @@ Validate the complete anonymous snapshot with:
 python evaluation_programs/validate_dataset.py
 ```
 
-The current 18-model Table 2 snapshot is published in
-[`results/table2_main_results.csv`](results/table2_main_results.csv). Its
-Revise-code/Gurobi column is also available separately in
-[`results/gurobi/revise_code.csv`](results/gurobi/revise_code.csv); release
-validation checks that the two remain identical.
-
-The frozen aggregate results needed to reproduce the paper tables are included
-under [`results/`](results/). Raw per-instance execution archives are
-intentionally omitted from the anonymous review snapshot because execution
-logs may contain identifying machine paths. The packaging script is
-[`tools/package_gurobi_baselines.py`](tools/package_gurobi_baselines.py); it
-requires all 18 Build and Revise-code aggregates to match Table 2 before it
-writes any archive for the post-review release.
+Representative model traces and their release metadata are documented under
+[`baseline_outputs/gurobi/`](baseline_outputs/gurobi/).
 
 ## Main Paper Findings
 

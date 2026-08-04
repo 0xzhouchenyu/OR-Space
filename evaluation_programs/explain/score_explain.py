@@ -154,7 +154,7 @@ def score_one(
     reasoning = _dimension(judgment, "reasoning", 35.0)
     grounding = _dimension(judgment, "grounding", 20.0)
     quality = _dimension(judgment, "answer_quality", 10.0)
-    penalty = _dimension(judgment, "hallucination_penalty", 12.0)
+    penalty = _dimension(judgment, "hallucination_penalty", 20.0)
     total = max(0.0, min(100.0, coverage + reasoning + grounding + quality - penalty))
     return {
         "instance_id": rubric["instance_id"],

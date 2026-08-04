@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "solver": "gurobi",
+  "models": 18,
+  "tasks": [
+    "build",
+    "revise_code",
+    "explain"
+  ],
+  "instances_per_model_task": 100,
+  "result_rows": 600,
+  "archives": [
+    {
+      "paper_model": "gpt-5.4",
+      "artifact_model": "gpt-5.4",
+      "archive": "models/gpt-5.4.zip",
+      "archive_bytes": 1966997,
+      "archive_sha256": "92d8694055bfb2022d398aa75936866610ba5c93adaf08f0126132759a98af10",
+      "build_rows": 100,
+      "build_passed": 59,
+      "build_code_files": 100,
+      "revise_code_rows": 100,
+      "revise_code_passed": 85,
+      "revise_code_files": 100,
+      "revise_release_mode": "restored_historical_first_call",
+      "explain_rows": 100,
+      "explain_answer_files": 100,
+      "explain_stored_mean": "88.37",
+      "explain_table2_mean": "86.52"
+    },
+    {
+      "paper_model": "deepseek-v4-flash",
+      "artifact_model": "deepseek-v4-flash",
+      "archive": "models/deepseek-v4-flash.zip",
+      "archive_bytes": 1843625,
+      "archive_sha256": "e36479b04e883f359ca2aad2b8be937ec2cf66d212610f177faa1e02ce611ed1",
+      "build_rows": 100,
+      "build_passed": 54,
+      "build_code_files": 100,
+      "revise_code_rows": 100,
+      "revise_code_passed": 70,
+      "revise_code_files": 100,
+      "revise_release_mode": "restored_historical_first_call",
+      "explain_rows": 100,
+      "explain_answer_files": 100,
+      "explain_stored_mean": "77.79",
+      "explain_table2_mean": "77.77"
+    }
+  ],
+  "model_count": 2,
+  "tasks_per_model": 300
+}
