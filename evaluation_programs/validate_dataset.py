@@ -12,10 +12,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CJK = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
+TASK_DIRECTORIES = {
+    "build": "build_workspaces",
+    "revise": "revise_workspaces",
+    "explain": "explain_workspaces",
+}
 
 
 def instance_dirs(task: str) -> list[Path]:
-    return sorted((ROOT / "workspace_benchmark" / task).glob("instance_*"))
+    return sorted((ROOT / "Workspace_OR" / TASK_DIRECTORIES[task]).glob("instance_*"))
 
 
 def main() -> int:
@@ -92,7 +97,13 @@ def main() -> int:
             errors.append(f"Difficulty/index mismatch: {row['workspace_id']}")
         number = int(row["instance_number"])
         metadata = json.loads(
-            (ROOT / "workspace_benchmark" / row["task_type"] / f"instance_{number}" / "metadata.json").read_text(
+            (
+                ROOT
+                / "Workspace_OR"
+                / TASK_DIRECTORIES[row["task_type"]]
+                / f"instance_{number}"
+                / "metadata.json"
+            ).read_text(
                 encoding="utf-8"
             )
         )
@@ -118,7 +129,7 @@ def main() -> int:
         errors.append(f"Unexpected Explain rubric inventory: {dict(rubric_types)}")
 
     release_roots = (
-        ROOT / "workspace_benchmark",
+        ROOT / "Workspace_OR",
         ROOT / "evaluation",
         ROOT / "evaluation_programs",
         ROOT / "supporting_files",

@@ -50,7 +50,7 @@ include the complete verified original/revised evidence:
 python evaluation_programs/explain/prepare_judge_inputs.py \
   --rubrics evaluation/explain_evaluation/rubrics.jsonl \
   --answers answers.jsonl \
-  --workspaces workspace_benchmark/explain \
+  --workspaces Workspace_OR/explain_workspaces \
   --output judge_inputs.jsonl
 ```
 

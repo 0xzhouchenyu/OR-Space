@@ -69,17 +69,17 @@ PY
 The workspaces follow this pattern:
 
 ```text
-workspace_benchmark/
-  build/instance_1/
+Workspace_OR/
+  build_workspaces/instance_1/
     docs/
     data/
     src/
     metadata.json
-  revise/instance_1/
+  revise_workspaces/instance_1/
     original/
     revised/
     metadata.json
-  explain/instance_1/
+  explain_workspaces/instance_1/
     original/
       logs/
       solver_records/
@@ -98,7 +98,7 @@ runnable evaluators.
 .
   README.md
   LICENSE
-  workspace_benchmark/      100 Build, 100 Revise, and 100 Explain workspaces
+  Workspace_OR/             100 Build, 100 Revise, and 100 Explain workspaces
   evaluation/               Evaluator-only references for all three tasks
   evaluation_programs/      Public executable scoring programs
   supporting_files/         Index, difficulty labels, split, and documentation
