@@ -81,15 +81,18 @@ workspace_benchmark/
     metadata.json
   explain/instance_1/
     original/
+      logs/
+      solver_records/
     revised/
-    solver_artifacts/
+      logs/
+      solver_records/
     metadata.json
 ```
 
 ## What This Repo Contains
 
-This repository contains the participant dataset, generation utilities,
-runnable evaluators, and representative model traces.
+This repository contains the participant dataset, generation utilities, and
+runnable evaluators.
 
 ```text
 .
@@ -102,7 +105,6 @@ runnable evaluators, and representative model traces.
   01_build/                 Build workspace generation utilities
   02_revise_modeling/       Revise workspace generation utilities
   03_revise_business/       Business-voice rewriting utilities
-  baseline_outputs/gurobi/  Representative traces for two models
   tools/                    Participant staging and release validation
   tests/                    Evaluator smoke tests
 ```
@@ -137,9 +139,6 @@ Validate the complete anonymous snapshot with:
 ```bash
 python evaluation_programs/validate_dataset.py
 ```
-
-Representative model traces and their release metadata are documented under
-[`baseline_outputs/gurobi/`](baseline_outputs/gurobi/).
 
 ## Review Snapshot
 
