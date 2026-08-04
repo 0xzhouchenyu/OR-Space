@@ -56,10 +56,10 @@ and `evaluation/explain_evaluation/`.
 The repository uses this layout:
 
 ```text
-workspace_benchmark/
-  build/
-  revise/
-  explain/
+Workspace_OR/
+  build_workspaces/
+  revise_workspaces/
+  explain_workspaces/
 ```
 
 Build workspaces expose documents, data, sanitized metadata, and an empty

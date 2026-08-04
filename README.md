@@ -44,7 +44,7 @@ programs, and benchmark construction code.
 ```text
 .
 ├── 01_build/ ... 03_revise_business/  Benchmark construction code
-├── workspace_benchmark/           Build, Revise, and Explain workspaces
+├── Workspace_OR/                   Build, Revise, and Explain workspaces
 ├── evaluation/                    Task references and Explain rubrics
 ├── evaluation_programs/           Build, Revise, and Explain evaluators
 ├── supporting_files/              Metadata, task splits, and visual assets
@@ -71,10 +71,10 @@ The benchmark release is organized as:
 
 ```text
 .
-├── workspace_benchmark/
-│   ├── build/
-│   ├── revise/
-│   └── explain/
+├── Workspace_OR/
+│   ├── build_workspaces/
+│   ├── revise_workspaces/
+│   └── explain_workspaces/
 ├── evaluation/
 │   ├── build_evaluation/
 │   ├── revise_evaluation/
