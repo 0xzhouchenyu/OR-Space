@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_070",
+  "instance_number": 70,
+  "source_revise_instance": "IndustryOR_70_revise_business",
+  "domain": "Routing_TSP",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Routing_TSP",
+    "question": "In the revised model, explain exactly why the optimal objective drops from 35.0 to 27.0 by tracing the chosen arc variables back to both CSV fields and the business memo terms. Your answer must name the exact code variables used in the revised optimal path, the exact `general_parameters.csv` fields and values that enforce the start/end/prohibited/inspection logic, and identify which code additions replaced the original closed tour logic with an open path logic. Then use `Hazmat_Fixed_End_Path_TSP_lp_relaxation.json` to identify at least two binding constraints (by `_C#` and/or the corresponding mathematical condition), interpret one shadow price in business terms, and explain why that dual value cannot be linearly extrapolated to a large policy change such as removing the fixed end city or allowing the prohibited `1 -> 3` arc."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Advanced_70_exact_route.gurobi.log",
+        "Advanced_70_exact_route.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Hazmat_Fixed_End_Path_TSP.gurobi.log",
+        "Hazmat_Fixed_End_Path_TSP.lp_relaxation.json",
+        "Hazmat_Fixed_End_Path_TSP.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 50.411111
+  }
+}

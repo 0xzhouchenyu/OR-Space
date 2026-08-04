@@ -1,0 +1,44 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinFreightCost",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 6800.0,
+  "objective_bound": 6800.0,
+  "mip_gap": 0.0,
+  "runtime": 0.003428936004638672,
+  "node_count": 1.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_k7uh_34n/solver_records/MinFreightCost.gurobi.log",
+  "variables": {
+    "trucks_from_A": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "trucks_from_B": {
+      "value": 30.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "RawMaterialA": {
+      "sense": ">=",
+      "slack": -10.0,
+      "dual_value": null
+    },
+    "RawMaterialB": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "RawMaterialC": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

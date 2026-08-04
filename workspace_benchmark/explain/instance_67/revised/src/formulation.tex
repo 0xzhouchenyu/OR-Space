@@ -1,0 +1,150 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Months \(T=\{\text{July},\text{August},\text{September},\text{October},\text{November},\text{December}\}\), indexed by \(t\).
+    \item Products \(P=\{\text{Product\_I},\text{Product\_II}\}\), indexed by \(p\).
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter values are read from the CSV data files using the literal field names shown below.
+
+\begin{itemize}
+    \item Demand \(d_{t,p}\): market demand in month \(t\) for product \(p\) (from \texttt{table\_1.csv}, field \texttt{Market\_Demand\_Units}).
+    \item Unit production cost \(c^{\text{prod}}_p\):
+    \[
+    c^{\text{prod}}_{\text{Product\_I}}=\texttt{product\_I\_cost\_jun\_to\_dec},\qquad
+    c^{\text{prod}}_{\text{Product\_II}}=\texttt{product\_II\_cost\_jun\_to\_dec}.
+    \]
+    \item Inventory volume per unit \(v_p\):
+    \[
+    v_{\text{Product\_I}}=\texttt{product\_I\_volume},\qquad
+    v_{\text{Product\_II}}=\texttt{product\_II\_volume}.
+    \]
+    \item Machine-hours required per unit \(a_p\):
+    \[
+    a_{\text{Product\_I}}=\texttt{product\_I\_machine\_hours},\qquad
+    a_{\text{Product\_II}}=\texttt{product\_II\_machine\_hours}.
+    \]
+    \item Electricity required per unit \(e_p\):
+    \[
+    e_{\text{Product\_I}}=\texttt{product\_I\_power\_kwh},\qquad
+    e_{\text{Product\_II}}=\texttt{product\_II\_power\_kwh}.
+    \]
+    \item Monthly machine-hour capacity \(M=\texttt{machine\_hours\_capacity\_monthly}\).
+    \item Warehouse capacity \(W=\texttt{warehouse\_capacity}\).
+    \item Own-warehouse holding cost per cubic meter per month \(c^{\text{wh}}=\texttt{own\_warehouse\_cost}\).
+    \item Grid electricity unit cost \(c^{\text{grid}}=\texttt{grid\_electricity\_cost}\).
+    \item Diesel generation unit cost \(c^{\text{gen}}=\texttt{generator\_electricity\_cost}\).
+    \item Initial inventory for each product at the start of July
+    \[
+    I^0=\texttt{initial\_inventory\_july}.
+    \]
+    \item Monthly grid quota \(Q_t\), where
+    \[
+    Q_t \in \{\texttt{grid\_quota\_july},\texttt{grid\_quota\_august},\texttt{grid\_quota\_september},
+    \texttt{grid\_quota\_october},\texttt{grid\_quota\_november},\texttt{grid\_quota\_december}\}.
+    \]
+    \item Monthly diesel generation limit \(G_t\), where
+    \[
+    G_t \in \{\texttt{generator\_max\_july},\texttt{generator\_max\_august},\texttt{generator\_max\_september},
+    \texttt{generator\_max\_october},\texttt{generator\_max\_november},\texttt{generator\_max\_december}\}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each \(t\in T\) and \(p\in P\):
+
+\begin{itemize}
+    \item Production quantity \(x_{t,p}\) (code: \texttt{prod[(t,p)]}) \(\ge 0\).
+    \item End-of-month inventory \(I_{t,p}\) (code: \texttt{inv[(t,p)]}) \(\ge 0\).
+\end{itemize}
+
+For each \(t\in T\):
+
+\begin{itemize}
+    \item Grid electricity purchased \(y_t^{\text{grid}}\) (code: \texttt{grid\_power[t]}) \(\ge 0\).
+    \item Diesel-generated electricity \(y_t^{\text{gen}}\) (code: \texttt{gen\_power[t]}) \(\ge 0\).
+    \item Own-warehouse usage \(w_t\) (code: \texttt{own\_wh[t]}) \(\ge 0\).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total production, inventory, and electricity cost:
+\[
+\min \;
+\sum_{t\in T}\sum_{p\in P} c^{\text{prod}}_p x_{t,p}
+\;+\;
+\sum_{t\in T} c^{\text{wh}} w_t
+\;+\;
+\sum_{t\in T}\left(c^{\text{grid}} y_t^{\text{grid}} + c^{\text{gen}} y_t^{\text{gen}}\right).
+\]
+
+\section*{Constraints}
+
+\paragraph{Inventory balance and demand satisfaction.}
+For July:
+\[
+I^0 + x_{\text{July},p} - d_{\text{July},p} = I_{\text{July},p}
+\qquad \forall p\in P.
+\]
+
+For each later month \(t\in T\setminus\{\text{July}\}\), letting \(t^{-}\) denote the previous month:
+\[
+I_{t^{-},p} + x_{t,p} - d_{t,p} = I_{t,p}
+\qquad \forall p\in P.
+\]
+
+\paragraph{Monthly machine-hour capacity.}
+\[
+\sum_{p\in P} a_p x_{t,p} \le M
+\qquad \forall t\in T.
+\]
+
+\paragraph{Own-warehouse accounting and capacity.}
+\[
+w_t = \sum_{p\in P} v_p I_{t,p}
+\qquad \forall t\in T,
+\]
+\[
+w_t \le W
+\qquad \forall t\in T.
+\]
+
+\paragraph{Monthly electricity quotas and supply.}
+\[
+y_t^{\text{grid}} \le Q_t
+\qquad \forall t\in T,
+\]
+\[
+y_t^{\text{gen}} \le G_t
+\qquad \forall t\in T,
+\]
+\[
+y_t^{\text{grid}} + y_t^{\text{gen}}
+\ge
+\sum_{p\in P} e_p x_{t,p}
+\qquad \forall t\in T.
+\]
+
+\paragraph{Nonnegativity.}
+\[
+x_{t,p}\ge 0,\quad I_{t,p}\ge 0
+\qquad \forall t\in T,\; p\in P,
+\]
+\[
+y_t^{\text{grid}}\ge 0,\quad y_t^{\text{gen}}\ge 0,\quad w_t\ge 0
+\qquad \forall t\in T.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program solved through PuLP with \texttt{GUROBI\_CMD}.
+    \item The planning horizon is restricted to July--December only.
+    \item The code uses a single scalar \texttt{initial\_inventory\_july} for both products, so both Product I and Product II start July with the same initial inventory \(I^0\).
+    \item Outside storage is not modeled. Although \texttt{external\_warehouse\_cost} and \texttt{max\_production\_capacity} appear in the data, they are not used in the implemented formulation.
+    \item Electricity supply is enforced with ``\(\ge\)'' rather than equality. Because both electricity cost coefficients are positive, the LP will avoid unnecessary over-purchase in an optimal solution, but the mathematical model should match the code exactly.
+    \item Warehouse cost is charged on the variable \(w_t\), which is constrained to equal the end-of-month inventory volume stored in the factory warehouse.
+\end{itemize}

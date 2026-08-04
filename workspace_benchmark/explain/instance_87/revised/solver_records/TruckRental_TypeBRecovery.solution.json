@@ -1,0 +1,75 @@
+{
+  "solver": "gurobi",
+  "model_name": "TruckRental_TypeBRecovery",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 4880.0,
+  "objective_bound": 4880.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0030989646911621094,
+  "node_count": 1.0,
+  "iteration_count": 5.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ewgv7q45/solver_records/TruckRental_TypeBRecovery.gurobi.log",
+  "variables": {
+    "TypeA_extra": {
+      "value": 24.0,
+      "reduced_cost": null
+    },
+    "TypeA_trucks": {
+      "value": 54.0,
+      "reduced_cost": null
+    },
+    "TypeB_extra": {
+      "value": 24.0,
+      "reduced_cost": null
+    },
+    "TypeB_recovery_desk": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "TypeB_trucks": {
+      "value": 64.0,
+      "reduced_cost": null
+    },
+    "total_fleet_surge": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": ">=",
+      "slack": -80.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 9997.0,
+      "dual_value": null
+    }
+  }
+}

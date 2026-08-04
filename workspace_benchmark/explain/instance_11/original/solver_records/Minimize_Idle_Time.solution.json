@@ -1,0 +1,49 @@
+{
+  "solver": "gurobi",
+  "model_name": "Minimize_Idle_Time",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 272.0,
+  "objective_bound": 272.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0003948211669921875,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_9l6uchr5/solver_records/Minimize_Idle_Time.gurobi.log",
+  "variables": {
+    "x_A": {
+      "value": 6.0,
+      "reduced_cost": null
+    },
+    "x_B": {
+      "value": 3.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 29.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 4.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": -867.0,
+      "dual_value": null
+    }
+  }
+}

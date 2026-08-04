@@ -1,0 +1,1 @@
+Tom and Jerry just bought a farm in Sunshine Valley, and they are considering using it to plant corn, wheat, soybeans, and sorghum. To maximize their profit, they need to determine how many acres of land should be allocated to each crop. Please refer to the corresponding CSV files in the data folder for specific parameter values.

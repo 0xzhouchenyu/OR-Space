@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+min_weekly_profit,10000,dollars,The total weekly profit must not be less than this value.
+min_model_A_units,10,units,Minimum weekly production requirement for Model A.
+min_model_B_units,15,units,Minimum weekly production requirement for Model B.
+process_I_hours,150,hours,Weekly production time for Process I.
+process_II_hours,70,hours,Weekly production time for Process II with potential overtime.

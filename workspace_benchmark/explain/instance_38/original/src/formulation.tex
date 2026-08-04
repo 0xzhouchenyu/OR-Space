@@ -1,0 +1,90 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $P = \{1,2,3\}$: set of products/jobs.
+    \item $M = \{1,2,3\}$: set of machines, processed in the fixed technological order $1 \rightarrow 2 \rightarrow 3$.
+    \item $K = \{1,2,3\}$: positions in the common processing sequence.
+    \item Indices:
+    \begin{itemize}
+        \item $i \in P$: product index.
+        \item $j \in M$: machine index.
+        \item $k \in K$: position in the sequence.
+    \end{itemize}
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $t_{ij}$: processing time of product $i$ on machine $j$ (code data: \texttt{processing\_times[i][j]} with $0$-based indexing in Python).
+    
+    From the CSV data,
+    \[
+    (t_{ij}) =
+    \begin{pmatrix}
+    2 & 3 & 1\\
+    4 & 2 & 3\\
+    3 & 5 & 2
+    \end{pmatrix},
+    \]
+    where rows correspond to products $1,2,3$ and columns to machines $1,2,3$.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $\pi_k$ (code: \texttt{perm[k]} / \texttt{sequence[k]}): product assigned to position $k$ in the common sequence. The vector $\pi=(\pi_1,\pi_2,\pi_3)$ must be a permutation of $P$.
+    \item $C_{k,j}$ (code: \texttt{completion[k][j-1]} with shifted indexing): completion time of the product scheduled in position $k$ on machine $j$.
+    \item $C_{\max}$: makespan, equal to the completion time of the last sequence position on the last machine.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the total processing cycle (makespan):
+\[
+\min \; C_{\max}.
+\]
+
+\section*{Constraints}
+
+The model evaluated by the code is the permutation flow-shop recursion for a fixed common order on all machines.
+
+\begin{align}
+&\text{Permutation condition: } (\pi_1,\pi_2,\pi_3) \text{ is a permutation of } P. \label{perm}
+\end{align}
+
+Completion times are computed position-by-position and machine-by-machine:
+\begin{align}
+C_{1,1} &= t_{\pi_1,1}, \\
+C_{k,1} &= C_{k-1,1} + t_{\pi_k,1} \qquad &&\forall k=2,3, \\
+C_{1,j} &= C_{1,j-1} + t_{\pi_1,j} \qquad &&\forall j=2,3, \\
+C_{k,j} &= \max\{C_{k-1,j},\, C_{k,j-1}\} + t_{\pi_k,j}
+\qquad &&\forall k=2,3,\; j=2,3.
+\end{align}
+
+The makespan is
+\begin{align}
+C_{\max} = C_{3,3}.
+\end{align}
+
+Equivalently, the optimization problem solved is
+\[
+\min_{\pi \in \mathcal{S}_3} \; C_{3,3}(\pi),
+\]
+where $\mathcal{S}_3$ is the set of all permutations of $P$, and $C_{k,j}(\pi)$ is defined by the recursion above.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code does not build an LP or MIP model. It performs exact finite enumeration of all job permutations using \texttt{itertools.permutations(range(n\_products))}.
+    \item For each candidate sequence $\pi$, the makespan is computed by dynamic recursion:
+    \[
+    C_{k,j} = \max\{C_{k-1,j},\, C_{k,j-1}\} + t_{\pi_k,j},
+    \]
+    with boundary cases on the first position and first machine.
+    \item The same job order is enforced on every machine because the sequence variable is a single permutation shared across all machines.
+    \item The objective value reported by the code is the minimum makespan over all permutations:
+    \[
+    \min_{\pi \in \mathcal{S}_3} C_{3,3}(\pi).
+    \]
+    \item Python uses $0$-based indexing in the arrays \texttt{processing\_times[job][machine]} and \texttt{completion[i][j]}; the formulation above is written with the standard $1$-based mathematical indexing.
+\end{itemize}

@@ -1,0 +1,55 @@
+{
+  "instance_id": "OR_explain_013",
+  "instance_number": 13,
+  "source_revise_instance": "IndustryOR_13_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised farm model, explain precisely why the optimal objective drops from 180000.0 to 150000.0 by tracing the business rule through the mathematical and code implementation. Your answer must name the exact code variables and constraint names (`y_corn`, `y_soybeans`, `corn_activation`, `soybeans_activation`, `mutual_exclusion_corn_soybeans`, `corn_min_supply`), the exact CSV parameter names and values used as big-M/profit inputs, and the business terms in the requirement document that these encode. Then use the LP-relaxation diagnostics to identify which constraints are binding and interpret the reported duals/slacks (especially `total_area`, `corn_min_supply`, `corn_activation`, `soybeans_activation`, and `mutual_exclusion_corn_soybeans`), including why the huge shadow price of `mutual_exclusion_corn_soybeans` in the relaxation cannot be linearly extrapolated to predict the true MIP objective change if that rule were relaxed by one unit."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Farm_Optimization.gurobi.log",
+        "Farm_Optimization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Farm_Optimization_Revised.gurobi.log",
+        "Farm_Optimization_Revised.lp_relaxation.json",
+        "Farm_Optimization_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 73.208889
+  }
+}

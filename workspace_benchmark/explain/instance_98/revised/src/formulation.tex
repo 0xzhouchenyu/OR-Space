@@ -1,0 +1,103 @@
+\section*{Sets and Indices}
+
+\[
+P=\{A,B\}
+\]
+set of products, indexed by \(p\).
+
+\section*{Parameters}
+
+All parameter names below match the data fields.
+
+For each product \(p \in P\):
+\begin{align*}
+s_p &: \text{steel required per unit (from \texttt{Steel\_Required\_kg})},\\
+a_p &: \text{aluminum required per unit (from \texttt{Aluminum\_Required\_kg})},\\
+\ell_p &: \text{labor required per unit (from \texttt{Labor\_Required\_hours})},\\
+r_p &: \text{profit per unit (from \texttt{Profit\_yuan})},\\
+f_p &: \text{fixed setup cost (from \texttt{Setup\_Cost\_yuan})}.
+\end{align*}
+
+Resource and policy parameters:
+\begin{align*}
+S &:= \texttt{available\_steel},\\
+A &:= \texttt{available\_aluminum},\\
+L &:= \texttt{available\_labor},\\
+c^{ot} &:= \texttt{overtime\_pay},\\
+\overline{O} &:= \texttt{max\_overtime},\\
+T^{rev} &:= \texttt{overtime\_review\_threshold},\\
+F^{rev} &:= \texttt{overtime\_review\_fee},\\
+T^A &:= \texttt{product\_A\_line\_audit\_threshold},\\
+F^A &:= \texttt{product\_A\_line\_audit\_fee}.
+\end{align*}
+
+Implementation constants used in the code:
+\[
+M = 10000, \qquad M^{rev} = \texttt{max\_overtime}.
+\]
+
+\section*{Decision Variables}
+
+\begin{align*}
+x_p &\ge 0 \qquad &&\text{production quantity of product } p \text{ (code: \texttt{x[p]})},\\
+y_p &\in \{0,1\} \qquad &&\text{1 if product } p \text{ is produced/setup is paid (code: \texttt{y[p]})},\\
+o &\in [0,\overline{O}] \qquad &&\text{overtime hours (code: \texttt{overtime})},\\
+z^{rev} &\in \{0,1\} \qquad &&\text{1 if overtime review fee is triggered (code: \texttt{review})},\\
+z^{A} &\in \{0,1\} \qquad &&\text{1 if Product A line-audit fee is triggered (code: \texttt{product\_A\_line\_audit})}.
+\end{align*}
+
+\section*{Objective}
+
+Maximize net profit:
+\[
+\max \;
+\sum_{p \in P} r_p x_p
+-\sum_{p \in P} f_p y_p
+-c^{ot} o
+-F^{rev} z^{rev}
+-F^{A} z^{A}.
+\]
+
+\section*{Constraints}
+
+Resource limits:
+\begin{align*}
+\sum_{p \in P} s_p x_p &\le S,\\
+\sum_{p \in P} a_p x_p &\le A,\\
+\sum_{p \in P} \ell_p x_p &\le L + o.
+\end{align*}
+
+Setup-linking constraints:
+\[
+x_p \le M y_p \qquad \forall p \in P.
+\]
+
+Overtime review gate:
+\[
+o \le T^{rev} + M^{rev} z^{rev}.
+\]
+
+Product A line-audit gate:
+\[
+x_A \le T^A + M z^{A}.
+\]
+
+Variable domains:
+\[
+x_p \ge 0 \;\; (\forall p \in P), \qquad
+0 \le o \le \overline{O}, \qquad
+y_p \in \{0,1\} \;\; (\forall p \in P), \qquad
+z^{rev}, z^{A} \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The formulation above matches the implemented mixed-integer linear model in \texttt{current\_heuristic.py}.
+
+The overtime-review rule is modeled as a binary gate, not as a proportional surcharge: if \(o \le T^{rev}\), then \(z^{rev}=0\) is feasible and no review fee is paid; if \(o>T^{rev}\), feasibility requires \(z^{rev}=1\), which adds the one-time fee \(F^{rev}\).
+
+Likewise, the Product A audit rule is modeled as a binary gate: up to \(\texttt{product\_A\_line\_audit\_threshold}\) units of A can be produced with \(z^{A}=0\); producing more forces \(z^{A}=1\), which adds the one-time fee \(\texttt{product\_A\_line\_audit\_fee}\). This audit fee is separate from the overtime review fee.
+
+The code uses the big-\(M\) value \(10000\) both for setup linking \(x_p \le 10000\,y_p\) and for the Product A audit gate \(x_A \le T^A + 10000\,z^A\). The overtime review gate uses \(\texttt{max\_overtime}\) as its big-\(M\) term exactly as written in the source code.
+
+The model is solved as a MILP through \texttt{GUROBI\_CMD(msg=0)}.

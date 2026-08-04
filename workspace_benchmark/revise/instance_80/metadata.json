@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_80_revise_business",
+  "original_instance_id": "IndustryOR_80",
+  "revise_description": "In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. The sponsor was careful about direction. A companion, prerequisite, approval, or follow-on condition runs only the way the business sentence says it runs; the reverse direction is not part of the deal unless it is stated. The weekly staffing plan now has to satisfy task-level skill-balance bands, not just the overall hiring ratio. Each task still uses one of its two methods and must receive enough effective hours, but the skilled share on Task 1, Task 2, and Task 3 must stay between the task-specific lower and upper bounds listed in `general_parameters.csv`. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+6var, +9constr, mod_8constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 6,
+        "-variable": 0,
+        "+constraint": 9,
+        "-constraint": 0,
+        "modify_constraint": 8,
+        "modify_data": 1
+      },
+      "op_count": 24,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 77.777778
+  }
+}

@@ -1,0 +1,107 @@
+\section*{Sets and Indices}
+
+\[
+P=\{\text{A1},\text{A2},\text{A3}\}
+\]
+
+Set of products, indexed by \(p \in P\).
+
+\section*{Parameters}
+
+For each product \(p \in P\):
+\begin{itemize}
+    \item \(D_p\): maximum demand (\texttt{Maximum\_Demand})
+    \item \(s_p\): selling price per unit (\texttt{Selling\_Price})
+    \item \(c_p\): production cost per unit (\texttt{Production\_Cost})
+    \item \(q_p\): production quota in units per day (\texttt{Production\_Quota})
+    \item \(F_p\): activation cost (\texttt{Activation\_Cost})
+    \item \(B_p\): minimum batch size (\texttt{Minimum\_Batch})
+\end{itemize}
+
+Global parameter:
+\begin{itemize}
+    \item \(T\): available production days in the month (\texttt{production\_days})
+\end{itemize}
+
+Using the provided data for instance 22:
+\[
+T=22
+\]
+and
+\[
+\begin{array}{c|cccccc}
+p & D_p & s_p & c_p & q_p & F_p & B_p \\
+\hline
+\text{A1} & 5300 & 124 & 73.30 & 500 & 170000 & 20 \\
+\text{A2} & 4500 & 109 & 52.90 & 450 & 150000 & 20 \\
+\text{A3} & 5400 & 115 & 65.40 & 550 & 100000 & 16
+\end{array}
+\]
+
+\section*{Decision Variables}
+
+For each product \(p \in P\):
+\begin{itemize}
+    \item \(x_p \ge 0\) (code: \texttt{x[p]}): production quantity of product \(p\)
+    \item \(y_p \in \{0,1\}\) (code: \texttt{y[p]}): activation indicator for product \(p\)
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \sum_{p \in P} \left[(s_p-c_p)x_p - F_p y_p\right].
+\]
+
+\section*{Constraints}
+
+The implemented model imposes that all three products are activated:
+\[
+y_p = 1 \qquad \forall p \in P.
+\]
+
+Demand upper bound linked to activation:
+\[
+x_p \le D_p\, y_p \qquad \forall p \in P.
+\]
+
+Minimum batch linked to activation:
+\[
+x_p \ge B_p\, y_p \qquad \forall p \in P.
+\]
+
+Total production time limit:
+\[
+\sum_{p \in P} \frac{x_p}{q_p} \le T.
+\]
+
+Variable domains:
+\[
+x_p \ge 0 \qquad \forall p \in P,
+\]
+\[
+y_p \in \{0,1\} \qquad \forall p \in P.
+\]
+
+\section*{Notes on Implementation}
+
+The formulation is implemented as a mixed-integer linear program in \texttt{current\_heuristic.py} and solved with Gurobi through PuLP.
+
+Although binary activation variables \(y_p\) are declared, the code also explicitly enforces
+\(
+y_p=1
+\)
+for every product. Therefore, in the implemented model all products must be produced, activation costs are always incurred, and the lower bounds reduce to
+\(
+x_p \ge B_p
+\)
+while the upper bounds reduce to
+\(
+x_p \le D_p
+\).
+
+The production-days constraint uses the exact code expression
+\[
+\sum_{p\in P} x_p/q_p \le T,
+\]
+so each product consumes production time in proportion to its quantity divided by its quota. No integrality is imposed on \(x_p\); production quantities are continuous.

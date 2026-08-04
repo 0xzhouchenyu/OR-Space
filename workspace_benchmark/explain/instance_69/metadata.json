@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_069",
+  "instance_number": 69,
+  "source_revise_instance": "IndustryOR_69_revise_business",
+  "domain": "Cutting_Stock",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Cutting_Stock",
+    "question": "The revised objective rises from 20.0 to 27.5. Explain exactly which new code elements caused that increase by tracing the business brief’s “rush order for 5-meter bars” and “gate” language to the CSV fields `batch_5m_quantity`, `setup_cost_per_pattern`, and `max_distinct_patterns`, then to the code variables `n[i]`, `u[i]`, the big-M parameter `M`, and the revised objective/constraints in `src/current_heuristic.py` (you may use `src/formulation.tex` to name the mathematical objects). Using the revised solution and LP-relaxation records, identify which demand constraints are binding or slack, give the shadow prices for the binding demand constraints, interpret those marginal values in business terms, and quantify how much of the +7.5 objective change is setup cost versus extra raw-bar usage. Finally, explain why you cannot linearly extrapolate those LP dual values to predict the integer objective effect of increasing `batch_5m_quantity` further under the pattern cap."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "CuttingStock.gurobi.log",
+        "CuttingStock.lp_relaxation.json",
+        "CuttingStock.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "CuttingStock_Revised.gurobi.log",
+        "CuttingStock_Revised.lp_relaxation.json",
+        "CuttingStock_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 54.200556
+  }
+}

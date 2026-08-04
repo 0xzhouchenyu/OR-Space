@@ -1,0 +1,11 @@
+Parameter_Name,Value,Unit,Context_Description
+max_employees,3,employees,Maximum number of new employees to be hired
+budget_limit,35000,dollars,Total budget for base salaries (excluding manager bonus)
+min_advanced_degree_candidates,1,candidates,Minimum number of candidates with Master's or Doctoral degrees to be selected
+min_work_experience,12,years,Minimum total work experience of selected candidates
+max_equivalent_candidates,1,candidates,Maximum number of candidates to be selected from the pair A and E
+min_employees,2,employees,Minimum number of new employees to be hired
+min_managers,1,employees,Minimum number of managers to be hired
+max_managers,2,employees,Maximum number of managers to be hired
+min_manager_experience,10,years,Minimum total work experience of hired managers
+manager_bonus_per_candidate,2000,dollars_per_candidate,Fixed additional cost incurred for each manager

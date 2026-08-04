@@ -1,0 +1,143 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Product types \(i \in P = \{A,B\}\).
+    \item Processes \(j \in R = \{\mathrm{mfg},\mathrm{asm},\mathrm{insp}\}\), representing manufacturing, assembly, and inspection.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter values are taken from the CSV files.
+
+\begin{itemize}
+    \item Processing time per unit of product \(i\) on process \(j\): \(a_{ji}\).
+    \[
+    \begin{aligned}
+    &a_{\mathrm{mfg},A}=20,\quad a_{\mathrm{asm},A}=5,\quad a_{\mathrm{insp},A}=3,\\
+    &a_{\mathrm{mfg},B}=0,\quad a_{\mathrm{asm},B}=7,\quad a_{\mathrm{insp},B}=6.
+    \end{aligned}
+    \]
+    \item Weekly capacity of process \(j\): \(C_j\).
+    \[
+    C_{\mathrm{mfg}}=120,\qquad C_{\mathrm{asm}}=80,\qquad C_{\mathrm{insp}}=40.
+    \]
+    \item Hourly process cost (also used as idle-time weight) for process \(j\): \(w_j\).
+    \[
+    w_{\mathrm{mfg}}=12,\qquad w_{\mathrm{asm}}=8,\qquad w_{\mathrm{insp}}=10.
+    \]
+    \item Selling price per unit of product \(i\): \(s_i\).
+    \[
+    s_A=650,\qquad s_B=725.
+    \]
+    \item Minimum weekly profit requirement: \(P^{\min}=3000\).
+    \item Minimum weekly production of Type A: \(L_A=5\).
+\end{itemize}
+
+The code computes unit cost and unit profit as
+\[
+c_i=\sum_{j\in R} w_j a_{ji},\qquad \pi_i=s_i-c_i.
+\]
+Numerically,
+\[
+c_A=20(12)+5(8)+3(10)=310,\qquad \pi_A=650-310=340,
+\]
+\[
+c_B=0(12)+7(8)+6(10)=116,\qquad \pi_B=725-116=609.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Weekly production quantity of Type A: \(x_A\) (code: \texttt{x\_A} in Phase 1, \texttt{x\_A2} in Phase 2), integer.
+    \item Weekly production quantity of Type B: \(x_B\) (code: \texttt{x\_B} in Phase 1, \texttt{x\_B2} in Phase 2), integer.
+\end{itemize}
+
+Bounds implemented in code:
+\[
+x_A \ge L_A,\qquad x_B \ge 0,\qquad x_A,x_B \in \mathbb{Z}.
+\]
+
+\section*{Objective}
+
+The implemented logic is lexicographic, solved in two sequential optimization phases.
+
+\paragraph{Phase 1: minimize weighted idle time.}
+For any feasible \((x_A,x_B)\), idle time on process \(j\) is
+\[
+I_j = C_j - \sum_{i\in P} a_{ji}x_i.
+\]
+The Phase-1 problem is
+\[
+\min \; Z_{\mathrm{idle}}=\sum_{j\in R} w_j I_j
+\]
+subject to the constraints listed below. Let the optimal value be \(Z_{\mathrm{idle}}^\star\).
+
+Equivalently, with substituted coefficients,
+\[
+\min \; 12\bigl(120-20x_A-0x_B\bigr)+8\bigl(80-5x_A-7x_B\bigr)+10\bigl(40-3x_A-6x_B\bigr).
+\]
+
+\paragraph{Phase 2: maximize profit subject to minimum idle time.}
+Using the Phase-1 optimum, the code solves
+\[
+\max \; Z_{\mathrm{profit}}=\pi_A x_A+\pi_B x_B
+\]
+subject to the same constraints as in Phase 1 and additionally
+\[
+\sum_{j\in R} w_j\left(C_j-\sum_{i\in P} a_{ji}x_i\right)\le Z_{\mathrm{idle}}^\star + 10^{-5}.
+\]
+Numerically, the Phase-2 objective is
+\[
+\max \; 340x_A+609x_B.
+\]
+
+\section*{Constraints}
+
+The following constraints are enforced in both phases.
+
+\paragraph{Capacity constraints}
+\[
+20x_A+0x_B \le 120 \qquad \text{(manufacturing)}
+\]
+\[
+5x_A+7x_B \le 80 \qquad \text{(assembly)}
+\]
+\[
+3x_A+6x_B \le 40 \qquad \text{(inspection)}
+\]
+
+\paragraph{Minimum profit constraint}
+\[
+340x_A+609x_B \ge 3000
+\]
+
+\paragraph{Minimum Type A production}
+\[
+x_A \ge 5
+\]
+
+\paragraph{Nonnegativity and integrality}
+\[
+x_B \ge 0,\qquad x_A,x_B \in \mathbb{Z}
+\]
+
+\paragraph{Phase-2 idle-time restriction}
+Only in Phase 2:
+\[
+12(120-20x_A)+8(80-5x_A-7x_B)+10(40-3x_A-6x_B)\le Z_{\mathrm{idle}}^\star+10^{-5}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code does \emph{not} optimize a single weighted combination of profit and idle time. It uses a strict two-stage lexicographic procedure:
+    \begin{enumerate}
+        \item minimize weighted idle time;
+        \item among solutions with minimum weighted idle time (up to a tolerance of \(10^{-5}\)), maximize profit.
+    \end{enumerate}
+    \item The hourly process costs are used twice in the implementation: first to compute per-unit profit coefficients \(\pi_i\), and second as weights in the idle-time objective.
+    \item Idle times are not introduced as explicit decision variables in the code; they are affine expressions of \(x_A\) and \(x_B\).
+    \item Overtime is disallowed implicitly by the capacity inequalities; there are no overtime variables or penalties.
+    \item The model is solved as an integer linear program in each phase using PuLP with the Gurobi command interface (\texttt{pulp.GUROBI\_CMD}).
+    \item The reported objective value printed by the script is the Phase-2 optimal profit \(Z_{\mathrm{profit}}\), not the minimized idle-time value.
+\end{itemize}

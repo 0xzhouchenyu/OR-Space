@@ -1,0 +1,8 @@
+Parameter_Name,Value,Unit,Context_Description
+machine_time_available,40,hours,Total machine time available in the next working week
+craftsman_time_available,35,hours,Total craftsman time available in the next working week
+machine_time_cost,10,GBP_per_hour,Cost of machine time per hour
+craftsman_time_cost,2,GBP_per_hour,Cost of craftsman time per hour
+revenue_product_X,20,GBP_per_batch,Revenue generated for each batch of product X sold
+revenue_product_Y,30,GBP_per_batch,Revenue generated for each batch of product Y sold
+min_batches_product_X,10,batches,Minimum number of batches of product X required by contract

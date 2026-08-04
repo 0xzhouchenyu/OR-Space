@@ -1,0 +1,7 @@
+Parameter_Name,Value,Unit,Context_Description
+n,10,,Number of planning stages
+cost_new_tool,10,dollars,Cost of buying a new tool
+cost_slow_repair,1,dollars,Cost of slow repair per tool
+cost_fast_repair,3,dollars,Cost of fast repair per tool
+slow_repair_duration,3,stages,Duration of slow repair
+fast_repair_duration,1,stages,Duration of fast repair

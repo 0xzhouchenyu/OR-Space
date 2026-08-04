@@ -1,0 +1,108 @@
+\section*{Sets and Indices}
+
+There are no nontrivial sets or indices in the implemented model; it is a single-period truck-count problem with two truck types.
+
+\section*{Parameters}
+
+All parameters are scalar inputs from \texttt{general\_parameters.csv}:
+
+\[
+\begin{aligned}
+R_A &:\text{ refrigerated capacity of a Type A truck } (\texttt{refrigerated\_capacity\_type\_a}),\\
+N_A &:\text{ non-refrigerated capacity of a Type A truck } (\texttt{non\_refrigerated\_capacity\_type\_a}),\\
+R_B &:\text{ refrigerated capacity of a Type B truck } (\texttt{refrigerated\_capacity\_type\_b}),\\
+N_B &:\text{ non-refrigerated capacity of a Type B truck } (\texttt{non\_refrigerated\_capacity\_type\_b}),\\
+D_R &:\text{ refrigerated cargo requirement } (\texttt{refrigerated\_cargo\_requirement}),\\
+D_N &:\text{ non-refrigerated cargo requirement } (\texttt{non\_refrigerated\_cargo\_requirement}),\\
+c_A &:\text{ rental cost of a Type A truck } (\texttt{rental\_cost\_type\_a}),\\
+c_B &:\text{ rental cost of a Type B truck } (\texttt{rental\_cost\_type\_b}),\\
+\bar A &:\text{ base fleet threshold for Type A trucks } (\texttt{base\_fleet\_type\_a}),\\
+\bar B &:\text{ base fleet threshold for Type B trucks } (\texttt{base\_fleet\_type\_b}),\\
+p_A &:\text{ penalty cost per Type A truck above base } (\texttt{penalty\_cost\_type\_a}),\\
+p_B &:\text{ penalty cost per Type B truck above base } (\texttt{penalty\_cost\_type\_b}),\\
+T_B &:\text{ Type B recovery threshold } (\texttt{type\_b\_recovery\_threshold}),\\
+F_B &:\text{ fixed Type B recovery desk fee } (\texttt{type\_b\_recovery\_fee}),\\
+T_F &:\text{ total fleet surge threshold } (\texttt{total\_fleet\_surge\_threshold}),\\
+F_F &:\text{ fixed total fleet surge fee } (\texttt{total\_fleet\_surge\_fee}),\\
+M &:\text{ big-}M\text{ constant used in the code } (=10000).
+\end{aligned}
+\]
+
+For this instance, the data are:
+\[
+\begin{aligned}
+&R_A=20,\; N_A=40,\; R_B=30,\; N_B=30,\; D_R=3000,\; D_N=4000,\\
+&c_A=30,\; c_B=40,\; \bar A=30,\; \bar B=40,\; p_A=10,\; p_B=15,\\
+&T_B=65,\; F_B=600,\; T_F=115,\; F_F=100,\; M=10000.
+\end{aligned}
+\]
+
+\section*{Decision Variables}
+
+\[
+\begin{aligned}
+x &\in \mathbb{Z}_{\ge 0} &&\text{number of Type A trucks rented (code: \texttt{x})},\\
+y &\in \mathbb{Z}_{\ge 0} &&\text{number of Type B trucks rented (code: \texttt{y})},\\
+x^{\text{extra}} &\in \mathbb{Z}_{\ge 0} &&\text{Type A trucks counted for base-fleet penalty (code: \texttt{x\_extra})},\\
+y^{\text{extra}} &\in \mathbb{Z}_{\ge 0} &&\text{Type B trucks counted for base-fleet penalty (code: \texttt{y\_extra})},\\
+z_B &\in \{0,1\} &&\text{indicator that the Type B recovery desk is opened (code: \texttt{y\_over})},\\
+z_F &\in \{0,1\} &&\text{indicator that the total-fleet surge desk is opened (code: \texttt{fleet\_surge})}.
+\end{aligned}
+\]
+
+\section*{Objective}
+
+Minimize total rental, over-base penalties, and fixed recovery/surge fees:
+\[
+\min\;
+c_A x + c_B y + p_A x^{\text{extra}} + p_B y^{\text{extra}} + F_B z_B + F_F z_F.
+\]
+
+\section*{Constraints}
+
+Cargo requirements:
+\[
+R_A x + R_B y \ge D_R,
+\]
+\[
+N_A x + N_B y \ge D_N.
+\]
+
+Base-fleet excess accounting:
+\[
+x^{\text{extra}} \ge x - \bar A,
+\]
+\[
+y^{\text{extra}} \ge y - \bar B.
+\]
+
+Type B recovery-desk gate:
+\[
+y \le T_B + M z_B.
+\]
+
+Total-fleet surge gate:
+\[
+x + y \le T_F + M z_F.
+\]
+
+Integrality and binary restrictions:
+\[
+x,y,x^{\text{extra}},y^{\text{extra}} \in \mathbb{Z}_{\ge 0},\qquad
+z_B,z_F \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The formulation above matches the implemented mixed-integer model in \texttt{current\_heuristic.py}.
+
+The business rule revision is implemented as a binary gate, not as a smooth surcharge: if \(y>T_B\), the model must set \(z_B=1\) and incur \(F_B\); separately, if \(x+y>T_F\), the model must set \(z_F=1\) and incur \(F_F\). Because the constraints are only one-way big-\(M\) implications, the objective is what makes the indicators stay at \(0\) unless crossing the corresponding threshold is necessary or advantageous.
+
+Also, the over-base penalty variables are modeled exactly as in code: \(x^{\text{extra}}\) and \(y^{\text{extra}}\) only satisfy lower bounds against \(x-\bar A\) and \(y-\bar B\), together with nonnegativity and positive objective coefficients. Thus, at optimality they take
+\[
+x^{\text{extra}}=\max\{0,x-\bar A\},\qquad
+y^{\text{extra}}=\max\{0,y-\bar B\},
+\]
+but this equality is induced by minimization, not imposed directly as explicit max constraints.
+
+The model is solved as a MIP by Gurobi through PuLP compatibility, not by exhaustive enumeration or dynamic programming.

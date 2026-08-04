@@ -1,0 +1,84 @@
+{
+  "solver": "gurobi",
+  "model_name": "Production_Overtime_Review",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 128100.0,
+  "objective_bound": 128100.0,
+  "mip_gap": 0.0,
+  "runtime": 0.003545045852661133,
+  "node_count": 1.0,
+  "iteration_count": 7.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_nh43akbo/solver_records/Production_Overtime_Review.gurobi.log",
+  "variables": {
+    "overtime": {
+      "value": 19.0,
+      "reduced_cost": null
+    },
+    "overtime_review": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "product_A_line_audit": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_A": {
+      "value": 29.0,
+      "reduced_cost": null
+    },
+    "x_B": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_A": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_B": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 26.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 68.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 9971.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

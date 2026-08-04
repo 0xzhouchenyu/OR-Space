@@ -1,0 +1,3 @@
+Set parameter LicenseID to value 2802670
+Optimal solution: {'apples': 120.0, 'pears': 0.0, 'oranges': 0.0, 'lemons': 0.0}
+OBJECTIVE_VALUE: 240000.0

@@ -1,0 +1,8 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+  x[A,ProdA_standard] = 45.0000
+  x[C,ProdA_premium] = 10.0000
+  x[C,ProdA_standard] = 45.0000
+  x[C,ProdB_premium] = 4.0000
+  x[D,ProdB_premium] = 16.0000
+OBJECTIVE_VALUE: 60.0

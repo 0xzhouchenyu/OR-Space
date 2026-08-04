@@ -1,0 +1,90 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$: set of devices, indexed by $i$. In this instance,
+    \[
+    I=\{A,B,C,D\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $R$: required production quantity (code: \texttt{required\_units}). Here,
+    \[
+    R=2000.
+    \]
+    \item $F_i$: preparation completion cost for device $i$ (code field: \texttt{devices[i]['prep\_cost']}).
+    \item $c_i$: unit production cost for device $i$ (code field: \texttt{devices[i]['unit\_cost']}).
+    \item $U_i$: maximum processing capacity of device $i$ (code field: \texttt{devices[i]['max\_cap']}).
+\end{itemize}
+
+For this instance:
+\[
+\begin{array}{c|cccc}
+i & A & B & C & D\\
+\hline
+F_i & 1000 & 920 & 800 & 700\\
+c_i & 20 & 24 & 16 & 28\\
+U_i & 900 & 1000 & 1200 & 1600
+\end{array}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_i \ge 0$: quantity produced on device $i$ (code: \texttt{x[i]}).
+    \item $y_i \in \{0,1\}$: equals $1$ if device $i$ is used, and $0$ otherwise (code: \texttt{y[i]}).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total fixed preparation cost plus variable production cost:
+\[
+\min \sum_{i\in I} \left(F_i y_i + c_i x_i\right).
+\]
+
+For the given data, this is
+\[
+\min\;
+1000y_A+20x_A
++920y_B+24x_B
++800y_C+16x_C
++700y_D+28x_D.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{i\in I} x_i &= R
+&& \text{(meet required production)}\\
+x_i &\le U_i y_i
+&& \forall i\in I
+\quad \text{(link production to device usage)}\\
+0 \le x_i &\le U_i
+&& \forall i\in I
+\quad \text{(variable bounds as created in code)}\\
+y_i &\in \{0,1\}
+&& \forall i\in I.
+\end{align}
+
+For this instance, the linking constraints are
+\begin{align}
+x_A &\le 900\,y_A,\\
+x_B &\le 1000\,y_B,\\
+x_C &\le 1200\,y_C,\\
+x_D &\le 1600\,y_D,
+\end{align}
+and
+\[
+x_A+x_B+x_C+x_D=2000.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The source code builds a mixed-integer linear program with continuous production variables \texttt{x[i]} and binary usage variables \texttt{y[i]}.
+    \item Each production variable is created with bounds $0 \le x_i \le U_i$, and the model also adds the linking constraint $x_i \le U_i y_i$. The explicit upper bound $x_i \le U_i$ is therefore present in the implemented model in addition to the linking constraint.
+    \item The production requirement is enforced as exact equality, not as a lower bound: total output must be exactly $2000$ units.
+    \item The model is solved directly by the optimizer invoked in code via \texttt{GUROBI\_CMD(msg=0)}; it is not implemented as a heuristic, enumeration, or dynamic program.
+\end{itemize}

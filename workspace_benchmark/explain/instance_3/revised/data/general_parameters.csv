@@ -1,0 +1,19 @@
+Parameter_Name,Value,Unit,Context_Description
+initial_workforce,1000,employees,Initial workforce at the start of January
+initial_inventory,15000,units,Initial inventory at the start of January
+sales_price,300,Yuan per unit,Sales price per unit sold
+raw_material_cost,90,Yuan per unit,Raw material cost for in-house production
+outsourcing_cost,200,Yuan per unit,Cost for finished tables acquired from third-party supplier
+inventory_holding_cost,15,Yuan per unit,Cost for inventory held at the end of a month
+backorder_cost,35,Yuan per unit,Cost for unfulfilled demand carried over to the next month
+labor_requirement,5,labor hours per unit,Labor hours required to produce one in-house unit
+regular_labor_hours,160,hours per worker per month,Regular working hours provided by each worker per month
+regular_wage,30,Yuan per hour,Regular wage paid per hour for regular working hours
+overtime_hours_limit,20,hours per worker per month,Maximum overtime hours allowed per worker per month
+overtime_wage,40,Yuan per hour,Wage paid per hour for overtime hours
+hiring_cost,5000,Yuan per worker,Cost to hire a new worker
+firing_cost,8000,Yuan per worker,Cost to fire a worker
+terminal_inventory,10000,units,Minimum ending inventory required at the end of June
+terminal_backorders,0,units,Ending backorders must be zero at the end of June
+contract_min_units,15000,units,Minimum monthly net demand in April-June that must be satisfied by in-house regular-time production
+contract_bigM,60000,units,Upper bound on contract-qualified production used for big-M constraints with binary indicators

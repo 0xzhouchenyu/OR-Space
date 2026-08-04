@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_038",
+  "instance_number": 38,
+  "source_revise_instance": "IndustryOR_38_revise_business",
+  "domain": "Scheduling",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Scheduling",
+    "question": "Using the revised model only, explain why the objective rises from 14.0 in the original enumeration model to 16.7 in the revised MILP, and identify the exact code additions responsible. Your answer must trace the value of `overtime_used[0]` and `machine1_overtime_review` back to the CSV fields `Machine_1`, `time_window_1`, `overtime_penalty_per_unit`, `machine1_overtime_review_threshold`, and `machine1_overtime_review_fee`, showing the numeric decomposition of the extra 2.7 objective units relative to the original `T=14`. Then use the LP relaxation diagnostics to name at least one binding constraint (zero slack) and one nonbinding constraint, interpret the shadow price/business meaning of a positive dual on an overtime-capacity or review-trigger relation if present, and explain why the LP marginal values cannot be linearly extrapolated to the integer optimum once `machine1_overtime_review` switches from 0.3333 in the relaxation to 1.0 in the MIP."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Advanced_38.gurobi.log",
+        "Advanced_38.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "FlowShop_with_Overtime.gurobi.log",
+        "FlowShop_with_Overtime.lp_relaxation.json",
+        "FlowShop_with_Overtime.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 66.300556
+  }
+}

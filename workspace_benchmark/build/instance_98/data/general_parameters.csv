@@ -1,0 +1,5 @@
+Parameter_Name,Value,Unit,Context_Description
+available_steel,200,kg,Total steel available for production
+available_aluminum,300,kg,Total aluminum available for production
+available_labor,300,hours,Total labor hours available for production
+overtime_pay,100,yuan/hour,Cost of worker overtime per hour

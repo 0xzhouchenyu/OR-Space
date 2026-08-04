@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_073",
+  "instance_number": 73,
+  "source_revise_instance": "IndustryOR_73_revise_business",
+  "domain": "Scheduling",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Scheduling",
+    "question": "In the revised two-day model, explain why the optimal net objective becomes 2600 instead of the original 1600 by tracing the exact code additions that create this change. Your answer must name the revised decision variables `x[(c,d)]`, `y[c]`, and `z[c]`, identify the exact CSV column names and parameter names used to instantiate them, and use the LP-relaxation diagnostics to interpret at least two binding constraints with their slack/dual values (for example `MinChildren_day1`, `MinChildren_day2`, or `DianaRequiresElla_day2`) in business terms. Also explain why the shadow price on a binding daily headcount constraint cannot be linearly extrapolated to adding another full child/day requirement, and connect that failure to the discrete availability/relationship rules and the specific revised code blocks that were absent in the original one-day model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "FamilyTrip.gurobi.log",
+        "FamilyTrip.lp_relaxation.json",
+        "FamilyTrip.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "FamilyTwoDayTrip.gurobi.log",
+        "FamilyTwoDayTrip.lp_relaxation.json",
+        "FamilyTwoDayTrip.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 57.613889
+  }
+}

@@ -1,0 +1,7 @@
+Set parameter LicenseID to value 2802670
+Best combination: ('motorcycle', 'large_truck')
+  motorcycle: 0 trips
+  large_truck: 6 trips
+Total transport capacity: 300.0
+Total pollution: 600.0
+OBJECTIVE_VALUE: 600.0

@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 77499.99999999999,
+  "stdout": "Profit per pack Meaties: 0.6499999999999999\nProfit per pack Yummies: 0.44999999999999996\nSet parameter LicenseID to value 2802670\nStatus: Optimal\nMeaties: 50000.0\nYummies: 100000.0\nOBJECTIVE_VALUE: 77499.99999999999\n",
+  "stderr": "",
+  "error": null
+}

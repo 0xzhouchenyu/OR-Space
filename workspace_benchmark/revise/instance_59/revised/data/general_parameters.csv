@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+SetupCost_A,300,Yuan,Fixed monthly setup cost if candy brand A is produced
+SetupCost_B,500,Yuan,Fixed monthly setup cost if candy brand B is produced
+SetupCost_C,200,Yuan,Fixed monthly setup cost if candy brand C is produced
+BrandAB_SharedWrapper_Trigger,1,boolean,Shared wrapper applies when candy brands A and B are both produced
+BrandAB_SharedWrapper_Fee,300,Yuan,One-time wrapper coordination cost for producing brands A and B together

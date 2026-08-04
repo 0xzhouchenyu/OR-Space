@@ -1,0 +1,82 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $T=\{0,1,\dots,5\}$: set of 4-hour time windows, in the order given by \texttt{table\_1.csv}.
+    \item $j \in T$: index of a coverage window.
+    \item $i \in T$: index of the first window of an 8-hour tour.
+    \item For each $i \in T$, let the candidate tour cover windows $i$ and $(i+1)\bmod |T|$.
+    \item $A \subseteq T$: set of admissible tour starts,
+    \[
+        A=\{\, i \in T : \texttt{peak\_indicator}_i \neq \texttt{peak\_indicator}_{(i+1)\bmod |T|}\,\},
+    \]
+    i.e., only adjacent peak/off-peak pairs are allowed.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_j$ (\texttt{min\_waiters[j]}): minimum required number of waiters in window $j$.
+    \item $\pi_j$ (\texttt{peak\_indicator[j]}): peak indicator for window $j$.
+    \item $q_j$ (\texttt{quality\_weight[j]}): service quality weight for staffing in window $j$.
+    \item $c$ (\texttt{waiter\_cost\_per\_shift}): cost of one 8-hour waiter tour.
+    \item $B$ (\texttt{waiter\_budget}): total staffing budget.
+    \item $a_{ij}$ (\texttt{coverage[(i,0,j)]}): coverage indicator, defined for admissible $i \in A$ by
+    \[
+        a_{ij}=
+        \begin{cases}
+            1, & \text{if } j=i \text{ or } j=(i+1)\bmod |T|,\\
+            0, & \text{otherwise}.
+        \end{cases}
+    \]
+    Since the code creates at most one pattern per start $i$, the pattern index is fixed to $0$ whenever it exists.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $y_i$ (code: \texttt{y[(i,0)]}) for each $i \in A$: integer number of waiters assigned to the admissible 8-hour tour starting in window $i$,
+    \[
+        y_i \in \mathbb{Z}_{\ge 0}.
+    \]
+    \item $w_j$ (code: \texttt{waiters\_in\_period[j]}$): implied total number of waiters covering window $j$,
+    \[
+        w_j=\sum_{i \in A} a_{ij} y_i \qquad \forall j \in T.
+    \]
+    This is a linear expression in the implementation, not a separate optimization variable.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize the total service quality score:
+\[
+\max \sum_{j \in T} q_j\, w_j
+=
+\max \sum_{j \in T} q_j \left(\sum_{i \in A} a_{ij} y_i\right).
+\]
+
+\section*{Constraints}
+
+\begin{align*}
+w_j &= \sum_{i \in A} a_{ij} y_i && \forall j \in T,\\
+w_j &\ge d_j && \forall j \in T,\\
+c \sum_{i \in A} y_i &\le B,\\
+y_i &\in \mathbb{Z}_{\ge 0} && \forall i \in A.
+\end{align*}
+
+Equivalently, eliminating the implied expressions $w_j$:
+\begin{align*}
+\sum_{i \in A} a_{ij} y_i &\ge d_j && \forall j \in T,\\
+c \sum_{i \in A} y_i &\le B,\\
+y_i &\in \mathbb{Z}_{\ge 0} && \forall i \in A.
+\end{align*}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a deterministic single-stage integer linear program solved with \texttt{GUROBI\_CMD}. Although the business brief refers to multiple cases, the current code does not introduce scenario indices, nonanticipativity constraints, or scenario-dependent recourse variables.
+    \item A feasible 8-hour tour is represented as exactly two adjacent 4-hour windows. The code permits such a tour only when one window is peak and the other is off-peak, i.e., when \texttt{peak\_indicator[i] != peak\_indicator[(i+1)\%6]}.
+    \item The implementation creates at most one pattern for each start window $i$; hence the only pattern identifier used in code is \texttt{p = 0}.
+    \item The objective maximizes \texttt{service\_quality\_score} as the weighted sum of staffed waiters by window. It does \emph{not} minimize the number of waiters.
+    \item Budget is enforced on the number of assigned 8-hour tours via \texttt{waiter\_cost\_per\_shift}. Because all tour costs are identical, this limits the total number of assigned shifts.
+    \item If some window had no admissible covering tours, then in the code its staffing expression would be the empty sum (equal to $0$), and the corresponding minimum-coverage constraint would make the model infeasible. In this instance, admissible tours are generated from the data-driven peak/off-peak pattern.
+\end{itemize}

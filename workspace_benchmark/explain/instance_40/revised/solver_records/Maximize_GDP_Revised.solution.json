@@ -1,0 +1,86 @@
+{
+  "solver": "gurobi",
+  "model_name": "Maximize_GDP_Revised",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 37617279.76190476,
+  "objective_bound": 37617279.76190476,
+  "mip_gap": null,
+  "runtime": 0.0005481243133544922,
+  "node_count": 0.0,
+  "iteration_count": 5.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_6_rluxlj/solver_records/Maximize_GDP_Revised.gurobi.log",
+  "variables": {
+    "L_ot": {
+      "value": 0.0,
+      "reduced_cost": -354.6779761904762
+    },
+    "L_reg": {
+      "value": 830000.0,
+      "reduced_cost": 45.32202380952381
+    },
+    "imp_electronics": {
+      "value": 7410.714285714284,
+      "reduced_cost": 0.0
+    },
+    "imp_engine": {
+      "value": 0.0,
+      "reduced_cost": -224.99999999999977
+    },
+    "imp_plastic": {
+      "value": 5829.761904761905,
+      "reduced_cost": 0.0
+    },
+    "imp_steel": {
+      "value": 0.0,
+      "reduced_cost": -9.26785714285711
+    },
+    "x_electronics": {
+      "value": 0.0,
+      "reduced_cost": -66.58946428571431
+    },
+    "x_engine": {
+      "value": 49404.7619047619,
+      "reduced_cost": 0.0
+    },
+    "x_plastic": {
+      "value": 0.0,
+      "reduced_cost": -183.1250000000001
+    },
+    "x_steel": {
+      "value": 39523.80952380953,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Domestic_Demand_steel": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -65.73214285714289
+    },
+    "Domestic_Demand_engine": {
+      "sense": ">=",
+      "slack": -48614.28571428571,
+      "dual_value": 0.0
+    },
+    "Domestic_Demand_electronics": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -45.0
+    },
+    "Domestic_Demand_plastic": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -180.0
+    },
+    "Labor_Balance": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -45.32202380952381
+    }
+  }
+}

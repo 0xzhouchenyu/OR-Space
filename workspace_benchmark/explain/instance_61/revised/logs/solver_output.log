@@ -1,0 +1,14 @@
+Set parameter LicenseID to value 2802670
+Device A, period peak: x=0.0000, z=0
+Device A, period offpeak: x=800.0000, z=1
+Device A: y=1
+Device B, period peak: x=0.0000, z=0
+Device B, period offpeak: x=0.0000, z=0
+Device B: y=0
+Device C, period peak: x=0.0000, z=0
+Device C, period offpeak: x=1200.0000, z=1
+Device C: y=1
+Device D, period peak: x=0.0000, z=0
+Device D, period offpeak: x=0.0000, z=0
+Device D: y=0
+OBJECTIVE_VALUE: 46980.0

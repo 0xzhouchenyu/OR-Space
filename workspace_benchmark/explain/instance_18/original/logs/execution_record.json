@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 5.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nClothing fabric hours: 45.0\nCurtain fabric hours: 70.0\nOvertime hours: 5.0\nClothing fabric produced: 45000.0 meters\nCurtain fabric produced: 70000.0 meters\nOBJECTIVE_VALUE: 5.0\n",
+  "stderr": "",
+  "error": null
+}

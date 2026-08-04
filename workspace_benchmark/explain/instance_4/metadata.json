@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_004",
+  "instance_number": 4,
+  "source_revise_instance": "IndustryOR_4_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the objective increases by exactly 4400 relative to the original, even though all premium-animal variables (`cows_premium`, `sheep_premium`, `chickens_premium`) stay at 0. Your answer must trace the business phrase “gate”/“expanded setup” to the binary `z_expand`, identify which revised code lines/constraints let `cows_regular` rise from 70 to 86, and name the exact CSV field names and parameter values that make constraint `_C5` binding with dual value 40 while `_C4` remains slack. Also interpret the solver-state meaning of `_C5`’s shadow price and explain why that marginal value cannot be linearly extrapolated indefinitely once the gate variable and other constraints are considered."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "FarmProfit.gurobi.log",
+        "FarmProfit.lp_relaxation.json",
+        "FarmProfit.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "FarmProfit_Revised.gurobi.log",
+        "FarmProfit_Revised.lp_relaxation.json",
+        "FarmProfit_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 82.932778
+  }
+}

@@ -1,0 +1,92 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $T=\{1,2,3\}$: planning years.
+    \item $P=\{1,2,3,4\}$: investment projects.
+    \item Project~1 is available for reinvestment in each year $t\in T$ and matures at the end of the same year.
+    \item Project~2 is available only at the beginning of Year~1 and matures at the end of Year~2.
+    \item Project~3 is available only at the beginning of Year~2 and matures at the end of Year~2.
+    \item Project~4 is available only at the beginning of Year~3 and matures at the end of Year~3.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $C_0$: initial capital (code: \texttt{initial\_capital}).
+    \item $r_1=1.20$: gross return factor of Project~1 (same-year maturity).
+    \item $r_2=1.50$: gross return factor of Project~2.
+    \item $r_3=1.60$: gross return factor of Project~3.
+    \item $r_4=1.40$: gross return factor of Project~4.
+    \item $U_2=120000$: investment capacity of Project~2.
+    \item $U_3=150000$: investment capacity of Project~3.
+    \item $U_4=100000$: investment capacity of Project~4.
+\end{itemize}
+
+Project~1 has no explicit upper bound in the implementation.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{1,1}\ge 0$ (code: \texttt{x1\_1}): amount invested in Project~1 at the beginning of Year~1.
+    \item $x_{1,2}\ge 0$ (code: \texttt{x1\_2}): amount invested in Project~1 at the beginning of Year~2.
+    \item $x_{1,3}\ge 0$ (code: \texttt{x1\_3}): amount invested in Project~1 at the beginning of Year~3.
+    \item $x_2\in[0,U_2]$ (code: \texttt{x2}): amount invested in Project~2 at the beginning of Year~1.
+    \item $x_3\in[0,U_3]$ (code: \texttt{x3}): amount invested in Project~3 at the beginning of Year~2.
+    \item $x_4\in[0,U_4]$ (code: \texttt{x4}): amount invested in Project~4 at the beginning of Year~3.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total wealth realized at the end of Year~3:
+\[
+\max \; Z = r_1 x_{1,3} + r_4 x_4.
+\]
+
+With the given data, this is
+\[
+\max \; Z = 1.20\,x_{1,3} + 1.40\,x_4.
+\]
+
+\section*{Constraints}
+
+\paragraph{Year 1 cash availability.}
+Investments made at the beginning of Year~1 cannot exceed initial capital:
+\[
+x_{1,1} + x_2 \le C_0.
+\]
+
+\paragraph{Year 2 cash availability.}
+Only the proceeds of the Year~1 investment in Project~1 are available for reinvestment at the beginning of Year~2:
+\[
+x_{1,2} + x_3 \le r_1 x_{1,1}.
+\]
+
+\paragraph{Year 3 cash availability.}
+Funds available at the beginning of Year~3 consist of the proceeds from Project~1 invested in Year~2, plus the matured values of Projects~2 and~3:
+\[
+x_{1,3} + x_4 \le r_1 x_{1,2} + r_2 x_2 + r_3 x_3.
+\]
+
+With the given data,
+\[
+x_{1,3} + x_4 \le 1.20\,x_{1,2} + 1.50\,x_2 + 1.60\,x_3.
+\]
+
+\paragraph{Bound constraints.}
+\[
+x_{1,1},x_{1,2},x_{1,3},x_2,x_3,x_4 \ge 0,
+\]
+\[
+x_2 \le U_2,\qquad x_3 \le U_3,\qquad x_4 \le U_4.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program solved with PuLP through \texttt{GUROBI\_CMD}.
+    \item The code uses six explicit scalar variables rather than a time--project indexed variable family.
+    \item The objective counts only investments that mature at the end of Year~3, namely \texttt{x1\_3} and \texttt{x4}. Earlier maturities contribute to the objective only indirectly through the inter-year budget constraints.
+    \item The Year~2 budget constraint uses only the proceeds from \texttt{x1\_1}. Any unused initial capital from Year~1 is not carried forward unless first invested in Project~1. This is exactly how the current implementation models cash flow.
+    \item Similarly, the model uses inequality budget constraints, so the formulation allows cash to remain uninvested within a year; however, uninvested cash does not explicitly carry to later years except through the coded investment transitions above.
+    \item Although the source comments say Project~1 ``matured same year = end of year 1'' and its proceeds are available at the beginning of the next year, this timing convention is represented exactly by the constraints above and should be interpreted as coded rather than redefined.
+\end{itemize}

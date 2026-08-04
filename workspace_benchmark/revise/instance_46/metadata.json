@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_46_revise_business",
+  "original_instance_id": "IndustryOR_46",
+  "revise_description": "To comply with new lab safety policy requiring more graduate-student oversight, the schedule must collectively use at least min_grad_weekly_coverage_hours=16 hours of graduate time per week. A fixed daily_open_fee_cny=12 is also paid per (student,day) worked, tracked by new binary z[i,d]=y[i,d]; objective adds the open-fee term.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+1var(z), +2constr(z=y, weekly grad cov), mod_obj, mod_1data",
+      "counts": {
+        "+variable": 1,
+        "-variable": 0,
+        "+constraint": 2,
+        "-constraint": 0,
+        "modify_constraint": 1,
+        "modify_data": 1
+      },
+      "op_count": 6,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 94.444444
+  }
+}

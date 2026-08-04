@@ -1,0 +1,5 @@
+Device,Prep_Completion_Cost_Yuan,Unit_Production_Cost_Yuan_per_Unit,Max_Processing_Capacity_Units
+A,1000,20,900
+B,920,24,1000
+C,800,16,1200
+D,700,28,1600

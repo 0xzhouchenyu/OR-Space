@@ -1,0 +1,123 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Furnaces: $F=\{1,2\}$, indexed by $i$.
+    \item Steelmaking methods: $J=\{1,2\}$.
+    \item Time periods: $P=\{\text{off},\text{peak}\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+All numerical values are read from \texttt{general\_parameters.csv}.
+
+\begin{itemize}
+    \item $a$ (code: \texttt{a}): hours required per batch of method 1.
+    \item $b$ (code: \texttt{b}): hours required per batch of method 2.
+    \item $k$ (code: \texttt{k}): tons produced per batch, independent of method and period.
+    \item $d$ (code: \texttt{d}): minimum required steel production.
+    \item $c^{\text{off}}$ (code: \texttt{c\_off} from field \texttt{c\_offpeak}): off-peak time capacity per furnace.
+    \item $c^{\text{peak}}$ (code: \texttt{c\_peak} from field \texttt{c\_peak}): peak time capacity per furnace.
+    \item $\mathrm{Cap}^{\text{off}}$ (code: \texttt{cap\_off} from field \texttt{cap\_offpeak}): plant-wide off-peak time capacity.
+    \item $\mathrm{Cap}^{\text{peak}}$ (code: \texttt{cap\_peak} from field \texttt{cap\_peak}): plant-wide peak time capacity.
+    \item $m^{\text{off}}$ (code: \texttt{m\_off} from field \texttt{m\_offpeak}): fuel cost per off-peak batch of method 1.
+    \item $m^{\text{peak}}$ (code: \texttt{m\_peak} from field \texttt{m\_peak}): fuel cost per peak batch of method 1.
+    \item $n^{\text{off}}$ (code: \texttt{n\_off} from field \texttt{n\_offpeak}): fuel cost per off-peak batch of method 2.
+    \item $n^{\text{peak}}$ (code: \texttt{n\_peak} from field \texttt{n\_peak}): fuel cost per peak batch of method 2.
+    \item $f^{\text{off}}$ (code: \texttt{f\_off} from field \texttt{f\_offpeak}): fixed activation cost if a furnace is used in off-peak hours.
+    \item $f^{\text{peak}}$ (code: \texttt{f\_peak} from field \texttt{f\_peak}): fixed activation cost if a furnace is used in peak hours.
+    \item $\tau$ (code: \texttt{offpeak\_cooldown\_threshold} from field \texttt{offpeak\_cooldown\_batch\_threshold}): off-peak batch threshold per furnace.
+    \item $\phi$ (code: \texttt{offpeak\_cooldown\_fee} from field \texttt{offpeak\_cooldown\_fee}): one-time cooldown fee if the threshold gate is crossed.
+    \item $M^{\text{off}}$ (code: \texttt{M\_off}): big-$M$ used for off-peak linking,
+    \[
+    M^{\text{off}}=\frac{\mathrm{Cap}^{\text{off}}}{\min(a,b)}.
+    \]
+    \item $M^{\text{peak}}$ (code: \texttt{M\_peak}): big-$M$ used for peak linking,
+    \[
+    M^{\text{peak}}=\frac{\mathrm{Cap}^{\text{peak}}}{\min(a,b)}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each furnace $i\in F$:
+
+\begin{itemize}
+    \item $x_{i,1}^{\text{off}}$ (code: \texttt{x1\_off[i]}) $\ge 0$: off-peak batches of method 1.
+    \item $x_{i,2}^{\text{off}}$ (code: \texttt{x2\_off[i]}) $\ge 0$: off-peak batches of method 2.
+    \item $x_{i,1}^{\text{peak}}$ (code: \texttt{x1\_peak[i]}) $\ge 0$: peak batches of method 1.
+    \item $x_{i,2}^{\text{peak}}$ (code: \texttt{x2\_peak[i]}) $\ge 0$: peak batches of method 2.
+    \item $y_i^{\text{off}}$ (code: \texttt{y\_off[i]}) $\in \{0,1\}$: 1 if furnace $i$ is activated in off-peak hours.
+    \item $y_i^{\text{peak}}$ (code: \texttt{y\_peak[i]}) $\in \{0,1\}$: 1 if furnace $i$ is activated in peak hours.
+    \item $z_i^{\text{cool}}$ (code: \texttt{cooldown[i]}) $\in \{0,1\}$: 1 if furnace $i$ incurs the off-peak cooldown fee.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total fuel, activation, and cooldown cost:
+\[
+\min \sum_{i\in F}\Big(
+m^{\text{off}}x_{i,1}^{\text{off}}
++m^{\text{peak}}x_{i,1}^{\text{peak}}
++n^{\text{off}}x_{i,2}^{\text{off}}
++n^{\text{peak}}x_{i,2}^{\text{peak}}
++f^{\text{off}}y_i^{\text{off}}
++f^{\text{peak}}y_i^{\text{peak}}
++\phi z_i^{\text{cool}}
+\Big).
+\]
+
+\section*{Constraints}
+
+\paragraph{Per-furnace time capacities.}
+For each $i\in F$,
+\[
+a x_{i,1}^{\text{off}} + b x_{i,2}^{\text{off}} \le c^{\text{off}},
+\]
+\[
+a x_{i,1}^{\text{peak}} + b x_{i,2}^{\text{peak}} \le c^{\text{peak}}.
+\]
+
+\paragraph{Plant-wide shared time capacities.}
+\[
+a\sum_{i\in F}x_{i,1}^{\text{off}} + b\sum_{i\in F}x_{i,2}^{\text{off}} \le \mathrm{Cap}^{\text{off}},
+\]
+\[
+a\sum_{i\in F}x_{i,1}^{\text{peak}} + b\sum_{i\in F}x_{i,2}^{\text{peak}} \le \mathrm{Cap}^{\text{peak}}.
+\]
+
+\paragraph{Activation linking.}
+For each $i\in F$,
+\[
+x_{i,1}^{\text{off}} + x_{i,2}^{\text{off}} \le M^{\text{off}} y_i^{\text{off}},
+\]
+\[
+x_{i,1}^{\text{peak}} + x_{i,2}^{\text{peak}} \le M^{\text{peak}} y_i^{\text{peak}}.
+\]
+
+\paragraph{Off-peak cooldown gate.}
+For each $i\in F$,
+\[
+x_{i,1}^{\text{off}} + x_{i,2}^{\text{off}} \le \tau + M^{\text{off}} z_i^{\text{cool}}.
+\]
+
+\paragraph{Minimum production requirement.}
+\[
+k\sum_{i\in F}\left(
+x_{i,1}^{\text{off}} + x_{i,2}^{\text{off}} + x_{i,1}^{\text{peak}} + x_{i,2}^{\text{peak}}
+\right)\ge d.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved with \texttt{pulp.GUROBI\_CMD}.
+    \item The cooldown rule is modeled as a binary gate, consistent with the business brief: if a furnace stays at or below $\tau$ off-peak batches, it may take $z_i^{\text{cool}}=0$ and pay no cooldown fee; if it exceeds $\tau$, feasibility requires $z_i^{\text{cool}}=1$, which adds the fixed fee $\phi$.
+    \item The current implementation does \emph{not} impose a reverse implication such as $z_i^{\text{cool}}=1 \Rightarrow x_{i,1}^{\text{off}} + x_{i,2}^{\text{off}}>\tau$; it only uses the upper-bound gate shown above.
+    \item Batch variables are continuous nonnegative variables in the code, not restricted to integers.
+    \item The big-$M$ constants are computed from plant-wide capacities and the faster processing time, exactly as
+    \[
+    M^{\text{off}}=\mathrm{Cap}^{\text{off}}/\min(a,b),\qquad
+    M^{\text{peak}}=\mathrm{Cap}^{\text{peak}}/\min(a,b).
+    \]
+    These are the constants used for both activation linking and the cooldown gate in the code.
+\end{itemize}

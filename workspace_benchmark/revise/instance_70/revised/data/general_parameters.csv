@@ -1,0 +1,8 @@
+parameter,value
+start_city,1
+end_city,4
+prohibited_from,1
+prohibited_to,3
+inspection_arc_from,2
+inspection_arc_to,3
+inspection_stop_cost,4

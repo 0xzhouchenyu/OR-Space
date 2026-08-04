@@ -1,0 +1,285 @@
+{
+  "solver": "gurobi",
+  "model_name": "ZhangFamilyTripPaceMode_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 1557.3684210526314,
+  "runtime": 0.00043320655822753906,
+  "variables": {
+    "max_child_cost": {
+      "value": 1300.0,
+      "reduced_cost": 0.0
+    },
+    "min_child_cost": {
+      "value": 600.0,
+      "reduced_cost": 0.0
+    },
+    "x_Fred": {
+      "value": 0.3157894736842105,
+      "reduced_cost": 0.0
+    },
+    "x_George": {
+      "value": 0.3157894736842105,
+      "reduced_cost": 0.0
+    },
+    "x_Ginny": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_Harry": {
+      "value": 0.4,
+      "reduced_cost": 0.0
+    },
+    "x_Hermione": {
+      "value": 0.3157894736842105,
+      "reduced_cost": 0.0
+    },
+    "x_Ron": {
+      "value": 0.6526315789473682,
+      "reduced_cost": 0.0
+    },
+    "y_Fred": {
+      "value": 0.0,
+      "reduced_cost": 0.052631578947368474
+    },
+    "y_George": {
+      "value": 0.0,
+      "reduced_cost": 1.0
+    },
+    "y_Ginny": {
+      "value": 1200.0,
+      "reduced_cost": 0.0
+    },
+    "y_Harry": {
+      "value": 0.0,
+      "reduced_cost": 0.4
+    },
+    "y_Hermione": {
+      "value": 0.0,
+      "reduced_cost": 0.052631578947368474
+    },
+    "y_Ron": {
+      "value": 287.36842105263145,
+      "reduced_cost": 0.0
+    },
+    "z_balanced": {
+      "value": 0.0,
+      "reduced_cost": 1123.6842105263158
+    },
+    "z_budget": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "z_premium": {
+      "value": 0.0,
+      "reduced_cost": 2142.6315789473683
+    }
+  },
+  "constraints": {
+    "y_le_Mx_Harry": {
+      "sense": "<",
+      "slack": 600.0,
+      "dual_value": 0.0
+    },
+    "y_le_costplus_Harry": {
+      "sense": "<",
+      "slack": 1800.0,
+      "dual_value": 0.0
+    },
+    "y_ge_costminus_Harry": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.6
+    },
+    "y_le_Mx_Hermione": {
+      "sense": "<",
+      "slack": 600.0,
+      "dual_value": 0.0
+    },
+    "y_le_costplus_Hermione": {
+      "sense": "<",
+      "slack": 2600.0,
+      "dual_value": 0.0
+    },
+    "y_ge_costminus_Hermione": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.9473684210526315
+    },
+    "y_le_Mx_Ron": {
+      "sense": "<",
+      "slack": 300.0,
+      "dual_value": 0.0
+    },
+    "y_le_costplus_Ron": {
+      "sense": "<",
+      "slack": 625.2631578947371,
+      "dual_value": 0.0
+    },
+    "y_ge_costminus_Ron": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "y_le_Mx_Fred": {
+      "sense": "<",
+      "slack": 300.0,
+      "dual_value": 0.0
+    },
+    "y_le_costplus_Fred": {
+      "sense": "<",
+      "slack": 1300.0,
+      "dual_value": 0.0
+    },
+    "y_ge_costminus_Fred": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.9473684210526315
+    },
+    "y_le_Mx_George": {
+      "sense": "<",
+      "slack": 300.0,
+      "dual_value": 0.0
+    },
+    "y_le_costplus_George": {
+      "sense": "<",
+      "slack": 1300.0,
+      "dual_value": 0.0
+    },
+    "y_ge_costminus_George": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "y_le_Mx_Ginny": {
+      "sense": "<",
+      "slack": 600.0,
+      "dual_value": 0.0
+    },
+    "y_le_costplus_Ginny": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "y_ge_costminus_Ginny": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "Ginny_must_go": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 900.0
+    },
+    "Max_children": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "Min_children": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 900.0
+    },
+    "Harry_no_Fred": {
+      "sense": "<",
+      "slack": 0.2842105263157895,
+      "dual_value": 0.0
+    },
+    "Harry_no_George": {
+      "sense": "<",
+      "slack": 0.2842105263157895,
+      "dual_value": 0.0
+    },
+    "George_requires_Fred": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "George_requires_Hermione": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -900.0
+    },
+    "Exactly_one_mode": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 4257.368421052632
+    },
+    "Min_children_balanced_mode": {
+      "sense": ">",
+      "slack": -2.9999999999999996,
+      "dual_value": 0.0
+    },
+    "Min_children_premium_mode": {
+      "sense": ">",
+      "slack": -2.9999999999999996,
+      "dual_value": 0.0
+    },
+    "Budget_constraint": {
+      "sense": "<",
+      "slack": 3512.6315789473683,
+      "dual_value": 0.0
+    },
+    "Max_cost_ge_Harry": {
+      "sense": ">",
+      "slack": -400.0,
+      "dual_value": 0.0
+    },
+    "Min_cost_le_Harry": {
+      "sense": "<",
+      "slack": 300.0,
+      "dual_value": 0.0
+    },
+    "Max_cost_ge_Hermione": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.1
+    },
+    "Min_cost_le_Hermione": {
+      "sense": "<",
+      "slack": 700.0,
+      "dual_value": 0.0
+    },
+    "Max_cost_ge_Ron": {
+      "sense": ">",
+      "slack": -700.0,
+      "dual_value": 0.0
+    },
+    "Min_cost_le_Ron": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.1
+    },
+    "Max_cost_ge_Fred": {
+      "sense": ">",
+      "slack": -650.0,
+      "dual_value": 0.0
+    },
+    "Min_cost_le_Fred": {
+      "sense": "<",
+      "slack": 50.0,
+      "dual_value": 0.0
+    },
+    "Max_cost_ge_George": {
+      "sense": ">",
+      "slack": -650.0,
+      "dual_value": 0.0
+    },
+    "Min_cost_le_George": {
+      "sense": "<",
+      "slack": 50.0,
+      "dual_value": 0.0
+    },
+    "Max_cost_ge_Ginny": {
+      "sense": ">",
+      "slack": -100.0,
+      "dual_value": 0.0
+    },
+    "Min_cost_le_Ginny": {
+      "sense": "<",
+      "slack": 600.0,
+      "dual_value": 0.0
+    }
+  }
+}

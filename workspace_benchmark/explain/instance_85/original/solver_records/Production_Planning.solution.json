@@ -1,0 +1,44 @@
+{
+  "solver": "gurobi",
+  "model_name": "Production_Planning",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 1866.379310344828,
+  "objective_bound": 1866.379310344828,
+  "mip_gap": null,
+  "runtime": 0.0006291866302490234,
+  "node_count": 0.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_v4eceuxi/solver_records/Production_Planning.gurobi.log",
+  "variables": {
+    "X": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    },
+    "Y": {
+      "value": 65.51724137931035,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Machine_Time_Constraint": {
+      "sense": "<=",
+      "slack": 17.086206896551726,
+      "dual_value": 0.0
+    },
+    "Craftsman_Time_Constraint": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 53.51724137931035
+    },
+    "Min_Production_X": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -0.672413793103452
+    }
+  }
+}

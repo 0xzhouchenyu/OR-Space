@@ -1,0 +1,4 @@
+Parameter_Name,Value,Unit,Context_Description
+min_protein_requirement,700,g,Minimum daily protein requirement for the animal
+min_minerals_requirement,30,g,Minimum daily minerals requirement for the animal
+min_vitamins_requirement,100,mg,Minimum daily vitamins requirement for the animal

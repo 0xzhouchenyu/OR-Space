@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_005",
+  "instance_number": 5,
+  "source_revise_instance": "IndustryOR_5_revise_business",
+  "domain": "Meal_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Meal_Planning",
+    "question": "Using the revised model only, explain why the LP relaxation shows `d_okra = 0.1` with objective 27.5657 while the integer optimum is 27.5443, and identify which binding constraints and dual values in the relaxation diagnose this gap. You must name the exact code variables and constraints involved (`x[(s,f)]`, `y[(s,f)]`, `z[p]`, `d[v]`, and the constraints that enforce `total_intake_{s}`, `weekday_budget`, `weekend_budget`, `one_protein_activation`, `backlink_z_p`, and the linking bounds), and connect them to the CSV columns `Fiber_Content_per_100g`, `Price_per_100g`, `prep_time_per_100g`, plus the parameters `veg_balance_penalty`, `max_prep_time_weekday`, and `max_prep_time_weekend`. Then compare the original single-meal objective 18.6943 to the revised 27.5443 by pinpointing the exact added objective term and constraint blocks that caused the +8.85 change, and explain why the shadow price on the binding `total_intake_*` constraints cannot be used for a linear “one more gram of food” extrapolation in the MIP business setting."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Maximize_Fiber.gurobi.log",
+        "Maximize_Fiber.lp_relaxation.json",
+        "Maximize_Fiber.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Two_Scenario_Maximize_Fiber_With_Balance.gurobi.log",
+        "Two_Scenario_Maximize_Fiber_With_Balance.lp_relaxation.json",
+        "Two_Scenario_Maximize_Fiber_With_Balance.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 53.79
+  }
+}

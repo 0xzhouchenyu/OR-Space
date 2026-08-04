@@ -1,0 +1,14 @@
+Parameter_Name,Value,Unit,Context_Description
+activity_A_duration,4,days,Duration of activity A
+activity_B_duration,3,days,Duration of activity B
+activity_C_duration,5,days,Duration of activity C
+activity_D_duration,2,days,Duration of activity D
+activity_E_duration,10,days,Duration of activity E
+activity_F_duration,10,days,Duration of activity F
+activity_G_duration,1,days,Duration of activity G
+work_cost_per_day,1000,Euros,Cost of work per day
+machine_rental_cost_per_day,5000,Euros,Cost of renting the special machine per day
+activity_E_overtime_reduction,3,days,Reduction in duration of activity E if overtime is used
+activity_E_overtime_cost,2500,Euros,Fixed premium cost for using overtime on activity E
+activity_E_followup_review_trigger,1,boolean,Follow-up review applies if Activity E is accelerated with overtime
+activity_E_followup_review_cost,1000,Euros,One-time follow-up review cost after accelerating Activity E

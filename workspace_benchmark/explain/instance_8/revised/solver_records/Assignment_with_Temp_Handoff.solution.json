@@ -1,0 +1,204 @@
+{
+  "solver": "gurobi",
+  "model_name": "Assignment_with_Temp_Handoff",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 37.0,
+  "objective_bound": 37.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004703044891357422,
+  "node_count": 1.0,
+  "iteration_count": 15.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_nbo6p7kf/solver_records/Assignment_with_Temp_Handoff.gurobi.log",
+  "variables": {
+    "shared_temp_handoff": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "worker_II_V_pair": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_III_A": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_III_B": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_III_C": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_III_D": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_II_A": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_II_B": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_II_C": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_II_D": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_IV_A": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_IV_B": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_IV_C": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_IV_D": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_I_A": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_I_B": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_I_C": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_I_D": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_V_A": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_V_B": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_V_C": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_V_D": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_I": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_II": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_III": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_IV": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_V": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

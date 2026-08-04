@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+warehouse_capacity,500,units,Maximum storage capacity of the warehouse
+initial_stock,200,units,Units in stock at the end of this year
+fixed_ordering_cost,400,Yuan,Fixed cost incurred if any units are purchased in a month
+month2_bulk_receiving_threshold,300,units,Month 2 purchase volume that can be received through the ordinary unloading slot
+month2_bulk_receiving_fee,600,Yuan,One-time receiving-office cost if Month 2 purchases exceed the ordinary unloading slot

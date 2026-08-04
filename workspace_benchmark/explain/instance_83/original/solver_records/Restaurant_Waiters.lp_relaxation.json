@@ -1,0 +1,66 @@
+{
+  "solver": "gurobi",
+  "model_name": "Restaurant_Waiters_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 26.0,
+  "runtime": 0.00031495094299316406,
+  "variables": {
+    "x_0": {
+      "value": 4.0,
+      "reduced_cost": 0.0
+    },
+    "x_1": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    },
+    "x_2": {
+      "value": -0.0,
+      "reduced_cost": 0.0
+    },
+    "x_3": {
+      "value": 8.0,
+      "reduced_cost": 0.0
+    },
+    "x_4": {
+      "value": 4.0,
+      "reduced_cost": 0.0
+    },
+    "x_5": {
+      "value": -0.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Period_0_2-6": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "Period_1_6-10": {
+      "sense": ">",
+      "slack": -6.0,
+      "dual_value": 0.0
+    },
+    "Period_2_10-14": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "Period_3_14-18": {
+      "sense": ">",
+      "slack": -1.0,
+      "dual_value": 0.0
+    },
+    "Period_4_18-22": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "Period_5_22-2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.0
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 28.0,
+  "stdout": "Best combination: (2, 2, 3, 1, 2)\n  Jewelry: 2 stores\n  Shoes_and_Hats: 2 stores\n  General_Merchandise: 3 stores\n  Bookstore: 1 stores\n  Catering: 2 stores\nTotal area used: 5000\nTotal profit: 140.0\nTotal rent (objective): 28.0\nOBJECTIVE_VALUE: 28.0\nSet parameter LicenseID to value 2802670\n",
+  "stderr": "",
+  "error": null
+}

@@ -1,0 +1,101 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $B = \{1,\dots,n\}$: set of fabric batches.
+    \item $V = \{1,\dots,m\}$: set of dyeing vats, in the required processing order.
+    \item $P$: set of all permutations of the batches in $B$.
+    \item $i = 1,\dots,n$: position index in a candidate batch sequence.
+    \item $j \in V$: vat index.
+    \item For a permutation $\pi \in P$, $\pi(i) \in B$ denotes the batch placed in position $i$.
+\end{itemize}
+
+For Instance 35, the data give $n=5$ batches and $m=3$ vats.
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $p_{bj}$: processing time of batch $b$ in vat $j$ (code source: \texttt{processing\_times[b][j-1]} with 0-based indexing in Python).
+\end{itemize}
+
+Using \texttt{table\_1.csv}, the processing times are:
+\[
+\begin{array}{c|ccc}
+b & p_{b1} & p_{b2} & p_{b3} \\
+\hline
+1 & 3.0 & 1.0 & 1.0 \\
+2 & 2.0 & 1.5 & 1.0 \\
+3 & 3.0 & 1.2 & 1.3 \\
+4 & 2.0 & 2.0 & 2.0 \\
+5 & 2.1 & 2.0 & 3.0
+\end{array}
+\]
+
+\section*{Decision Variables}
+
+The implemented search evaluates a complete batch order directly rather than optimizing over algebraic variables in a solver. A mathematical reconstruction is:
+
+\begin{itemize}
+    \item $\pi \in P$: permutation of batches (code: \texttt{perm}).
+    \item $C_{ij}(\pi) \ge 0$: completion time of the batch in sequence position $i$ on vat $j$ under permutation $\pi$ (code: \texttt{completion[i][j]}).
+    \item $C_{\max}(\pi)$: makespan of permutation $\pi$ (code: value returned by \texttt{compute\_makespan}, stored as \texttt{ms}).
+\end{itemize}
+
+\section*{Objective}
+
+The code solves
+\[
+\min_{\pi \in P} \; C_{\max}(\pi),
+\]
+where
+\[
+C_{\max}(\pi) = C_{nm}(\pi).
+\]
+
+\section*{Constraints}
+
+For any fixed permutation $\pi \in P$, completion times are computed recursively as follows.
+
+First batch on first vat:
+\[
+C_{11}(\pi) = p_{\pi(1),1}.
+\]
+
+First batch on later vats:
+\[
+C_{1j}(\pi) = C_{1,j-1}(\pi) + p_{\pi(1),j}
+\qquad \forall j=2,\dots,m.
+\]
+
+Later batches on first vat:
+\[
+C_{i1}(\pi) = C_{i-1,1}(\pi) + p_{\pi(i),1}
+\qquad \forall i=2,\dots,n.
+\]
+
+Later batches on later vats:
+\[
+C_{ij}(\pi) =
+\max\!\left\{C_{i-1,j}(\pi),\, C_{i,j-1}(\pi)\right\} + p_{\pi(i),j}
+\qquad \forall i=2,\dots,n,\; j=2,\dots,m.
+\]
+
+The makespan is then
+\[
+C_{\max}(\pi) = C_{nm}(\pi).
+\]
+
+Equivalently, the recursion enforces the standard permutation flow-shop precedence logic:
+\begin{itemize}
+    \item each batch must finish on vat $j-1$ before starting on vat $j$;
+    \item on each vat, the batch in position $i$ cannot start before the batch in position $i-1$ finishes there;
+    \item the same batch order $\pi$ is used on every vat.
+\end{itemize}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The Python code uses 0-based job and vat indices internally. Thus Python job index \texttt{job} corresponds to batch $\pi(i)$, and Python vat index \texttt{j} corresponds to vat $j+1$ in the formulation above.
+    \item The algorithm performs exact enumeration over all permutations of the batches (code: \texttt{for perm in permutations(job\_indices)}). For Instance 35 this is $5! = 120$ candidate sequences.
+    \item For each enumerated permutation, the completion-time recursion above is evaluated exactly by dynamic forward simulation in \texttt{compute\_makespan}; no LP, MIP, or CP solver is used.
+    \item The reported objective value is the minimum makespan across all enumerated permutations, and the reported batch order is the corresponding optimal permutation.
+\end{itemize}

@@ -1,0 +1,23 @@
+Parameter_Name,Value,Unit,Context_Description
+profit_per_acre_apples,2000,USD,Profit for growing one acre of apples
+profit_per_acre_pears,1800,USD,Profit for growing one acre of pears
+profit_per_acre_oranges,2200,USD,Profit for growing one acre of oranges
+profit_per_acre_lemons,3000,USD,Profit for growing one acre of lemons
+total_farm_area,120,acres,Total area of the farm in the Yarra Valley
+min_apples_to_pears_ratio,2,,The land used to grow apples should be at least twice the land used to grow pears
+min_apples_to_lemons_ratio,3,,The land used to grow apples should be at least three times the land used to grow lemons
+oranges_to_lemons_ratio,2,,The land used to grow oranges must be twice the land used to grow lemons
+max_fruit_types,2,,Vicky and David are unwilling to grow more than two types of fruit
+water_per_acre_apples_spring,10,m3_per_acre,Water required per acre of apples in spring
+water_per_acre_apples_autumn,12,m3_per_acre,Water required per acre of apples in autumn
+water_per_acre_pears_spring,9,m3_per_acre,Water required per acre of pears in spring
+water_per_acre_pears_autumn,11,m3_per_acre,Water required per acre of pears in autumn
+water_per_acre_oranges_spring,14,m3_per_acre,Water required per acre of oranges in spring
+water_per_acre_oranges_autumn,16,m3_per_acre,Water required per acre of oranges in autumn
+water_per_acre_lemons_spring,18,m3_per_acre,Water required per acre of lemons in spring
+water_per_acre_lemons_autumn,20,m3_per_acre,Water required per acre of lemons in autumn
+water_cap_spring,5000,m3,Maximum irrigation water available in spring
+water_cap_autumn,5000,m3,Maximum irrigation water available in autumn
+total_water_budget,8000,m3,Maximum total irrigation water available over the year
+min_annual_water_per_fruit,500,m3,Minimum annual water usage for any fruit that is irrigated
+diversification_reward,40000,USD,Fixed reward if at least two fruits are grown over the year

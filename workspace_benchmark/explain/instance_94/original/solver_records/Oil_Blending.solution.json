@@ -1,0 +1,102 @@
+{
+  "solver": "gurobi",
+  "model_name": "Oil_Blending",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 5000000.0,
+  "objective_bound": 5000000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.005017995834350586,
+  "node_count": 1.0,
+  "iteration_count": 6.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_5rmmlgny/solver_records/Oil_Blending.gurobi.log",
+  "variables": {
+    "crude_A_in_I": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "crude_A_in_II": {
+      "value": 1500.0,
+      "reduced_cost": null
+    },
+    "crude_B_in_I": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "crude_B_in_II": {
+      "value": 1000.0,
+      "reduced_cost": null
+    },
+    "purchase_tier1": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "purchase_tier2": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "purchase_tier3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y2": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 500.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

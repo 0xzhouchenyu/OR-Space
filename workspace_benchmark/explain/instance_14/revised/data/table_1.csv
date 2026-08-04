@@ -1,0 +1,9 @@
+Item,Protein_Content_per_100g,Cost_per_100g,Type,Calories_per_100g,Sodium_mg_per_100g
+Chicken,23,3.00,Protein,165,74
+Salmon,20,5.00,Protein,208,59
+Tofu,8,1.50,Protein,76,7
+Broccoli,2.8,1.20,Vegetable,34,33
+Carrots,0.9,0.80,Vegetable,41,69
+Spinach,2.9,1.50,Vegetable,23,79
+Bell_Pepper,1.0,1.00,Vegetable,31,2
+Mushrooms,3.1,2.00,Vegetable,22,5

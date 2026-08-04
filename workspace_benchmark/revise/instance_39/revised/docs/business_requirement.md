@@ -1,0 +1,7 @@
+A company plans to transport goods between the city and the suburb and needs to choose the most environmentally friendly transportation method. The company can choose from three methods: motorcycle, small truck, and large truck. The company's goal is to minimize total pollution. The company can only choose two out of these three transportation methods. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the service manager framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The transport day is now split into peak and off-peak windows, and operations can lease extra service only when it is truly needed. Owned trips still follow their vehicle capacities and pollution rates, while leased capacity brings both `leasing_pollution_per_unit` and `leasing_fixed_pollution`. In each demand window, the company wants a limited set of active methods and a day-wide plan with the smallest environmental burden. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

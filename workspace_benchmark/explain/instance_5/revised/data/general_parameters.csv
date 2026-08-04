@@ -1,0 +1,8 @@
+Parameter_Name,Value,Unit,Context_Description
+budget,18,dollars,Mary's total budget for both dinners
+food_intake,500,grams,Total food intake required per dinner scenario
+weekday_budget_share,0.6,dimensionless_fraction,Fraction of total budget allocated to weekday dinner
+max_prep_time_weekday,45,minutes,Maximum total preparation time for weekday dinner
+max_prep_time_weekend,50,minutes,Maximum total preparation time for weekend dinner
+weekend_protein_ban,0,binary_flag,If 1 proteins are not allowed in weekend dinner
+veg_balance_penalty,0.5,dollars_per_100g,Penalty per 100 g deviation between weekday and weekend vegetable amounts

@@ -1,0 +1,5 @@
+Parameter_Name,Value,Unit,Context_Description
+warehouse_capacity,5000,dan,Maximum storage capacity of the warehouse
+initial_stock,1000,dan,Initial stock of grain on January 1
+initial_funds,20000,yuan,Initial funds available on January 1
+end_of_quarter_inventory,2000,dan,Target inventory level at the end of the first quarter

@@ -1,0 +1,105 @@
+\section*{Sets and Indices}
+
+Let
+\[
+P=\{\mathrm{M},\mathrm{Y}\}
+\]
+denote the two products, where \(\mathrm{M}\) is Meaties and \(\mathrm{Y}\) is Yummies.
+
+\section*{Parameters}
+
+For each product \(i \in P\):
+\begin{itemize}
+    \item \(\text{price}_i\): selling price per pack (code data field: \texttt{Price\_per\_pack})
+    \item \(\text{grain}_i\): grains used per pack in lbs (code data field: \texttt{Grains\_per\_pack})
+    \item \(\text{meat}_i\): meat used per pack in lbs (code data field: \texttt{Meat\_per\_pack})
+    \item \(\text{varcost}_i\): variable cost per pack (code data field: \texttt{Variable\_cost\_per\_pack})
+    \item \(\text{cap}_i\): product-specific production capacity, if present (code data field: \texttt{Production\_capacity}); only Meaties has a finite value in the data
+\end{itemize}
+
+General parameters from \texttt{general\_parameters.csv}:
+\begin{itemize}
+    \item \(G^{\max}\): grains availability (code: \texttt{max\_grains})
+    \item \(c^G\): grain purchase cost per lb (code: \texttt{price\_per\_lb\_grains})
+    \item \(M^{\max}\): meat availability (code: \texttt{max\_meat})
+    \item \(c^M\): meat purchase cost per lb (code: \texttt{price\_per\_lb\_meat})
+    \item \(F^{\text{line}}\): fixed monthly co-packing line charge (code: \texttt{line\_fixed\_cost})
+    \item \(L\): shared line capacity in packs (code: \texttt{line\_capacity\_packs})
+    \item \(B^{\min}\): minimum combined production when line is active (code: \texttt{min\_batch\_packs})
+    \item \(Y^{\min}\): minimum Yummies production when line is active (code: \texttt{min\_yummies})
+    \item \(Y^{\text{reb}}\): Yummies threshold for retailer allowance eligibility (code: \texttt{retailer\_rebate\_yummies\_threshold})
+    \item \(M^{\text{reb}}\): Meaties threshold for retailer allowance eligibility (code: \texttt{retailer\_rebate\_min\_meaties})
+    \item \(R\): fixed retailer allowance amount (code: \texttt{retailer\_rebate\_fixed})
+\end{itemize}
+
+Define per-pack contribution margins exactly as in the code:
+\[
+c_{\mathrm{M}}=\text{price}_{\mathrm{M}}-\text{varcost}_{\mathrm{M}}-\text{grain}_{\mathrm{M}}c^G-\text{meat}_{\mathrm{M}}c^M,
+\]
+\[
+c_{\mathrm{Y}}=\text{price}_{\mathrm{Y}}-\text{varcost}_{\mathrm{Y}}-\text{grain}_{\mathrm{Y}}c^G-\text{meat}_{\mathrm{Y}}c^M.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_{\mathrm{M}} \ge 0\): packs of Meaties produced (code: \texttt{meaties})
+    \item \(x_{\mathrm{Y}} \ge 0\): packs of Yummies produced (code: \texttt{yummies})
+    \item \(z \in \{0,1\}\): whether the co-packing line is open (code: \texttt{line\_open})
+    \item \(r \in \{0,1\}\): whether the fixed retailer allowance is earned (code: \texttt{retailer\_allowance})
+\end{itemize}
+
+\section*{Objective}
+
+Maximize monthly profit:
+\[
+\max \quad c_{\mathrm{M}}x_{\mathrm{M}} + c_{\mathrm{Y}}x_{\mathrm{Y}} - F^{\text{line}} z + R r.
+\]
+
+\section*{Constraints}
+
+Raw-material limits:
+\[
+\text{grain}_{\mathrm{M}}x_{\mathrm{M}} + \text{grain}_{\mathrm{Y}}x_{\mathrm{Y}} \le G^{\max},
+\]
+\[
+\text{meat}_{\mathrm{M}}x_{\mathrm{M}} + \text{meat}_{\mathrm{Y}}x_{\mathrm{Y}} \le M^{\max}.
+\]
+
+Line-activation and capacity constraints:
+\[
+x_{\mathrm{M}} \le \min(\text{cap}_{\mathrm{M}},L)\, z,
+\]
+\[
+x_{\mathrm{Y}} \le L z,
+\]
+\[
+x_{\mathrm{M}} + x_{\mathrm{Y}} \le L z.
+\]
+
+Minimum run requirements when the line is active:
+\[
+x_{\mathrm{M}} + x_{\mathrm{Y}} \ge B^{\min} z,
+\]
+\[
+x_{\mathrm{Y}} \ge Y^{\min} z.
+\]
+
+Retailer allowance gate constraints:
+\[
+x_{\mathrm{Y}} \ge Y^{\text{reb}} r,
+\]
+\[
+x_{\mathrm{M}} \ge M^{\text{reb}} r,
+\]
+\[
+r \le z.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program with two continuous production variables and two binary gate variables. The retailer allowance is modeled as a fixed on/off payment, not a smooth surcharge: the binary variable \(r\) may take value \(1\) only if both threshold conditions are met, namely \(x_{\mathrm{Y}} \ge Y^{\text{reb}}\) and \(x_{\mathrm{M}} \ge M^{\text{reb}}\). If either threshold is missed, \(r=1\) is infeasible, so the allowance is not paid.
+
+The line-open binary \(z\) gates all production through upper bounds and also activates the minimum batch and minimum Yummies requirements. Because of the upper bounds \(x_{\mathrm{M}} \le \min(\text{cap}_{\mathrm{M}},L)z\), \(x_{\mathrm{Y}} \le Lz\), and \(x_{\mathrm{M}}+x_{\mathrm{Y}} \le Lz\), setting \(z=0\) forces \(x_{\mathrm{M}}=x_{\mathrm{Y}}=0\).
+
+The formulation should be read exactly as above; in particular, the code does not include reverse logic forcing \(r=1\) whenever both thresholds are met. Instead, since \(R>0\) in the data, profit maximization makes claiming the allowance optimal whenever it is feasible. The model is solved directly as a MILP by the solver interface used in \texttt{current\_heuristic.py}.

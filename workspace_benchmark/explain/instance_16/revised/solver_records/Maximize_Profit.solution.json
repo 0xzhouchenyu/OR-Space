@@ -1,0 +1,153 @@
+{
+  "solver": "gurobi",
+  "model_name": "Maximize_Profit",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 2800.0,
+  "objective_bound": 2800.0,
+  "mip_gap": 0.0,
+  "runtime": 0.00403594970703125,
+  "node_count": 1.0,
+  "iteration_count": 8.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_f9_t_iv7/solver_records/Maximize_Profit.gurobi.log",
+  "variables": {
+    "inventory_1": {
+      "value": 200.0,
+      "reduced_cost": null
+    },
+    "inventory_2": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "inventory_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "month2_bulk_receiving": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "purchase_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "purchase_2": {
+      "value": 300.0,
+      "reduced_cost": null
+    },
+    "purchase_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "purchase_flag_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "purchase_flag_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "purchase_flag_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "sell_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "sell_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "sell_3": {
+      "value": 500.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "inventory_balance_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_after_purchase_1": {
+      "sense": "<=",
+      "slack": 300.0,
+      "dual_value": null
+    },
+    "warehouse_end_1": {
+      "sense": "<=",
+      "slack": 300.0,
+      "dual_value": null
+    },
+    "sell_limit_1": {
+      "sense": "<=",
+      "slack": 200.0,
+      "dual_value": null
+    },
+    "purchase_fixed_cost_link_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "inventory_balance_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_after_purchase_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_end_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "sell_limit_2": {
+      "sense": "<=",
+      "slack": 500.0,
+      "dual_value": null
+    },
+    "purchase_fixed_cost_link_2": {
+      "sense": "<=",
+      "slack": 200.0,
+      "dual_value": null
+    },
+    "month2_bulk_receiving_trigger": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "inventory_balance_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_after_purchase_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_end_3": {
+      "sense": "<=",
+      "slack": 500.0,
+      "dual_value": null
+    },
+    "sell_limit_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "purchase_fixed_cost_link_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_081",
+  "instance_number": 81,
+  "source_revise_instance": "IndustryOR_81_revise_business",
+  "domain": "Binary_Linear_Programming",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Binary_Linear_Programming",
+    "question": "The revised objective jumps from 28.6 to 57.1. Trace this change all the way from the business memo phrase about Danzig Street resident access, through the exact CSV fields and values, to the new code variables and constraints (`y[s]`, `a[i,s]`, `L[s]`, `exactly_one_usable_side`, `link_assignment_to_side_{i}_{s}`, `cap_side_{s}`), and explain precisely why the optimal solution becomes “all cars on one side” with `T = 57.1` rather than the original split solution. Then use the LP-relaxation diagnostics to identify which revised constraints are binding/nonbinding and interpret the shadow prices/slacks economically; finally, explain why you cannot linearly extrapolate those LP dual values to predict the 28.5 objective increase between the original and revised MIP models."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ParkingMinStreetLength.gurobi.log",
+        "ParkingMinStreetLength.lp_relaxation.json",
+        "ParkingMinStreetLength.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ParkingSingleUsableSide.gurobi.log",
+        "ParkingSingleUsableSide.lp_relaxation.json",
+        "ParkingSingleUsableSide.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 81.362222
+  }
+}

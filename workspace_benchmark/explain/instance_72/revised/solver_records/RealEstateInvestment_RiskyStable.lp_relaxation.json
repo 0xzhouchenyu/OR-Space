@@ -1,0 +1,176 @@
+{
+  "solver": "gurobi",
+  "model_name": "RealEstateInvestment_RiskyStable_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 149066.66666666666,
+  "runtime": 0.00046896934509277344,
+  "variables": {
+    "r_Property_1": {
+      "value": 0.0,
+      "reduced_cost": -1249.9999999999964
+    },
+    "r_Property_2": {
+      "value": 0.06666666666666667,
+      "reduced_cost": 0.0
+    },
+    "r_Property_3": {
+      "value": 0.0,
+      "reduced_cost": -65100.0
+    },
+    "r_Property_4": {
+      "value": 0.8,
+      "reduced_cost": 0.0
+    },
+    "s_Property_1": {
+      "value": 0.4666666666666667,
+      "reduced_cost": 0.0
+    },
+    "s_Property_2": {
+      "value": 0.9333333333333333,
+      "reduced_cost": 0.0
+    },
+    "s_Property_3": {
+      "value": 0.0,
+      "reduced_cost": -63566.66666666667
+    },
+    "s_Property_4": {
+      "value": 0.19999999999999996,
+      "reduced_cost": 0.0
+    },
+    "x_Property_1": {
+      "value": 0.4666666666666667,
+      "reduced_cost": 0.0
+    },
+    "x_Property_2": {
+      "value": 1.0,
+      "reduced_cost": 17500.0
+    },
+    "x_Property_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_Property_4": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "y_Property_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_Property_2": {
+      "value": 0.06666666666666667,
+      "reduced_cost": 0.0
+    },
+    "y_Property_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_Property_4": {
+      "value": 0.8,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Acquisition_Budget": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.008333333333333333
+    },
+    "Mutual_Exclusion_P3_P4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 67400.0
+    },
+    "Frac_leq_x_Property_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 12500.0
+    },
+    "Risky_cap_Property_1": {
+      "sense": "<",
+      "slack": 0.37333333333333335,
+      "dual_value": 0.0
+    },
+    "Risky_link1_Property_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 2499.9999999999945
+    },
+    "Risky_link2_Property_1": {
+      "sense": "<",
+      "slack": 0.4666666666666667,
+      "dual_value": 0.0
+    },
+    "Frac_leq_x_Property_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 35000.0
+    },
+    "Risky_cap_Property_2": {
+      "sense": "<",
+      "slack": 0.7333333333333334,
+      "dual_value": 0.0
+    },
+    "Risky_link1_Property_2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 3499.9999999999927
+    },
+    "Risky_link2_Property_2": {
+      "sense": "<",
+      "slack": 0.9333333333333333,
+      "dual_value": 0.0
+    },
+    "Frac_leq_x_Property_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 86566.66666666667
+    },
+    "Risky_cap_Property_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Risky_link1_Property_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 3833.3333333333253
+    },
+    "Risky_link2_Property_3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Frac_leq_x_Property_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 100000.0
+    },
+    "Risky_cap_Property_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 3000.000000000001
+    },
+    "Risky_link1_Property_4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 6999.9999999999845
+    },
+    "Risky_link2_Property_4": {
+      "sense": "<",
+      "slack": 0.19999999999999996,
+      "dual_value": 0.0
+    },
+    "Total_Risky_Budget": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.001666666666666663
+    },
+    "Max_Risky_Properties": {
+      "sense": "<",
+      "slack": 1.1333333333333333,
+      "dual_value": 0.0
+    }
+  }
+}

@@ -48,42 +48,38 @@ with a backend mounted by the evaluator.
 
 ## Quick Start
 
-Install the lightweight Python dependencies:
+Install the lightweight validation dependency:
 
 ```bash
 pip install -U pandas
 ```
 
-Unpack the bundled workspace archive and inspect the task index:
-
-```bash
-unzip data/build-revise-explain_workspaces.zip -d data/
-```
+Inspect the bundled task index directly:
 
 ```bash
 python - <<'PY'
 import pandas as pd
 
-index = pd.read_csv("data/metadata/workspace_index.csv")
-print(index.groupby("task_type").size())
+index = pd.read_csv("supporting_files/metadata/workspace_index.csv")
+print(index.groupby(["task_type", "difficulty"]).size())
 print(index.head()[["workspace_id", "task_type", "workspace_path"]])
 PY
 ```
 
-The expanded workspaces follow this pattern:
+The workspaces follow this pattern:
 
 ```text
-build-revise-explain_workspaces/
-  build_workspaces/instance_1/
+workspace_benchmark/
+  build/instance_1/
     docs/
     data/
     src/
     metadata.json
-  revise_workspaces/instance_1/
+  revise/instance_1/
     original/
     revised/
     metadata.json
-  explain_workspaces/instance_1/
+  explain/instance_1/
     original/
     revised/
     solver_artifacts/
@@ -99,7 +95,10 @@ runnable evaluators, and machine-readable result snapshots used by the paper.
 .
   README.md
   LICENSE
-  data/                     Review dataset, indexes, oracle values, and rubrics
+  workspace_benchmark/      100 Build, 100 Revise, and 100 Explain workspaces
+  evaluation/               Evaluator-only references for all three tasks
+  evaluation_programs/      Public executable scoring programs
+  supporting_files/         Index, difficulty labels, split, and documentation
   figs/                     Project-page figures
   01_build/                 Build workspace generation utilities
   02_revise_modeling/       Revise workspace generation utilities
@@ -107,25 +106,41 @@ runnable evaluators, and machine-readable result snapshots used by the paper.
   04_difficulty_judge/      Difficulty judging utilities
   05_business_quality_rubric/
   06_static_diff/           Static revision-diff analysis
-  evaluation/               Executable Build/Revise and Explain scoring
   results/                  Machine-readable paper table snapshots
   tools/                    Participant staging and release validation
   tests/                    Evaluator smoke tests
 ```
 
-The `data/` directory contains the 300 participant-visible task views,
-Build/Revise objective references, all 100 Explain rubrics/checklists, and the
-public-test split. Participant workspaces and evaluator-only labels are kept in
-separate paths so models are not accidentally given reference code or answers.
+The artifact contains all 300 participant-visible task views, Build and Revise
+objective references, all 100 Explain rubrics and checklists, empirical
+difficulty labels, and the public-test split. Participant workspaces and
+evaluator-only labels are kept in separate top-level paths so models are not
+accidentally given reference code or answers.
+
+## Empirical Difficulty
+
+Difficulty labels are derived separately for each task from observed benchmark
+performance under a fixed evaluation panel. Build and Revise use executable
+pass rates, while Explain uses the mean rubric score. Boundaries approximate
+tertiles without splitting tied scores. The resulting Easy/Medium/Hard counts
+are 35/32/33 for Build, 39/30/31 for Revise, and 33/33/34 for Explain. See
+[`supporting_files/metadata/difficulty_methodology.md`](supporting_files/metadata/difficulty_methodology.md)
+and [`supporting_files/metadata/empirical_difficulty.csv`](supporting_files/metadata/empirical_difficulty.csv).
 
 ## Evaluation
 
-See [`evaluation/`](evaluation/) for runnable scorers. In particular,
-[`evaluation/explain/`](evaluation/explain/) documents the complete Explain
-workflow: deterministic normalized entity checks, criterion-level semantic
+See [`evaluation_programs/`](evaluation_programs/) for runnable scorers and
+[`evaluation/`](evaluation/) for evaluator-only references. The Explain release
+includes deterministic normalized entity checks, criterion-level semantic
 judgments, verified workspace evidence, the independent judge prompt and JSON
 schema, and aggregation into the paper's 35/35/20/10 rubric with an unsupported-
 claim penalty of up to 12 points.
+
+Validate the complete anonymous snapshot with:
+
+```bash
+python evaluation_programs/validate_dataset.py
+```
 
 The current 18-model Table 2 snapshot is published in
 [`results/table2_main_results.csv`](results/table2_main_results.csv). Its

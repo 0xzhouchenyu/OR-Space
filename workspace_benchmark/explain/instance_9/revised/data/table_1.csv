@@ -1,0 +1,5 @@
+Toy_Type,Profit_Per_Unit,Wood_Required_Per_Unit,Steel_Required_Per_Unit
+truck,5,12,6
+airplane,10,20,3
+boat,8,15,5
+train,7,10,4

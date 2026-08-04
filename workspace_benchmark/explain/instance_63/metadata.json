@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_063",
+  "instance_number": 63,
+  "source_revise_instance": "IndustryOR_63_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "Compare the original and revised models and explain exactly which new code elements caused the objective to jump from 640.0 to 1745.0. Your answer must trace the revised permit logic from the business brief’s “pollution tier” rule to the exact CSV parameter names and values, then to the code variables/constraints (`pollution_permit`, `total_pollution`, `z_bike`, `z_cart`, and the specific big-M gate), and use the solver outputs to identify which constraints are binding/slack in the LP relaxation versus the final MIP. Also interpret the relevant shadow prices/slacks in business terms and explain why you cannot linearly extrapolate the LP marginal values to predict the MIP cost change once pollution crosses the 600-unit threshold."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "FarmTransport.gurobi.log",
+        "FarmTransport.lp_relaxation.json",
+        "FarmTransport.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "FarmTransport_Revised.gurobi.log",
+        "FarmTransport_Revised.lp_relaxation.json",
+        "FarmTransport_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 73.605556
+  }
+}

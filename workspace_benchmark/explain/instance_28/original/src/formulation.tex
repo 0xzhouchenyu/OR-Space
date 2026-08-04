@@ -1,0 +1,155 @@
+\section*{Sets and Indices}
+
+No nontrivial index sets are used in the implemented model; the decision variables correspond directly to specific investment choices at specific decision times:
+\[
+\text{Year 1: } a_1,\ b_1,\qquad
+\text{Year 2: } a_2,\ c_2,\qquad
+\text{Year 3: } a_3,\ d_3.
+\]
+
+\section*{Parameters}
+
+All parameter values are read from \texttt{general\_parameters.csv}.
+
+\begin{itemize}
+    \item Initial available funds:
+    \[
+    F_0 \;(\text{code: \texttt{initial\_fund}})
+    \]
+    \item Annual profit rate for the standard one-year investment:
+    \[
+    r \;(\text{code: \texttt{annual\_rate}})
+    \]
+    so one unit invested in this option returns \(1+r\) after one year.
+    \item Maximum amount allowed in the Year-1 two-year investment:
+    \[
+    \bar B_1 \;(\text{code: \texttt{inv\_limit\_y1}})
+    \]
+    \item Return multiplier from a two-year investment started in Year 1 and recovered at the end of Year 2:
+    \[
+    \rho_{12} \;(\text{code: \texttt{return\_rate\_y1y2}})
+    \]
+    \item Maximum amount allowed in the Year-2 two-year investment:
+    \[
+    \bar C_2 \;(\text{code: \texttt{inv\_limit\_y2}})
+    \]
+    \item Return multiplier from a two-year investment started in Year 2 and recovered at the end of Year 3:
+    \[
+    \rho_{23} \;(\text{code: \texttt{return\_rate\_y2y3}})
+    \]
+    \item Maximum amount allowed in the special Year-3 one-year investment:
+    \[
+    \bar D_3 \;(\text{code: \texttt{inv\_limit\_y3}})
+    \]
+    \item Profit rate for the special Year-3 one-year investment:
+    \[
+    r_3 \;(\text{code: \texttt{profit\_rate\_y3}})
+    \]
+    so one unit invested in this option returns \(1+r_3\) after one year.
+\end{itemize}
+
+For Instance 28, the data imply
+\[
+F_0=300000,\quad r=0.20,\quad \bar B_1=150000,\quad \rho_{12}=1.50,\quad
+\bar C_2=200000,\quad \rho_{23}=1.60,\quad \bar D_3=100000,\quad r_3=0.40.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Amount invested at the beginning of Year 1 in the standard one-year investment:
+    \[
+    a_1 \ge 0 \qquad (\text{code: \texttt{a1}})
+    \]
+    \item Amount invested at the beginning of Year 1 in the two-year investment maturing at the end of Year 2:
+    \[
+    b_1 \in [0,\bar B_1] \qquad (\text{code: \texttt{b1}})
+    \]
+    \item Amount invested at the beginning of Year 2 in the standard one-year investment:
+    \[
+    a_2 \ge 0 \qquad (\text{code: \texttt{a2}})
+    \]
+    \item Amount invested at the beginning of Year 2 in the two-year investment maturing at the end of Year 3:
+    \[
+    c_2 \in [0,\bar C_2] \qquad (\text{code: \texttt{c2}})
+    \]
+    \item Amount invested at the beginning of Year 3 in the standard one-year investment:
+    \[
+    a_3 \ge 0 \qquad (\text{code: \texttt{a3}})
+    \]
+    \item Amount invested at the beginning of Year 3 in the special one-year investment:
+    \[
+    d_3 \in [0,\bar D_3] \qquad (\text{code: \texttt{d3}})
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+The code maximizes total funds at the end of Year 3, including idle cash carried forward without interest and the returns from investments that mature by the end of Year 3.
+
+Define the cash remaining after Year-3 investment decisions as
+\[
+\text{cash}_3
+=
+(F_0-a_1-b_1)+a_1(1+r)-a_2-c_2+a_2(1+r)+b_1\rho_{12}-a_3-d_3.
+\]
+
+Then the objective is
+\[
+\max \;
+\text{cash}_3 + a_3(1+r) + c_2\rho_{23} + d_3(1+r_3).
+\]
+
+Equivalently, substituting \(\text{cash}_3\),
+\[
+\max \;
+(F_0-a_1-b_1)+a_1(1+r)-a_2-c_2+a_2(1+r)+b_1\rho_{12}-a_3-d_3
++ a_3(1+r) + c_2\rho_{23} + d_3(1+r_3).
+\]
+
+\section*{Constraints}
+
+\paragraph{Year 1 budget.}
+The initial allocation between the Year-1 one-year investment and the Year-1 two-year investment cannot exceed initial funds:
+\[
+a_1 + b_1 \le F_0.
+\]
+
+\paragraph{Year 2 budget.}
+Funds available at the beginning of Year 2 are the idle cash left from Year 1 plus the matured return from \(a_1\):
+\[
+a_2 + c_2 \le (F_0-a_1-b_1)+a_1(1+r).
+\]
+
+\paragraph{Year 3 budget.}
+Funds available at the beginning of Year 3 are the remaining cash after Year-2 decisions, plus the matured return from \(a_2\), plus the maturity of the Year-1 two-year investment:
+\[
+a_3 + d_3
+\le
+(F_0-a_1-b_1)+a_1(1+r)-a_2-c_2+a_2(1+r)+b_1\rho_{12}.
+\]
+
+\paragraph{Investment bounds.}
+\[
+a_1,a_2,a_3 \ge 0,
+\]
+\[
+0 \le b_1 \le \bar B_1,
+\qquad
+0 \le c_2 \le \bar C_2,
+\qquad
+0 \le d_3 \le \bar D_3.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a linear program solved with \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+
+The formulation intentionally matches the code's cash-flow logic exactly:
+\begin{itemize}
+    \item Any uninvested funds are carried forward as idle cash with zero return.
+    \item The standard investment \(a_t\) is modeled as a one-year investment with return factor \(1+r\) for \(t=1,2,3\).
+    \item The special Year-3 investment \(d_3\) returns \(1+r_3\) by the end of Year 3.
+    \item The two-year investments \(b_1\) and \(c_2\) return factors \(\rho_{12}\) and \(\rho_{23}\), respectively.
+    \item No additional balance equations or state variables are introduced in the code; instead, available funds in Years 2 and 3 and end-of-horizon cash are written directly as expanded expressions in the constraints and objective.
+\end{itemize}

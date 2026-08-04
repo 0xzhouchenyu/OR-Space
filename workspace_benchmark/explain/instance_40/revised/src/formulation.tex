@@ -1,0 +1,126 @@
+\section*{Sets and Indices}
+
+\[
+C = \{\text{steel},\ \text{engine},\ \text{electronics},\ \text{plastic}\}
+\]
+
+Indices:
+\[
+c \in C \quad \text{(commodity being balanced)}, \qquad
+p \in C \quad \text{(commodity whose production consumes inputs)}
+\]
+
+\section*{Parameters}
+
+For each commodity \(c \in C\):
+\begin{itemize}
+    \item \(P_c\): world price of commodity \(c\) (data fields \texttt{steel\_price}, \texttt{engine\_price}, \texttt{electronics\_price}, \texttt{plastic\_price}).
+    \item \(m_c\): imported intermediate-goods cost per unit of domestic production of \(c\) (data fields \texttt{steel\_import\_cost}, \dots).
+    \item \(\ell_c\): labor requirement per unit of domestic production of \(c\) (data fields \texttt{steel\_labor\_requirement}, \dots).
+    \item \(\overline{x}_c\): exogenous upper bound on production of \(c\) when a field \texttt{\(c\)\_production\_limit} exists; otherwise no explicit upper bound.
+\end{itemize}
+
+For each ordered pair \(p,c \in C\):
+\begin{itemize}
+    \item \(a_{pc}\): units of commodity \(c\) required to produce one unit of commodity \(p\), taken from field \texttt{\(p\)\_\(c\)\_requirement} if present, and \(0\) otherwise.
+\end{itemize}
+
+Economy-wide parameters:
+\begin{itemize}
+    \item \(L^{\max}\): regular labor capacity (\texttt{labor\_force}).
+    \item \(O^{\max}\): overtime labor capacity (\texttt{overtime\_cap}).
+    \item \(w^{ot}\): overtime wage per person-month (\texttt{overtime\_wage}).
+    \item \(\rho\): premium multiplier for finished-commodity imports (\texttt{import\_premium\_ratio}).
+    \item \(Q^{imp}\): per-commodity upper bound on finished-commodity imports (\texttt{import\_quota}).
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_c\) (code: \texttt{x[c]}) \(\ge 0\): domestic production of commodity \(c\).
+    \item \(imp_c\) (code: \texttt{imp[c]}) \(\ge 0\): imports of finished commodity \(c\), with \(imp_c \le Q^{imp}\).
+    \item \(L^{reg}\) (code: \texttt{L\_reg}) \(\ge 0\): regular labor used, with \(L^{reg} \le L^{\max}\).
+    \item \(L^{ot}\) (code: \texttt{L\_ot}) \(\ge 0\): overtime labor used, with \(L^{ot} \le O^{\max}\).
+\end{itemize}
+
+For convenience, define the net export expression for each \(c \in C\):
+\[
+ne_c = x_c + imp_c - \sum_{p \in C} a_{pc}\,x_p .
+\]
+
+This matches the code expression \texttt{net\_export[c] = x[c] + imp[c] - consumed}.
+
+\section*{Objective}
+
+The implemented model maximizes
+\[
+\max \quad
+\sum_{c \in C} P_c\, ne_c
+\;-\;
+\sum_{c \in C} m_c\, x_c
+\;-\;
+\sum_{c \in C} \rho P_c\, imp_c
+\;-\;
+w^{ot} L^{ot}.
+\]
+
+Equivalently, after substituting \(ne_c\),
+\[
+\max \quad
+\sum_{c \in C} P_c\!\left(x_c + imp_c - \sum_{p \in C} a_{pc}x_p\right)
+-
+\sum_{c \in C} m_c x_c
+-
+\sum_{c \in C} \rho P_c\, imp_c
+-
+w^{ot}L^{ot}.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Domestic demand satisfaction / nonnegative net export}
+    \[
+    ne_c = x_c + imp_c - \sum_{p \in C} a_{pc}\,x_p \ge 0
+    \qquad \forall c \in C.
+    \]
+
+    \item \textbf{Labor balance}
+    \[
+    L^{reg} + L^{ot} = \sum_{c \in C} \ell_c\, x_c.
+    \]
+
+    \item \textbf{Regular labor capacity}
+    \[
+    0 \le L^{reg} \le L^{\max}.
+    \]
+
+    \item \textbf{Overtime capacity}
+    \[
+    0 \le L^{ot} \le O^{\max}.
+    \]
+
+    \item \textbf{Import quotas}
+    \[
+    0 \le imp_c \le Q^{imp}
+    \qquad \forall c \in C.
+    \]
+
+    \item \textbf{Commodity-specific production limits}
+    \[
+    0 \le x_c \le \overline{x}_c
+    \qquad \forall c \in C \text{ for which a production-limit field exists.}
+    \]
+    In this instance, this applies to engine and plastic.
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The formulation is a linear program and is solved in \texttt{current\_heuristic.py} with \texttt{pulp.GUROBI\_CMD(msg=False)}.
+    \item The input-output coefficients are read literally from parameter names of the form \texttt{\(p\)\_\(c\)\_requirement}. Thus \(a_{pc}\) is the amount of commodity \(c\) consumed when producing commodity \(p\).
+    \item The code names the balance quantity \emph{net export}, but the implemented constraint is simply \(ne_c \ge 0\), i.e., domestic production plus finished imports must cover intermediate use of each commodity.
+    \item Regular labor and overtime labor are separated exactly as in the code: only overtime incurs the wage penalty \(w^{ot}L^{ot}\), and total labor used must equal \(L^{reg}+L^{ot}\).
+    \item Finished imports enter both positively in the commodity-balance expression \(ne_c\) and negatively in the objective through the premium import cost \(\rho P_c\,imp_c\).
+    \item No integer restrictions are imposed; all variables are continuous.
+\end{itemize}

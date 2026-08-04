@@ -1,0 +1,12 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+
+Coal Yard A -> Area 2: 30.0 tons (distance: 5.0 km)
+Coal Yard A -> Area 3: 50.0 tons (distance: 6.0 km)
+Coal Yard B -> Area 1: 55.0 tons (distance: 4.0 km)
+Coal Yard B -> Area 2: 45.0 tons (distance: 8.0 km)
+
+Coal Yard A total supply: 80.0 tons (min: 80.0)
+Coal Yard B total supply: 100.0 tons (min: 100.0)
+
+OBJECTIVE_VALUE: 1030.0

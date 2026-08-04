@@ -1,0 +1,196 @@
+{
+  "solver": "gurobi",
+  "model_name": "Container_Transportation_Trucks_v2",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 957360.0,
+  "objective_bound": 957360.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0023360252380371094,
+  "node_count": 1.0,
+  "iteration_count": 14.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_053horhl/solver_records/Container_Transportation_Trucks_v2.gurobi.log",
+  "variables": {
+    "t3_Lamezia_Ancona": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Lamezia_Bari": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "t3_Lamezia_Genoa": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Lamezia_Naples": {
+      "value": 15.0,
+      "reduced_cost": null
+    },
+    "t3_Lamezia_Venice": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Perugia_Ancona": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Perugia_Bari": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Perugia_Genoa": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "t3_Perugia_Naples": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Perugia_Venice": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "t3_Pescara_Ancona": {
+      "value": 12.0,
+      "reduced_cost": null
+    },
+    "t3_Pescara_Bari": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Pescara_Genoa": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Pescara_Naples": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Pescara_Venice": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "t3_Rome_Ancona": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "t3_Rome_Bari": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Rome_Genoa": {
+      "value": 7.0,
+      "reduced_cost": null
+    },
+    "t3_Rome_Naples": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "t3_Rome_Venice": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Taranto_Ancona": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Taranto_Bari": {
+      "value": 9.0,
+      "reduced_cost": null
+    },
+    "t3_Taranto_Genoa": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Taranto_Naples": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "t3_Taranto_Venice": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Verona_Ancona": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Verona_Bari": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Verona_Genoa": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "t3_Verona_Naples": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "t3_Verona_Venice": {
+      "value": 5.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 6.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    }
+  }
+}

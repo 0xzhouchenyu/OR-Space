@@ -1,0 +1,3 @@
+Parameter_Name,Value,Unit,Context_Description
+mall_total_space,5000,m²,Total space available for lease in the shopping mall
+rent_percentage,20,%,Percentage of annual profit paid as rent by each store

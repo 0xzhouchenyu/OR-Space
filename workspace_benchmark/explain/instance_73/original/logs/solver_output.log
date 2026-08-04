@@ -1,0 +1,5 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+  Bob: taken (cost=900)
+  Ella: taken (cost=700)
+OBJECTIVE_VALUE: 1600.0

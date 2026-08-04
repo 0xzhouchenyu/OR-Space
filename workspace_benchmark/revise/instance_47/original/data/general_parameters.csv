@@ -1,0 +1,18 @@
+Parameter_Name,Value,Unit,Context_Description
+land_area,100,hectares,Total land available on the farm
+funds_available,15000,yuan,Total funds available for production development
+labor_autumn_winter,3500,person-days,Labor force available in autumn and winter
+labor_spring_summer,4000,person-days,Labor force available in spring and summer
+external_work_rate_spring_summer,2.1,yuan/person-day,Earnings per person-day for external work in spring and summer
+external_work_rate_autumn_winter,1.8,yuan/person-day,Earnings per person-day for external work in autumn and winter
+investment_per_dairy_cow,400,yuan,Investment required per dairy cow
+investment_per_chicken,3,yuan,Investment required per chicken
+land_per_dairy_cow,1.5,hectares,Land required per dairy cow for feed
+labor_autumn_winter_per_dairy_cow,100,person-days,Labor required in autumn and winter per dairy cow
+labor_spring_summer_per_dairy_cow,50,person-days,Labor required in spring and summer per dairy cow
+net_income_per_dairy_cow,400,yuan,Annual net income per dairy cow
+labor_autumn_winter_per_chicken,0.6,person-days,Labor required in autumn and winter per chicken
+labor_spring_summer_per_chicken,0.3,person-days,Labor required in spring and summer per chicken
+net_income_per_chicken,2,yuan,Annual net income per chicken
+max_chickens,3000,units,Maximum capacity of the chicken coop
+max_dairy_cows,32,units,Maximum capacity of the cow barn

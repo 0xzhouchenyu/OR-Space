@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+n,2,None,Number of factories and locations in the assignment problem
+d_ij,None,None,Transportation volume between factory i and factory j
+c_pq,None,None,Unit transportation cost from location p to location q
+premium_cost_multiplier,1.5,None,Multiplier applied to base transportation cost when premium handling mode is used
+min_premium_share,0.4,None,Minimum share of a factory's outbound volume that must be handled in premium mode if premium is activated

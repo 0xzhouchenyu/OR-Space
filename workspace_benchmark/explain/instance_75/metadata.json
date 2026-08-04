@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_075",
+  "instance_number": 75,
+  "source_revise_instance": "IndustryOR_75_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "Using the original and revised models together, explain precisely why the objective rises from 57.0 to 59.666666666666664. Your answer must name the exact revised code additions (`z1_high`, `z2_high`, `cDispLow`, `cDispHigh`, and the constraints `Process1TimeMode`, `Process2TimeMode`, `MutualExclusionHighMode`, `LowDisposalCap`) and trace each one back to the business brief terms and the exact `general_parameters.csv` fields such as `available_time_process_1_high`, `available_time_process_2_high`, `threshold_c`, and `disposal_cost_per_unit_c_high`. Also diagnose which revised constraints are binding in the integer optimum versus the LP relaxation, interpret the reported dual/shadow prices and slacks for at least `MutualExclusionHighMode` and `LowDisposalCap`, and explain why you cannot linearly extrapolate those dual values to predict the MILP objective if both stages were allowed high-throughput or if disposal exceeded `threshold_c` further."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MaxProfit.gurobi.log",
+        "MaxProfit.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MaxProfitWithModesAndPiecewiseDisposal.gurobi.log",
+        "MaxProfitWithModesAndPiecewiseDisposal.lp_relaxation.json",
+        "MaxProfitWithModesAndPiecewiseDisposal.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 67.369444
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "solver": "gurobi",
+  "model_name": "Maximize_Profit_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 22652.604166666664,
+  "runtime": 0.000598907470703125,
+  "variables": {
+    "p_A": {
+      "value": 8425.0,
+      "reduced_cost": 0.0
+    },
+    "p_B": {
+      "value": 7560.9375,
+      "reduced_cost": 0.0
+    },
+    "p_C": {
+      "value": 6666.666666666666,
+      "reduced_cost": 0.0
+    },
+    "x_A": {
+      "value": 62.5,
+      "reduced_cost": 0.0
+    },
+    "x_B": {
+      "value": 18.75,
+      "reduced_cost": 0.0
+    },
+    "x_C": {
+      "value": -0.0,
+      "reduced_cost": -0.5656250000000003
+    },
+    "y_A_0": {
+      "value": 0.22,
+      "reduced_cost": 0.0
+    },
+    "y_A_1": {
+      "value": 0.21375,
+      "reduced_cost": 0.0
+    },
+    "y_A_2": {
+      "value": 0.2075,
+      "reduced_cost": 0.0
+    },
+    "y_A_3": {
+      "value": 0.20125,
+      "reduced_cost": 0.0
+    },
+    "y_B_0": {
+      "value": 0.25515625,
+      "reduced_cost": 0.0
+    },
+    "y_B_1": {
+      "value": 0.25140625000000005,
+      "reduced_cost": 0.0
+    },
+    "y_B_2": {
+      "value": 0.24953125,
+      "reduced_cost": 0.0
+    },
+    "y_C_0": {
+      "value": 0.3333333333333333,
+      "reduced_cost": 0.0
+    },
+    "y_C_1": {
+      "value": 0.33333333333333337,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<",
+      "slack": 0.1575,
+      "dual_value": 0.0
+    },
+    "_C2": {
+      "sense": ">",
+      "slack": -7861.5,
+      "dual_value": 0.0
+    },
+    "_C3": {
+      "sense": "<",
+      "slack": 7777.5,
+      "dual_value": 0.0
+    },
+    "_C4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.2
+    },
+    "_C5": {
+      "sense": ">",
+      "slack": -7884.0,
+      "dual_value": 0.0
+    },
+    "_C6": {
+      "sense": "<",
+      "slack": 7900.0,
+      "dual_value": 0.0
+    },
+    "_C7": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.2
+    },
+    "_C8": {
+      "sense": ">",
+      "slack": -7886.5,
+      "dual_value": 0.0
+    },
+    "_C9": {
+      "sense": "<",
+      "slack": 8012.5,
+      "dual_value": 0.0
+    },
+    "_C10": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.2
+    },
+    "_C11": {
+      "sense": ">",
+      "slack": -7899.0,
+      "dual_value": 0.0
+    },
+    "_C12": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.2
+    },
+    "_C13": {
+      "sense": "<",
+      "slack": 8362.5,
+      "dual_value": 0.0
+    },
+    "_C14": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.2
+    },
+    "_C15": {
+      "sense": "<",
+      "slack": 0.24390624999999996,
+      "dual_value": 0.0
+    },
+    "_C16": {
+      "sense": ">",
+      "slack": -7466.1875,
+      "dual_value": 0.0
+    },
+    "_C17": {
+      "sense": "<",
+      "slack": 7479.6875,
+      "dual_value": 0.0
+    },
+    "_C18": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.25
+    },
+    "_C19": {
+      "sense": ">",
+      "slack": -7453.6875,
+      "dual_value": 0.0
+    },
+    "_C20": {
+      "sense": "<",
+      "slack": 7567.1875,
+      "dual_value": 0.0
+    },
+    "_C21": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.25
+    },
+    "_C22": {
+      "sense": ">",
+      "slack": -7422.4375,
+      "dual_value": 0.0
+    },
+    "_C23": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.25
+    },
+    "_C24": {
+      "sense": "<",
+      "slack": 7542.1875,
+      "dual_value": 0.0
+    },
+    "_C25": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.25
+    },
+    "_C26": {
+      "sense": "<",
+      "slack": 0.33333333333333337,
+      "dual_value": 0.0
+    },
+    "_C27": {
+      "sense": ">",
+      "slack": -6665.666666666667,
+      "dual_value": 0.0
+    },
+    "_C28": {
+      "sense": "<",
+      "slack": 6766.666666666667,
+      "dual_value": 0.0
+    },
+    "_C29": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.3333333333333333
+    },
+    "_C30": {
+      "sense": ">",
+      "slack": -6565.666666666666,
+      "dual_value": 0.0
+    },
+    "_C31": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.33333333333333337
+    },
+    "_C32": {
+      "sense": "<",
+      "slack": 6666.666666666666,
+      "dual_value": 0.0
+    },
+    "_C33": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.33333333333333337
+    },
+    "_C34": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.3312499999999998
+    },
+    "_C35": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.6468750000000001
+    },
+    "_C36": {
+      "sense": "<",
+      "slack": 175.0,
+      "dual_value": 0.0
+    }
+  }
+}

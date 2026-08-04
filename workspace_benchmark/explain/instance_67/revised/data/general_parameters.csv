@@ -1,0 +1,31 @@
+Parameter_Name,Value,Unit,Context_Description
+product_I_cost_jan_to_may,5,yuan per unit,Cost of producing Product I from January to May
+product_I_cost_jun_to_dec,4.5,yuan per unit,Cost of producing Product I from June to December
+product_II_cost_jan_to_may,8,yuan per unit,Cost of producing Product II from January to May
+product_II_cost_jun_to_dec,7,yuan per unit,Cost of producing Product II from June to December
+max_production_capacity,120000,units per month,Legacy combined production capacity retained for reference only and not used in revised model
+product_I_volume,0.2,cubic meters per unit,Volume of Product I per unit
+product_II_volume,0.4,cubic meters per unit,Volume of Product II per unit
+warehouse_capacity,30000,cubic meters,Factory's own warehouse capacity after the revised operating rule
+own_warehouse_cost,1,yuan per cubic meter per month,Cost of using the factory's own warehouse
+external_warehouse_cost,1.5,yuan per cubic meter per month,Legacy external warehouse rental cost retained for reference only and not used in revised model
+initial_inventory_july,0,units,Initial inventory of each product at the beginning of July
+product_I_machine_hours,0.8,machine-hours per unit,Machine processing time required to produce one unit of Product I
+product_II_machine_hours,1.6,machine-hours per unit,Machine processing time required to produce one unit of Product II
+machine_hours_capacity_monthly,120000,machine-hours per month,Total available machine-hours in each month across both products
+grid_electricity_cost,0.6,yuan per kWh,Cost of purchasing one kWh of grid electricity
+generator_electricity_cost,0.9,yuan per kWh,Operating cost of generating one kWh with the on-site diesel generator
+product_I_power_kwh,2,kWh per unit,Electricity required to produce one unit of Product I
+product_II_power_kwh,3,kWh per unit,Electricity required to produce one unit of Product II
+grid_quota_july,70000,kWh,Maximum grid electricity available in July
+grid_quota_august,70000,kWh,Maximum grid electricity available in August
+grid_quota_september,70000,kWh,Maximum grid electricity available in September
+grid_quota_october,220000,kWh,Maximum grid electricity available in October
+grid_quota_november,220000,kWh,Maximum grid electricity available in November
+grid_quota_december,220000,kWh,Maximum grid electricity available in December
+generator_max_july,200000,kWh,Maximum on-site generated electricity available in July
+generator_max_august,200000,kWh,Maximum on-site generated electricity available in August
+generator_max_september,200000,kWh,Maximum on-site generated electricity available in September
+generator_max_october,150000,kWh,Maximum on-site generated electricity available in October
+generator_max_november,150000,kWh,Maximum on-site generated electricity available in November
+generator_max_december,150000,kWh,Maximum on-site generated electricity available in December

@@ -1,0 +1,90 @@
+\section*{Sets and Indices}
+
+No nontrivial sets or indices are used in the implemented model, since it has only two aggregate decision variables:
+\begin{itemize}
+    \item buses,
+    \item minibuses.
+\end{itemize}
+
+\section*{Parameters}
+
+From \texttt{general\_parameters.csv}:
+\begin{itemize}
+    \item $S =$ number of students (\texttt{num\_students}).
+    \item $B^{\max} =$ maximum available buses (\texttt{num\_buses}).
+    \item $C^b =$ capacity of one bus (\texttt{bus\_capacity}).
+    \item $M^{\max} =$ maximum available minibuses (\texttt{num\_minibuses}).
+    \item $C^m =$ capacity of one minibus (\texttt{minibus\_capacity}).
+    \item $D =$ number of available drivers (\texttt{num\_drivers}).
+    \item $K^b =$ rental cost of one bus (\texttt{bus\_rental\_cost}).
+    \item $K^m =$ rental cost of one minibus (\texttt{minibus\_rental\_cost}).
+\end{itemize}
+
+For instance 92, these values are:
+\[
+S=400,\quad
+B^{\max}=10,\quad
+C^b=50,\quad
+M^{\max}=8,\quad
+C^m=40,\quad
+D=9,\quad
+K^b=800,\quad
+K^m=600.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x$ (code: \texttt{x}): integer number of buses rented.
+    \item $y$ (code: \texttt{y}): integer number of minibuses rented.
+\end{itemize}
+
+With bounds imposed directly in the variable declarations:
+\[
+0 \le x \le B^{\max}, \qquad 0 \le y \le M^{\max},
+\]
+\[
+x,y \in \mathbb{Z}.
+\]
+
+\section*{Objective}
+
+Minimize total rental cost:
+\[
+\min \; K^b x + K^m y.
+\]
+
+For this instance:
+\[
+\min \; 800x + 600y.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+C^b x + C^m y &\ge S
+&&\text{(enough seats for all students)} \\
+x + y &\le D
+&&\text{(driver limit)} \\
+x &\ge 2y
+&&\text{(at least two buses per minibus)} \\
+y &\ge 1
+&&\text{(at least one minibus)}.
+\end{align}
+
+Including the explicit variable bounds, the full model is:
+\begin{align}
+\min \quad & K^b x + K^m y \\
+\text{s.t.}\quad
+& C^b x + C^m y \ge S, \\
+& x + y \le D, \\
+& x \ge 2y, \\
+& y \ge 1, \\
+& 0 \le x \le B^{\max}, \\
+& 0 \le y \le M^{\max}, \\
+& x,y \in \mathbb{Z}.
+\end{align}
+
+\section*{Notes on Implementation}
+
+The source code builds this model as a two-variable integer linear program in PuLP and solves it using \texttt{GUROBI\_CMD}. The mathematical variables correspond directly to the code variables \texttt{x} and \texttt{y}. The upper bounds on buses and minibuses are enforced through the variable definitions, not as separately named constraints in the code. No additional reformulation, preprocessing, or search logic is implemented beyond solving this ILP exactly with the solver.

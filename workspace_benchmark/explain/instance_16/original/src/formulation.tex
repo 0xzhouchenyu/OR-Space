@@ -1,0 +1,98 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $M$ : set of months in the planning horizon, indexed by $m$. For this instance,
+    \[
+    M=\{1,2,3\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $p_m^{\text{buy}}$ : purchasing price in month $m$ (code: \texttt{purchasing\_prices[m]}).
+    \item $p_m^{\text{sell}}$ : selling price in month $m$ (code: \texttt{selling\_prices[m]}).
+    \item $C$ : warehouse capacity (code: \texttt{warehouse\_capacity}); here $C=500$.
+    \item $I_0$ : initial stock before month $1$ (code: \texttt{initial\_stock}); here $I_0=200$.
+\end{itemize}
+
+For this instance,
+\[
+(p_1^{\text{buy}},p_2^{\text{buy}},p_3^{\text{buy}})=(8,6,9),
+\qquad
+(p_1^{\text{sell}},p_2^{\text{sell}},p_3^{\text{sell}})=(9,8,10).
+\]
+
+\section*{Decision Variables}
+
+For each month $m \in M$:
+\begin{itemize}
+    \item $x_m \ge 0$ : units purchased at the beginning of month $m$ (code: \texttt{x[m]}).
+    \item $s_m \ge 0$ : units sold during month $m$ (code: \texttt{s[m]}).
+    \item $I_m \ge 0$ : inventory at the end of month $m$ (code: \texttt{inv[m]}).
+\end{itemize}
+
+All decision variables are continuous, exactly as implemented.
+
+\section*{Objective}
+
+Maximize total profit over the quarter:
+\[
+\max \sum_{m \in M} \left(p_m^{\text{sell}} s_m - p_m^{\text{buy}} x_m\right).
+\]
+
+For this instance, this is
+\[
+\max \; 9s_1+8s_2+10s_3-8x_1-6x_2-9x_3.
+\]
+
+\section*{Constraints}
+
+For month $1$:
+\[
+I_1 = I_0 + x_1 - s_1,
+\]
+\[
+I_0 + x_1 \le C,
+\]
+\[
+I_1 \le C,
+\]
+\[
+s_1 \le I_0 + x_1.
+\]
+
+For each month $m \in M \setminus \{1\}$:
+\[
+I_m = I_{m-1} + x_m - s_m,
+\]
+\[
+I_{m-1} + x_m \le C,
+\]
+\[
+I_m \le C,
+\]
+\[
+s_m \le I_{m-1} + x_m.
+\]
+
+Nonnegativity:
+\[
+x_m \ge 0,\qquad s_m \ge 0,\qquad I_m \ge 0 \qquad \forall m \in M.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a linear program solved by PuLP using \texttt{GUROBI\_CMD}. The formulation includes both:
+\begin{itemize}
+    \item a capacity limit immediately after purchasing, $I_{m-1}+x_m \le C$ (with $I_0$ used for month 1), and
+    \item a capacity limit on end-of-month inventory, $I_m \le C$.
+\end{itemize}
+
+The sales feasibility constraint is implemented explicitly as
+\[
+s_m \le I_{m-1}+x_m
+\]
+(with $I_0$ for month 1), even though it is also implied by inventory balance together with $I_m \ge 0$.
+
+No demand limits, purchase limits, integrality restrictions, or terminal inventory requirements are included in the code, so they are not part of the mathematical model.

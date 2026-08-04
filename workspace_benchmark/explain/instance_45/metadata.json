@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_045",
+  "instance_number": 45,
+  "source_revise_instance": "IndustryOR_45_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the MIP objective stays at 700.0 even though the code adds `L_reg`, `L_ot`, and `overtime_second_review` and modifies the objective. Trace the business phrase about the 'first 100 overtime labor hours' and the '10-unit review burden' to the exact `general_parameters.csv` field names and the exact revised code constraints involving `L_ot` and `overtime_second_review`, then use the revised solution values (`L_reg`, `L_ot`, `x_A`, `x_C`) and the original/revised LP-relaxation diagnostics to identify which labor-related constraints are binding, what their shadow-price interpretation is, and why you cannot linearly extrapolate the LP marginal values to predict the integer model after pushing overtime past the threshold. Also state which exact code additions beyond overtime could have changed the objective but did not in the reported optimum, and quantify the realized cost impact in this instance."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Maximize_Profit.gurobi.log",
+        "Maximize_Profit.lp_relaxation.json",
+        "Maximize_Profit.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Maximize_Profit_Revised.gurobi.log",
+        "Maximize_Profit_Revised.lp_relaxation.json",
+        "Maximize_Profit_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 78.865556
+  }
+}

@@ -1,0 +1,18 @@
+Parameter_Name,Value,Unit,Context_Description
+profit_per_robot,15,USD,Profit for each robot sold
+profit_per_model_car,8,USD,Profit for each model car sold
+profit_per_building_blocks,12,USD,Profit for each set of building blocks sold
+profit_per_doll,5,USD,Profit for each doll sold
+plastic_available,1200,units,Total units of plastic available
+plastic_per_robot,30,units,Plastic required for each robot
+plastic_per_model_car,10,units,Plastic required for each model car
+plastic_per_building_blocks,20,units,Plastic required for each set of building blocks
+plastic_per_doll,15,units,Plastic required for each doll
+electronic_components_available,800,units,Total units of electronic components available
+electronics_per_robot,8,units,Electronic components required for each robot
+electronics_per_model_car,5,units,Electronic components required for each model car
+electronics_per_building_blocks,3,units,Electronic components required for each set of building blocks
+electronics_per_doll,2,units,Electronic components required for each doll
+robots_and_dolls_exclusion,1,boolean,If robots are manufactured, dolls cannot be manufactured
+model_cars_and_building_blocks_dependency,1,boolean,If model cars are manufactured, building blocks must also be manufactured
+dolls_less_than_or_equal_model_cars,1,boolean,The number of dolls manufactured cannot exceed the number of model cars manufactured

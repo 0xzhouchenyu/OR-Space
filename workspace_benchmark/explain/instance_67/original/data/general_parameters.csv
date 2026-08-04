@@ -1,0 +1,12 @@
+Parameter_Name,Value,Unit,Context_Description
+product_I_cost_jan_to_may,5,yuan per unit,Cost of producing Product I from January to May
+product_I_cost_jun_to_dec,4.5,yuan per unit,Cost of producing Product I from June to December
+product_II_cost_jan_to_may,8,yuan per unit,Cost of producing Product II from January to May
+product_II_cost_jun_to_dec,7,yuan per unit,Cost of producing Product II from June to December
+max_production_capacity,120000,units per month,Factory's combined production capacity for both products per month
+product_I_volume,0.2,cubic meters per unit,Volume of Product I per unit
+product_II_volume,0.4,cubic meters per unit,Volume of Product II per unit
+warehouse_capacity,15000,cubic meters,Factory's warehouse capacity
+own_warehouse_cost,1,yuan per cubic meter per month,Cost of using the factory's own warehouse
+external_warehouse_cost,1.5,yuan per cubic meter per month,Cost of renting external warehouse space
+initial_inventory_july,0,units,Initial inventory of both products at the beginning of July

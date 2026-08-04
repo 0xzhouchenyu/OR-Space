@@ -1,0 +1,89 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $P$: set of products, indexed by $p$. In this instance, $P=\{A,B\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $s_p$: steel required per unit of product $p$ (from \texttt{Steel\_Required\_kg}).
+    \item $a_p$: aluminum required per unit of product $p$ (from \texttt{Aluminum\_Required\_kg}).
+    \item $\ell_p$: labor required per unit of product $p$ (from \texttt{Labor\_Required\_hours}).
+    \item $\pi_p$: profit per unit of product $p$ (from \texttt{Profit\_yuan}).
+    \item $\bar S$: available steel (code data key: \texttt{available\_steel}).
+    \item $\bar A$: available aluminum (code data key: \texttt{available\_aluminum}).
+    \item $\bar L$: available labor (code data key: \texttt{available\_labor}).
+    \item $c^{ot}$: overtime pay per hour (code data key: \texttt{overtime\_pay}); this parameter is read from data but not used in the implemented optimization model.
+\end{itemize}
+
+For Instance 98, the parameter values are:
+\[
+\begin{array}{c|cccc}
+p & s_p & a_p & \ell_p & \pi_p \\ \hline
+A & 6 & 8 & 11 & 5000 \\
+B & 12 & 20 & 24 & 11000
+\end{array}
+\]
+and
+\[
+\bar S=200,\qquad \bar A=300,\qquad \bar L=300,\qquad c^{ot}=100.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_p$ (code: \texttt{x[p['Product']]}) : continuous nonnegative production quantity of product $p$.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \sum_{p\in P} \pi_p x_p.
+\]
+
+For this instance:
+\[
+\max \; 5000\,x_A + 11000\,x_B.
+\]
+
+\section*{Constraints}
+
+Resource limits:
+\[
+\sum_{p\in P} s_p x_p \le \bar S
+\]
+\[
+\sum_{p\in P} a_p x_p \le \bar A
+\]
+\[
+\sum_{p\in P} \ell_p x_p \le \bar L
+\]
+
+Nonnegativity:
+\[
+x_p \ge 0 \qquad \forall p\in P.
+\]
+
+For Instance 98, this is:
+\[
+6x_A + 12x_B \le 200
+\]
+\[
+8x_A + 20x_B \le 300
+\]
+\[
+11x_A + 24x_B \le 300
+\]
+\[
+x_A,x_B \ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model in \texttt{current\_heuristic.py} is a linear program with continuous variables and no integrality restrictions. It is solved by a mathematical programming solver via \texttt{GUROBI\_CMD}.
+
+Although the business description mentions overtime cost, the current code does not model overtime at all: labor is enforced as a hard upper bound, and the objective includes only product profits. The parameter \texttt{overtime\_pay} is read from the CSV file but is unused in the optimization model.
+
+The formulation above matches the code exactly, including the absence of any overtime decision variable, overtime penalty term, or softened labor constraint.

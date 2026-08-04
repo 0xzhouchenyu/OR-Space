@@ -1,0 +1,175 @@
+\section*{Sets and Indices}
+
+\[
+P=\{m,w\}
+\]
+
+where
+\[
+m=\text{microwave ovens}, \qquad w=\text{water heaters}.
+\]
+
+\section*{Parameters}
+
+For each product \(p\in P\):
+
+\[
+a_p = \text{Workshop A hours per unit},
+\qquad
+b_p = \text{Workshop B hours per unit},
+\qquad
+c_p = \text{inspection/sales cost per unit}.
+\]
+
+From \texttt{table\_1.csv},
+\[
+a_m=\texttt{Workshop\_A\_Hours for Microwave\_Oven}, \quad
+a_w=\texttt{Workshop\_A\_Hours for Water\_Heater},
+\]
+\[
+b_m=\texttt{Workshop\_B\_Hours for Microwave\_Oven}, \quad
+b_w=\texttt{Workshop\_B\_Hours for Water\_Heater},
+\]
+\[
+c_m=\texttt{Inspection\_Sales\_Cost for Microwave\_Oven}, \quad
+c_w=\texttt{Inspection\_Sales\_Cost for Water\_Heater}.
+\]
+
+General parameters from \texttt{general\_parameters.csv}:
+
+\[
+H_A=\texttt{workshop\_a\_available\_hours}, \qquad
+H_B=\texttt{workshop\_b\_available\_hours},
+\]
+\[
+K_A=\texttt{workshop\_a\_hourly\_cost}, \qquad
+K_B=\texttt{workshop\_b\_hourly\_cost},
+\]
+\[
+L=\texttt{inspection\_sales\_cost\_limit},
+\]
+\[
+\underline{x}_m=\texttt{microwave\_minimum\_sales}, \qquad
+\underline{x}_w=\texttt{water\_heater\_minimum\_sales},
+\]
+\[
+O_A=\texttt{workshop\_a\_overtime\_limit},
+\qquad
+S_A=\texttt{setup\_hours\_A},
+\]
+\[
+T=\texttt{tech\_pool\_hours},
+\qquad
+\rho_m=\texttt{tech\_rate\_m},
+\qquad
+\rho_w=\texttt{tech\_rate\_w},
+\]
+\[
+g_m=\texttt{green\_bonus\_m}, \qquad
+g_w=\texttt{green\_bonus\_w},
+\]
+\[
+M=\texttt{bigM}.
+\]
+
+The code constructs per-unit objective coefficients as
+\[
+r_m = a_m K_A + b_m K_B + c_m,
+\qquad
+r_w = a_w K_A + b_w K_B + c_w.
+\]
+
+\section*{Decision Variables}
+
+\[
+x_m \ge \underline{x}_m
+\qquad
+\text{(code: \texttt{x\_m})}
+\]
+number of microwave ovens produced/sold,
+
+\[
+x_w \ge \underline{x}_w
+\qquad
+\text{(code: \texttt{x\_w})}
+\]
+number of water heaters produced/sold,
+
+\[
+z_m \in \{0,1\}
+\qquad
+\text{(code: \texttt{z\_m})}
+\]
+activation indicator for microwave use of workshop A setup gate,
+
+\[
+z_w \in \{0,1\}
+\qquad
+\text{(code: \texttt{z\_w})}
+\]
+activation indicator for water-heater use of workshop A setup gate.
+
+\section*{Objective}
+
+The implemented model maximizes
+\[
+\max \; (r_m+g_m)x_m + (r_w+g_w)x_w.
+\]
+
+Equivalently, after substitution of the constructed coefficients,
+\[
+\max \; (a_m K_A+b_m K_B+c_m+g_m)x_m
+      + (a_w K_A+b_w K_B+c_w+g_w)x_w.
+\]
+
+\section*{Constraints}
+
+Workshop A capacity with overtime and fixed setup consumption for each activated product:
+\[
+a_m x_m + a_w x_w + S_A(z_m+z_w) \le H_A + O_A.
+\]
+
+Workshop B utilization lower bound:
+\[
+b_m x_m + b_w x_w \ge H_B.
+\]
+
+Inspection and sales cost budget:
+\[
+c_m x_m + c_w x_w \le L.
+\]
+
+Big-\(M\) gate linking microwave production to activation:
+\[
+x_m \le M z_m.
+\]
+
+Big-\(M\) gate linking water-heater production to activation:
+\[
+x_w \le M z_w.
+\]
+
+Shared certified-technician pool:
+\[
+\rho_m x_m + \rho_w x_w \le T.
+\]
+
+At least one activation variable must be on:
+\[
+z_m + z_w \ge 1.
+\]
+
+\section*{Notes on Implementation}
+
+The formulation above matches the model created in \texttt{current\_heuristic.py} without correction or reinterpretation.
+
+In particular:
+
+\begin{itemize}
+\item The objective coefficients \(r_m,r_w\) are not external selling prices; they are computed in code from workshop-hour coefficients and inspection/sales cost, then the green bonuses are added.
+\item The workshop A certification rule is implemented as a fixed setup-hour charge \(S_A\) for each product with \(z_p=1\), via \(S_A(z_m+z_w)\).
+\item The green bonuses \(g_m,g_w\) are applied to all units \(x_m,x_w\) in the objective, not only beyond a threshold.
+\item The activation logic is one-sided: \(x_p \le M z_p\). Because \(x_m\) and \(x_w\) already have positive lower bounds \(\underline{x}_m,\underline{x}_w\), feasibility forces \(z_m=z_w=1\) in this instance, making the additional condition \(z_m+z_w\ge 1\) redundant in practice, though it is present in the code.
+\item Workshop B is modeled with a \emph{minimum} usage requirement \(b_m x_m+b_w x_w \ge H_B\), not an upper-capacity limit.
+\item The model is solved as a mixed-integer linear program with Gurobi through \texttt{GUROBI\_CMD(msg=0)}.
+\end{itemize}

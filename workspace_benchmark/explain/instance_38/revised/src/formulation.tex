@@ -1,0 +1,105 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products \(i,k \in I\), where \(I=\{\text{Product\_1},\text{Product\_2},\text{Product\_3}\}\).
+    \item Machines \(j \in J\), where \(J=\{\text{Machine\_1},\text{Machine\_2},\text{Machine\_3}\}\), processed in this order.
+    \item Unordered product pairs \((i,k)\in P\) with \(i<k\), used for common sequencing decisions across all machines.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item \(t_{ij}\): processing time of product \(i\) on machine \(j\) (data field: \texttt{t\_ij}; values from \texttt{table\_1.csv}).
+    \item \(W_j\): regular availability limit of machine \(j\) (code/data: \texttt{time\_window\_1}, \texttt{time\_window\_2}, \texttt{time\_window\_3}).
+    \item \(O_j^{\max}\): maximum overtime available on machine \(j\) (code/data: \texttt{overtime\_window\_1}, \texttt{overtime\_window\_2}, \texttt{overtime\_window\_3}).
+    \item \(\rho\): overtime penalty per unit time (code/data: \texttt{overtime\_penalty\_per\_unit}).
+    \item \(M_j\): big-\(M\) constant for machine \(j\) sequencing constraints (code/data: \texttt{M\_1}, \texttt{M\_2}, \texttt{M\_3}).
+    \item \(\theta\): Machine 1 overtime review threshold (code/data: \texttt{machine1\_overtime\_review\_threshold}).
+    \item \(F\): one-time Machine 1 overtime review fee (code/data: \texttt{machine1\_overtime\_review\_fee}).
+    \item \(B_j=\sum_{i\in I} t_{ij}\): total busy time required on machine \(j\); this is computed in the code as a constant (code: \texttt{busy\_time[j]}).
+\end{itemize}
+
+For this instance,
+\[
+W=(7,9,6),\quad O^{\max}=(3,3,3),\quad \rho=0.5,\quad \theta=1,\quad F=1.2,
+\]
+and
+\[
+(t_{ij})=
+\begin{pmatrix}
+2 & 3 & 1\\
+4 & 2 & 3\\
+3 & 5 & 2
+\end{pmatrix},
+\qquad
+(B_1,B_2,B_3)=(9,10,6).
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(S_{ij}\ge 0\): start time of product \(i\) on machine \(j\) (code: \texttt{S[i][j]}).
+    \item \(y_{ik}\in\{0,1\}\) for \((i,k)\in P\): common precedence decision, equal to 1 if product \(i\) is scheduled before product \(k\) on every machine (code: \texttt{y[(i,k)]}).
+    \item \(T\ge 0\): makespan / total processing cycle completion time (code: \texttt{T}).
+    \item \(o_j\ge 0\): overtime used on machine \(j\) (code: \texttt{overtime\_used[j]}).
+    \item \(r\in\{0,1\}\): indicator that Machine 1 overtime exceeds the threshold and triggers the review burden (code: \texttt{machine1\_overtime\_review}).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize makespan plus overtime charges and the additional Machine 1 review fee:
+\[
+\min \; T + \rho \sum_{j\in J} o_j + F r.
+\]
+
+\section*{Constraints}
+
+\paragraph{1. Common non-overlap sequencing on each machine.}
+For every pair \((i,k)\in P\) and each machine \(j\in J\),
+\[
+S_{ij}+t_{ij} \le S_{kj} + M_j(1-y_{ik}),
+\]
+\[
+S_{kj}+t_{kj} \le S_{ij} + M_j y_{ik}.
+\]
+These two inequalities enforce that either \(i\) precedes \(k\) on machine \(j\) (\(y_{ik}=1\)) or \(k\) precedes \(i\) (\(y_{ik}=0\)), and the same \(y_{ik}\) is reused on all machines.
+
+\paragraph{2. Technological precedence within each product.}
+For every product \(i\in I\),
+\[
+S_{i,2} \ge S_{i,1} + t_{i,1},
+\]
+\[
+S_{i,3} \ge S_{i,2} + t_{i,2}.
+\]
+
+\paragraph{3. Makespan definition.}
+For every product \(i\in I\),
+\[
+T \ge S_{i,3} + t_{i,3}.
+\]
+
+\paragraph{4. Machine availability and overtime accounting.}
+For every machine \(j\in J\),
+\[
+B_j \le W_j + o_j,
+\]
+\[
+o_j \le O_j^{\max}.
+\]
+
+\paragraph{5. Special Machine 1 overtime review rule.}
+\[
+o_1 \le \theta + O_1^{\max} r.
+\]
+With \(\theta=1\), the first 1 second of Machine 1 overtime can be used without activating \(r\); any larger Machine 1 overtime level requires \(r=1\), which adds fee \(F\) in the objective.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a MILP solved by Gurobi through PuLP compatibility wrappers; it is not an exact permutation enumeration or dynamic program.
+    \item The code uses zero-based machine indices internally, corresponding to business machines \(1,2,3\).
+    \item Overtime is modeled from the constant total required busy time \(B_j=\sum_i t_{ij}\), not from schedule-dependent completion times. Thus overtime only reflects whether total processing load on a machine exceeds its regular window, exactly as implemented.
+    \item The Machine 1 special note is implemented only through the binary variable \(r\) and constraint \(o_1 \le \theta + O_1^{\max}r\), together with the added objective term \(Fr\). No analogous review variable exists for Machines 2 or 3.
+    \item Because the same precedence variable \(y_{ik}\) is shared across all machines, the product order is constrained to be identical on every machine, matching the flow-shop interpretation in the code.
+\end{itemize}

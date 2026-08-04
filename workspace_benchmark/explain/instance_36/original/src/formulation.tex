@@ -1,0 +1,175 @@
+\section*{Sets and Indices}
+
+\[
+V=\{0,1,\dots,n\}
+\]
+set of all nodes, where node \(0\) is the depot and nodes \(1,\dots,n\) are customers.
+
+\[
+N=\{1,\dots,n\}
+\]
+set of customers.
+
+\[
+A \subseteq \{(i,j)\in V\times V : i\neq j\}
+\]
+set of directed arcs retained by the preprocessing in the code. An arc \((i,j)\) is included only if it passes the following feasibility screen:
+\[
+(i,j)\in A \iff i\neq j \text{ and}
+\]
+\[
+\begin{cases}
+e_i+s_i+d_{ij}\le l_j, & i\in N,\ j\in N,\\
+e_0+d_{0j}\le l_j, & i=0,\ j\in N,\\
+e_i+s_i+d_{i0}\le l_0, & i\in N,\ j=0.
+\end{cases}
+\]
+
+Indices:
+\[
+i,j \in V.
+\]
+
+\section*{Parameters}
+
+\[
+n=20
+\]
+number of customers (\texttt{num\_customers}).
+
+\[
+K^{\max}=5
+\]
+maximum number of trucks (\texttt{max\_trucks}).
+
+\[
+Q=200
+\]
+truck capacity (\texttt{truck\_capacity}).
+
+\[
+(x_i,y_i)
+\]
+coordinates of node \(i\) (\texttt{coords[i]}), with depot at \((40,50)\).
+
+\[
+q_i
+\]
+demand of customer \(i\) (\texttt{demands\_list[i]}), with \(q_0=0\).
+
+\[
+[e_i,l_i]
+\]
+time window of node \(i\) (\texttt{tw\_list[i]}). In particular, the depot has
+\[
+[e_0,l_0]=[0,1236].
+\]
+
+\[
+s_i
+\]
+service duration at node \(i\) (\texttt{svc\_list[i]}), with \(s_0=0\). In the data, customer service times are \(90\) minutes.
+
+\[
+d_{ij}=\sqrt{(x_i-x_j)^2+(y_i-y_j)^2}
+\]
+travel distance (and, in the implemented timing constraints, also travel time) from node \(i\) to node \(j\) (\texttt{dist[i,j]}).
+
+\[
+M=l_0+\max_{i\in V} s_i
+\]
+big-\(M\) constant used in the time propagation constraints (\texttt{M\_val}).
+
+\section*{Decision Variables}
+
+\[
+x_{ij} \in \{0,1\} \qquad \forall (i,j)\in A
+\]
+binary arc-selection variable indicating whether arc \((i,j)\) is used (\texttt{x[i,j]}).
+
+\[
+t_i \ge 0 \qquad \forall i\in V
+\]
+service start time at node \(i\) (\texttt{t[i]}).
+
+\section*{Objective}
+
+Minimize total traveled distance:
+\[
+\min \sum_{(i,j)\in A} d_{ij}\,x_{ij}.
+\]
+
+\section*{Constraints}
+
+Depot departure limit:
+\[
+\sum_{j\in N:\,(0,j)\in A} x_{0j} \le K^{\max}.
+\]
+
+Exactly one incoming arc for each customer:
+\[
+\sum_{j\in V:\,(j,i)\in A} x_{ji}=1
+\qquad \forall i\in N.
+\]
+
+Exactly one outgoing arc for each customer:
+\[
+\sum_{j\in V:\,(i,j)\in A} x_{ij}=1
+\qquad \forall i\in N.
+\]
+
+Customer time-window bounds:
+\[
+t_i \ge e_i \qquad \forall i\in N,
+\]
+\[
+t_i \le l_i \qquad \forall i\in N.
+\]
+
+Depot time-window bounds:
+\[
+t_0 \ge e_0,
+\]
+\[
+t_0 \le l_0.
+\]
+
+Time propagation on used arcs ending at a customer:
+\[
+t_i + s_i + d_{ij} - t_j \le M(1-x_{ij})
+\qquad \forall (i,j)\in A \text{ with } j\neq 0.
+\]
+
+Pairwise capacity screening on customer-to-customer arcs:
+\[
+q_i+q_j \le Q + Q(1-x_{ij})
+\qquad \forall (i,j)\in A \text{ with } i\neq 0,\ j\neq 0.
+\]
+
+Binary and nonnegativity restrictions:
+\[
+x_{ij}\in\{0,1\} \qquad \forall (i,j)\in A,
+\]
+\[
+t_i\ge 0 \qquad \forall i\in V.
+\]
+
+\section*{Notes on Implementation}
+
+This formulation matches the implemented model exactly.
+
+The code builds the arc set \(A\) by removing arcs that are impossible with respect to the destination time-window upper bound using earliest possible departure from the tail node. This preprocessing is part of the implemented model.
+
+No explicit vehicle index is used. Routes are represented implicitly by arcs leaving and returning to the depot. The only fleet-size restriction is the bound on the number of arcs departing the depot.
+
+There is no full cumulative vehicle-capacity formulation in the code. Instead, the only capacity-related constraint is the pairwise condition on any selected customer-to-customer arc:
+\[
+x_{ij}=1 \implies q_i+q_j \le Q.
+\]
+Thus the implemented model does not track total load along an entire route.
+
+There are also no explicit subtour-elimination constraints. Time propagation constraints prevent cycles among customers that would be temporally inconsistent, but the formulation is not strengthened beyond the exact coded constraints.
+
+The variable \(t_0\) is given an initial value \(0\) in the code (\texttt{t[0].setInitialValue(0)}), but this is only a solver hint and not an additional constraint.
+
+The model is solved as a mixed-integer linear program using Gurobi through the PuLP-compatible interface (\texttt{GUROBI\_CMD}) with a \(100\)-second time limit.

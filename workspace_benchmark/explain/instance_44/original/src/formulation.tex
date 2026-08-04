@@ -1,0 +1,81 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I = \{1,\dots,m\}$: production points, indexed by $i$.
+    \item $J = \{1,\dots,n\}$: demand points, indexed by $j$.
+    \item $K = \{1,\dots,p\}$: intermediate marshaling stations, indexed by $k$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $m$: number of production points.
+    \item $n$: number of demand points.
+    \item $p$: number of marshaling stations.
+    \item $a_i \ge 0$: available output at production point $i$.
+    \item $b_j \ge 0$: demand requirement at demand point $j$.
+    \item $f_k \ge 0$: fixed cost for using marshaling station $k$.
+    \item $q_k \ge 0$: maximum transshipment capacity of marshaling station $k$.
+    \item $c_{ik} \ge 0$: unit transportation cost from production point $i$ to marshaling station $k$.
+    \item $c'_{kj} \ge 0$: unit transportation cost from marshaling station $k$ to demand point $j$.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ik} \ge 0$ (code: \texttt{x[(i,k)]}): amount shipped from production point $i$ to marshaling station $k$.
+    \item $y_{kj} \ge 0$ (code: \texttt{y[(k,j)]}): amount shipped from marshaling station $k$ to demand point $j$.
+    \item $z_k \in \{0,1\}$ (code: \texttt{z[k]}): equals $1$ if marshaling station $k$ is used, and $0$ otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total inbound transportation cost, outbound transportation cost, and fixed station-activation cost:
+\[
+\min \;
+\sum_{i \in I}\sum_{k \in K} c_{ik} x_{ik}
+\;+\;
+\sum_{k \in K}\sum_{j \in J} c'_{kj} y_{kj}
+\;+\;
+\sum_{k \in K} f_k z_k.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Production capacity constraints}
+    \[
+    \sum_{k \in K} x_{ik} \le a_i
+    \qquad \forall i \in I.
+    \]
+
+    \item \textbf{Demand satisfaction constraints}
+    \[
+    \sum_{k \in K} y_{kj} \ge b_j
+    \qquad \forall j \in J.
+    \]
+
+    \item \textbf{Flow conservation at each marshaling station}
+    \[
+    \sum_{i \in I} x_{ik}
+    =
+    \sum_{j \in J} y_{kj}
+    \qquad \forall k \in K.
+    \]
+
+    \item \textbf{Marshaling-station capacity and activation linking}
+    \[
+    \sum_{i \in I} x_{ik} \le q_k z_k
+    \qquad \forall k \in K.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program with continuous flow variables $x_{ik}, y_{kj}$ and binary activation variables $z_k$.
+    \item The code uses production constraints as upper bounds only ($\le a_i$), not equalities, so production need not be fully used.
+    \item Demand constraints are modeled as lower bounds ($\ge b_j$), not equalities, so over-delivery is allowed by the formulation, although the positive shipping costs will generally discourage it.
+    \item Station capacity is imposed on total inbound flow, and by flow conservation this is also the total outbound flow through station $k$.
+    \item The model is solved directly by a MIP solver through \texttt{GUROBI\_CMD(msg=0)} in PuLP-compatible syntax; it is not evaluated by custom enumeration or dynamic programming.
+\end{itemize}

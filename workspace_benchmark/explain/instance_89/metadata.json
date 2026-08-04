@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_089",
+  "instance_number": 89,
+  "source_revise_instance": "IndustryOR_89_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised LP-relaxation diagnostics together with `src/current_heuristic.py` and, where helpful, `src/formulation.tex`, explain which revised constraints are binding and what their shadow prices mean in business terms. Your answer must name the exact code constraints and variables (for example `Prod_Hours_1`, `Inv_Balance_A_1`, `inv_A[1]`, `sales_A[2]`, `promo_A[2]`, `extra_rev_A[2]`), trace them back to the exact `general_parameters.csv` fields and values they use (including `max_production_hours_week_1 = 40`, `profit_per_kg_product_A = 30`, and the storage carry-over terms), and explain why the LP-relaxation marginal value for week-1 hours cannot be linearly extrapolated to the integer optimum. Then compare original vs revised and identify the exact code additions/modifications that created the objective jump from `146.667` to `337.333`, including the business motivation from the revision brief and a quantitative decomposition of how carry-over inventory plus promotions changed the economics relative to the original `x_A`/`x_B` model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Maximize_Profit.gurobi.log",
+        "Maximize_Profit.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Two_Week_Production_Promotion_Planning.gurobi.log",
+        "Two_Week_Production_Promotion_Planning.lp_relaxation.json",
+        "Two_Week_Production_Promotion_Planning.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 55.783889
+  }
+}

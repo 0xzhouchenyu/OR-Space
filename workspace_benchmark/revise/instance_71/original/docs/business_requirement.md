@@ -1,0 +1,1 @@
+Consider assigning factories to locations. The transportation volume between factories and the unit transportation cost between locations are provided in the corresponding CSV files in the data folder. To minimize the total transportation cost, this problem can be formulated as an integer model.

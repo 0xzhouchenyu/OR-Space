@@ -1,0 +1,10 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+
+Assignment:
+  Worker II -> Task A (time: 4)
+  Worker III -> Task B (time: 4)
+  Worker IV -> Task C (time: 2)
+  Worker V -> Task D (time: 4)
+
+OBJECTIVE_VALUE: 14.0

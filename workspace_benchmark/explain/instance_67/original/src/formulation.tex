@@ -1,0 +1,150 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Months in the planning horizon: $T=\{\text{Jul},\text{Aug},\text{Sep},\text{Oct},\text{Nov},\text{Dec}\}$, indexed by $t$.
+    \item Products: $P=\{\mathrm{I},\mathrm{II}\}$, indexed by $p$.
+\end{itemize}
+
+For notational consistency with the implementation, the ordered months are
+\[
+(\text{Jul},\text{Aug},\text{Sep},\text{Oct},\text{Nov},\text{Dec}),
+\]
+so that each month after July has a unique predecessor.
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Demand in month $t$ for product $p$: $d_{t,p}$, from \texttt{table\_1.csv}.
+    \item Unit production cost for product $p$: $c^{\mathrm{prod}}_p$, where
+    \[
+    c^{\mathrm{prod}}_{\mathrm{I}} = 4.5,\qquad
+    c^{\mathrm{prod}}_{\mathrm{II}} = 7.
+    \]
+    These are the June--December production costs used by the code (\texttt{prod\_cost}).
+    \item Monthly total production capacity: $C = 120000$ units (\texttt{max\_cap}).
+    \item Inventory volume per unit of product $p$: $v_p$, where
+    \[
+    v_{\mathrm{I}} = 0.2,\qquad
+    v_{\mathrm{II}} = 0.4
+    \]
+    cubic meters per unit (\texttt{volume}).
+    \item Internal warehouse capacity: $W = 15000$ cubic meters (\texttt{warehouse\_cap}).
+    \item Internal warehouse cost: $c^{\mathrm{own}} = 1$ yuan per cubic meter per month (\texttt{own\_cost}).
+    \item External warehouse cost: $c^{\mathrm{ext}} = 1.5$ yuan per cubic meter per month (\texttt{ext\_cost}).
+    \item Initial inventory at the beginning of July for each product:
+    \[
+    I^{0}_p = 0 \qquad \forall p\in P.
+    \]
+\end{itemize}
+
+Using the CSV data, the monthly demands in the modeled horizon are:
+\[
+d_{t,\mathrm{I}}=
+\begin{cases}
+30000,& t\in\{\text{Jul},\text{Aug},\text{Sep}\},\\
+100000,& t\in\{\text{Oct},\text{Nov},\text{Dec}\},
+\end{cases}
+\qquad
+d_{t,\mathrm{II}}=
+\begin{cases}
+15000,& t\in\{\text{Jul},\text{Aug},\text{Sep}\},\\
+50000,& t\in\{\text{Oct},\text{Nov},\text{Dec}\}.
+\end{cases}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Production quantity of product $p$ in month $t$:
+    \[
+    x_{t,p} \ge 0
+    \qquad\text{(code: \texttt{x[(m,p)]})}.
+    \]
+    \item End-of-month inventory of product $p$ in month $t$:
+    \[
+    I_{t,p} \ge 0
+    \qquad\text{(code: \texttt{inv[(m,p)]})}.
+    \]
+    \item Internal warehouse volume used in month $t$:
+    \[
+    w^{\mathrm{own}}_t \ge 0
+    \qquad\text{(code: \texttt{own\_wh[m]})}.
+    \]
+    \item External warehouse volume used in month $t$:
+    \[
+    w^{\mathrm{ext}}_t \ge 0
+    \qquad\text{(code: \texttt{ext\_wh[m]})}.
+    \]
+\end{itemize}
+
+All variables are continuous, exactly as in the implementation.
+
+\section*{Objective}
+
+Minimize total production cost plus monthly warehouse usage cost:
+\[
+\min \;
+\sum_{t\in T}\sum_{p\in P} c^{\mathrm{prod}}_p\, x_{t,p}
+\;+\;
+\sum_{t\in T}\left(
+c^{\mathrm{own}}\, w^{\mathrm{own}}_t
++
+c^{\mathrm{ext}}\, w^{\mathrm{ext}}_t
+\right).
+\]
+
+\section*{Constraints}
+
+\paragraph{Inventory balance.}
+For July:
+\[
+I_{\text{Jul},p} = I^0_p + x_{\text{Jul},p} - d_{\text{Jul},p}
+\qquad \forall p\in P.
+\]
+
+For each subsequent month $t\in T\setminus\{\text{Jul}\}$ with predecessor $\operatorname{prev}(t)$:
+\[
+I_{t,p} = I_{\operatorname{prev}(t),p} + x_{t,p} - d_{t,p}
+\qquad \forall p\in P.
+\]
+
+\paragraph{Monthly production capacity.}
+\[
+\sum_{p\in P} x_{t,p} \le C
+\qquad \forall t\in T.
+\]
+
+\paragraph{Warehouse volume coverage.}
+\[
+w^{\mathrm{own}}_t + w^{\mathrm{ext}}_t
+\;\ge\;
+\sum_{p\in P} v_p\, I_{t,p}
+\qquad \forall t\in T.
+\]
+
+\paragraph{Internal warehouse capacity.}
+\[
+w^{\mathrm{own}}_t \le W
+\qquad \forall t\in T.
+\]
+
+\paragraph{Nonnegativity.}
+\[
+x_{t,p}\ge 0,\quad I_{t,p}\ge 0
+\qquad \forall t\in T,\; p\in P,
+\]
+\[
+w^{\mathrm{own}}_t \ge 0,\quad w^{\mathrm{ext}}_t \ge 0
+\qquad \forall t\in T.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is a linear program solved with the PuLP-compatible interface using \texttt{GUROBI\_CMD}.
+    \item The planning horizon is restricted to July--December only. Although the data file contains January--June demands and costs, the implemented model ignores those months except that it uses the June--December unit production costs for all modeled months.
+    \item Initial inventory in July is fixed at zero separately for each product.
+    \item Warehouse costs are charged through the auxiliary variables $w^{\mathrm{own}}_t$ and $w^{\mathrm{ext}}_t$, with only the constraint that their sum be at least the inventory volume. Because both warehouse cost coefficients are positive, the optimizer will set these variables to the minimum-cost feasible values.
+    \item There is no explicit constraint forcing ending inventory in December to be zero.
+    \item The implementation uses continuous variables for production, inventory, and warehouse usage; no integrality restrictions are imposed.
+\end{itemize}

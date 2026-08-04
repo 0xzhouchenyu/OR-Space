@@ -1,0 +1,90 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $A$: set of residential areas that are also candidate store locations. For this instance,
+    \[
+    A=\{A,B,C,D,E,F,G,H,I,J,K,L\}.
+    \]
+    \item $i \in A$: index of an area that must be covered.
+    \item $j \in A$: index of a candidate store location.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d^{\max}$: maximum allowed service distance (code data: \texttt{params['distance\_limit']}), here
+    \[
+    d^{\max}=800 \text{ m}.
+    \]
+    \item $C_j \subseteq A$: set of areas covered if a store is built in area $j$ (code: \texttt{coverage[j]}$)$, obtained from \texttt{table\_1.csv}. For this instance:
+    \begin{align*}
+    C_A &= \{A,C,E,G,H,I\},\\
+    C_B &= \{B,H,I\},\\
+    C_C &= \{A,C,G,H,I\},\\
+    C_D &= \{D,J\},\\
+    C_E &= \{A,E,G\},\\
+    C_F &= \{F,J,K\},\\
+    C_G &= \{A,C,E,G\},\\
+    C_H &= \{A,B,C,H,I\},\\
+    C_I &= \{A,B,C,H,I\},\\
+    C_J &= \{D,F,J,K,L\},\\
+    C_K &= \{F,J,K,L\},\\
+    C_L &= \{J,K,L\}.
+    \end{align*}
+    \item $a_{ij} \in \{0,1\}$: coverage incidence, where
+    \[
+    a_{ij}=
+    \begin{cases}
+    1, & \text{if } i \in C_j,\\
+    0, & \text{otherwise}.
+    \end{cases}
+    \]
+    This corresponds to the code test \texttt{i in coverage.get(j, set())}.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_j \in \{0,1\}$ (code: \texttt{x[j]}): equals $1$ if a chain store is built in area $j$, and $0$ otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the total number of stores built:
+\[
+\min \sum_{j \in A} x_j.
+\]
+
+\section*{Constraints}
+
+Each area must be covered by at least one selected store location:
+\[
+\sum_{j \in A:\; i \in C_j} x_j \ge 1
+\qquad \forall i \in A.
+\]
+
+Equivalently, using the incidence parameters:
+\[
+\sum_{j \in A} a_{ij} x_j \ge 1
+\qquad \forall i \in A.
+\]
+
+Binary restrictions:
+\[
+x_j \in \{0,1\}
+\qquad \forall j \in A.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code implements a standard set covering model, not a maximal covering or $p$-median variant.
+    \item Candidate store locations and demand areas are the same set \texttt{areas}, loaded from the first column of \texttt{table\_1.csv}.
+    \item Coverage sets are read exactly as listed in \texttt{table\_1.csv}; the implementation does not recompute coverage from geometric distances. The distance limit parameter \texttt{distance\_limit} is only reported and is not otherwise used in the optimization once the coverage table has been loaded.
+    \item For each area $i$, the implementation constructs the covering set as
+    \[
+    \{j \in A : i \in C_j\},
+    \]
+    and imposes one covering constraint for that area.
+    \item The model is solved as a binary linear program using \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+\end{itemize}

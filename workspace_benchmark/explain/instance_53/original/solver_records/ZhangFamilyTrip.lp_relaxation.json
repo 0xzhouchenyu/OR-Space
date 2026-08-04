@@ -1,0 +1,71 @@
+{
+  "solver": "gurobi",
+  "model_name": "ZhangFamilyTrip_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 3050.0,
+  "runtime": 0.0003859996795654297,
+  "variables": {
+    "x_Fred": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_George": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_Ginny": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_Harry": {
+      "value": 0.0,
+      "reduced_cost": 400.0
+    },
+    "x_Hermione": {
+      "value": 0.0,
+      "reduced_cost": 850.0
+    },
+    "x_Ron": {
+      "value": 1.0,
+      "reduced_cost": -50.0
+    }
+  },
+  "constraints": {
+    "Ginny_must_go": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 700.0
+    },
+    "Max_children": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "Min_children": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 800.0
+    },
+    "Harry_no_Fred": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Harry_no_George": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "George_requires_Fred": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "George_requires_Hermione": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    }
+  }
+}

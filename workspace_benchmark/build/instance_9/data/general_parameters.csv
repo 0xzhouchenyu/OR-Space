@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+available_wood,890,units,Total wood available for manufacturing
+available_steel,500,units,Total steel available for manufacturing
+truck_train_exclusion,1,None,If Haus Toys manufactures trucks, they will not manufacture trains
+boat_airplane_dependency,1,None,If Haus Toys manufactures boats, they will also manufacture airplanes
+boat_train_limit,1,None,The number of toy boats manufactured cannot exceed the number of toy trains manufactured

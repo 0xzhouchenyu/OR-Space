@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_074",
+  "instance_number": 74,
+  "source_revise_instance": "IndustryOR_74_revise_business",
+  "domain": "Project_Scheduling",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Project_Scheduling",
+    "question": "In the revised model, explain why the optimal objective stays at 115000 even after adding the overtime option for Activity E. Your answer must trace the exact revised code additions (`use_ot`, `actual_dur['E']`, and the objective term `(ot_cost + followup_cost) * use_ot`) back to the business brief and the CSV field names, then use the LP-relaxation diagnostics to identify which specific precedence and completion constraints are binding or slack for the E-path and why the shadow-price logic implies no profitable activation of `use_ot`. Also explain the business meaning of the `use_ot` reduced cost of 500.0 and why you cannot linearly extrapolate that marginal value into a generic “overtime is always bad” conclusion once the binary gate is crossed."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Project_Cost_Minimization.gurobi.log",
+        "Project_Cost_Minimization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Project_Cost_Minimization.gurobi.log",
+        "Project_Cost_Minimization.lp_relaxation.json",
+        "Project_Cost_Minimization.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 74.896667
+  }
+}

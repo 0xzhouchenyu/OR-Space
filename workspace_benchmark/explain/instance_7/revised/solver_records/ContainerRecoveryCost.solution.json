@@ -1,0 +1,270 @@
+{
+  "solver": "gurobi",
+  "model_name": "ContainerRecoveryCost",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 749100.0,
+  "objective_bound": 749100.0,
+  "mip_gap": 0.0,
+  "runtime": 0.005507230758666992,
+  "node_count": 1.0,
+  "iteration_count": 13.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ajrpqam9/solver_records/ContainerRecoveryCost.gurobi.log",
+  "variables": {
+    "adriatic_pool": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "recovery_Ancona": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "recovery_Bari": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "recovery_Genoa": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "recovery_Naples": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "recovery_Venice": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Lamezia_Ancona": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Lamezia_Bari": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "ship_Lamezia_Genoa": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Lamezia_Naples": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "ship_Lamezia_Venice": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Perugia_Ancona": {
+      "value": 8.0,
+      "reduced_cost": null
+    },
+    "ship_Perugia_Bari": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Perugia_Genoa": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Perugia_Naples": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Perugia_Venice": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "ship_Pescara_Ancona": {
+      "value": 17.0,
+      "reduced_cost": null
+    },
+    "ship_Pescara_Bari": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Pescara_Genoa": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Pescara_Naples": {
+      "value": 7.0,
+      "reduced_cost": null
+    },
+    "ship_Pescara_Venice": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Rome_Ancona": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Rome_Bari": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Rome_Genoa": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Rome_Naples": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "ship_Rome_Venice": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Taranto_Ancona": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Taranto_Bari": {
+      "value": 18.0,
+      "reduced_cost": null
+    },
+    "ship_Taranto_Genoa": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Taranto_Naples": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Taranto_Venice": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Verona_Ancona": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Verona_Bari": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Verona_Genoa": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Verona_Naples": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "ship_Verona_Venice": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "short_Ancona": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "short_Bari": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "short_Genoa": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "short_Naples": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "short_Venice": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 34.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 2.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "<=",
+      "slack": 2.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C17": {
+      "sense": "<=",
+      "slack": 7.0,
+      "dual_value": null
+    }
+  }
+}

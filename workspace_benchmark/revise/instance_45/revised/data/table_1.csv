@@ -1,0 +1,10 @@
+Product,Sales_Volume_Range,Profit
+Product_A,0_40,10
+Product_A,40_100,9
+Product_A,100_150,8
+Product_A,Above_150,7
+Product_B,0_50,6
+Product_B,50_100,4
+Product_B,Above_100,3
+Product_C,0_100,5
+Product_C,Above_100,4

@@ -1,0 +1,5 @@
+Parameter_Name,Value,Unit,Context_Description
+max_container_capacity,60,tons,Maximum weight capacity of each container
+min_container_load,18,tons,Minimum weight that must be loaded into each container
+min_d_goods_per_container,12,units,Minimum number of D goods that must be loaded into each container
+min_c_per_a,1,units,Minimum number of C goods that must be loaded whenever A goods are loaded

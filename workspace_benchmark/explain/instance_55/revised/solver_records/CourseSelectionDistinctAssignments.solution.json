@@ -1,0 +1,214 @@
+{
+  "solver": "gurobi",
+  "model_name": "CourseSelectionDistinctAssignments",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 6.0,
+  "objective_bound": 6.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0023589134216308594,
+  "node_count": 1.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_5082_8zc/solver_records/CourseSelectionDistinctAssignments.gurobi.log",
+  "variables": {
+    "activate_Computer_Science": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "activate_Mathematics": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "activate_Operations_Research": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "assign_Calculus_to_Mathematics": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "assign_Computer_Programming_to_Computer_Science": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "assign_Computer_Simulation_to_Computer_Science": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "assign_Computer_Simulation_to_Operations_Research": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "assign_Data_Structures_to_Computer_Science": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "assign_Data_Structures_to_Mathematics": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "assign_Forecasting_to_Mathematics": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "assign_Forecasting_to_Operations_Research": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "assign_Management_Statistics_to_Mathematics": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "assign_Management_Statistics_to_Operations_Research": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "assign_Operations_Research_to_Mathematics": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "assign_Operations_Research_to_Operations_Research": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "take_Calculus": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "take_Computer_Programming": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "take_Computer_Simulation": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "take_Data_Structures": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "take_Forecasting": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "take_Management_Statistics": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "take_Operations_Research": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "AssignOnlyIfTaken_Calculus": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "AssignOnlyIfTaken_Operations_Research": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "AssignOnlyIfTaken_Data_Structures": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "AssignOnlyIfTaken_Management_Statistics": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "AssignOnlyIfTaken_Computer_Simulation": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "AssignOnlyIfTaken_Computer_Programming": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "AssignOnlyIfTaken_Forecasting": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MinDistinctCount_Computer_Science": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "ActivateLB_Computer_Science": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "ActivateUB_Computer_Science": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "MinDistinctCount_Mathematics": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "ActivateLB_Mathematics": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "ActivateUB_Mathematics": {
+      "sense": "<=",
+      "slack": 3.0,
+      "dual_value": null
+    },
+    "MinDistinctCount_Operations_Research": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "ActivateLB_Operations_Research": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "ActivateUB_Operations_Research": {
+      "sense": "<=",
+      "slack": 2.0,
+      "dual_value": null
+    },
+    "Prereq_Computer_Simulation_needs_Computer_Programming": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Prereq_Data_Structures_needs_Computer_Programming": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "Prereq_Management_Statistics_needs_Calculus": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Prereq_Forecasting_needs_Management_Statistics": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MandatoryFoundationForCSCoverage": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

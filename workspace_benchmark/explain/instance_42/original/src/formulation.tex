@@ -1,0 +1,101 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $F = \{1,2\}$: set of furnaces, indexed by $i$.
+    \item $M = \{1,2\}$: set of steelmaking methods, indexed by $j$.
+\end{itemize}
+
+\section*{Parameters}
+
+From the data file:
+
+\begin{itemize}
+    \item $a$: processing time (hours) for method $1$ on one furnace use (\texttt{a}).
+    \item $b$: processing time (hours) for method $2$ on one furnace use (\texttt{b}).
+    \item $m$: fuel cost (dollars) for method $1$ on one furnace use (\texttt{m}).
+    \item $n$: fuel cost (dollars) for method $2$ on one furnace use (\texttt{n}).
+    \item $k$: steel output (tons) per furnace use, independent of method (\texttt{k}).
+    \item $d$: minimum required steel production (tons) (\texttt{d}).
+    \item $c$: maximum available production time (hours) for each furnace (\texttt{c}).
+\end{itemize}
+
+For compact notation, define:
+\[
+t_1 = a,\quad t_2 = b,
+\]
+\[
+q_1 = m,\quad q_2 = n.
+\]
+
+For instance 42, the parameter values are:
+\[
+a=2,\quad b=3,\quad m=50,\quad n=70,\quad k=10,\quad d=30,\quad c=12.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{11}$ (code: \texttt{x1}): nonnegative number of times furnace $1$ uses method $1$.
+    \item $x_{12}$ (code: \texttt{x2}): nonnegative number of times furnace $1$ uses method $2$.
+    \item $x_{21}$ (code: \texttt{x3}): nonnegative number of times furnace $2$ uses method $1$.
+    \item $x_{22}$ (code: \texttt{x4}): nonnegative number of times furnace $2$ uses method $2$.
+\end{itemize}
+
+Equivalently, one may write a family of continuous variables
+\[
+x_{ij} \ge 0 \qquad \forall i \in F,\; j \in M.
+\]
+
+\section*{Objective}
+
+Minimize total fuel cost:
+\[
+\min \; m(x_{11}+x_{21}) + n(x_{12}+x_{22}).
+\]
+
+Equivalently,
+\[
+\min \; \sum_{i\in F}\sum_{j\in M} q_j x_{ij}.
+\]
+
+\section*{Constraints}
+
+Per-furnace time limits:
+\[
+a x_{11} + b x_{12} \le c,
+\]
+\[
+a x_{21} + b x_{22} \le c.
+\]
+
+Minimum production requirement:
+\[
+k(x_{11}+x_{12}+x_{21}+x_{22}) \ge d.
+\]
+
+Nonnegativity:
+\[
+x_{ij} \ge 0 \qquad \forall i \in F,\; j \in M.
+\]
+
+For instance 42, this is:
+\[
+\min \; 50(x_{11}+x_{21}) + 70(x_{12}+x_{22})
+\]
+subject to
+\[
+2x_{11} + 3x_{12} \le 12,
+\]
+\[
+2x_{21} + 3x_{22} \le 12,
+\]
+\[
+10(x_{11}+x_{12}+x_{21}+x_{22}) \ge 30,
+\]
+\[
+x_{11},x_{12},x_{21},x_{22} \ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model in \texttt{current\_heuristic.py} is a linear program solved with PuLP using the Gurobi command-line solver interface (\texttt{pulp.GUROBI\_CMD}). The variables are continuous with only lower bounds of zero; there are no integrality restrictions in the code, even though the business description refers to two furnaces and method allocations. The code models separate time-capacity constraints for furnace 1 and furnace 2, and a single aggregate minimum-production constraint. The objective and constraints above match the code exactly, with variables \texttt{x1}, \texttt{x2}, \texttt{x3}, and \texttt{x4} corresponding respectively to $(x_{11},x_{12},x_{21},x_{22})$.

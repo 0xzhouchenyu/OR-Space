@@ -1,0 +1,142 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $S=\{1,2\}$: suppliers.
+    \item $I=\{1,\dots,n\}$: finished-length item types from \texttt{table\_1.csv}.
+    \item For each supplier $s\in S$, let $P_s$ be the finite set of feasible cutting patterns generated for that supplier by exhaustive enumeration in the code.
+    \item For each supplier $s\in S$, let $K_s=\{1,\dots,\bar K_s\}$ be the available rank slots for pattern-governance charges, where
+    $\bar K_1=\texttt{max\_cutting\_patterns\_supplier1}$ and
+    $\bar K_2=\texttt{max\_cutting\_patterns\_supplier2}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $l_i$: required finished length of item type $i$ (code source: \texttt{lengths[i]}).
+    \item $d_i$: demand quantity of item type $i$ (code source: \texttt{demands[i]}).
+    \item $L_s$: raw pipe length for supplier $s$ (code: \texttt{L1}, \texttt{L2}).
+    \item $C_s$: maximum number of cuts/pieces allowed in one pattern for supplier $s$ (code: \texttt{max\_cuts\_s1}, \texttt{max\_cuts\_s2}).
+    \item $\Delta_s$: maximum leftover length allowed for supplier $s$ (code: \texttt{max\_leftover\_s1}, \texttt{max\_leftover\_s2}).
+    \item $\bar K_s$: maximum number of distinct patterns allowed for supplier $s$ (code: \texttt{max\_patterns\_s1}, \texttt{max\_patterns\_s2}).
+    \item $c_s^{\text{pipe}}$: purchase cost per raw pipe from supplier $s$ (code: \texttt{purchase\_cost\_s1}, \texttt{purchase\_cost\_s2}).
+    \item $r_{s,k}$: extra cost rate for rank slot $k\in K_s$ for supplier $s$, taken from the ordered list
+    \[
+    (r_{1,1},r_{1,2},r_{1,3})
+    =
+    (\texttt{most\_frequent\_pattern\_cost\_rate\_supplier1},
+    \texttt{second\_frequent\_pattern\_cost\_rate\_supplier1},
+    \texttt{third\_frequent\_pattern\_cost\_rate\_supplier1}),
+    \]
+    \[
+    (r_{2,1},r_{2,2},r_{2,3})
+    =
+    (\texttt{most\_frequent\_pattern\_cost\_rate\_supplier2},
+    \texttt{second\_frequent\_pattern\_cost\_rate\_supplier2},
+    \texttt{third\_frequent\_pattern\_cost\_rate\_supplier2}),
+    \]
+    with only the first $\bar K_s$ entries used in the model.
+    \item $Q^{(1)}$: supplier-1 tier-1 maximum quantity before discount applies (code: \texttt{tier1\_max\_qty}).
+    \item $D^{(1)}$: fixed supplier-1 discount amount for the high tier (code: \texttt{fixed\_discount\_tier2}).
+    \item $M^{\text{disc}}$: big-$M$ constant used in supplier-1 discount constraints (code: \texttt{bigM\_discount}).
+    \item $M^y=\sum_{i\in I} d_i$: big-$M$ constant linking pattern counts to usage indicators (code: \texttt{bigM\_y = total\_demand}).
+    \item For each supplier $s\in S$ and pattern $p\in P_s$, $a_{sip}\in \mathbb{Z}_{\ge 0}$ is the number of pieces of item type $i$ produced by one raw pipe cut according to pattern $p$. These are the entries of the enumerated tuples \texttt{patterns\_s1[p]} and \texttt{patterns\_s2[p]}.
+\end{itemize}
+
+Each supplier-specific pattern set is generated subject to
+\[
+\sum_{i\in I} a_{sip} \ge 1,\qquad
+\sum_{i\in I} a_{sip} \le C_s,\qquad
+L_s-\Delta_s \le \sum_{i\in I} l_i a_{sip} \le L_s.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $y_{sp}\in \mathbb{Z}_{\ge 0}$: number of raw pipes from supplier $s$ cut with pattern $p$ (code: \texttt{y1[p]}, \texttt{y2[p]}).
+    \item $z_{sp}\in \{0,1\}$: 1 if pattern $p$ of supplier $s$ is used at least once (code: \texttt{z1[p]}, \texttt{z2[p]}).
+    \item $u_{s,k}\in \{0,1\}$: 1 if the $k$th rank slot is active for supplier $s$ (code: \texttt{u1[k]}, \texttt{u2[k]}).
+    \item $T_s\in \mathbb{Z}_{\ge 0}$: total number of pipes purchased from supplier $s$ (code: \texttt{total\_pipes\_s1}, \texttt{total\_pipes\_s2}).
+    \item $t^{\text{low}}_1\in\{0,1\}$ and $t^{\text{high}}_1\in\{0,1\}$: supplier-1 discount-tier binaries (code: \texttt{t1\_low}, \texttt{t1\_high}).
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model minimizes
+\[
+\min\;
+c_1^{\text{pipe}} T_1 + c_2^{\text{pipe}} T_2
++ \sum_{k\in K_1} r_{1,k} u_{1,k}
++ \sum_{k\in K_2} r_{2,k} u_{2,k}
+- D^{(1)} t^{\text{high}}_1.
+\]
+
+\section*{Constraints}
+
+\paragraph{Demand coverage across both suppliers.}
+For each item type $i\in I$,
+\[
+\sum_{p\in P_1} a_{1ip} y_{1p} + \sum_{p\in P_2} a_{2ip} y_{2p} \ge d_i.
+\]
+
+\paragraph{Link pattern counts to usage indicators.}
+For each $p\in P_1$,
+\[
+y_{1p} \le M^y z_{1p},
+\]
+and for each $p\in P_2$,
+\[
+y_{2p} \le M^y z_{2p}.
+\]
+
+\paragraph{Pattern-count / rank-slot matching.}
+For supplier 1,
+\[
+\sum_{p\in P_1} z_{1p} = \sum_{k\in K_1} u_{1,k},
+\]
+and for supplier 2,
+\[
+\sum_{p\in P_2} z_{2p} = \sum_{k\in K_2} u_{2,k}.
+\]
+
+\paragraph{Monotone activation of rank slots.}
+For $k=1,\dots,\bar K_1-1$,
+\[
+u_{1,k} \ge u_{1,k+1},
+\]
+and for $k=1,\dots,\bar K_2-1$,
+\[
+u_{2,k} \ge u_{2,k+1}.
+\]
+
+\paragraph{Maximum number of distinct patterns per supplier.}
+\[
+\sum_{p\in P_1} z_{1p} \le \bar K_1,\qquad
+\sum_{p\in P_2} z_{2p} \le \bar K_2.
+\]
+
+\paragraph{Total purchased pipes by supplier.}
+\[
+T_1=\sum_{p\in P_1} y_{1p},\qquad
+T_2=\sum_{p\in P_2} y_{2p}.
+\]
+
+\paragraph{Supplier-1 discount-tier logic.}
+\[
+t^{\text{low}}_1 + t^{\text{high}}_1 = 1,
+\]
+\[
+T_1 \le Q^{(1)} + M^{\text{disc}} t^{\text{high}}_1,
+\]
+\[
+T_1 \ge Q^{(1)} + 1 - M^{\text{disc}}(1-t^{\text{high}}_1).
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code first enumerates all feasible cutting patterns separately for each supplier. A pattern is any nonzero integer vector $(a_{sip})_{i\in I}$ satisfying the supplier-specific raw-length, leftover, and max-cuts rules above.
+    \item The optimization model does \emph{not} explicitly encode the business statement that pattern charges depend on the descending order of actual pattern frequencies. Instead, the implemented MILP charges only by the \emph{number} of used patterns through variables $u_{s,k}$, with nested activation enforced by $u_{s,k}\ge u_{s,k+1}$. There are no constraints comparing the magnitudes of the $y_{sp}$ values to assign ranks to specific patterns.
+    \item Likewise, the extra pattern-charge terms are additive constants per active rank slot, not multiplied by pipe counts.
+    \item Supplier 2 has no discount variables or discount constraints.
+    \item The resulting finite mixed-integer linear program is solved directly by Gurobi through PuLP (\texttt{pulp.GUROBI\_CMD(msg=False)}).
+\end{itemize}

@@ -1,0 +1,72 @@
+{
+  "solver": "gurobi",
+  "model_name": "Restaurant_Waiters_Service_Quality",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 102.0,
+  "objective_bound": 102.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0005581378936767578,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_iifdjjmf/solver_records/Restaurant_Waiters_Service_Quality.gurobi.log",
+  "variables": {
+    "y_0_0": {
+      "value": 8.0,
+      "reduced_cost": null
+    },
+    "y_2_0": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "y_3_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_4_0": {
+      "value": 12.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "MinCoverage_0_2-6": {
+      "sense": ">=",
+      "slack": -4.0,
+      "dual_value": null
+    },
+    "MinCoverage_1_6-10": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "MinCoverage_2_10-14": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "MinCoverage_3_14-18": {
+      "sense": ">=",
+      "slack": -3.0,
+      "dual_value": null
+    },
+    "MinCoverage_4_18-22": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "MinCoverage_5_22-2": {
+      "sense": ">=",
+      "slack": -8.0,
+      "dual_value": null
+    },
+    "BudgetConstraint": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

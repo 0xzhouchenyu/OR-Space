@@ -1,0 +1,184 @@
+\section*{Sets and Indices}
+
+Let
+\[
+A=\{\mathrm{cow},\mathrm{sheep},\mathrm{chicken}\}
+\]
+be the set of animal types.
+
+For compact notation, let regular and premium production modes be indexed implicitly by the variable names rather than by a separate set, since the implementation creates distinct variables for each animal--mode combination.
+
+\section*{Parameters}
+
+All parameter values are read from \texttt{general\_parameters.csv}.
+
+For each \(a\in A\):
+\begin{itemize}
+    \item \(p_a\): selling price per animal
+    \[
+    p_{\mathrm{cow}}=\texttt{cow\_selling\_price},\quad
+    p_{\mathrm{sheep}}=\texttt{sheep\_selling\_price},\quad
+    p_{\mathrm{chicken}}=\texttt{chicken\_selling\_price}.
+    \]
+    \item \(f_a\): regular feed cost per animal
+    \[
+    f_{\mathrm{cow}}=\texttt{cow\_feed\_cost},\quad
+    f_{\mathrm{sheep}}=\texttt{sheep\_feed\_cost},\quad
+    f_{\mathrm{chicken}}=\texttt{chicken\_feed\_cost}.
+    \]
+    \item \(m_a\): manure production per animal
+    \[
+    m_{\mathrm{cow}}=\texttt{cow\_manure\_production},\quad
+    m_{\mathrm{sheep}}=\texttt{sheep\_manure\_production},\quad
+    m_{\mathrm{chicken}}=\texttt{chicken\_manure\_production}.
+    \]
+    \item \(\ell_a\): base land usage per animal
+    \[
+    \ell_{\mathrm{cow}}=\texttt{base\_land\_usage\_cow},\quad
+    \ell_{\mathrm{sheep}}=\texttt{base\_land\_usage\_sheep},\quad
+    \ell_{\mathrm{chicken}}=\texttt{base\_land\_usage\_chicken}.
+    \]
+\end{itemize}
+
+Global parameters:
+\begin{itemize}
+    \item \(M=\texttt{max\_manure\_capacity}\): regular-mode manure capacity.
+    \item \(C=\texttt{max\_chickens}\): maximum total chickens.
+    \item \(L=\texttt{max\_total\_animals}\): regular-mode total animal capacity.
+    \item \(\underline{x}_{\mathrm{cow}}=\texttt{min\_cows}\): minimum total cows.
+    \item \(\underline{x}_{\mathrm{sheep}}=\texttt{min\_sheep}\): minimum total sheep.
+    \item \(\alpha=\texttt{premium\_capacity\_multiplier}\): multiplier applied to \(L\) when expanded mode is selected.
+    \item \(\beta=\texttt{premium\_manure\_multiplier}\): multiplier applied to \(M\) when expanded mode is selected.
+    \item \(\gamma=\texttt{premium\_feed\_multiplier}\): multiplier applied to feed costs of premium animals.
+    \item \(K=\texttt{expansion\_cost}\): fixed daily cost of expanded mode.
+    \item \(B=\texttt{base\_land\_capacity}\): regular-mode land capacity.
+    \item \(\Delta=\texttt{expansion\_land\_increase}\): additional land capacity in expanded mode.
+\end{itemize}
+
+Define per-animal profits exactly as in the code:
+\[
+\pi_a^{R}=p_a-f_a,\qquad \pi_a^{P}=p_a-\gamma f_a \qquad (a\in A).
+\]
+
+\section*{Decision Variables}
+
+For each animal type, the model uses separate integer counts for regular and premium animals:
+\begin{itemize}
+    \item \(x_{\mathrm{cow}}^{R}\) (code: \texttt{cows\_regular}) \(\in \mathbb{Z}_{+}\)
+    \item \(x_{\mathrm{cow}}^{P}\) (code: \texttt{cows\_premium}) \(\in \mathbb{Z}_{+}\)
+    \item \(x_{\mathrm{sheep}}^{R}\) (code: \texttt{sheep\_regular}) \(\in \mathbb{Z}_{+}\)
+    \item \(x_{\mathrm{sheep}}^{P}\) (code: \texttt{sheep\_premium}) \(\in \mathbb{Z}_{+}\)
+    \item \(x_{\mathrm{chicken}}^{R}\) (code: \texttt{chickens\_regular}) \(\in \mathbb{Z}_{+}\)
+    \item \(x_{\mathrm{chicken}}^{P}\) (code: \texttt{chickens\_premium}) \(\in \mathbb{Z}_{+}\)
+\end{itemize}
+
+Binary expansion decision:
+\[
+z \text{ (code: \texttt{z\_expand})} \in \{0,1\}.
+\]
+
+Total animals of each type are shorthand expressions used in the implementation:
+\[
+x_{\mathrm{cow}}=x_{\mathrm{cow}}^{R}+x_{\mathrm{cow}}^{P},\qquad
+x_{\mathrm{sheep}}=x_{\mathrm{sheep}}^{R}+x_{\mathrm{sheep}}^{P},\qquad
+x_{\mathrm{chicken}}=x_{\mathrm{chicken}}^{R}+x_{\mathrm{chicken}}^{P}.
+\]
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+\pi_{\mathrm{cow}}^{R}x_{\mathrm{cow}}^{R}
++\pi_{\mathrm{cow}}^{P}x_{\mathrm{cow}}^{P}
++\pi_{\mathrm{sheep}}^{R}x_{\mathrm{sheep}}^{R}
++\pi_{\mathrm{sheep}}^{P}x_{\mathrm{sheep}}^{P}
++\pi_{\mathrm{chicken}}^{R}x_{\mathrm{chicken}}^{R}
++\pi_{\mathrm{chicken}}^{P}x_{\mathrm{chicken}}^{P}
+-Kz.
+\]
+
+Equivalently, after substituting the code-defined profits,
+\[
+\max \;
+(p_{\mathrm{cow}}-f_{\mathrm{cow}})x_{\mathrm{cow}}^{R}
++(p_{\mathrm{cow}}-\gamma f_{\mathrm{cow}})x_{\mathrm{cow}}^{P}
++(p_{\mathrm{sheep}}-f_{\mathrm{sheep}})x_{\mathrm{sheep}}^{R}
++(p_{\mathrm{sheep}}-\gamma f_{\mathrm{sheep}})x_{\mathrm{sheep}}^{P}
++(p_{\mathrm{chicken}}-f_{\mathrm{chicken}})x_{\mathrm{chicken}}^{R}
++(p_{\mathrm{chicken}}-\gamma f_{\mathrm{chicken}})x_{\mathrm{chicken}}^{P}
+-Kz.
+\]
+
+\section*{Constraints}
+
+Minimum demand requirements:
+\[
+x_{\mathrm{cow}} \ge \underline{x}_{\mathrm{cow}},
+\qquad
+x_{\mathrm{sheep}} \ge \underline{x}_{\mathrm{sheep}}.
+\]
+
+Chicken limit:
+\[
+x_{\mathrm{chicken}} \le C.
+\]
+
+Expanded-gate total animal capacity:
+\[
+x_{\mathrm{cow}}+x_{\mathrm{sheep}}+x_{\mathrm{chicken}}
+\le
+L + (\alpha L-L)z.
+\]
+
+Expanded-gate manure capacity:
+\[
+m_{\mathrm{cow}}x_{\mathrm{cow}}
++m_{\mathrm{sheep}}x_{\mathrm{sheep}}
++m_{\mathrm{chicken}}x_{\mathrm{chicken}}
+\le
+M + (\beta M-M)z.
+\]
+
+Expanded-gate land capacity:
+\[
+\ell_{\mathrm{cow}}x_{\mathrm{cow}}
++\ell_{\mathrm{sheep}}x_{\mathrm{sheep}}
++\ell_{\mathrm{chicken}}x_{\mathrm{chicken}}
+\le
+B+\Delta z.
+\]
+
+Premium-animal gating constraints:
+\[
+x_{\mathrm{cow}}^{P} \le \alpha L z,
+\qquad
+x_{\mathrm{sheep}}^{P} \le \alpha L z,
+\qquad
+x_{\mathrm{chicken}}^{P} \le Cz.
+\]
+
+Integrality and binary restrictions:
+\[
+x_{a}^{R},x_{a}^{P}\in \mathbb{Z}_{+}\quad (a\in A),\qquad z\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The current implementation is a mixed-integer linear optimization model built in PuLP-compatible syntax and solved with \texttt{GUROBI\_CMD}. The formulation above matches that code directly.
+
+The business ``gate'' logic is represented by the binary variable \(z\):
+\begin{itemize}
+    \item If \(z=0\), the farm is in regular mode: total capacity is \(L\), manure capacity is \(M\), land capacity is \(B\), and all premium variables are forced to \(0\).
+    \item If \(z=1\), the farm is in expanded mode: total capacity becomes \(\alpha L\), manure capacity becomes \(\beta M\), land capacity becomes \(B+\Delta\), premium animals are allowed, and the fixed cost \(K\) is incurred.
+\end{itemize}
+
+Premium animals are modeled only through a different feed-cost multiplier \(\gamma\); selling prices are unchanged. Also, the code applies manure coefficients \(m_a\) and land coefficients \(\ell_a\) to total animals \(x_a\), not separately by regular versus premium mode. Thus \texttt{premium\_manure\_multiplier} changes the farm-wide manure-capacity right-hand side, not per-animal manure generation.
+
+The premium gating bounds are intentionally asymmetric in the source code:
+\[
+x_{\mathrm{cow}}^{P},x_{\mathrm{sheep}}^{P}\le \alpha L z,
+\qquad
+x_{\mathrm{chicken}}^{P}\le Cz,
+\]
+rather than tighter animal-specific bounds. The formulation preserves this exactly.

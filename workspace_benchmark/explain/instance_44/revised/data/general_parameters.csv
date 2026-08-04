@@ -1,0 +1,18 @@
+Parameter_Name,Value,Unit,Context_Description
+m,2,,Number of production points
+n,2,,Number of demand points
+p,2,,Number of intermediate marshaling stations
+a_1,100,,Output at production point 1
+a_2,150,,Output at production point 2
+b_1,80,,Demand at demand point 1
+b_2,120,,Demand at demand point 2
+f_1,10,,Fixed cost for using intermediate marshaling station 1
+f_2,15,,Fixed cost for using intermediate marshaling station 2
+q_1,100,,Maximum total transshipment capacity at intermediate marshaling station 1 for all modes combined
+q_2,100,,Maximum total transshipment capacity at intermediate marshaling station 2 for all modes combined
+qexp_1,50,,Maximum express transshipment capacity at intermediate marshaling station 1
+qexp_2,60,,Maximum express transshipment capacity at intermediate marshaling station 2
+alpha_1,0.25,,Minimum express fraction for demand point 1
+alpha_2,0.20,,Minimum express fraction for demand point 2
+eps,0.1,,Minimum strictly positive express flow to activate source indicator
+M,250,,Big-M upper bound on express flow yE_kj per station-demand pair

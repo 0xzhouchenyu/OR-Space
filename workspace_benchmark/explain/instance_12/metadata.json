@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_012",
+  "instance_number": 12,
+  "source_revise_instance": "IndustryOR_12_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "In the revised model, the optimal plan keeps the same physical production pattern as the original (types 1, 3, 4, and 6 produced; all eco variables at zero) but the objective rises from 43200.0 to 46550.0. Explain exactly which code additions create this 3350.0 increase, tracing them to the business brief’s “electricity directive” and the literal CSV field names/values they use; you must name the revised code variables/expressions and show why `max_total_energy_kwh = 10000` does not change the primal production mix here even though it is a new model restriction. Then, using the LP-relaxation diagnostics, identify which family of constraints is binding for eco usage and interpret the shadow-price/slack logic in business terms, including why you cannot linearly extrapolate the LP dual value of the energy cap (or any marginal value you cite) to claim the same per-kWh savings/costs in the integer optimum."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "PlasticContainers.gurobi.log",
+        "PlasticContainers.lp_relaxation.json",
+        "PlasticContainers.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "PlasticContainers_EnergyModes.gurobi.log",
+        "PlasticContainers_EnergyModes.lp_relaxation.json",
+        "PlasticContainers_EnergyModes.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 82.056667
+  }
+}

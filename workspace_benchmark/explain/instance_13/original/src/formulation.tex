@@ -1,0 +1,116 @@
+\section*{Sets and Indices}
+
+Let
+\[
+C = \{\text{corn},\text{wheat},\text{soybeans},\text{sorghum}\}
+\]
+denote the set of crops. No additional indexing sets are used in the implemented model.
+
+\section*{Parameters}
+
+For each crop \(c \in C\), let \(p_c\) denote profit per acre:
+\[
+p_{\text{corn}},\; p_{\text{wheat}},\; p_{\text{soybeans}},\; p_{\text{sorghum}}.
+\]
+In code these are
+\texttt{profit\_corn}, \texttt{profit\_wheat}, \texttt{profit\_soybeans}, and \texttt{profit\_sorghum}.
+
+Let
+\[
+A
+\]
+(code: \texttt{total\_area}) be the total available farm area.
+
+Let
+\[
+r^{cw}
+\]
+(code: \texttt{corn\_wheat\_ratio}) be the minimum corn-to-wheat acreage ratio.
+
+Let
+\[
+r^{ss}
+\]
+(code: \texttt{soybeans\_sorghum\_ratio}) be the minimum soybeans-to-sorghum acreage ratio.
+
+Let
+\[
+r^{ws}
+\]
+(code: \texttt{wheat\_sorghum\_ratio}) be the wheat-to-sorghum proportionality factor.
+
+\section*{Decision Variables}
+
+Let
+\[
+x_{\text{corn}} \ge 0
+\]
+(code: \texttt{corn}) be the acres planted in corn.
+
+Let
+\[
+x_{\text{wheat}} \ge 0
+\]
+(code: \texttt{wheat}) be the acres planted in wheat.
+
+Let
+\[
+x_{\text{soybeans}} \ge 0
+\]
+(code: \texttt{soybeans}) be the acres planted in soybeans.
+
+Let
+\[
+x_{\text{sorghum}} \ge 0
+\]
+(code: \texttt{sorghum}) be the acres planted in sorghum.
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+p_{\text{corn}} x_{\text{corn}}
++ p_{\text{wheat}} x_{\text{wheat}}
++ p_{\text{soybeans}} x_{\text{soybeans}}
++ p_{\text{sorghum}} x_{\text{sorghum}}.
+\]
+
+\section*{Constraints}
+
+Total land availability:
+\[
+x_{\text{corn}} + x_{\text{wheat}} + x_{\text{soybeans}} + x_{\text{sorghum}} \le A.
+\]
+
+Corn-to-wheat ratio:
+\[
+x_{\text{corn}} \ge r^{cw} x_{\text{wheat}}.
+\]
+
+Soybeans-to-sorghum ratio:
+\[
+x_{\text{soybeans}} \ge r^{ss} x_{\text{sorghum}}.
+\]
+
+Wheat-to-sorghum proportionality:
+\[
+x_{\text{wheat}} = r^{ws} x_{\text{sorghum}}.
+\]
+
+Nonnegativity:
+\[
+x_{\text{corn}},x_{\text{wheat}},x_{\text{soybeans}},x_{\text{sorghum}} \ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a continuous linear program with four nonnegative decision variables and one equality constraint. It is solved in \texttt{current\_heuristic.py} by constructing an \texttt{LpProblem} with maximization sense and passing it to \texttt{GUROBI\_CMD(msg=0)} through the PuLP-compatible interface.
+
+A notable implementation detail is that the wheat--sorghum requirement is modeled as an equality,
+\[
+x_{\text{wheat}} = r^{ws} x_{\text{sorghum}},
+\]
+not as an inequality. This follows the source code exactly and should not be replaced by a weaker or stronger alternative when reproducing the model.
+
+All acreage variables are continuous; there are no integrality restrictions.

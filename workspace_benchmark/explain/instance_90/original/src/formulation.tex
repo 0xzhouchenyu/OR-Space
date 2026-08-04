@@ -1,0 +1,133 @@
+\section*{Sets and Indices}
+
+Let
+\[
+P=\{A,B\}
+\]
+be the set of promotional packages.
+
+\section*{Parameters}
+
+For each package \(p \in P\):
+\begin{itemize}
+    \item \(r_p\): revenue per unit sold of package \(p\).
+    \item \(m_p\): minimum required sales of package \(p\).
+    \item \(s_p\): number of shirts used in one unit of package \(p\).
+    \item \(q_p\): number of pants used in one unit of package \(p\).
+\end{itemize}
+
+Inventory parameters:
+\begin{itemize}
+    \item \(S\): total shirts inventory available.
+    \item \(Q\): total pants inventory available.
+\end{itemize}
+
+Using the provided data:
+\[
+S = 200, \qquad Q = 100,
+\]
+\[
+r_A = 30,\quad r_B = 50,
+\]
+\[
+m_A = 20,\quad m_B = 10,
+\]
+\[
+s_A = 1,\quad s_B = 3,
+\]
+\[
+q_A = 2,\quad q_B = 1.
+\]
+
+Correspondence to code parameters:
+\[
+S \text{ (code: \texttt{shirts\_inventory})}, \quad
+Q \text{ (code: \texttt{pants\_inventory})},
+\]
+\[
+r_A \text{ (code: \texttt{price\_a})}, \quad
+r_B \text{ (code: \texttt{price\_b})},
+\]
+\[
+m_A \text{ (code: \texttt{min\_a})}, \quad
+m_B \text{ (code: \texttt{min\_b})},
+\]
+\[
+s_A \text{ (code: \texttt{shirts\_a})}, \quad
+s_B \text{ (code: \texttt{shirts\_b})},
+\]
+\[
+q_A \text{ (code: \texttt{pants\_a})}, \quad
+q_B \text{ (code: \texttt{pants\_b})}.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_A\) (code: \texttt{x\_a}): integer number of Package A units to sell.
+    \item \(x_B\) (code: \texttt{x\_b}): integer number of Package B units to sell.
+\end{itemize}
+
+The variables are restricted to be nonnegative integers:
+\[
+x_A, x_B \in \mathbb{Z}_{\ge 0}.
+\]
+
+\section*{Objective}
+
+Maximize total revenue:
+\[
+\max \; r_A x_A + r_B x_B.
+\]
+
+With the given data, this is
+\[
+\max \; 30x_A + 50x_B.
+\]
+
+\section*{Constraints}
+
+Inventory limits:
+\[
+s_A x_A + s_B x_B \le S,
+\]
+\[
+q_A x_A + q_B x_B \le Q.
+\]
+
+With the given data:
+\[
+x_A + 3x_B \le 200,
+\]
+\[
+2x_A + x_B \le 100.
+\]
+
+Minimum sales requirements:
+\[
+x_A \ge m_A,
+\]
+\[
+x_B \ge m_B.
+\]
+
+With the given data:
+\[
+x_A \ge 20,
+\]
+\[
+x_B \ge 10.
+\]
+
+Integrality:
+\[
+x_A, x_B \in \mathbb{Z}_{\ge 0}.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model in \texttt{current\_heuristic.py} is a two-variable integer linear program created with PuLP and solved using \texttt{GUROBI\_CMD}. No additional valid inequalities, reformulations, or preprocessing are applied in the code.
+
+Although the lower bounds \(x_A \ge 20\) and \(x_B \ge 10\) already imply nonnegativity, the code also sets an explicit lower bound of \(0\) on both variables. The formulation above preserves both the explicit nonnegativity/integrality and the separate minimum-sales constraints to match the implementation exactly.
+
+The solver maximizes the linear objective subject to the linear inventory and minimum-sales constraints over whole-package quantities only.

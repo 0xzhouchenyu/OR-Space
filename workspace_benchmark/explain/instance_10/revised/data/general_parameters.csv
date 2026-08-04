@@ -1,0 +1,8 @@
+Parameter_Name,Value,Unit,Context_Description
+distance_limit,800,m,Maximum distance from any residential area to one of the chain stores
+small_cost,1,cost_units,Cost of opening a Small-format store
+large_cost,2,cost_units,Cost of opening a Large-format store
+small_cap_areas,3,count,Maximum number of areas a Small store can serve from its physical coverage list
+max_large_stores,1,count,Maximum number of Large stores allowed in the entire network
+minimum_neighborhood_counters,6,sites,Minimum number of small neighborhood-facing counters required for the rollout
+small_store_counter_credit,1,counter_per_small_store,Each Small-format store counts as one neighborhood counter

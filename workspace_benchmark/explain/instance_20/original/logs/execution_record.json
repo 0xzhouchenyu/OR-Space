@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 956.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nRobots: 0\nModel Cars: 118\nBuilding Blocks: 1\nDolls: 0\nOBJECTIVE_VALUE: 956.0\n",
+  "stderr": "",
+  "error": null
+}

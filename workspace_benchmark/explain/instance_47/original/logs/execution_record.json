@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 20260.869565217392,
+  "stdout": "Set parameter LicenseID to value 2802670\nSoybean: 0.0000 hectares\nCorn: 39.1304 hectares\nWheat: 0.0000 hectares\nDairy cows: 21.3043\nChickens: 0.0000\nSurplus labor AW: 0.0000 person-days\nSurplus labor SS: 0.0000 person-days\nOBJECTIVE_VALUE: 20260.869565217392\n",
+  "stderr": "",
+  "error": null
+}

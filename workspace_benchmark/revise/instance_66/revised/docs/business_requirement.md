@@ -1,0 +1,7 @@
+A toy company manufactures three types of tabletop golf toys, each requiring different manufacturing techniques. The production process involves constraints on labor hours, inspection hours, and market demand for each type of toy. The goal is to determine the production plan that maximizes profit. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. The operations lead described this revision as a timing promise, not a quantity tweak. Work, inventory, cash, or capacity that leaves one ledger position should only reappear when the business clock says it has cleared. The two-period toy season now has a fatigue carryover. Period-1 overtime above `period1_overtime_fatigue_threshold` reduces period-2 regular labor by `period2_labor_recovery_loss`, and heavy total overtime above `overtime_review_threshold` brings the seasonal safety review cost `seasonal_safety_review_fee`. Period-specific demand and inspection limits remain separate. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

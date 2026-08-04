@@ -1,0 +1,165 @@
+{
+  "solver": "gurobi",
+  "model_name": "Factory_Production_With_Setup_Costs",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 670.5665024630542,
+  "objective_bound": 670.5665024630542,
+  "mip_gap": 0.0,
+  "runtime": 0.003969907760620117,
+  "node_count": 1.0,
+  "iteration_count": 9.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_7dw1qp0k/solver_records/Factory_Production_With_Setup_Costs.gurobi.log",
+  "variables": {
+    "A2_B2_joint_calibration": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_A1_I": {
+      "value": 1200.0,
+      "reduced_cost": null
+    },
+    "x_A1_II": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_A2_I": {
+      "value": 230.0492610837439,
+      "reduced_cost": null
+    },
+    "x_A2_II": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "x_A2_III": {
+      "value": 324.13793103448273,
+      "reduced_cost": null
+    },
+    "x_B1_I": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B1_II": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "x_B2_I": {
+      "value": 858.6206896551724,
+      "reduced_cost": null
+    },
+    "x_B2_III": {
+      "value": 324.13793103448273,
+      "reduced_cost": null
+    },
+    "x_B3_I": {
+      "value": 571.4285714285714,
+      "reduced_cost": null
+    },
+    "y_A1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_A2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_B1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_B2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_B3": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "flow_balance_I": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "flow_balance_II": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "flow_balance_III": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "capacity_A1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "activation_A1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "capacity_A2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "activation_A2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "capacity_B1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "activation_B1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "capacity_B2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "activation_B2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "capacity_B3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "activation_B3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "A2_B2_joint_calibration_lower": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "A2_B2_joint_calibration_A2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "A2_B2_joint_calibration_B2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

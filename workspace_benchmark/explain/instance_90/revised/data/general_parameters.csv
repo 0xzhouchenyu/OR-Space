@@ -1,0 +1,29 @@
+Parameter_Name,Value,Unit,Context_Description
+shirts_inventory,200,units,Total number of shirts available for promotion
+pants_inventory,100,units,Total number of pants available for promotion
+package_a_price,30,pounds,Price of Package A
+package_b_price,50,pounds,Price of Package B
+package_c_price,80,pounds,Price of Package C (Deluxe)
+package_a_shirts,1,units,Number of shirts included in Package A
+package_a_pants,2,units,Number of pants included in Package A
+package_b_shirts,3,units,Number of shirts included in Package B
+package_b_pants,1,units,Number of pants included in Package B
+package_c_shirts,2,units,Number of shirts included in Package C
+package_c_pants,2,units,Number of pants included in Package C
+min_campaign_batch_a,20,units,Minimum units of Package A if its campaign is launched
+min_campaign_batch_b,10,units,Minimum units of Package B if its campaign is launched
+min_campaign_batch_c,5,units,Minimum units of Package C if its campaign is launched
+activation_cost_a,150,pounds,Fixed one-time activation cost for Package A campaign
+activation_cost_b,200,pounds,Fixed one-time activation cost for Package B campaign
+activation_cost_c,250,pounds,Fixed one-time activation cost for Package C campaign
+labor_hours_per_A,0.5,hours_per_unit,Packaging labor per unit of Package A
+labor_hours_per_B,0.8,hours_per_unit,Packaging labor per unit of Package B
+labor_hours_per_C,1.2,hours_per_unit,Packaging labor per unit of Package C
+labor_hours_total,90,hours,Total weekly packaging labor budget
+bigM_a,300,units,Upper bound used to link x_a to y_a
+bigM_b,300,units,Upper bound used to link x_b to y_b
+bigM_c,300,units,Upper bound used to link x_c to y_c
+package_b_review_threshold,45,packages,Package B volume covered by the standard campaign display review
+package_b_review_charge,300,pounds,Extra display review charge if Package B volume exceeds its threshold
+package_c_review_threshold,27,packages,Package C volume covered by the ordinary deluxe-display review
+package_c_review_charge,30,pounds,One-time review charge if Package C volume exceeds the ordinary deluxe-display review

@@ -1,0 +1,8 @@
+Parameter_Name,Value,Unit,Context_Description
+min_courses_required,2,courses,Minimum number of distinct counted courses required in each category
+prerequisite_computer_simulation,Computer Programming,course,Prerequisite for Computer Simulation
+prerequisite_data_structures,Computer Programming,course,Prerequisite for Data Structures
+prerequisite_management_statistics,Calculus,course,Prerequisite for Management Statistics
+prerequisite_forecasting,Management Statistics,course,Prerequisite for Forecasting
+mandatory_foundation_for_cs_counting,Computer Programming,course,Required foundation course whenever Computer Science category coverage is activated
+cs_category_name,Computer Science,category,Category whose coverage triggers the mandatory foundation rule

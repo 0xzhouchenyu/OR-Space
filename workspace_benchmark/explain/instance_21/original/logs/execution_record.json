@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 15000.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nOrders from A: 0, Tables: 0\nOrders from B: 0, Tables: 0\nOrders from C: 10, Tables: 150\nOBJECTIVE_VALUE: 15000.0\n",
+  "stderr": "",
+  "error": null
+}

@@ -1,0 +1,299 @@
+{
+  "solver": "gurobi",
+  "model_name": "Transportation_Problem_Mode_Split_Diversification",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 773.0,
+  "objective_bound": 773.0,
+  "mip_gap": 0.0,
+  "runtime": 0.00429081916809082,
+  "node_count": 1.0,
+  "iteration_count": 14.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_egda23q2/solver_records/Transportation_Problem_Mode_Split_Diversification.gurobi.log",
+  "variables": {
+    "u_1_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "u_1_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "u_2_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "u_2_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "v": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "w_1_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "w_1_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "w_2_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "w_2_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "xE_1_1": {
+      "value": 24.0,
+      "reduced_cost": null
+    },
+    "xE_1_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "xE_2_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "xE_2_2": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "xR_1_1": {
+      "value": 76.0,
+      "reduced_cost": null
+    },
+    "xR_1_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "xR_2_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "xR_2_2": {
+      "value": 80.0,
+      "reduced_cost": null
+    },
+    "yE_1_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "yE_1_2": {
+      "value": 24.0,
+      "reduced_cost": null
+    },
+    "yE_2_1": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "yE_2_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "yR_1_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "yR_1_2": {
+      "value": 76.0,
+      "reduced_cost": null
+    },
+    "yR_2_1": {
+      "value": 60.0,
+      "reduced_cost": null
+    },
+    "yR_2_2": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "z_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Supply_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Supply_2": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": null
+    },
+    "Demand_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Demand_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "FlowBalance_R_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "FlowBalance_E_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "FlowBalance_R_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "FlowBalance_E_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "CapacityTotal_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "CapacityTotal_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "CapacityExpress_1": {
+      "sense": "<=",
+      "slack": 26.0,
+      "dual_value": null
+    },
+    "CapacityExpress_2": {
+      "sense": "<=",
+      "slack": 40.0,
+      "dual_value": null
+    },
+    "ExpressShare_1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "ExpressShare_2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "MinExpress_1_1": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MaxExpress_1_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MinExpress_1_2": {
+      "sense": ">=",
+      "slack": -23.9,
+      "dual_value": null
+    },
+    "MaxExpress_1_2": {
+      "sense": "<=",
+      "slack": 226.0,
+      "dual_value": null
+    },
+    "MinExpress_2_1": {
+      "sense": ">=",
+      "slack": -19.9,
+      "dual_value": null
+    },
+    "MaxExpress_2_1": {
+      "sense": "<=",
+      "slack": 230.0,
+      "dual_value": null
+    },
+    "MinExpress_2_2": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MaxExpress_2_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "W_leq_U_1_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "W_leq_Z_1_1": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "W_leq_U_1_2": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "W_leq_Z_1_2": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "W_leq_U_2_1": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "W_leq_Z_2_1": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "W_leq_U_2_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "W_leq_Z_2_2": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "v_upper": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "v_lower": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "Diversification_1": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Diversification_2": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

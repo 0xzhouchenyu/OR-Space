@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 125.0,
+  "stdout": "Year 1 training jets: 10.0\nYear 2 training jets: 15.0\nTotal pilots trained: 125.0\nOBJECTIVE_VALUE: 125.0\nSet parameter LicenseID to value 2802670\n",
+  "stderr": "",
+  "error": null
+}

@@ -1,0 +1,87 @@
+{
+  "solver": "gurobi",
+  "model_name": "Investment_Optimization_With_Fees",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 553400.0,
+  "objective_bound": 553400.0000000001,
+  "mip_gap": 2.1036379079677415e-16,
+  "runtime": 0.004007101058959961,
+  "node_count": 1.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_5yw3epwy/solver_records/Investment_Optimization_With_Fees.gurobi.log",
+  "variables": {
+    "a1": {
+      "value": 300000.0,
+      "reduced_cost": null
+    },
+    "a2": {
+      "value": 160000.0,
+      "reduced_cost": null
+    },
+    "a3": {
+      "value": 92000.0,
+      "reduced_cost": null
+    },
+    "b1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "c2": {
+      "value": 200000.0,
+      "reduced_cost": null
+    },
+    "d3": {
+      "value": 100000.0,
+      "reduced_cost": null
+    },
+    "y_b1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_c2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_d3": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Year1_budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Year2_budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Year3_budget": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

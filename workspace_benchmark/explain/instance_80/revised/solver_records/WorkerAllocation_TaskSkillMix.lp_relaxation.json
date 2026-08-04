@@ -1,0 +1,316 @@
+{
+  "solver": "gurobi",
+  "model_name": "WorkerAllocation_TaskSkillMix_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 86000.0,
+  "runtime": 0.00049591064453125,
+  "variables": {
+    "L_Task_1": {
+      "value": 155.55555555555554,
+      "reduced_cost": 0.0
+    },
+    "L_Task_2": {
+      "value": 265.57377049180326,
+      "reduced_cost": 0.0
+    },
+    "L_Task_3": {
+      "value": 378.87067395264114,
+      "reduced_cost": 0.0
+    },
+    "S_Task_1": {
+      "value": 66.66666666666667,
+      "reduced_cost": 0.0
+    },
+    "S_Task_2": {
+      "value": 29.508196721311478,
+      "reduced_cost": 0.0
+    },
+    "S_Task_3": {
+      "value": 103.82513661202188,
+      "reduced_cost": 0.0
+    },
+    "l_Task_1_Method_A": {
+      "value": 155.55555555555554,
+      "reduced_cost": 0.0
+    },
+    "l_Task_1_Method_B": {
+      "value": 0.0,
+      "reduced_cost": 2.142857142857139
+    },
+    "l_Task_2_Method_A": {
+      "value": 265.57377049180326,
+      "reduced_cost": 0.0
+    },
+    "l_Task_2_Method_B": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "l_Task_3_Method_A": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "l_Task_3_Method_B": {
+      "value": 378.87067395264114,
+      "reduced_cost": 0.0
+    },
+    "s_Task_1_Method_A": {
+      "value": 66.66666666666667,
+      "reduced_cost": 0.0
+    },
+    "s_Task_1_Method_B": {
+      "value": 0.0,
+      "reduced_cost": 2.500000000000014
+    },
+    "s_Task_2_Method_A": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "s_Task_2_Method_B": {
+      "value": 29.508196721311478,
+      "reduced_cost": 0.0
+    },
+    "s_Task_3_Method_A": {
+      "value": 87.92846497764533,
+      "reduced_cost": 0.0
+    },
+    "s_Task_3_Method_B": {
+      "value": 15.89667163437655,
+      "reduced_cost": 0.0
+    },
+    "total_laborers": {
+      "value": 800.0,
+      "reduced_cost": 0.0
+    },
+    "total_skilled": {
+      "value": 200.00000000000003,
+      "reduced_cost": 0.0
+    },
+    "y_Task_1_Method_A": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "y_Task_1_Method_B": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_Task_2_Method_A": {
+      "value": 0.8852459016393442,
+      "reduced_cost": 0.0
+    },
+    "y_Task_2_Method_B": {
+      "value": 0.11475409836065574,
+      "reduced_cost": 0.0
+    },
+    "y_Task_3_Method_A": {
+      "value": 0.20516641828117244,
+      "reduced_cost": 0.0
+    },
+    "y_Task_3_Method_B": {
+      "value": 0.7948335817188276,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "TotalSkilledDef": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 110.0
+    },
+    "TotalLaborersDef": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 94.28571428571429
+    },
+    "TaskSkilledSum_Task_1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 2.842170943040401e-14
+    },
+    "TaskLaborerSum_Task_1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "TaskSkilledSum_Task_2": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "TaskLaborerSum_Task_2": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "TaskSkilledSum_Task_3": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "TaskLaborerSum_Task_3": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "OneMethod_Task_1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 22000.0
+    },
+    "OneMethod_Task_2": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 28285.714285714286
+    },
+    "OneMethod_Task_3": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 47142.857142857145
+    },
+    "Hours_Task_1_Method_A": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 2.619047619047619
+    },
+    "LinkS_Task_1_Method_A": {
+      "sense": "<",
+      "slack": 9933.333333333334,
+      "dual_value": 0.0
+    },
+    "LinkL_Task_1_Method_A": {
+      "sense": "<",
+      "slack": 9844.444444444445,
+      "dual_value": 0.0
+    },
+    "Hours_Task_1_Method_B": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 2.5595238095238098
+    },
+    "LinkS_Task_1_Method_B": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "LinkL_Task_1_Method_B": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Hours_Task_2_Method_A": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 2.619047619047619
+    },
+    "LinkS_Task_2_Method_A": {
+      "sense": "<",
+      "slack": 8852.459016393443,
+      "dual_value": 0.0
+    },
+    "LinkL_Task_2_Method_A": {
+      "sense": "<",
+      "slack": 8586.88524590164,
+      "dual_value": 0.0
+    },
+    "Hours_Task_2_Method_B": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 2.619047619047619
+    },
+    "LinkS_Task_2_Method_B": {
+      "sense": "<",
+      "slack": 1118.032786885246,
+      "dual_value": 0.0
+    },
+    "LinkL_Task_2_Method_B": {
+      "sense": "<",
+      "slack": 1147.5409836065573,
+      "dual_value": 0.0
+    },
+    "Hours_Task_3_Method_A": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 2.619047619047619
+    },
+    "LinkS_Task_3_Method_A": {
+      "sense": "<",
+      "slack": 1963.7357178340792,
+      "dual_value": 0.0
+    },
+    "LinkL_Task_3_Method_A": {
+      "sense": "<",
+      "slack": 2051.6641828117245,
+      "dual_value": 0.0
+    },
+    "Hours_Task_3_Method_B": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 2.619047619047619
+    },
+    "LinkS_Task_3_Method_B": {
+      "sense": "<",
+      "slack": 7932.439145553899,
+      "dual_value": 0.0
+    },
+    "LinkL_Task_3_Method_B": {
+      "sense": "<",
+      "slack": 7569.465143235634,
+      "dual_value": 0.0
+    },
+    "MaxSkilled": {
+      "sense": "<",
+      "slack": 229.99999999999997,
+      "dual_value": 0.0
+    },
+    "MaxLaborers": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -14.285714285714292
+    },
+    "SkilledRatioGlobal": {
+      "sense": "<",
+      "slack": 280.0,
+      "dual_value": 0.0
+    },
+    "ExclusionRule_T1B_T3A": {
+      "sense": "<",
+      "slack": 0.7948335817188276,
+      "dual_value": 0.0
+    },
+    "MinSkilledTask3B": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "MinShare_Task_1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -5.684341886080802e-14
+    },
+    "MaxShare_Task_1": {
+      "sense": "<",
+      "slack": 88.88888888888887,
+      "dual_value": 0.0
+    },
+    "MinShare_Task_2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "MaxShare_Task_2": {
+      "sense": "<",
+      "slack": 118.03278688524588,
+      "dual_value": 0.0
+    },
+    "MinShare_Task_3": {
+      "sense": ">",
+      "slack": -7.285974499089278,
+      "dual_value": 0.0
+    },
+    "MaxShare_Task_3": {
+      "sense": "<",
+      "slack": 185.7923497267759,
+      "dual_value": 0.0
+    }
+  }
+}

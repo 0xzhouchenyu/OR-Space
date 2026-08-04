@@ -1,0 +1,43 @@
+{
+  "solver": "gurobi",
+  "model_name": "clothing_production",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 21500.0,
+  "objective_bound": 21500.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0035681724548339844,
+  "node_count": 1.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_kdyom1t4/solver_records/clothing_production.gurobi.log",
+  "variables": {
+    "x_0": {
+      "value": 100.0,
+      "reduced_cost": null
+    },
+    "x_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_2": {
+      "value": 200.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "labor": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "material": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

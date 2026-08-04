@@ -1,0 +1,11 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+Brand A production: 2544.44 kg
+Brand B production: 3155.56 kg
+Brand C production: 0.00 kg
+  RM A in Brand A: 1526.67
+  RM A in Brand B: 473.33
+  RM B in Brand A: 1017.78
+  RM B in Brand B: 1482.22
+  RM C in Brand B: 1200.00
+OBJECTIVE_VALUE: 6160.0

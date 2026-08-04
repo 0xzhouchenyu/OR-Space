@@ -1,0 +1,60 @@
+{
+  "instance_id": "OR_explain_049",
+  "instance_number": 49,
+  "source_revise_instance": "IndustryOR_49_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain exactly how the business phrase “first-month onboarding drag” is implemented by tracing one start-month contract pair through the math and code: identify the revised code variable names and the exact monthly-coverage expression that changes a new contract’s contribution in its start month, and name the CSV field names and numeric values that feed this logic. Then use the revised LP-relaxation diagnostics to identify which monthly coverage constraints are binding and interpret at least one visible shadow price/slack in business terms, including why you cannot linearly extrapolate that marginal value to the integer optimal solution. Finally, compare the original and revised models and pinpoint the exact code additions that cause the objective to rise from 208000.0 to 225200.0, tying them back to the business brief and quantifying the 17200.0 increase with specific references to variables/constraints that appear in the revised optimal solution."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "table_2.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Warehouse_Rental.gurobi.log",
+        "Warehouse_Rental.lp_relaxation.json",
+        "Warehouse_Rental.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "table_2.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "WarehouseOnboarding.gurobi.log",
+        "WarehouseOnboarding.lp_relaxation.json",
+        "WarehouseOnboarding.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 56.797778
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_071",
+  "instance_number": 71,
+  "source_revise_instance": "IndustryOR_71_revise_business",
+  "domain": "Facility_Assignment_with_Service_Mode_Selection",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Facility_Assignment_with_Service_Mode_Selection",
+    "question": "Using the revised LP-relaxation diagnostics, explain why the optimal solution keeps all premium variables `y[i][p]` and `v_prem[i][p]` at zero even though premium mode was introduced. Your answer must trace `v_std_0_0 = 30`, `v_std_1_1 = 70`, the binding constraints `volume_balance_0`, `volume_balance_1`, `location_capacity_1`, and `std_only_if_assigned_0_1`, back to the exact CSV columns `Transportation_volume_to_Location_1`, `Transportation_volume_to_Location_2`, `Transportation_cost_to_Location_1`, `Transportation_cost_to_Location_2`, and the parameter values `premium_cost_multiplier = 1.5` and `min_premium_share = 0.4`; also name the exact code variables `x[i][p]`, `y[i][p]`, `v_std[i][p]`, `v_prem[i][p]`, `c_std[(i,p)]`, and `c_prem[(i,p)]`. Then compare the original objective 330.0 to the revised 670.0 by pinpointing which exact code additions in `current_heuristic.py` changed the economics, interpret the shadow prices/duals and slacks in business terms, and explain why you cannot linearly extrapolate the `location_capacity_1` or `volume_balance_1` dual to predict the cost of adding capacity or forcing premium usage."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Advanced_71.gurobi.log",
+        "Advanced_71.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "FactoryLocationAssignmentWithModes.gurobi.log",
+        "FactoryLocationAssignmentWithModes.lp_relaxation.json",
+        "FactoryLocationAssignmentWithModes.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 65.949444
+  }
+}

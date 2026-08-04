@@ -1,0 +1,39 @@
+{
+  "solver": "gurobi",
+  "model_name": "SchoolTrip",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 6200.0,
+  "objective_bound": 6200.0,
+  "mip_gap": 0.0,
+  "runtime": 0.002218961715698242,
+  "node_count": 1.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_qgk1ruot/solver_records/SchoolTrip.gurobi.log",
+  "variables": {
+    "buses": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "minibuses": {
+      "value": 5.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "StudentCapacity": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "DriverLimit": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

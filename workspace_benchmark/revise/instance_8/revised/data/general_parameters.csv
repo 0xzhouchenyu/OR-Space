@@ -1,0 +1,4 @@
+Parameter_Name,Value,Unit,Context_Description
+shared_temp_handoff_cost,6,cost_units,One-time coordination charge if Workers III and V are both brought onto the job
+worker_II_V_pair_limit,1,pair,The crew-pair office treats Workers II and V as a watched combination when both appear on the same four-task job
+worker_II_V_pair_fee,5,cost_units,One-time office handling cost for using Workers II and V together

@@ -1,0 +1,105 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$ : set of applicant types, indexed by $i$. In this instance,
+    \[
+    I=\{1,2,3,4,5,6\}.
+    \]
+    \item $J$ : set of branch cities, indexed by $j$. Here,
+    \[
+    J=\{\text{Donghai},\text{Nanjiang}\}.
+    \]
+    \item $K$ : set of specialties, indexed by $k$. Here,
+    \[
+    K=\{1,2,3\}.
+    \]
+    \item $S_i \subseteq K$ : specialties suitable for applicant type $i$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $n_i$ : number of available recruits of type $i$.
+    \[
+    n_i = 1500 \qquad \forall i\in I.
+    \]
+    \item $d_{jk}$ : required demand at city $j$ for specialty $k$:
+    \[
+    \begin{array}{c|ccc}
+    & k=1 & k=2 & k=3\\ \hline
+    j=\text{Donghai} & 1000 & 2000 & 1500\\
+    j=\text{Nanjiang} & 2000 & 1000 & 1000
+    \end{array}
+    \]
+    \item $p_i$ : preferred specialty of type $i$.
+    \[
+    p_1=1,\; p_2=2,\; p_3=1,\; p_4=3,\; p_5=3,\; p_6=3.
+    \]
+    \item $c_i$ : preferred city of type $i$.
+    \[
+    c_1=\text{Donghai},\;
+    c_2=\text{Donghai},\;
+    c_3=\text{Nanjiang},\;
+    c_4=\text{Nanjiang},\;
+    c_5=\text{Donghai},\;
+    c_6=\text{Nanjiang}.
+    \]
+    \item $\tau$ : minimum required number of recruits assigned to their preferred specialty (Priority 2 target),
+    \[
+    \tau = 7500.
+    \]
+    \item Suitability sets from the data:
+    \[
+    S_1=\{1,2\},\;
+    S_2=\{2,3\},\;
+    S_3=\{1,3\},\;
+    S_4=\{1,3\},\;
+    S_5=\{2,3\},\;
+    S_6=\{3\}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ijk}$ (code: \texttt{x[i,j,k]}) : integer number of recruits of type $i$ assigned to city $j$ in specialty $k$.
+    \[
+    x_{ijk}\in \mathbb{Z}_{\ge 0}\qquad \forall i\in I,\; j\in J,\; k\in K.
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Maximize the number of recruits who receive both their preferred city and preferred specialty:
+\[
+\max \sum_{i\in I:\, p_i\in S_i} x_{i\,c_i\,p_i}.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{j\in J}\sum_{k\in K} x_{ijk} &\le n_i
+&& \forall i\in I
+\label{cons:supply}
+\\
+\sum_{i\in I} x_{ijk} &\ge d_{jk}
+&& \forall j\in J,\; k\in K
+\label{cons:demand}
+\\
+x_{ijk} &= 0
+&& \forall i\in I,\; j\in J,\; k\in K \text{ such that } k\notin S_i
+\label{cons:suitability}
+\\
+\sum_{i\in I:\, p_i\in S_i}\sum_{j\in J} x_{ij\,p_i} &\ge \tau
+\label{cons:preferred-specialty}
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is an integer linear program solved with \texttt{GUROBI\_CMD} through PuLP.
+    \item Demand constraints are coded with ``$\ge$'' rather than equality, so the formulation permits overstaffing relative to branch-specialty demand if beneficial or necessary.
+    \item Availability constraints are also coded with ``$\le$'', so not all recruits must be assigned.
+    \item The preferred-specialty count in both the constraint and objective is built only for applicant types whose preferred specialty is in their suitability set. In this instance, this condition holds for all six types.
+    \item The legacy Priority 3 target parameter (\texttt{priority\_3\_target} $=8000$) is read from data but is not used in the revised model.
+\end{itemize}

@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 46980.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nDevice A, period peak: x=0.0000, z=0\nDevice A, period offpeak: x=800.0000, z=1\nDevice A: y=1\nDevice B, period peak: x=0.0000, z=0\nDevice B, period offpeak: x=0.0000, z=0\nDevice B: y=0\nDevice C, period peak: x=0.0000, z=0\nDevice C, period offpeak: x=1200.0000, z=1\nDevice C: y=1\nDevice D, period peak: x=0.0000, z=0\nDevice D, period offpeak: x=0.0000, z=0\nDevice D: y=0\nOBJECTIVE_VALUE: 46980.0\n",
+  "stderr": "",
+  "error": null
+}

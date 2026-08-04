@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_008",
+  "instance_number": 8,
+  "source_revise_instance": "IndustryOR_8_revise_business",
+  "domain": "Assignment_Optimization",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Assignment_Optimization",
+    "question": "Using the revised model only, explain why the LP relaxation and final MIP both avoid Worker V, even though `x_V_D` has reduced cost 0 in the LP relaxation. Your answer must trace the logic from the business brief’s “one-time handling desk” gate to the exact code variables `pair_ii_v`, `y['V']`, `y['II']`, and the linearization constraints, and must cite the exact CSV field names and parameter values (`Fixed_Cost`, `worker_II_V_pair_fee`, `shared_temp_handoff_cost`). Also compare to the original model and identify the exact code additions that cause the objective to jump from 14.0 to 37.0, quantifying how much of the +23 comes from replacing Worker V with Worker I versus from newly introduced fixed/gate charges; include which LP constraints are binding/slack and why the shadow prices cannot be linearly extrapolated to “adding V back in.”"
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Assignment.gurobi.log",
+        "Assignment.lp_relaxation.json",
+        "Assignment.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Assignment_with_Temp_Handoff.gurobi.log",
+        "Assignment_with_Temp_Handoff.lp_relaxation.json",
+        "Assignment_with_Temp_Handoff.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 42.869444
+  }
+}

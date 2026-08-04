@@ -1,0 +1,137 @@
+{
+  "solver": "gurobi",
+  "model_name": "A1PriorityCalendar",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 155999.99999999994,
+  "objective_bound": 156000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.003735065460205078,
+  "node_count": 1.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_8p0gdbfj/solver_records/A1PriorityCalendar.gurobi.log",
+  "variables": {
+    "a1_deep": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "a1_priority_excess": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a1_watch": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "open_A1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "open_A2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "open_A3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_A1": {
+      "value": 3000.0,
+      "reduced_cost": null
+    },
+    "x_A2": {
+      "value": 2781.8181818181815,
+      "reduced_cost": null
+    },
+    "x_A3": {
+      "value": 5400.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 2300.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": ">=",
+      "slack": -2980.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 1718.1818181818185,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": ">=",
+      "slack": -2761.8181818181815,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": ">=",
+      "slack": -5384.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "<=",
+      "slack": 600.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "<=",
+      "slack": 5300.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

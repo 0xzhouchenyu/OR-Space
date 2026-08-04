@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 1146.5665,
+  "stdout": "Set parameter LicenseID to value 2802670\n  A1 -> Product_I: 1200.0000 units\n  A2 -> Product_I: 230.0493 units\n  A2 -> Product_II: 500.0000 units\n  A2 -> Product_III: 324.1379 units\n  B1 -> Product_II: 500.0000 units\n  B2 -> Product_I: 858.6207 units\n  B2 -> Product_III: 324.1379 units\n  B3 -> Product_I: 571.4286 units\nOBJECTIVE_VALUE: 1146.5665\n",
+  "stderr": "",
+  "error": null
+}

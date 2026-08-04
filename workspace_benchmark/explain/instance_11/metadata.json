@@ -1,0 +1,64 @@
+{
+  "instance_id": "OR_explain_011",
+  "instance_number": 11,
+  "source_revise_instance": "IndustryOR_11_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "In the revised two-week model, use the Stage2 LP-relaxation duals/slacks together with the code and CSV data to identify exactly which physical constraints are binding in week 1 and map them to the business story: name the solver constraints, the code variables involved (for example `x_A2_1`, `x_B2_1`, `y_E2_1`, `h_insp_E2_1`), and the exact CSV fields/values that generate those coefficients. Then explain the business meaning of the positive shadow prices on the binding capacity rows and why you cannot linearly extrapolate those marginal values to claim that “one more hour of capacity” will keep improving profit indefinitely, referencing the binary protocol-choice structure and the Stage-1-to-Stage-2 lexicographic carryover (`idle_tolerance`, risk penalty term). Finally, compare the original model’s objective 3867.0 with the revised 12686.0 and pinpoint the exact code additions and data parameters that cause this change, including why the increase is not just a simple doubling of the original one-week profit."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Maximize_Profit.gurobi.log",
+        "Maximize_Profit.lp_relaxation.json",
+        "Maximize_Profit.solution.json",
+        "Minimize_Idle_Time.gurobi.log",
+        "Minimize_Idle_Time.lp_relaxation.json",
+        "Minimize_Idle_Time.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Stage1_Minimize_Idle_And_Risk.gurobi.log",
+        "Stage1_Minimize_Idle_And_Risk.lp_relaxation.json",
+        "Stage1_Minimize_Idle_And_Risk.solution.json",
+        "Stage2_Maximize_Profit.gurobi.log",
+        "Stage2_Maximize_Profit.lp_relaxation.json",
+        "Stage2_Maximize_Profit.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 46.92
+  }
+}

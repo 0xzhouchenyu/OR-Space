@@ -1,0 +1,8 @@
+Set parameter LicenseID to value 2802670
+Buy in Winter, sell in Winter (store 0q): 100.00 10k m^3
+Buy in Spring, sell in Spring (store 0q): 140.00 10k m^3
+Buy in Summer, sell in Summer (store 0q): 200.00 10k m^3
+Buy in Autumn, sell in Autumn (store 0q): 160.00 10k m^3
+End-of-autumn reserve inventory: 20.00 10k m^3
+Over-stock above safety level: 0.00 10k m^3
+OBJECTIVE_VALUE: 4800.0

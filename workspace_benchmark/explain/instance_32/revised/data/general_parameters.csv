@@ -1,0 +1,25 @@
+Parameter_Name,Value,Unit,Context_Description
+regular_hours_limit_day_A,60,hours,Maximum regular-time hours allowed in the day shift for workshop A
+regular_hours_limit_day_B,90,hours,Maximum regular-time hours allowed in the day shift for workshop B
+regular_hours_limit_day_C,50,hours,Maximum regular-time hours allowed in the day shift for workshop C
+regular_hours_limit_day_D,120,hours,Maximum regular-time hours allowed in the day shift for workshop D
+regular_hours_limit_night_A,20,hours,Maximum regular-time hours allowed in the night shift for workshop A
+regular_hours_limit_night_B,30,hours,Maximum regular-time hours allowed in the night shift for workshop B
+regular_hours_limit_night_C,20,hours,Maximum regular-time hours allowed in the night shift for workshop C
+regular_hours_limit_night_D,40,hours,Maximum regular-time hours allowed in the night shift for workshop D
+overtime_capacity_day_A,20,hours,Maximum overtime hours allowed in the day shift for workshop A
+overtime_capacity_day_B,30,hours,Maximum overtime hours allowed in the day shift for workshop B
+overtime_capacity_day_C,15,hours,Maximum overtime hours allowed in the day shift for workshop C
+overtime_capacity_day_D,40,hours,Maximum overtime hours allowed in the day shift for workshop D
+overtime_capacity_night_A,10,hours,Maximum overtime hours allowed in the night shift for workshop A
+overtime_capacity_night_B,15,hours,Maximum overtime hours allowed in the night shift for workshop B
+overtime_capacity_night_C,10,hours,Maximum overtime hours allowed in the night shift for workshop C
+overtime_capacity_night_D,20,hours,Maximum overtime hours allowed in the night shift for workshop D
+penalty_night_hour,1.0,cost units per hour,Penalty cost per hour worked in the night shift (regular-time only)
+penalty_overtime_hour,1.5,cost units per hour,Penalty cost per overtime hour in any shift
+penalty_shortage_per_unit,0.05,cost units per unit,Penalty cost per unit shortfall below z_target
+z_target,2924,units,Baseline target number of completed products
+bigM_shift_A,100,hours,Big-M parameter linking active indicator to hours for workshop A
+bigM_shift_B,150,hours,Big-M parameter linking active indicator to hours for workshop B
+bigM_shift_C,80,hours,Big-M parameter linking active indicator to hours for workshop C
+bigM_shift_D,200,hours,Big-M parameter linking active indicator to hours for workshop D

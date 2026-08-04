@@ -1,0 +1,10 @@
+Set parameter LicenseID to value 2802670
+xA_regular = 10.0
+xA_overtime = 0.0
+xB_regular = 18.333333333333332
+xB_overtime = 0.0
+Total A = 10.0
+Total B = 18.333333333333332
+Process II regular hours = 66.66666666666666
+Process II overtime hours = 0.0
+OBJECTIVE_VALUE: 11250.0

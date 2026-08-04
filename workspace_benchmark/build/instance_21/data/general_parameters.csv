@@ -1,0 +1,11 @@
+Parameter_Name,Value,Unit,Context_Description
+cost_supplier_a,120,USD,Cost of ordering each dining table from Supplier A
+cost_supplier_b,110,USD,Cost of ordering each dining table from Supplier B
+cost_supplier_c,100,USD,Cost of ordering each dining table from Supplier C
+order_size_supplier_a,20,tables,Number of tables included in each order from Supplier A
+order_size_supplier_b,15,tables,Number of tables included in each order from Supplier B
+order_size_supplier_c,15,tables,Number of tables included in each order from Supplier C
+min_tables_required,150,tables,Minimum number of tables the restaurant needs to order
+max_tables_allowed,600,tables,Maximum number of tables the restaurant can order
+min_tables_supplier_b_if_a,30,tables,Minimum number of tables from Supplier B if tables are ordered from Supplier A
+supplier_b_requires_c,1,boolean,Requirement to order tables from Supplier C if tables are ordered from Supplier B

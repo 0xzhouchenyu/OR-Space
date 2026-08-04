@@ -1,0 +1,142 @@
+\section*{Sets and Indices}
+
+\[
+T = \{1,\dots,n\}
+\]
+set of planning stages, indexed by \(t\).
+
+For this instance,
+\[
+n=10.
+\]
+
+\section*{Parameters}
+
+\[
+r_t \qquad (t \in T)
+\]
+tool requirement in stage \(t\) (from \texttt{tool\_requirement}).
+
+\[
+c^{\text{new}}
+\]
+cost of buying one new tool (code data: \texttt{cost\_new\_tool}).
+
+\[
+c^{\text{fast}}
+\]
+cost of sending one tool to fast repair (code data: \texttt{cost\_fast\_repair}).
+
+\[
+c^{\text{slow}}
+\]
+cost of sending one tool to slow repair (code data: \texttt{cost\_slow\_repair}).
+
+\[
+\tau^{\text{fast}}
+\]
+fast repair duration in stages (code data: \texttt{fast\_repair\_duration}).
+
+\[
+\tau^{\text{slow}}
+\]
+slow repair duration in stages (code data: \texttt{slow\_repair\_duration}).
+
+For the provided data,
+\[
+c^{\text{new}}=10,\quad
+c^{\text{fast}}=3,\quad
+c^{\text{slow}}=1,\quad
+\tau^{\text{fast}}=1,\quad
+\tau^{\text{slow}}=3,
+\]
+and
+\[
+(r_1,\dots,r_{10})=(3,5,2,4,6,5,4,3,2,1).
+\]
+
+\section*{Decision Variables}
+
+For each \(t \in T\),
+
+\[
+x_t \in \mathbb{Z}_{\ge 0}
+\qquad \text{(code: \texttt{x[t]})}
+\]
+number of new tools purchased in stage \(t\).
+
+\[
+y_t \in \mathbb{Z}_{\ge 0}
+\qquad \text{(code: \texttt{y[t]})}
+\]
+number of tools sent to fast repair after stage \(t\).
+
+\[
+z_t \in \mathbb{Z}_{\ge 0}
+\qquad \text{(code: \texttt{z[t]})}
+\]
+number of tools sent to slow repair after stage \(t\).
+
+\[
+c_t \in \mathbb{Z}_{\ge 0}
+\qquad \text{(code: \texttt{c[t]})}
+\]
+number of clean/available tools carried at the end of stage \(t\), for \(t=0,\dots,n\).
+
+\[
+d_t \in \mathbb{Z}_{\ge 0}
+\qquad \text{(code: \texttt{d[t]})}
+\]
+number of dirty tools waiting after stage \(t\), for \(t=0,\dots,n\).
+
+\section*{Objective}
+
+Minimize total purchasing and repair cost:
+\[
+\min \sum_{t=1}^n \left(c^{\text{new}} x_t + c^{\text{fast}} y_t + c^{\text{slow}} z_t\right).
+\]
+
+\section*{Constraints}
+
+Initial conditions:
+\[
+c_0 = 0,
+\]
+\[
+d_0 = 0.
+\]
+
+Stage-by-stage clean-tool balance, for all \(t \in T\):
+\[
+x_t + c_{t-1}
++ \mathbf{1}_{\{t-\tau^{\text{fast}}-1 \ge 1\}}\, y_{\,t-\tau^{\text{fast}}-1}
++ \mathbf{1}_{\{t-\tau^{\text{slow}}-1 \ge 1\}}\, z_{\,t-\tau^{\text{slow}}-1}
+= r_t + c_t .
+\]
+
+This exactly matches the code logic that makes fast repairs sent in stage \(s\) available in stage \(s+\tau^{\text{fast}}+1\), and slow repairs sent in stage \(s\) available in stage \(s+\tau^{\text{slow}}+1\).
+
+Dirty-tool balance, for all \(t \in T\):
+\[
+r_t + d_{t-1} = y_t + z_t + d_t .
+\]
+
+Integrality and nonnegativity:
+\[
+x_t,y_t,z_t \in \mathbb{Z}_{\ge 0} \qquad \forall t\in T,
+\]
+\[
+c_t,d_t \in \mathbb{Z}_{\ge 0} \qquad \forall t=0,\dots,n.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program solved with Gurobi through PuLP.
+
+The balance equations should be interpreted literally as written in the source code. In particular, a tool used in stage \(t\) enters the dirty stock after that stage, and if it is sent to repair in stage \(t\), it returns only in stage \(t+\tau+1\), not \(t+\tau\). Thus the code uses the terms
+\[
+y_{t-\tau^{\text{fast}}-1}, \qquad z_{t-\tau^{\text{slow}}-1},
+\]
+with zero contribution whenever the index is less than \(1\).
+
+There is no explicit constraint forcing all dirty tools to be repaired by the end of the horizon; leftover dirty tools \(d_n\) are allowed. Likewise, end-of-horizon clean inventory \(c_n\) is allowed, although it is not rewarded. These modeling choices are part of the implemented formulation and are not tightened further here.

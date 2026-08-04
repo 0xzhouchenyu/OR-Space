@@ -1,0 +1,147 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Product set $P=\{\text{robot},\text{car},\text{blocks},\text{doll}\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+For each product $p \in P$:
+
+\begin{itemize}
+    \item Unit profit $c_p$, from the CSV:
+    \[
+    c_{\text{robot}}=\texttt{profit\_per\_robot},\quad
+    c_{\text{car}}=\texttt{profit\_per\_model\_car},\quad
+    c_{\text{blocks}}=\texttt{profit\_per\_building\_blocks},\quad
+    c_{\text{doll}}=\texttt{profit\_per\_doll}.
+    \]
+    \item Plastic consumption per unit $a^{\text{pl}}_p$, from:
+    \[
+    a^{\text{pl}}_{\text{robot}}=\texttt{plastic\_per\_robot},\ 
+    a^{\text{pl}}_{\text{car}}=\texttt{plastic\_per\_model\_car},\ 
+    a^{\text{pl}}_{\text{blocks}}=\texttt{plastic\_per\_building\_blocks},\ 
+    a^{\text{pl}}_{\text{doll}}=\texttt{plastic\_per\_doll}.
+    \]
+    \item Electronic-components consumption per unit $a^{\text{el}}_p$, from:
+    \[
+    a^{\text{el}}_{\text{robot}}=\texttt{electronics\_per\_robot},\ 
+    a^{\text{el}}_{\text{car}}=\texttt{electronics\_per\_model\_car},\ 
+    a^{\text{el}}_{\text{blocks}}=\texttt{electronics\_per\_building\_blocks},\ 
+    a^{\text{el}}_{\text{doll}}=\texttt{electronics\_per\_doll}.
+    \]
+\end{itemize}
+
+Resource availabilities:
+
+\begin{itemize}
+    \item Total plastic available $B^{\text{pl}}=\texttt{plastic\_available}$.
+    \item Total electronic components available $B^{\text{el}}=\texttt{electronic\_components\_available}$.
+\end{itemize}
+
+Auxiliary constant used in the implementation:
+
+\begin{itemize}
+    \item Big-$M$ constant $M=10000$.
+\end{itemize}
+
+\section*{Decision Variables}
+
+Production quantities:
+
+\begin{itemize}
+    \item Robots produced $x_{\text{robot}}$ (code: \texttt{x\_robot}) $\in \mathbb{Z}_{\ge 0}$.
+    \item Model cars produced $x_{\text{car}}$ (code: \texttt{x\_car}) $\in \mathbb{Z}_{\ge 0}$.
+    \item Building-block sets produced $x_{\text{blocks}}$ (code: \texttt{x\_blocks}) $\in \mathbb{Z}_{\ge 0}$.
+    \item Dolls produced $x_{\text{doll}}$ (code: \texttt{x\_doll}) $\in \mathbb{Z}_{\ge 0}$.
+\end{itemize}
+
+Binary activity indicators:
+
+\begin{itemize}
+    \item $y_{\text{robot}}$ (code: \texttt{y\_robot}) $\in \{0,1\}$.
+    \item $y_{\text{car}}$ (code: \texttt{y\_car}) $\in \{0,1\}$.
+    \item $y_{\text{blocks}}$ (code: \texttt{y\_blocks}) $\in \{0,1\}$.
+    \item $y_{\text{doll}}$ (code: \texttt{y\_doll}) $\in \{0,1\}$.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+c_{\text{robot}}x_{\text{robot}}
++ c_{\text{car}}x_{\text{car}}
++ c_{\text{blocks}}x_{\text{blocks}}
++ c_{\text{doll}}x_{\text{doll}}.
+\]
+
+\section*{Constraints}
+
+Resource limits:
+\[
+a^{\text{pl}}_{\text{robot}}x_{\text{robot}}
++a^{\text{pl}}_{\text{car}}x_{\text{car}}
++a^{\text{pl}}_{\text{blocks}}x_{\text{blocks}}
++a^{\text{pl}}_{\text{doll}}x_{\text{doll}}
+\le B^{\text{pl}},
+\]
+\[
+a^{\text{el}}_{\text{robot}}x_{\text{robot}}
++a^{\text{el}}_{\text{car}}x_{\text{car}}
++a^{\text{el}}_{\text{blocks}}x_{\text{blocks}}
++a^{\text{el}}_{\text{doll}}x_{\text{doll}}
+\le B^{\text{el}}.
+\]
+
+Big-$M$ upper-linking constraints:
+\[
+x_{\text{robot}} \le M y_{\text{robot}},\qquad
+x_{\text{car}} \le M y_{\text{car}},\qquad
+x_{\text{blocks}} \le M y_{\text{blocks}},\qquad
+x_{\text{doll}} \le M y_{\text{doll}}.
+\]
+
+Lower-linking constraints as implemented:
+\[
+y_{\text{robot}} \le x_{\text{robot}},\qquad
+y_{\text{car}} \le x_{\text{car}},\qquad
+y_{\text{blocks}} \le x_{\text{blocks}},\qquad
+y_{\text{doll}} \le x_{\text{doll}}.
+\]
+
+Robots and dolls cannot both be active:
+\[
+y_{\text{robot}} + y_{\text{doll}} \le 1.
+\]
+
+Model cars require building blocks:
+\[
+y_{\text{car}} \le y_{\text{blocks}}.
+\]
+
+Dolls cannot exceed model cars:
+\[
+x_{\text{doll}} \le x_{\text{car}}.
+\]
+
+Revised mutual exclusion between model cars and building blocks:
+\[
+y_{\text{car}} + y_{\text{blocks}} \le 1.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program solved by \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+
+The formulation above matches the code exactly, including both the dependency constraint
+\[
+y_{\text{car}} \le y_{\text{blocks}}
+\]
+and the newly added exclusion
+\[
+y_{\text{car}} + y_{\text{blocks}} \le 1.
+\]
+Together with the lower-linking constraint $y_{\text{blocks}} \le x_{\text{blocks}}$, these imply that any positive production of model cars would require $y_{\text{car}}=1$, hence $y_{\text{blocks}}=1$, which then violates the exclusion. Therefore, in the implemented model, model cars cannot be produced in any feasible solution.
+
+Also, because dolls satisfy $x_{\text{doll}} \le x_{\text{car}}$, the implemented logic consequently forces dolls to zero as well. These implications are not simplifications of the business statement; they are the direct consequence of the current coded constraints and should be preserved when reconstructing the model.

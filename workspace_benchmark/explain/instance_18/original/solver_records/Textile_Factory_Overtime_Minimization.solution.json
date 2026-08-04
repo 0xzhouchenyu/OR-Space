@@ -1,0 +1,38 @@
+{
+  "solver": "gurobi",
+  "model_name": "Textile_Factory_Overtime_Minimization",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 5.0,
+  "objective_bound": 5.0,
+  "mip_gap": null,
+  "runtime": 0.00045990943908691406,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_pjiushgk/solver_records/Textile_Factory_Overtime_Minimization.gurobi.log",
+  "variables": {
+    "clothing_hours": {
+      "value": 45.0,
+      "reduced_cost": 1.0
+    },
+    "curtain_hours": {
+      "value": 70.0,
+      "reduced_cost": 1.0
+    },
+    "overtime": {
+      "value": 5.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Production_Time_Balance": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -1.0
+    }
+  }
+}

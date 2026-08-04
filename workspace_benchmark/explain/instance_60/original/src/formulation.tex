@@ -1,0 +1,74 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $N = \{1,\dots,n\}$: set of locations/customers, with $n=7$ (code: \texttt{num\_customers}).
+    \item Location $1$ is the designated start/end location from the business data, but in the implemented model it is treated as the distinguished depot/root node in the subtour-elimination constraints.
+    \item $N_0 = N \setminus \{1\}$: non-root locations, indexed in code by \texttt{i,j = 1,\dots,num\_customers-1} using zero-based Python indices.
+    \item Indices $i,j \in N$ denote locations, with $i \neq j$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $n$: number of locations (code: \texttt{num\_customers}); here $n=7$.
+    \item $d_{ij}$: travel distance from location $i$ to location $j$ (code: \texttt{D[i][j]}), for all $i,j \in N$.
+    
+    The code reads the upper-triangular entries from \texttt{table\_1.csv} and symmetrizes them, so
+    \[
+    d_{ij} = d_{ji}, \qquad d_{ii}=0.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ij} \in \{0,1\}$ for all $i,j \in N$, $i \neq j$ (code: \texttt{x[i,j]}): equals $1$ if the tour directly travels from location $i$ to location $j$, and $0$ otherwise.
+    \item $u_i \in [1,n-1]$ for all $i \in N_0$ (code: \texttt{u[i]}): ordering variables used in the Miller--Tucker--Zemlin subtour-elimination constraints. These are declared continuous in the code.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total travel distance:
+\[
+\min \sum_{i \in N}\sum_{\substack{j \in N\\ j \neq i}} d_{ij} x_{ij}.
+\]
+
+\section*{Constraints}
+
+Each location has exactly one outgoing arc:
+\[
+\sum_{\substack{j \in N\\ j \neq i}} x_{ij} = 1
+\qquad \forall i \in N.
+\]
+
+Each location has exactly one incoming arc:
+\[
+\sum_{\substack{j \in N\\ j \neq i}} x_{ji} = 1
+\qquad \forall i \in N.
+\]
+
+MTZ subtour-elimination constraints on non-root nodes:
+\[
+u_i - u_j + (n-1)x_{ij} \le n-2
+\qquad \forall i,j \in N_0,\ i \neq j.
+\]
+
+Variable domains:
+\[
+x_{ij} \in \{0,1\}
+\qquad \forall i,j \in N,\ i \neq j,
+\]
+\[
+1 \le u_i \le n-1
+\qquad \forall i \in N_0.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implementation uses zero-based Python indexing, so code node \texttt{0} corresponds to location $1$ in the business data. The MTZ variables are created only for code indices \texttt{1,\dots,num\_customers-1}, i.e., for mathematical locations $2,\dots,n$.
+    \item Although the business statement specifies starting and ending at location $1$, the implemented model is the standard single-cycle TSP formulation: every node has one predecessor and one successor, and the MTZ constraints eliminate subtours while treating location $1$ as the root excluded from the $u$ variables.
+    \item The $u_i$ variables are continuous in the code, not integer. This matches the standard MTZ implementation and should not be replaced by a stronger or different formulation.
+    \item The distance matrix is constructed from the triangular CSV input by setting both \texttt{D[i][j]} and \texttt{D[j][i]} to the same value, so the solved model is symmetric even though directed arc variables $x_{ij}$ are used.
+    \item The model is solved as a mixed-integer linear program with Gurobi through \texttt{pulp.GUROBI\_CMD(msg=False)}.
+\end{itemize}

@@ -1,0 +1,20 @@
+Parameter_Name,Value,Unit,Context_Description
+raw_pipe_length_supplier1,1850,mm,Length of each raw steel pipe supplied by supplier 1
+raw_pipe_length_supplier2,1900,mm,Length of each raw steel pipe supplied by supplier 2
+max_cutting_patterns_supplier1,3,,Maximum number of cutting patterns allowed for supplier 1
+max_cutting_patterns_supplier2,2,,Maximum number of cutting patterns allowed for supplier 2
+most_frequent_pattern_cost_rate_supplier1,0.1,,Extra cost rate for the most frequently used cutting pattern of supplier 1
+second_frequent_pattern_cost_rate_supplier1,0.2,,Extra cost rate for the second most frequently used cutting pattern of supplier 1
+third_frequent_pattern_cost_rate_supplier1,0.3,,Extra cost rate for the third most frequently used cutting pattern of supplier 1
+most_frequent_pattern_cost_rate_supplier2,0.05,,Extra cost rate for the most frequently used cutting pattern of supplier 2
+second_frequent_pattern_cost_rate_supplier2,0.1,,Extra cost rate for the second most frequently used cutting pattern of supplier 2
+third_frequent_pattern_cost_rate_supplier2,0.15,,Extra cost rate for the third most frequently used cutting pattern of supplier 2
+max_cuts_per_pipe_supplier1,5,,Maximum number of cuts allowed per raw pipe for supplier 1
+max_cuts_per_pipe_supplier2,5,,Maximum number of cuts allowed per raw pipe for supplier 2
+max_leftover_length_supplier1,100,mm,Maximum leftover length allowed for any cutting pattern of supplier 1
+max_leftover_length_supplier2,120,mm,Maximum leftover length allowed for any cutting pattern of supplier 2
+purchase_cost_per_pipe_supplier1,1.0,currency,Base purchase cost per raw pipe from supplier 1
+purchase_cost_per_pipe_supplier2,1.05,currency,Base purchase cost per raw pipe from supplier 2
+discount_tier1_supplier1_max_qty,60,pipes,Maximum quantity for supplier 1 tier-1 pricing before discount applies
+fixed_discount_tier2_supplier1,5.0,currency,Fixed discount amount applied if supplier 1 tier-2 volume is reached
+bigM_discount,200,pipes,Big-M constant for modeling discount tier activation on supplier 1 total pipe quantity

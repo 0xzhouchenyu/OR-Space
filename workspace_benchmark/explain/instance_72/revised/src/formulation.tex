@@ -1,0 +1,98 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $P$: set of properties indexed by $p$. In the given data, $P=\{\text{Property\_1},\text{Property\_2},\text{Property\_3},\text{Property\_4}\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+For each property $p \in P$:
+\begin{itemize}
+    \item $I_p$: annual income of property $p$ (from \texttt{Annual\_Income}).
+    \item $C_p$: acquisition cost of property $p$ (from \texttt{Cost}).
+\end{itemize}
+
+Global parameters from \texttt{general\_parameters.csv}:
+\begin{itemize}
+    \item $B$: total acquisition budget (code/data: \texttt{budget}).
+    \item $\pi_1$: probability of scenario 1 (code/data: \texttt{scen\_1\_prob}).
+    \item $\pi_2$: probability of scenario 2 (code/data: \texttt{scen\_2\_prob}).
+    \item $m_1$: risky-income multiplier in scenario 1 (code/data: \texttt{scen\_1\_risky\_multiplier}).
+    \item $m_2$: risky-income multiplier in scenario 2 (code/data: \texttt{scen\_2\_risky\_multiplier}).
+    \item $R^{\text{tot}}$: total acquisition-cost budget of properties that are allowed to host any risky tenancy (code/data: \texttt{total\_risky\_budget}).
+    \item $\bar r$: maximum risky fraction allowed on any one purchased property (code/data: \texttt{per\_property\_risky\_cap}).
+    \item $K$: maximum number of properties that may host any risky tenancy (code/data: \texttt{max\_risky\_properties}).
+\end{itemize}
+
+Derived parameter used in the objective:
+\[
+\alpha = \pi_1 m_1 + \pi_2 m_2.
+\]
+
+The implemented mutual-exclusion rule is:
+\[
+x_{\text{Property\_4}} + x_{\text{Property\_3}} \le 1,
+\]
+corresponding to the data field \texttt{property\_4\_excludes\_property\_3}.
+
+\section*{Decision Variables}
+
+For each property $p \in P$:
+\begin{itemize}
+    \item $x_p$ (code: \texttt{x[name]}) $\in \{0,1\}$: equals 1 if property $p$ is purchased.
+    \item $s_p$ (code: \texttt{s[name]}) $\in [0,1]$: fraction of property $p$ allocated to dependable long-term tenancy.
+    \item $r_p$ (code: \texttt{r[name]}) $\in [0,1]$: fraction of property $p$ allocated to risky short-term leasing.
+    \item $y_p$ (code: \texttt{y[name]}) $\in \{0,1\}$: equals 1 if property $p$ is activated as a risky property.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize expected annual income:
+\[
+\max \sum_{p \in P} \left( I_p s_p + I_p \alpha r_p \right).
+\]
+
+Equivalently,
+\[
+\max \sum_{p \in P} \left( I_p s_p + I_p(\pi_1 m_1 + \pi_2 m_2) r_p \right).
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{p \in P} C_p x_p &\le B
+&& \text{(acquisition budget)} \\
+x_{\text{Property\_4}} + x_{\text{Property\_3}} &\le 1
+&& \text{(mutual exclusion)} \\
+s_p + r_p &\le x_p
+&& \forall p \in P \quad \text{(tenancy fractions only on purchased properties)} \\
+r_p &\le \bar r\, x_p
+&& \forall p \in P \quad \text{(per-property risky cap)} \\
+r_p &\le y_p
+&& \forall p \in P \quad \text{(risky gate activation)} \\
+y_p &\le x_p
+&& \forall p \in P \quad \text{(only purchased properties can be risky-enabled)} \\
+\sum_{p \in P} C_p y_p &\le R^{\text{tot}}
+&& \text{(total risky budget)} \\
+\sum_{p \in P} y_p &\le K
+&& \text{(maximum number of risky properties)} \\
+x_p &\in \{0,1\}
+&& \forall p \in P \\
+y_p &\in \{0,1\}
+&& \forall p \in P \\
+0 \le s_p &\le 1
+&& \forall p \in P \\
+0 \le r_p &\le 1
+&& \forall p \in P
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The formulation is a mixed-integer linear program and matches the implementation in \texttt{src/current\_heuristic.py}.
+    \item The ``gate'' interpretation from the business brief is implemented through the binary activation variables $y_p$: a property either crosses the risky-eligibility gate ($y_p=1$) or not ($y_p=0$). The total risky budget is applied to the acquisition costs of properties with $y_p=1$, not proportionally to the risky fraction $r_p$.
+    \item Risky leasing is allowed only on purchased properties because $r_p \le y_p \le x_p$.
+    \item The model does \emph{not} enforce $s_p + r_p = x_p$; it allows leaving part of a purchased property unused in the optimization because the implemented code uses $s_p + r_p \le x_p$.
+    \item Stable tenancy income is modeled with coefficient $1$ because the code uses $\pi_1+\pi_2=1$ implicitly, while risky tenancy uses the expected multiplier $\pi_1 m_1 + \pi_2 m_2$.
+    \item The code solves this MILP with \texttt{GUROBI\_CMD(msg=0)} through PuLP-compatible syntax.
+\end{itemize}

@@ -1,0 +1,7 @@
+A company needs to allocate workers and laborers to complete three tasks. Each task has multiple methods available, and the company must select one method per task. Specific details about the required hours, wages, and constraints are provided in the corresponding CSV files in the data folder. The goal is to minimize the total weekly cost, including wages and fixed costs, while adhering to recruitment policies and operational constraints.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. The sponsor was careful about direction. A companion, prerequisite, approval, or follow-on condition runs only the way the business sentence says it runs; the reverse direction is not part of the deal unless it is stated. The weekly staffing plan now has to satisfy task-level skill-balance bands, not just the overall hiring ratio. Each task still uses one of its two methods and must receive enough effective hours, but the skilled share on Task 1, Task 2, and Task 3 must stay between the task-specific lower and upper bounds listed in `general_parameters.csv`. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_052",
+  "instance_number": 52,
+  "source_revise_instance": "IndustryOR_52_revise_business",
+  "domain": "Workforce_Scheduling",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Workforce_Scheduling",
+    "question": "In the revised model, explain why the objective doubles from 150.0 to 300.0 even though all overtime variables stay at zero, and trace this all the way from business language to code and CSV fields. Your answer must name the exact code variables and constraints that create the extra cost, identify which CSV column and parameter values feed period-2 coverage and night-policy logic, and use the LP relaxation output to state which of `DriverDemand_period_2`, `CrewDemand_period_2`, `MaxNightDriverFraction`, and `MaxOvertimeShifts` are binding or slack and what their dual/slack values imply operationally. Finally, explain why the shadow price on period-2 demand cannot be linearly extrapolated to a large increase in `Required_number` once overtime or night-fraction limits would start to matter."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1_2.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MinimumWorkers.gurobi.log",
+        "MinimumWorkers.lp_relaxation.json",
+        "MinimumWorkers.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1_2.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "DriverCrewStaffingWithOvertime.gurobi.log",
+        "DriverCrewStaffingWithOvertime.lp_relaxation.json",
+        "DriverCrewStaffingWithOvertime.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 63.991667
+  }
+}

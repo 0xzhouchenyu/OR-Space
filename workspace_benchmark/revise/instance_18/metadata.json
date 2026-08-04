@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_18_revise_business",
+  "original_instance_id": "IndustryOR_18",
+  "revise_description": "In the stakeholder handoff for this case, the service manager framed the change in business terms rather than as a spreadsheet checklist. At the latest operating review, the business owner rejected treating this as a cosmetic rerun. The plan has to follow the commercial interpretation below, with the data-pack labels read literally. The textile factory has moved to a formal day-shift and night-shift operating pattern. Regular hours in each shift must stay inside its shift capacity and meet the utilization expectations `day_min_utilization_ratio` and `night_min_utilization_ratio`. Extra hours are possible through `day_overtime_hours` and `night_overtime_hours`, but those hours carry the shift-specific charges `day_overtime_penalty` and `night_overtime_penalty` while clothing and curtain commitments still need to be met. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+4var, +5constr, mod_1constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 4,
+        "-variable": 0,
+        "+constraint": 5,
+        "-constraint": 0,
+        "modify_constraint": 1,
+        "modify_data": 1
+      },
+      "op_count": 11,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 33.333333
+  }
+}

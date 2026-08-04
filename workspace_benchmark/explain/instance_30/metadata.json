@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_030",
+  "instance_number": 30,
+  "source_revise_instance": "IndustryOR_30_revise_business",
+  "domain": "Diet_Optimization",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Diet_Optimization",
+    "question": "In the revised model, explain precisely why the objective rises from 32.43589743589744 to 35.0 by tracing the new logic from the business document’s Feed 4/Feed 5 incompatibility to the exact code additions `y4`, `y5`, and `M = 100000`, and then to the mathematical constraints in `src/formulation.tex`. Using the CSV columns `Protein_g`, `Minerals_g`, `Vitamins_mg`, and `Price_Y_per_kg` plus the requirement parameters `min_protein_requirement = 700`, `min_minerals_requirement = 30`, and `min_vitamins_requirement = 100`, identify which original constraints were binding and their dual values, what their business shadow-price meaning was, and why those LP marginal values cannot be linearly extrapolated to predict the revised MIP optimum after enforcing `y4 + y5 <= 1`. Your answer must name the exact revised active solution variables and quantify the cost increase with the specific feed amounts and constraint references."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MinimizeFeedCost.gurobi.log",
+        "MinimizeFeedCost.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MinimizeFeedCost.gurobi.log",
+        "MinimizeFeedCost.lp_relaxation.json",
+        "MinimizeFeedCost.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 75.947222
+  }
+}

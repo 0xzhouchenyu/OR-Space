@@ -1,0 +1,6 @@
+Child,Cost,Relationship_Constraint
+Alice,1000,"Cannot be taken with Diana"
+Bob,900,"Must be taken on at least one day; Cannot be taken with Charlie on any day"
+Charlie,600,"Must be taken with Diana on the same day; Only available on day 2"
+Diana,500,"Must be taken with Ella on the same day; Only available on day 2"
+Ella,700,"Must be taken with Diana on the same day"

@@ -1,0 +1,7 @@
+Parameter_Name,Value,Unit,Context_Description
+product_I_stage_A_equipment,A1 or A2,None,Equipment options for processing stage A for Product I
+product_I_stage_B_equipment,B1 or B2 or B3,None,Equipment options for processing stage B for Product I
+product_II_stage_A_equipment,A1 or A2,None,Equipment options for processing stage A for Product II
+product_II_stage_B_equipment,B1,None,Equipment options for processing stage B for Product II
+product_III_stage_A_equipment,A2,None,Equipment options for processing stage A for Product III
+product_III_stage_B_equipment,B2,None,Equipment options for processing stage B for Product III

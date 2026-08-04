@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_093",
+  "instance_number": 93,
+  "source_revise_instance": "IndustryOR_93_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "Using the revised `src/current_heuristic.py`, `src/formulation.tex`, and the LP-relaxation/MIP solver records, explain exactly why the objective rises from 3360.0 in the original model to 3540.0 in the revised one even though running A3 triggers a cleaning loss on Type A capacity. Your answer must name the exact added code variables and constraints responsible for the +180 change, trace them to the literal CSV field names `cold_chain_bonus_threshold_kg`, `cold_chain_bonus_yuan`, `type_A_cleaning_loss_if_A3`, and `cap_A_shared`, and map them to the business-brief terms “cold-chain allowance” and “cleaning block.” Also identify which revised LP-relaxation constraints are binding and have nonzero duals, interpret the shadow price on the bonus-threshold constraint in business terms, and explain why that marginal value cannot be linearly extrapolated to larger threshold changes in the integer model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Dairy_Production.gurobi.log",
+        "Dairy_Production.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "DairyColdChain.gurobi.log",
+        "DairyColdChain.lp_relaxation.json",
+        "DairyColdChain.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 68.637222
+  }
+}

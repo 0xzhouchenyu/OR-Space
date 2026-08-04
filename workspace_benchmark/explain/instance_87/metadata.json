@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_087",
+  "instance_number": 87,
+  "source_revise_instance": "IndustryOR_87_revise_business",
+  "domain": "Transportation_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Transportation_Planning",
+    "question": "Using the revised LP-relaxation and MIP solution records together with `src/current_heuristic.py` and `src/formulation.tex`, explain exactly why the objective increased from 4170 to 4880 after the R4 scenario restructuring. Your answer must identify which new code variables and constraints implement the two business “gates,” map them to the exact CSV field names and parameter values (`T_F=115`, `F_F=100`, `T_B=65`, `F_B=600`, base-fleet and penalty fields), and decompose the 710 cost increase into rental mix changes versus newly activated penalty/desk terms. Also diagnose which revised LP-relaxation constraints are binding and what the dual values on `_C5` and `_C6` mean in business terms, then explain why those marginal values cannot be linearly extrapolated to the integer optimum once the total fleet crosses the gate."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "TruckRental.gurobi.log",
+        "TruckRental.lp_relaxation.json",
+        "TruckRental.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "TruckRental_TypeBRecovery.gurobi.log",
+        "TruckRental_TypeBRecovery.lp_relaxation.json",
+        "TruckRental_TypeBRecovery.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 65.120556
+  }
+}

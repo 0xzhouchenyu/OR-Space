@@ -1,0 +1,7 @@
+Parameter_Name,Value,Unit,Context_Description
+profit_product_A,3,GBP per unit,Profit per unit sold for product A
+profit_product_B,5,GBP per unit,Profit per unit sold for product B
+assembly_time_A,12,minutes per unit,Assembly time required per unit for product A
+assembly_time_B,25,minutes per unit,Assembly time required per unit for product B
+machine_working_time,30,hours per week,Estimated effective machine working time per week
+production_ratio_A_to_B,5:2,None,Technical constraint requiring at least 2 units of product B for every 5 units of product A produced

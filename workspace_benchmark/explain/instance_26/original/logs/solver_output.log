@@ -1,0 +1,8 @@
+Set parameter LicenseID to value 2802670
+Shift starting at period 2:00-6:00: 0 salespeople
+Shift starting at period 6:00-10:00: 15 salespeople
+Shift starting at period 10:00-14:00: 10 salespeople
+Shift starting at period 14:00-18:00: 10 salespeople
+Shift starting at period 18:00-22:00: 8 salespeople
+Shift starting at period 22:00-2:00: 10 salespeople
+OBJECTIVE_VALUE: 53.0

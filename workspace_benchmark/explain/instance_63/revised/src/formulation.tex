@@ -1,0 +1,169 @@
+\section*{Sets and Indices}
+
+No nontrivial index sets are used in the implemented model. The transportation modes are:
+\[
+\{\text{horse},\text{bicycle},\text{handcart}\}.
+\]
+
+\section*{Parameters}
+
+All parameter values are read from \texttt{general\_parameters.csv}.
+
+\[
+P^{\min} \; (\texttt{min\_total\_produce})
+\]
+minimum total produce that must be transported.
+
+\[
+\bar E \; (\texttt{max\_total\_pollution})
+\]
+maximum allowable total pollution.
+
+\[
+L^{\text{horse}} \; (\texttt{min\_horse\_trips})
+\]
+minimum required number of horse trips.
+
+Capacities per trip:
+\[
+q_{\text{horse}} \; (\texttt{horse\_capacity\_per\_trip}),\qquad
+q_{\text{bike}} \; (\texttt{bicycle\_capacity\_per\_trip}),\qquad
+q_{\text{cart}} \; (\texttt{handcart\_capacity\_per\_trip}).
+\]
+
+Variable transportation costs per trip:
+\[
+c_{\text{horse}} \; (\texttt{horse\_cost\_per\_trip}),\qquad
+c_{\text{bike}} \; (\texttt{bicycle\_cost\_per\_trip}),\qquad
+c_{\text{cart}} \; (\texttt{handcart\_cost\_per\_trip}).
+\]
+
+Fixed usage costs:
+\[
+f_{\text{horse}} \; (\texttt{horse\_fixed\_cost}),\qquad
+f_{\text{bike}} \; (\texttt{bicycle\_fixed\_cost}),\qquad
+f_{\text{cart}} \; (\texttt{handcart\_fixed\_cost}).
+\]
+
+Pollution generated per trip:
+\[
+e_{\text{horse}} \; (\texttt{horse\_pollution\_per\_trip}),\qquad
+e_{\text{bike}} \; (\texttt{bicycle\_pollution\_per\_trip}),\qquad
+e_{\text{cart}} \; (\texttt{handcart\_pollution\_per\_trip}).
+\]
+
+Pollution charge and permit parameters:
+\[
+\gamma \; (\texttt{pollution\_penalty\_per\_unit}),
+\qquad
+\Theta \; (\texttt{horse\_pollution\_permit\_threshold}),
+\qquad
+F^{\text{permit}} \; (\texttt{horse\_pollution\_permit\_fee}).
+\]
+
+Big-\(M\) constant used in the implementation:
+\[
+M = 10000.
+\]
+
+For convenience, define total pollution
+\[
+E = e_{\text{horse}}x_{\text{horse}} + e_{\text{bike}}x_{\text{bike}} + e_{\text{cart}}x_{\text{cart}}.
+\]
+
+\section*{Decision Variables}
+
+Trip counts:
+\[
+x_{\text{horse}} \; (\texttt{x\_horse}),\quad
+x_{\text{bike}} \; (\texttt{x\_bike}),\quad
+x_{\text{cart}} \; (\texttt{x\_cart}) \in \mathbb{Z}_{\ge 0}.
+\]
+
+Binary usage indicators:
+\[
+z_{\text{horse}} \; (\texttt{z\_horse}),\quad
+z_{\text{bike}} \; (\texttt{z\_bike}),\quad
+z_{\text{cart}} \; (\texttt{z\_cart}) \in \{0,1\}.
+\]
+
+Binary pollution-permit indicator:
+\[
+y^{\text{permit}} \; (\texttt{pollution\_permit}) \in \{0,1\}.
+\]
+
+\section*{Objective}
+
+Minimize total transportation, fixed, pollution, and permit costs:
+\[
+\min \;
+c_{\text{horse}}x_{\text{horse}}
++ c_{\text{bike}}x_{\text{bike}}
++ c_{\text{cart}}x_{\text{cart}}
++ f_{\text{horse}}z_{\text{horse}}
++ f_{\text{bike}}z_{\text{bike}}
++ f_{\text{cart}}z_{\text{cart}}
++ \gamma E
++ F^{\text{permit}} y^{\text{permit}}.
+\]
+
+\section*{Constraints}
+
+Produce requirement:
+\[
+q_{\text{horse}}x_{\text{horse}}
++ q_{\text{bike}}x_{\text{bike}}
++ q_{\text{cart}}x_{\text{cart}}
+\;\ge\;
+P^{\min}.
+\]
+
+Maximum pollution:
+\[
+E \le \bar E.
+\]
+
+Permit-gate constraint as implemented:
+\[
+E \le \Theta + M\, y^{\text{permit}}.
+\]
+
+Minimum horse trips:
+\[
+x_{\text{horse}} \ge L^{\text{horse}}.
+\]
+
+Linking trip counts to fixed-cost binaries:
+\[
+x_{\text{horse}} \le M z_{\text{horse}},
+\qquad
+x_{\text{bike}} \le M z_{\text{bike}},
+\qquad
+x_{\text{cart}} \le M z_{\text{cart}}.
+\]
+
+At most one of bicycle and handcart may be used:
+\[
+z_{\text{bike}} + z_{\text{cart}} \le 1.
+\]
+
+Integrality and binary restrictions:
+\[
+x_{\text{horse}},x_{\text{bike}},x_{\text{cart}} \in \mathbb{Z}_{\ge 0},
+\qquad
+z_{\text{horse}},z_{\text{bike}},z_{\text{cart}},y^{\text{permit}} \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The formulation above matches \texttt{current\_heuristic.py} exactly.
+
+The code introduces a binary \texttt{pollution\_permit} and charges the one-time fee \(F^{\text{permit}}\) in the objective, with the single gating constraint
+\[
+E \le \Theta + M\, y^{\text{permit}}.
+\]
+Thus, if total pollution exceeds \(\Theta\), the model must set \(y^{\text{permit}}=1\) and pay the fee. If \(E \le \Theta\), the model may set \(y^{\text{permit}}=0\), avoiding the fee. There is no reverse constraint forcing \(y^{\text{permit}}=1\) only when \(E>\Theta\); however, because the permit fee is nonnegative and minimized, the optimal solution will not set \(y^{\text{permit}}=1\) unnecessarily.
+
+The parameter \texttt{produce\_to\_transport} is loaded by the code into \texttt{produce} but is not used in the optimization model; the implemented requirement is based on \texttt{min\_total\_produce} only.
+
+The model is solved as a mixed-integer linear program using \texttt{GUROBI\_CMD(msg=0)}.

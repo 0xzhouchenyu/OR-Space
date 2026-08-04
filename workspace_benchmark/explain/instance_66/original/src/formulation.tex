@@ -1,0 +1,102 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $T$: set of toy types, indexed by $t$. In this instance,
+    \[
+    T=\{\text{High-End},\ \text{Mid-Range},\ \text{Low-End}\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+For each toy type $t \in T$:
+\begin{itemize}
+    \item $a_t$: manufacturing labor hours required per unit.
+    \item $b_t$: inspection hours required per unit.
+    \item $p_t$: profit per unit.
+    \item $d_t$: maximum demand.
+\end{itemize}
+
+Global resource limits:
+\begin{itemize}
+    \item $L$: total available labor hours.
+    \item $I$: total available inspection hours.
+\end{itemize}
+
+Using the CSV data for this instance:
+\[
+L=1000, \qquad I=500.
+\]
+
+Parameter values by toy type:
+\[
+\begin{array}{c|cccc}
+t & a_t & b_t & p_t & d_t \\ \hline
+\text{High-End} & 17 & 8 & 300 & 50 \\
+\text{Mid-Range} & 10 & 4 & 200 & 80 \\
+\text{Low-End} & 2 & 2 & 100 & 150
+\end{array}
+\]
+
+\section*{Decision Variables}
+
+For each toy type $t \in T$:
+\begin{itemize}
+    \item $x_t$ (code: \texttt{x[toy['type']]}): production quantity of toy type $t$.
+\end{itemize}
+
+The code defines these variables as continuous and nonnegative:
+\[
+x_t \ge 0 \qquad \forall t \in T.
+\]
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \sum_{t \in T} p_t x_t.
+\]
+
+For this instance:
+\[
+\max\ 300x_{\text{High-End}} + 200x_{\text{Mid-Range}} + 100x_{\text{Low-End}}.
+\]
+
+\section*{Constraints}
+
+Labor-hour capacity:
+\[
+\sum_{t \in T} a_t x_t \le L.
+\]
+
+Inspection-hour capacity:
+\[
+\sum_{t \in T} b_t x_t \le I.
+\]
+
+Demand upper bounds:
+\[
+x_t \le d_t \qquad \forall t \in T.
+\]
+
+Expanded for this instance:
+\[
+17x_{\text{High-End}} + 10x_{\text{Mid-Range}} + 2x_{\text{Low-End}} \le 1000,
+\]
+\[
+8x_{\text{High-End}} + 4x_{\text{Mid-Range}} + 2x_{\text{Low-End}} \le 500,
+\]
+\[
+x_{\text{High-End}} \le 50,\qquad
+x_{\text{Mid-Range}} \le 80,\qquad
+x_{\text{Low-End}} \le 150.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program with continuous production variables; no integrality restrictions are imposed.
+    \item The code constructs one variable per toy type using the toy names read from \texttt{table\_1.csv}.
+    \item Demand limits are read from \texttt{general\_parameters.csv} and matched by toy type.
+    \item The model is solved using \texttt{GUROBI\_CMD(msg=0)} through a PuLP-compatible interface.
+\end{itemize}

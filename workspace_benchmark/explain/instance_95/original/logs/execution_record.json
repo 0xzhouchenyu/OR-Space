@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 528.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nWeek 1: Produce 30.0, Inventory 15.0\nWeek 2: Produce 40.0, Inventory 30.0\nWeek 3: Produce 10.0, Inventory 5.0\nWeek 4: Produce 20.0, Inventory 0.0\nOBJECTIVE_VALUE: 528.0\n",
+  "stderr": "",
+  "error": null
+}

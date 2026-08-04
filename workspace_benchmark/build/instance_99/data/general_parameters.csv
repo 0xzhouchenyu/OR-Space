@@ -1,0 +1,9 @@
+Parameter_Name,Value,Unit,Context_Description
+unit_price_component_1,20,yuan,Unit price of component 1
+unit_price_component_2,30,yuan,Unit price of component 2
+unit_price_component_3,40,yuan,Unit price of component 3
+unit_weight_component_1,2,kg,Unit weight of component 1
+unit_weight_component_2,4,kg,Unit weight of component 2
+unit_weight_component_3,6,kg,Unit weight of component 3
+total_budget,150,yuan,Total budget for all spare parts
+weight_limit,20,kg,Maximum allowable weight for all spare parts

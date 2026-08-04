@@ -1,0 +1,101 @@
+\section*{Sets and Indices}
+
+\[
+P = \{\text{Property\_1},\text{Property\_2},\text{Property\_3},\text{Property\_4}\}
+\]
+
+Index:
+\[
+p \in P
+\]
+
+\section*{Parameters}
+
+For each property \(p \in P\):
+\begin{itemize}
+    \item \(r_p\): annual income of property \(p\).
+    \item \(c_p\): purchase cost of property \(p\).
+\end{itemize}
+
+Global parameter:
+\begin{itemize}
+    \item \(B\): total investment budget.
+\end{itemize}
+
+From the data:
+\[
+B = 7{,}000{,}000
+\]
+\[
+(r_{\text{Property\_1}},r_{\text{Property\_2}},r_{\text{Property\_3}},r_{\text{Property\_4}})
+=
+(12{,}500,35{,}000,23{,}000,100{,}000)
+\]
+\[
+(c_{\text{Property\_1}},c_{\text{Property\_2}},c_{\text{Property\_3}},c_{\text{Property\_4}})
+=
+(1{,}500{,}000,2{,}100{,}000,2{,}300{,}000,4{,}200{,}000)
+\]
+
+The exclusion parameter in the business data indicates that Property\_4 excludes Property\_3; in the implemented model this is represented directly as a pairwise constraint rather than via a separate symbolic parameter.
+
+\section*{Decision Variables}
+
+For each \(p \in P\), define the binary purchase decision
+\[
+x_p \in \{0,1\}
+\qquad \text{(code: \texttt{x[p['name']]})}
+\]
+where \(x_p = 1\) if property \(p\) is purchased, and \(x_p = 0\) otherwise.
+
+\section*{Objective}
+
+Maximize total annual income:
+\[
+\max \sum_{p \in P} r_p x_p
+\]
+
+Equivalently, with the given data:
+\[
+\max \; 12500\,x_{\text{Property\_1}}
++ 35000\,x_{\text{Property\_2}}
++ 23000\,x_{\text{Property\_3}}
++ 100000\,x_{\text{Property\_4}}
+\]
+
+\section*{Constraints}
+
+Budget limit:
+\[
+\sum_{p \in P} c_p x_p \le B
+\]
+
+With the given data:
+\[
+1500000\,x_{\text{Property\_1}}
++ 2100000\,x_{\text{Property\_2}}
++ 2300000\,x_{\text{Property\_3}}
++ 4200000\,x_{\text{Property\_4}}
+\le 7000000
+\]
+
+Mutual exclusion between Property\_4 and Property\_3:
+\[
+x_{\text{Property\_4}} + x_{\text{Property\_3}} \le 1
+\]
+
+Binary restrictions:
+\[
+x_p \in \{0,1\}
+\qquad \forall p \in P
+\]
+
+\section*{Notes on Implementation}
+
+The source code constructs a binary linear optimization model in PuLP with one binary variable per property, maximizing total annual income subject to:
+\begin{itemize}
+    \item one knapsack-style budget constraint, and
+    \item one explicit pairwise exclusion constraint, \(\texttt{x['Property\_4']} + \texttt{x['Property\_3']} \le 1\).
+\end{itemize}
+
+The model is solved by calling Gurobi through \texttt{GUROBI\_CMD(msg=0)}. No additional valid inequalities, preprocessing reductions, or alternative search logic are implemented in \texttt{current\_heuristic.py}. The exclusion rule from \texttt{general\_parameters.csv} is not modeled as a generic parameterized family of constraints; instead, the code adds this single hard-coded constraint for Property\_4 and Property\_3.

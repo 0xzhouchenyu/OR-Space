@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_041",
+  "instance_number": 41,
+  "source_revise_instance": "IndustryOR_41_revise_business",
+  "domain": "Investment_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Investment_Planning",
+    "question": "Using the revised model’s solver record, explain why the objective drops from 964640.0 to 948640.0 even though the shadow prices on `Year1_Budget` and `Year2_Budget` are unchanged. You must trace the new business rule from `docs/business_requirement.md` to the exact CSV fields `liquidity_policy.csv[Parameter_Name, Value]`, then to the code variables `reserve_y3` and `shortfall` and constraints `Year3_Cash_Balance` and `Shortfall_Definition` (you may also reference `src/formulation.tex` symbols `y` and `s`). Identify which revised constraints are binding from the reported slack values, interpret the dual values 1.2 and -0.2 in business terms, and explain why a linear extrapolation of the -0.2 shadow price cannot be trusted for arbitrarily increasing the required reserve beyond 80000 yuan."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Investment_Maximization.gurobi.log",
+        "Investment_Maximization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv",
+        "liquidity_policy.csv"
+      ],
+      "solver_records": [
+        "Investment_With_Liquidity_Penalty.gurobi.log",
+        "Investment_With_Liquidity_Penalty.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 86.156667
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "solver": "gurobi",
+  "model_name": "SteelFurnace",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 150.0,
+  "objective_bound": 150.0,
+  "mip_gap": null,
+  "runtime": 0.0005278587341308594,
+  "node_count": 0.0,
+  "iteration_count": 1.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_4w8amh40/solver_records/SteelFurnace.gurobi.log",
+  "variables": {
+    "x1": {
+      "value": 3.0,
+      "reduced_cost": 0.0
+    },
+    "x2": {
+      "value": 0.0,
+      "reduced_cost": 20.0
+    },
+    "x3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x4": {
+      "value": 0.0,
+      "reduced_cost": 20.0
+    }
+  },
+  "constraints": {
+    "Furnace1_Time": {
+      "sense": "<=",
+      "slack": 6.0,
+      "dual_value": 0.0
+    },
+    "Furnace2_Time": {
+      "sense": "<=",
+      "slack": 12.0,
+      "dual_value": 0.0
+    },
+    "MinProduction": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 5.0
+    }
+  }
+}

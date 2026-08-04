@@ -1,0 +1,99 @@
+{
+  "solver": "gurobi",
+  "model_name": "NurseScheduling",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 4240.0,
+  "objective_bound": 4240.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0023539066314697266,
+  "node_count": 1.0,
+  "iteration_count": 5.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_5uzj480n/solver_records/NurseScheduling.gurobi.log",
+  "variables": {
+    "x_0": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "x_1": {
+      "value": 11.0,
+      "reduced_cost": null
+    },
+    "x_2": {
+      "value": 14.0,
+      "reduced_cost": null
+    },
+    "x_3": {
+      "value": 6.0,
+      "reduced_cost": null
+    },
+    "x_4": {
+      "value": 12.0,
+      "reduced_cost": null
+    },
+    "x_5": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_5": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Demand_period_0": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Demand_period_1": {
+      "sense": ">=",
+      "slack": -6.0,
+      "dual_value": null
+    },
+    "Demand_period_2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Demand_period_3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Demand_period_4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Demand_period_5": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

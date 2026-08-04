@@ -1,0 +1,292 @@
+\section*{Sets and Indices}
+
+\[
+T=\{0,1,2,3,4,5\}
+\]
+monthly periods, corresponding respectively to January, February, March, April, May, and June.
+
+\[
+T^{c}=\{3,4,5\}
+\]
+contract months (April--June).
+
+\section*{Parameters}
+
+For each \(t\in T\), let \(d_t\) denote forecast demand in month \(t\) (code: \texttt{demand[t]}), with
+\[
+(d_0,d_1,d_2,d_3,d_4,d_5)=(20000,40000,42000,35000,19000,18500).
+\]
+
+Scalar parameters from \texttt{general\_parameters.csv}:
+
+\[
+W^0=1000
+\]
+initial workforce (code: \texttt{W0}),
+
+\[
+I^0=15000
+\]
+initial inventory (code: \texttt{I0}),
+
+\[
+p=300
+\]
+sales price per unit (code: \texttt{sp}),
+
+\[
+c^{rm}=90
+\]
+raw material cost per in-house unit (code: \texttt{rmc}),
+
+\[
+c^{out}=200
+\]
+outsourcing cost per unit (code: \texttt{oc}),
+
+\[
+c^{inv}=15
+\]
+inventory holding cost per unit-month (code: \texttt{hc}),
+
+\[
+c^{bo}=35
+\]
+backorder cost per unit-month (code: \texttt{bc}),
+
+\[
+\ell=5
+\]
+labor hours required per in-house unit (code: \texttt{lr}),
+
+\[
+h^{reg}=160
+\]
+regular labor hours per worker per month (code: \texttt{rh}),
+
+\[
+w^{reg}=30
+\]
+regular wage per labor hour (code: \texttt{rw}),
+
+\[
+h^{ot}=20
+\]
+maximum overtime hours per worker per month (code: \texttt{otl}),
+
+\[
+w^{ot}=40
+\]
+overtime wage per hour (code: \texttt{ow}),
+
+\[
+c^{hire}=5000
+\]
+hiring cost per worker (code: \texttt{hire\_cost}),
+
+\[
+c^{fire}=8000
+\]
+firing cost per worker (code: \texttt{fire\_cost}),
+
+\[
+I^{\min}_{6}=10000
+\]
+minimum ending inventory in June (code: \texttt{term\_inv}),
+
+\[
+B^{\max}_{6}=0
+\]
+maximum ending backorders in June (code: \texttt{term\_bo}),
+
+\[
+Q^{\min}=15000
+\]
+minimum contract-qualified units in each contract month (code: \texttt{contract\_min\_units}),
+
+\[
+M^{c}=60000
+\]
+big-\(M\) constant for contract linkage (code: \texttt{contract\_bigM}).
+
+Also define total horizon demand
+\[
+D^{\mathrm{tot}}=\sum_{t\in T} d_t.
+\]
+
+\section*{Decision Variables}
+
+For each \(t\in T\):
+
+\[
+W_t \ge 0
+\]
+workforce in month \(t\) (code: \texttt{W[t]}),
+
+\[
+H_t \ge 0
+\]
+workers hired in month \(t\) (code: \texttt{H[t]}),
+
+\[
+F_t \ge 0
+\]
+workers fired in month \(t\) (code: \texttt{F[t]}),
+
+\[
+P_t \ge 0
+\]
+total in-house production (code: \texttt{P[t]}),
+
+\[
+P^{reg}_t \ge 0
+\]
+regular-time in-house production (code: \texttt{P\_reg[t]}),
+
+\[
+P^{ot}_t \ge 0
+\]
+overtime in-house production (code: \texttt{P\_ot[t]}),
+
+\[
+OT_t \ge 0
+\]
+total overtime hours used (code: \texttt{OT\_total[t]}),
+
+\[
+O_t \ge 0
+\]
+outsourced units (code: \texttt{O[t]}),
+
+\[
+I_t \ge 0
+\]
+ending inventory (code: \texttt{Inv[t]}),
+
+\[
+B_t \ge 0
+\]
+ending backorders (code: \texttt{B[t]}),
+
+\[
+C_t \ge 0
+\]
+contract-qualified units (code: \texttt{C[t]}),
+
+\[
+z_t \in \{0,1\}
+\]
+contract activation indicator (code: \texttt{z[t]}).
+
+All nonbinary variables are continuous, matching the implementation.
+
+\section*{Objective}
+
+The code maximizes net profit:
+\[
+\max \; p\,D^{\mathrm{tot}}
+-\sum_{t\in T}\Big(
+c^{rm} P_t
++c^{out} O_t
++c^{inv} I_t
++c^{bo} B_t
++w^{reg} h^{reg} W_t
++w^{ot} OT_t
++c^{hire} H_t
++c^{fire} F_t
+\Big).
+\]
+
+Because the implementation sets revenue equal to \(p\) times total forecast demand, revenue is a constant term.
+
+\section*{Constraints}
+
+\paragraph{Workforce balance}
+For \(t=0\):
+\[
+W_0 = W^0 + H_0 - F_0.
+\]
+For \(t=1,\dots,5\):
+\[
+W_t = W_{t-1} + H_t - F_t.
+\]
+
+\paragraph{Regular-time capacity}
+For all \(t\in T\):
+\[
+\ell\, P^{reg}_t \le h^{reg} W_t.
+\]
+
+\paragraph{Overtime production-hour linkage}
+For all \(t\in T\):
+\[
+\ell\, P^{ot}_t = OT_t.
+\]
+
+\paragraph{Overtime capacity}
+For all \(t\in T\):
+\[
+OT_t \le h^{ot} W_t.
+\]
+
+\paragraph{Production decomposition}
+For all \(t\in T\):
+\[
+P_t = P^{reg}_t + P^{ot}_t.
+\]
+
+\paragraph{Inventory-backorder balance}
+For \(t=0\):
+\[
+I_0 - B_0 = I^0 + P_0 + O_0 - d_0.
+\]
+For \(t=1,\dots,5\):
+\[
+I_t - B_t = I_{t-1} - B_{t-1} + P_t + O_t - d_t.
+\]
+
+\paragraph{Contract accounting for April--June}
+For each \(t\in T^c\):
+\[
+C_t \le P^{reg}_t,
+\]
+\[
+C_t \le d_t + B_{t-1},
+\]
+\[
+C_t \ge Q^{\min},
+\]
+\[
+C_t \le M^{c} z_t.
+\]
+
+\paragraph{No contract activity before April}
+For \(t=0,1,2\):
+\[
+C_t = 0,
+\]
+\[
+z_t = 0.
+\]
+
+\paragraph{Terminal conditions}
+\[
+I_5 \ge I^{\min}_{6},
+\]
+\[
+B_5 \le B^{\max}_{6}.
+\]
+
+\section*{Notes on Implementation}
+
+The formulation above matches the implemented mixed-integer linear program in \texttt{current\_heuristic.py}, solved by Gurobi through the PuLP-compatible interface.
+
+The contract logic is implemented through the auxiliary variable \(C_t\) and binary \(z_t\) for April--June. Since \(C_t \ge Q^{\min}=15000>0\) and \(C_t \le M^c z_t\), feasibility forces \(z_t=1\) in each contract month; the binary variable is therefore redundant in effect, but it is present in the code and is included here exactly as implemented.
+
+The code interprets the monthly contract cap based on
+\[
+d_t + B_{t-1},
+\]
+i.e., current-month demand plus prior-month backlog. It does not introduce a separate shipment-allocation variable tying \(C_t\) to actual units delivered from regular production; instead, \(C_t\) is only upper-bounded by regular production and by this ``net demand'' expression.
+
+All workforce, hiring, and firing variables are continuous in the implementation rather than integer-valued, so the model permits fractional workers. Revenue is treated as the constant \(p\sum_t d_t\), relying on the terminal condition \(B_5=0\) to ensure all demand is eventually satisfied within the horizon.

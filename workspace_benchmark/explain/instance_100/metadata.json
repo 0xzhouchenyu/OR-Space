@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_100",
+  "instance_number": 100,
+  "source_revise_instance": "IndustryOR_100_revise_business",
+  "domain": "Network_Flow",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Network_Flow",
+    "question": "In the revised model, explain why the optimal objective becomes 35 by tracing the selected variables all the way from solver state to code to CSV to business terms: identify the exact binary variables set to 1, the exact `table_1.csv` cells/column names that provide their bandwidths, and the resulting `edges[(u,v)] = 100 - bw` costs. Then, using the LP-relaxation diagnostics, name at least one nonbasic arc variable with a positive reduced cost and interpret its business meaning as a marginal cost of forcing that direct connection into the route; also state which revised flow/path-structure constraints are binding with zero slack at nodes A, C, and E. Finally, compare to the original bandwidth-maximization formulation in `src/formulation.tex`: name the original conceptual variable and the revised code additions that changed the model behavior, and explain why you cannot linearly extrapolate the old objective value 84 into the new cost objective even though both are built from the same bandwidth table."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Advanced_100.gurobi.log",
+        "Advanced_100.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Minimize_Routing_Cost.gurobi.log",
+        "Minimize_Routing_Cost.lp_relaxation.json",
+        "Minimize_Routing_Cost.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 50.547778
+  }
+}

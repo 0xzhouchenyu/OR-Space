@@ -1,0 +1,13 @@
+Parameter_Name,Value,Unit,Context_Description
+product_a_process_1_time,2,hours,Time required for the first process per unit of product A
+product_a_process_2_time,3,hours,Time required for the second process per unit of product A
+product_b_process_1_time,3,hours,Time required for the first process per unit of product B
+product_b_process_2_time,4,hours,Time required for the second process per unit of product B
+available_time_process_1,16,hours,Total available time for the first process
+available_time_process_2,24,hours,Total available time for the second process
+byproduct_c_per_unit_b,2,units,By-product C generated per unit of product B
+max_byproduct_c_sales,5,units,Maximum units of by-product C that can be sold
+disposal_cost_per_unit_c,2,yuan,Cost to dispose of each unit of by-product C
+profit_per_unit_a,4,yuan,Profit per unit of product A sold
+profit_per_unit_b,10,yuan,Profit per unit of product B sold
+profit_per_unit_c,3,yuan,Profit per unit of by-product C sold

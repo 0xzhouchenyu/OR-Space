@@ -1,0 +1,130 @@
+\section*{Sets and Indices}
+
+\[
+P = \{\text{A1},\text{A2},\text{A3}\}
+\]
+
+Index:
+\[
+p \in P
+\]
+
+\section*{Parameters}
+
+For each product \(p \in P\):
+\begin{itemize}
+    \item \(D_p\): maximum demand (from \texttt{Maximum\_Demand})
+    \item \(s_p\): selling price per unit (from \texttt{Selling\_Price})
+    \item \(c_p\): production cost per unit (from \texttt{Production\_Cost})
+    \item \(q_p\): production quota in units per operating day (from \texttt{Production\_Quota})
+    \item \(F_p\): activation cost (from \texttt{Activation\_Cost})
+    \item \(B_p\): minimum batch size (from \texttt{Minimum\_Batch})
+\end{itemize}
+
+Global parameters:
+\begin{itemize}
+    \item \(T\): available production days in the month (code/data: \texttt{production\_days})
+    \item \(\theta^{W}\): A1 watch threshold (code/data: \texttt{a1\_watch\_threshold})
+    \item \(\theta^{D}\): A1 deep-service threshold (code/data: \texttt{a1\_deep\_service\_threshold})
+    \item \(\delta^{W}\): operating-day loss if the watch threshold is crossed (code/data: \texttt{maintenance\_penalty\_watch})
+    \item \(\delta^{D}\): additional operating-day loss if the deep-service threshold is crossed (code/data: \texttt{maintenance\_penalty\_deep})
+    \item \(K^{W}\): quality-release fee charged if the watch threshold is crossed (code/data: \texttt{a1\_quality\_release\_fee})
+    \item \(K^{D}\): deep-service fee charged if the deep-service threshold is crossed (code/data: \texttt{a1\_deep\_service\_fee})
+    \item \(\pi\): priority price uplift for A1 units above the watch threshold (code/data: \texttt{a1\_priority\_price\_lift})
+\end{itemize}
+
+Auxiliary constant used in the code:
+\[
+M = D_{\text{A1}}
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_p \ge 0\) (code: \texttt{x[p]}): production quantity of product \(p\)
+    \item \(y_p \in \{0,1\}\) (code: \texttt{y[p]} / \texttt{open[p]}): product activation indicator
+    \item \(w \in \{0,1\}\) (code: \texttt{watch} / \texttt{a1\_watch}): indicator for A1 crossing the watch threshold
+    \item \(d \in \{0,1\}\) (code: \texttt{deep} / \texttt{a1\_deep}): indicator for A1 crossing the deep-service threshold
+    \item \(e \ge 0\) (code: \texttt{excess} / \texttt{a1\_priority\_excess}): A1 units eligible for the priority uplift
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total operating contribution plus A1 priority uplift, minus activation costs and threshold-triggered charges:
+\[
+\max \;
+\sum_{p \in P} (s_p-c_p)x_p
+\;+\;
+\pi e
+\;-\;
+\sum_{p \in P} F_p y_p
+\;-\;
+K^{W} w
+\;-\;
+K^{D} d
+\]
+
+\section*{Constraints}
+
+All products are forced open in the implemented model:
+\[
+y_p = 1 \qquad \forall p \in P
+\]
+
+Demand and minimum-batch bounds:
+\[
+x_p \le D_p\, y_p \qquad \forall p \in P
+\]
+\[
+x_p \ge B_p\, y_p \qquad \forall p \in P
+\]
+
+A1 watch-threshold logic:
+\[
+x_{\text{A1}} - \theta^{W} \le (M-\theta^{W})\, w
+\]
+
+A1 deep-service logic:
+\[
+x_{\text{A1}} - \theta^{D} \le (M-\theta^{D})\, d
+\]
+
+Deep service implies watch:
+\[
+d \le w
+\]
+
+Priority-uplift excess for A1:
+\[
+e \ge x_{\text{A1}} - \theta^{W}
+\]
+\[
+e \le x_{\text{A1}} - \theta^{W} + M(1-w)
+\]
+\[
+e \le (M-\theta^{W})\, w
+\]
+
+Available operating days, including threshold-triggered day losses:
+\[
+\sum_{p \in P} \frac{x_p}{q_p}
+\;\le\;
+T - \delta^{W} w - \delta^{D} d
+\]
+
+\section*{Notes on Implementation}
+
+The formulation above matches the model implemented in \texttt{current\_heuristic.py}.
+
+In particular:
+\begin{itemize}
+    \item The binary activation variables \(y_p\) are present, but the code imposes \(y_p=1\) for every product, so all three product lines must be active.
+    \item The watch and deep-service rules are modeled as gates, not proportional surcharges: if A1 output exceeds \(\theta^W\), then \(w\) must become 1; if it exceeds \(\theta^D\), then \(d\) must become 1. These binaries trigger fixed fees and reduce available production days.
+    \item The priority uplift applies only to A1 units above the watch threshold. Variable \(e\) is linearized so that, in combination with profit maximization, it equals
+    \[
+    e = \max\{0,\, x_{\text{A1}}-\theta^W\}
+    \]
+    with the additional restriction that positive \(e\) is only possible when \(w=1\).
+    \item The monthly capacity constraint uses production days consumed as \(\sum_p x_p/q_p\), then subtracts \(\delta^W\) and \(\delta^D\) from available days when the corresponding A1 thresholds are crossed.
+    \item The code solves this as a mixed-integer linear program using \texttt{GUROBI\_CMD}.
+\end{itemize}

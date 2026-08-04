@@ -1,0 +1,7 @@
+Parameter_Name,Value,Unit,Context_Description
+mall_total_space,5000,m²,Total space available for lease in the shopping mall
+rent_percentage,20,%,Percentage of annual profit paid as rent by each store
+common_area_factor,1.15,multiplier,Effective occupied area multiplier including corridors fire access and shared facility support for every leased store
+general_merchandise_third_store_concession,1.0,rent_income_units,Rent concession if the third General Merchandise store is retained
+catering_third_store_security_threshold,2,stores,Catering stores that fit the ordinary food-court security plan
+catering_third_store_security_cost,0.7,rent_income_units,Rent-income burden if a third Catering store is retained

@@ -1,0 +1,59 @@
+{
+  "solver": "gurobi",
+  "model_name": "CuttingStock",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 20.0,
+  "objective_bound": 20.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004823923110961914,
+  "node_count": 1.0,
+  "iteration_count": 1.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_jbfjxegb/solver_records/CuttingStock.gurobi.log",
+  "variables": {
+    "Pattern_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "Pattern_1": {
+      "value": 8.0,
+      "reduced_cost": null
+    },
+    "Pattern_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "Pattern_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "Pattern_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "Pattern_5": {
+      "value": 45.0,
+      "reduced_cost": null
+    },
+    "Pattern_6": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    }
+  }
+}

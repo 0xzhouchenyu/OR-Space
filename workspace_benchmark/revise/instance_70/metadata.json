@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_70_revise_business",
+  "original_instance_id": "IndustryOR_70",
+  "revise_description": "In the stakeholder handoff for this case, the planning lead framed the change in business terms rather than as a spreadsheet checklist. The dispatch office is treating activity as something that must be earned by an actual working day, route, crew, or group. A closed day or unused group should stay quiet; an opened one carries the commitments in the memo. The hazardous-material inspector added one scheduled checkpoint: if the vehicle moves directly from city 2 to city 3, that leg carries an inspection stop costing 4 distance-equivalent units. The start at city 1, the end at city 4, and the direct 1-to-3 prohibition remain unchanged. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R4",
+  "revise_type_name": "structural_change",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "TSP",
+    "diff": {
+      "diff_summary": "+1var, +3constr, -2constr, mod_2constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 1,
+        "-variable": 0,
+        "+constraint": 3,
+        "-constraint": 2,
+        "modify_constraint": 2,
+        "modify_data": 1
+      },
+      "op_count": 10,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 38.888889
+  }
+}

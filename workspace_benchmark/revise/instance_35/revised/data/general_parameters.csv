@@ -1,0 +1,9 @@
+parameter,value
+planning_horizon_T,15
+energy_cost_v1,1.0
+energy_cost_v2,1.2
+energy_cost_v3,1.5
+peak_energy_multiplier,2.0
+peak_energy_cap,30.0
+makespan_weight,1.0
+energy_weight,0.5

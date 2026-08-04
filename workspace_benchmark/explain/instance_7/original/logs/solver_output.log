@@ -1,0 +1,7 @@
+Set parameter LicenseID to value 2802670
+Approach 1 (per container cost): 904590.0
+Approach 2 (per truck cost): 478680.0
+Approach 3 (per truck, cost includes capacity): 957360.0
+Best match: Approach 1 with value 904590.0
+
+OBJECTIVE_VALUE: 904590.0

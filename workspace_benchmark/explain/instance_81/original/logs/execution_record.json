@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 28.6,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nTotal car length: 57.1\nSide 1 length: 28.6\nSide 2 length: 28.5\nCars on side 1: [3, 5, 6, 7, 9, 11, 13, 15]\nCars on side 2: [1, 2, 4, 8, 10, 12, 14]\nOBJECTIVE_VALUE: 28.6\n",
+  "stderr": "",
+  "error": null
+}

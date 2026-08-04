@@ -1,0 +1,71 @@
+{
+  "solver": "gurobi",
+  "model_name": "Recruitment",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 23000.0,
+  "objective_bound": 23000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0006008148193359375,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_80665bbd/solver_records/Recruitment.gurobi.log",
+  "variables": {
+    "x_A": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_C": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_D": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_E": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 12000.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

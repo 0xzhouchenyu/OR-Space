@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_44_revise_business",
+  "original_instance_id": "IndustryOR_44",
+  "revise_description": "In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. The risk review no longer accepts a plan that is only good in the central case. The same front-office choices have to make sense across the cases in the data pack, while the case-specific consequences settle afterward. The logistics network has been redesigned after reliability reviews. Shipments can move in regular or express service on both legs through the marshaling stations, with express capacity limited at each station. Demand points with more than one open station need a diversified express share of at least `alpha_j` across two station links, while station fixed costs and total throughput limits remain in force. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+8var, +10constr, -2constr, mod_6constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 8,
+        "-variable": 0,
+        "+constraint": 10,
+        "-constraint": 2,
+        "modify_constraint": 6,
+        "modify_data": 1
+      },
+      "op_count": 27,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 16.666667
+  }
+}

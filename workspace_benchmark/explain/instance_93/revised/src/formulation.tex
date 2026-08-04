@@ -1,0 +1,101 @@
+\section*{Sets and Indices}
+There is a single daily planning period and three product lines:
+\[
+I=\{1,2,3\},
+\]
+where $1$ denotes A1, $2$ denotes A2, and $3$ denotes A3.
+
+\section*{Parameters}
+Milk, labor, yields, and profits:
+\[
+\begin{aligned}
+&m &&\text{(code: \texttt{daily\_milk\_supply})} &&= 50,\\
+&h &&\text{(code: \texttt{daily\_labor\_hours})} &&= 480,\\
+&a_i &&\text{(code: \texttt{product\_A$i$\_yield})} && i\in I,\\
+&t_i &&\text{(code: \texttt{product\_A$i$\_time})} && i\in I,\\
+&\pi_i &&\text{(code: \texttt{profit\_per\_kg\_A$i$})} && i\in I.
+\end{aligned}
+\]
+Numeric values: $a_1=3,a_2=4,a_3=2$ and $t_1=12,t_2=8,t_3=10$.
+
+Capacity and business-rule parameters:
+\[
+\begin{aligned}
+&C &&\text{(code: \texttt{cap\_A\_shared})} &&=90,\\
+&\ell &&\text{(code: \texttt{type\_A\_cleaning\_loss\_if\_A3})} &&=12,\\
+&\underline{q}_2 &&\text{(code: \texttt{min\_A2\_kg})} &&=40,\\
+&\underline{q}_3 &&\text{(code: \texttt{min\_A3\_kg})} &&=20,\\
+&\tau &&\text{(code: \texttt{cold\_chain\_bonus\_threshold\_kg})} &&=30,\\
+&B &&\text{(code: \texttt{cold\_chain\_bonus\_yuan})} &&=300.
+\end{aligned}
+\]
+
+\section*{Decision Variables}
+\[
+\begin{aligned}
+&x_1 \ge 0 &&\text{(code: \texttt{barrels\_A1})} &&\text{: barrels processed into A1},\\
+&x_2 \ge 0 &&\text{(code: \texttt{barrels\_A2})} &&\text{: barrels processed into A2},\\
+&x_3 \ge 0 &&\text{(code: \texttt{barrels\_A3})} &&\text{: barrels processed into A3},\\
+&y \in \{0,1\} &&\text{(code: \texttt{run\_A3})} &&\text{: 1 if A3 is run},\\
+&z \in \{0,1\} &&\text{(code: \texttt{cold\_bonus})} &&\text{: 1 if the cold-chain bonus is paid}.
+\end{aligned}
+\]
+Define product outputs (not independent variables):
+\[
+q_i=a_i x_i \qquad i\in I.
+\]
+
+\section*{Objective}
+\[
+\max \; \pi_1 q_1+\pi_2 q_2+\pi_3 q_3+Bz.
+\]
+
+\section*{Constraints}
+Milk availability:
+\[
+x_1+x_2+x_3 \le m.
+\]
+
+Labor availability:
+\[
+t_1x_1+t_2x_2+t_3x_3 \le h.
+\]
+
+Shared Type A capacity with cleaning loss if A3 is run:
+\[
+q_1+q_3 \le C-\ell y.
+\]
+
+Minimum A2 production:
+\[
+q_2 \ge \underline{q}_2.
+\]
+
+Minimum A3 production:
+\[
+q_3 \ge \underline{q}_3.
+\]
+
+A3 run indicator linking:
+\[
+q_3 \le a_3 m\, y,
+\]
+\[
+q_3 \ge \underline{q}_3\, y.
+\]
+
+Cold-chain bonus eligibility:
+\[
+q_3 \ge \tau z,
+\]
+\[
+z \le y.
+\]
+
+Variable domains:
+\[
+x_1,x_2,x_3\ge 0,\qquad y,z\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+The model is implemented exactly as a mixed-integer optimization problem in \texttt{current\_heuristic.py} and solved by Gurobi. The cleaning loss, A3 run flag, and cold-chain bonus are enforced through the stated linear linking constraints; no additional simplifications or reformulations are used.

@@ -1,0 +1,44 @@
+{
+  "solver": "gurobi",
+  "model_name": "HealthyPetFoods",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 77499.99999999999,
+  "objective_bound": 77499.99999999999,
+  "mip_gap": null,
+  "runtime": 0.0005078315734863281,
+  "node_count": 0.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_h3q4ju0k/solver_records/HealthyPetFoods.gurobi.log",
+  "variables": {
+    "Meaties": {
+      "value": 50000.0,
+      "reduced_cost": 0.0
+    },
+    "Yummies": {
+      "value": 100000.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Grains_Constraint": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.06250000000000001
+    },
+    "Meat_Constraint": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.17499999999999996
+    },
+    "Meaties_Capacity": {
+      "sense": "<=",
+      "slack": 40000.0,
+      "dual_value": 0.0
+    }
+  }
+}

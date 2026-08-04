@@ -1,0 +1,7 @@
+The problem involves determining a transportation plan for a material that minimizes the total cost. The material is produced at multiple production points and shipped to demand points via intermediate marshaling stations. Specific details about production capacities, demand requirements, transportation costs, and marshaling station constraints can be found in the corresponding CSV files in the data folder.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. The risk review no longer accepts a plan that is only good in the central case. The same front-office choices have to make sense across the cases in the data pack, while the case-specific consequences settle afterward. The logistics network has been redesigned after reliability reviews. Shipments can move in regular or express service on both legs through the marshaling stations, with express capacity limited at each station. Demand points with more than one open station need a diversified express share of at least `alpha_j` across two station links, while station fixed costs and total throughput limits remain in force. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

@@ -1,0 +1,109 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$: set of store types, indexed by $i$.
+    \item For each store type $i \in I$, let $K_i$ be the set of admissible store-count choices represented explicitly in the model:
+    \[
+    K_i=\{k \in \mathbb{Z}: \texttt{Min}_i \le k \le \texttt{Max}_i,\; (k=0)\ \text{or profit data for }k\text{ stores is present}\}.
+    \]
+    In this instance, because variables are created only for counts between \texttt{Min} and \texttt{Max}, the available choices are exactly those implemented in code.
+    \item Let $g \in I$ denote the store type with \texttt{Store\_Type} = \texttt{General\_Merchandise}.
+    \item Let $c \in I$ denote the store type with \texttt{Store\_Type} = \texttt{Catering}.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter names below correspond to fields in the CSV data.
+
+\begin{itemize}
+    \item $A_i$ (\texttt{Area\_per\_Shop\_m2}): area occupied by one shop of type $i$.
+    \item $\underline{n}_i$ (\texttt{Min}): minimum allowed number of shops of type $i$.
+    \item $\overline{n}_i$ (\texttt{Max}): maximum allowed number of shops of type $i$.
+    \item $P_{ik}$ (\texttt{Profit\_1\_Store}, \texttt{Profit\_2\_Stores}, \texttt{Profit\_3\_Stores}): annual profit per store for type $i$ when exactly $k$ stores of that type are leased; defined only for those $k$ present in the data and used by the code.
+    \item $S$ (\texttt{mall\_total\_space}): total mall space available.
+    \item $r$ (\texttt{rent\_percentage}/100): fraction of annual profit paid as rent.
+    \item $\alpha$ (\texttt{common\_area\_factor}): multiplier converting shop area into effective occupied area.
+    \item $\gamma$ (\texttt{general\_merchandise\_third\_store\_concession}): rent-income concession applied if 3 General Merchandise stores are retained.
+    \item $\tau$ (\texttt{catering\_third\_store\_security\_threshold}): number of Catering stores covered by the ordinary security plan.
+    \item $\sigma$ (\texttt{catering\_third\_store\_security\_cost}): extra rent-income cost of the Catering security arrangement.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ik}$ (code: \texttt{x[(i, k)]}) for $i \in I$, $k \in K_i$:
+    \[
+    x_{ik}=
+    \begin{cases}
+    1, & \text{if exactly }k\text{ stores of type }i\text{ are selected},\\
+    0, & \text{otherwise.}
+    \end{cases}
+    \]
+    \item $y$ (code: \texttt{catering\_third\_store\_security}) :
+    \[
+    y \in \{0,1\},
+    \]
+    indicating whether the extra Catering security arrangement is activated.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total rental income net of the implemented concession/cost adjustments:
+\[
+\max \;
+\sum_{i \in I}\sum_{\substack{k \in K_i\\k \ge 1}} k\,P_{ik}\,r\,x_{ik}
+\;-\;
+\gamma\,x_{g,3}
+\;-\;
+\sigma\,y.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item Exactly one count choice for each store type:
+    \[
+    \sum_{k \in K_i} x_{ik} = 1
+    \qquad \forall i \in I.
+    \]
+
+    \item Total effective occupied area cannot exceed available mall space:
+    \[
+    \sum_{i \in I}\sum_{k \in K_i} k\,A_i\,\alpha\,x_{ik} \le S.
+    \]
+
+    \item General Merchandise lower bound as implemented:
+    \[
+    \sum_{k \in K_g} k\,x_{gk} \ge 1.
+    \]
+    In this instance this is redundant with the data because \texttt{Min} for General Merchandise is already 1, but it is explicitly present in the code.
+
+    \item Catering extra-security trigger, in the forward direction only:
+    \[
+    y \;\ge\; \sum_{k \in K_c} k\,x_{ck} - \tau.
+    \]
+    With binary $y$ and the objective penalty on $y$, this enforces $y=1$ when the selected Catering count exceeds the threshold, and allows $y=0$ otherwise.
+
+    \item Binary restrictions:
+    \[
+    x_{ik} \in \{0,1\}
+    \qquad \forall i \in I,\; k \in K_i,
+    \]
+    \[
+    y \in \{0,1\}.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is a binary selection formulation over count alternatives. For each store type, the code creates one binary variable for each admissible count between \texttt{Min} and \texttt{Max} for which profit data exists (and also for $k=0$ if it were in range, though in this instance no such case occurs).
+    \item Profit is modeled exactly as in the code: if $k$ stores of type $i$ are selected, rent income contributed by that type is $k \cdot P_{ik} \cdot r$. Thus \texttt{Profit\_k\_Stores} is treated as a per-store profit level when $k$ stores are operated.
+    \item The business-direction revision is reflected literally: the Catering security condition is one-way only, matching the single inequality
+    \[
+    y \ge \text{Catering count} - \tau,
+    \]
+    with no reverse implication added. Likewise, no additional logical converse is introduced for any prerequisite/approval/follow-on interpretation.
+    \item The Catering adjustment applies once through the binary variable $y$. With $\tau=2$, selecting 1 or 2 Catering stores permits $y=0$, while selecting 3 forces $y=1$ and subtracts $\sigma=0.7$ from rent income.
+    \item The model is solved as a binary linear optimization problem by the configured solver interface (\texttt{GUROBI\_CMD}) in the implementation.
+\end{itemize}

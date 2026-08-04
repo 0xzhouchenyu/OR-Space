@@ -1,0 +1,125 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products \(P=\{\text{I},\text{II},\text{III}\}\), indexed by \(p\).
+    \item Quarters \(T=\{1,2,3,4\}\), indexed by \(t\).
+\end{itemize}
+
+\section*{Parameters}
+
+All numerical values are read from the CSV files in the data folder.
+
+\begin{itemize}
+    \item \(d_{p,t}\): contractual demand for product \(p\) in quarter \(t\) (from \texttt{table\_1.csv}).
+    \item \(I^0\): initial inventory for each product (field \texttt{initial\_inventory}).
+    \item \(I^{\mathrm{end}}\): required end-of-year inventory for each product (field \texttt{end\_inventory\_requirement}).
+    \item \(H\): total production hours per quarter before splitting into normal and peak bands (field \texttt{production\_hours\_per\_quarter}).
+    \item \(a_p\): production hours per unit of product \(p\):
+    \[
+    a_{\text{I}}=\texttt{product\_I\_hours\_per\_unit},\quad
+    a_{\text{II}}=\texttt{product\_II\_hours\_per\_unit},\quad
+    a_{\text{III}}=\texttt{product\_III\_hours\_per\_unit}.
+    \]
+    \item \(\pi_p\): delay penalty per unit of backlog of product \(p\) per quarter:
+    \[
+    \pi_{\text{I}}=\texttt{delay\_penalty\_product\_I},\quad
+    \pi_{\text{II}}=\texttt{delay\_penalty\_product\_II},\quad
+    \pi_{\text{III}}=\texttt{delay\_penalty\_product\_III}.
+    \]
+    \item \(c^{\mathrm{inv}}\): inventory holding cost per unit per quarter (field \texttt{inventory\_cost\_per\_unit}).
+    \item \(\alpha_t\): fraction of \(H\) available as normal hours in quarter \(t\):
+    \[
+    \alpha_t=\texttt{normal\_hours\_cap\_fraction\_q}t.
+    \]
+    \item \(K_t^{\mathrm{peak}}\): peak-hours capacity in quarter \(t\) (field \texttt{peak\_hours\_cap\_q}t).
+    \item \(c_t^{\mathrm{peak}}\): additional cost per peak-production hour in quarter \(t\) (field \texttt{peak\_cost\_per\_hour\_q}t).
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each \(p\in P\), \(t\in T\):
+
+\begin{itemize}
+    \item \(x_{p,t}\) (code: \texttt{x[(p,t)]}): units of product \(p\) produced in quarter \(t\) during normal hours, \(x_{p,t}\ge 0\).
+    \item \(x^{\mathrm{peak}}_{p,t}\) (code: \texttt{x\_peak[(p,t)]}): units of product \(p\) produced in quarter \(t\) during peak hours, \(x^{\mathrm{peak}}_{p,t}\ge 0\).
+    \item \(q_{p,t}\) (code: \texttt{q[(p,t)]}): total production of product \(p\) in quarter \(t\), \(q_{p,t}\ge 0\).
+    \item \(I_{p,t}\) (code: \texttt{inv[(p,t)]}): net inventory after quarter \(t\); this variable is unrestricted in sign.
+    \item \(I^+_{p,t}\) (code: \texttt{inv\_pos[(p,t)]}): positive inventory part, \(I^+_{p,t}\ge 0\).
+    \item \(I^-_{p,t}\) (code: \texttt{inv\_neg[(p,t)]}): backlog (negative inventory magnitude), \(I^-_{p,t}\ge 0\).
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model minimizes delay penalties, inventory holding costs, and peak-hour energy costs:
+\[
+\min \;
+\sum_{p\in P}\sum_{t\in T} \pi_p I^-_{p,t}
+\;+\;
+\sum_{p\in P}\sum_{t\in T} c^{\mathrm{inv}} I^+_{p,t}
+\;+\;
+\sum_{t\in T} c_t^{\mathrm{peak}} \sum_{p\in P} a_p x^{\mathrm{peak}}_{p,t}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Production split definition.}
+For all \(p\in P\), \(t\in T\),
+\[
+q_{p,t}=x_{p,t}+x^{\mathrm{peak}}_{p,t}.
+\]
+
+\paragraph{Inventory balance.}
+For all \(p\in P\),
+\[
+I_{p,1}=I^0+q_{p,1}-d_{p,1},
+\]
+and for all \(p\in P\), \(t=2,3,4\),
+\[
+I_{p,t}=I_{p,t-1}+q_{p,t}-d_{p,t}.
+\]
+
+\paragraph{Positive/negative inventory decomposition.}
+For all \(p\in P\), \(t\in T\),
+\[
+I_{p,t}=I^+_{p,t}-I^-_{p,t}.
+\]
+
+\paragraph{End-of-year inventory requirement.}
+For all \(p\in P\),
+\[
+I_{p,4}\ge I^{\mathrm{end}}.
+\]
+
+\paragraph{Normal-hours capacity by quarter.}
+For all \(t\in T\),
+\[
+\sum_{p\in P} a_p x_{p,t}\le \alpha_t H.
+\]
+
+\paragraph{Peak-hours capacity by quarter.}
+For all \(t\in T\),
+\[
+\sum_{p\in P} a_p x^{\mathrm{peak}}_{p,t}\le K_t^{\mathrm{peak}}.
+\]
+
+\paragraph{Product-specific production prohibition.}
+The code enforces that product I cannot be produced in quarter 2 in either time band:
+\[
+x_{\mathrm{I},2}=0,\qquad x^{\mathrm{peak}}_{\mathrm{I},2}=0.
+\]
+
+\paragraph{Nonnegativity and sign conditions.}
+For all \(p\in P\), \(t\in T\),
+\[
+x_{p,t}\ge 0,\quad x^{\mathrm{peak}}_{p,t}\ge 0,\quad q_{p,t}\ge 0,\quad I^+_{p,t}\ge 0,\quad I^-_{p,t}\ge 0,
+\]
+while \(I_{p,t}\) is free.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The formulation is implemented as a linear program in \texttt{current\_heuristic.py} and solved with \texttt{GUROBI\_CMD}; it is not an exact-search or dynamic-programming routine despite the filename.
+    \item The model uses a net-inventory variable \(I_{p,t}\) together with its positive and negative parts \(I^+_{p,t}\) and \(I^-_{p,t}\). Because both \(I^+\) and \(I^-\) are penalized with nonnegative coefficients, the LP objective induces the intended behavior without an explicit complementarity constraint \(I^+_{p,t} I^-_{p,t}=0\).
+    \item Peak-hour cost is charged per hour of peak production, implemented as \(c_t^{\mathrm{peak}}\sum_p a_p x^{\mathrm{peak}}_{p,t}\), matching the business interpretation of \texttt{peak\_cost\_per\_hour}.
+    \item The normal-hours band and peak-hours band are modeled as separate quarterly capacity constraints. The code does not impose any additional combined upper bound beyond these two separate caps.
+\end{itemize}

@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+overtime_hours_cap,350,hours,Maximum total equipment processing hours allowed for overtime production across all equipment and products per month
+overtime_cost_multiplier,1.4,dimensionless,Multiplier applied to base per-unit economic value to compute the per-unit cost of overtime production for each product
+min_prod_I,5,units,Minimum required monthly production quantity for product I considering contractual obligations
+min_prod_II,4,units,Minimum required monthly production quantity for product II considering contractual obligations
+min_prod_III,3,units,Minimum required monthly production quantity for product III considering contractual obligations

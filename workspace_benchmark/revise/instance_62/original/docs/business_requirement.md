@@ -1,0 +1,1 @@
+The Zhang family is deciding to invest in several different restaurants. They need to decide which restaurants to buy to maximize their annual income, given their investment budget and constraints. Please refer to the corresponding CSV files in the data folder for specific parameter values.

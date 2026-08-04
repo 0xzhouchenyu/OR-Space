@@ -1,0 +1,9 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+Total Skilled Workers: 200.0
+Total Laborers: 800.0
+Task_1: Method_A, Skilled=0.0, Laborers=233.3, Fixed=0.0
+Task_2: Method_B, Skilled=180.0, Laborers=90.0, Fixed=0.0
+Task_3: Method_B, Skilled=20.0, Laborers=476.7, Fixed=0.0
+
+OBJECTIVE_VALUE: 84000.0

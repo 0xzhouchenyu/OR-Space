@@ -1,0 +1,206 @@
+{
+  "solver": "gurobi",
+  "model_name": "FactoryLocationAssignmentWithModes_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 670.0,
+  "runtime": 0.0004839897155761719,
+  "variables": {
+    "v_prem_0_0": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "v_prem_0_1": {
+      "value": 0.0,
+      "reduced_cost": 3.0
+    },
+    "v_prem_1_0": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "v_prem_1_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "v_std_0_0": {
+      "value": 30.0,
+      "reduced_cost": 0.0
+    },
+    "v_std_0_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "v_std_1_0": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "v_std_1_1": {
+      "value": 70.0,
+      "reduced_cost": 0.0
+    },
+    "x_0_0": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_0_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_1_0": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_1_1": {
+      "value": 1.0,
+      "reduced_cost": -2.842170943040401e-14
+    },
+    "y_0_0": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_0_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_1_0": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_1_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "assign_factory_0": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "assign_factory_1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": -220.00000000000003
+    },
+    "location_capacity_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "location_capacity_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -9.999999999999991
+    },
+    "volume_balance_0": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 7.0
+    },
+    "volume_balance_1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 9.857142857142858
+    },
+    "std_only_if_assigned_0_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "prem_only_if_assigned_0_0": {
+      "sense": "<",
+      "slack": 30.0,
+      "dual_value": 0.0
+    },
+    "std_only_if_assigned_0_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.33333333333333304
+    },
+    "prem_only_if_assigned_0_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "std_only_if_assigned_1_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -3.1428571428571432
+    },
+    "prem_only_if_assigned_1_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "std_only_if_assigned_1_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -3.2857142857142865
+    },
+    "prem_only_if_assigned_1_1": {
+      "sense": "<",
+      "slack": 70.0,
+      "dual_value": 0.0
+    },
+    "prem_only_if_premium_0_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -2.3333333333333335
+    },
+    "prem_only_if_premium_0_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "prem_only_if_premium_1_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -0.14285714285714235
+    },
+    "prem_only_if_premium_1_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "min_prem_share_0_0": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 5.833333333333334
+    },
+    "min_prem_share_0_1": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "min_prem_share_1_0": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.3571428571428559
+    },
+    "min_prem_share_1_1": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "premium_only_if_assigned_0_0": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "premium_only_if_assigned_0_1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "premium_only_if_assigned_1_0": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "premium_only_if_assigned_1_1": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_079",
+  "instance_number": 79,
+  "source_revise_instance": "IndustryOR_79_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the optimal objective increases from 9800 to 10450 by tracing the exact code additions that implement the business-owner’s “rush orders” interpretation. Your answer must name the revised decision variables and constraints that did not exist in the original model, map them to the exact `general_parameters.csv` field names and the business brief terms in backticks, and quantify the 650 improvement using the actual produced rush quantities and per-unit bonus logic. Then use the revised LP-relaxation diagnostics to identify which constraints are binding (`Warehouse_Space`, `Rush_Items_Cap`, `Min_Tables_Total`) with their slack and dual values, interpret the business meaning of those shadow prices, and explain why you cannot reliably extrapolate profit linearly from the duals for a large increase in rush capacity."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Furniture_Production.gurobi.log",
+        "Furniture_Production.lp_relaxation.json",
+        "Furniture_Production.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Furniture_Production_With_Modes.gurobi.log",
+        "Furniture_Production_With_Modes.lp_relaxation.json",
+        "Furniture_Production_With_Modes.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 84.641667
+  }
+}

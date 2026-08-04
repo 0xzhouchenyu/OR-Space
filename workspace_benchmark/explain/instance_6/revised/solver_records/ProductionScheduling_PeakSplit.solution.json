@@ -1,0 +1,544 @@
+{
+  "solver": "gurobi",
+  "model_name": "ProductionScheduling_PeakSplit",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 10475.0,
+  "objective_bound": 10475.0,
+  "mip_gap": null,
+  "runtime": 0.0007870197296142578,
+  "node_count": 0.0,
+  "iteration_count": 5.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_0wjyo5l7/solver_records/ProductionScheduling_PeakSplit.gurobi.log",
+  "variables": {
+    "inv_III_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "inv_III_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "inv_III_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "inv_III_4": {
+      "value": 150.0,
+      "reduced_cost": 0.0
+    },
+    "inv_II_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "inv_II_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "inv_II_3": {
+      "value": 425.0,
+      "reduced_cost": 0.0
+    },
+    "inv_II_4": {
+      "value": 150.0,
+      "reduced_cost": 0.0
+    },
+    "inv_I_1": {
+      "value": 1000.0,
+      "reduced_cost": 0.0
+    },
+    "inv_I_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "inv_I_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "inv_I_4": {
+      "value": 150.0,
+      "reduced_cost": 0.0
+    },
+    "inv_neg_III_1": {
+      "value": 0.0,
+      "reduced_cost": 10.0
+    },
+    "inv_neg_III_2": {
+      "value": 0.0,
+      "reduced_cost": 12.25
+    },
+    "inv_neg_III_3": {
+      "value": 0.0,
+      "reduced_cost": 13.75
+    },
+    "inv_neg_III_4": {
+      "value": 0.0,
+      "reduced_cost": 15.0
+    },
+    "inv_neg_II_1": {
+      "value": 0.0,
+      "reduced_cost": 20.0
+    },
+    "inv_neg_II_2": {
+      "value": 0.0,
+      "reduced_cost": 23.0
+    },
+    "inv_neg_II_3": {
+      "value": 0.0,
+      "reduced_cost": 25.0
+    },
+    "inv_neg_II_4": {
+      "value": 0.0,
+      "reduced_cost": 25.0
+    },
+    "inv_neg_I_1": {
+      "value": 0.0,
+      "reduced_cost": 25.0
+    },
+    "inv_neg_I_2": {
+      "value": 0.0,
+      "reduced_cost": 16.5
+    },
+    "inv_neg_I_3": {
+      "value": 0.0,
+      "reduced_cost": 22.5
+    },
+    "inv_neg_I_4": {
+      "value": 0.0,
+      "reduced_cost": 25.0
+    },
+    "inv_pos_III_1": {
+      "value": 0.0,
+      "reduced_cost": 5.0
+    },
+    "inv_pos_III_2": {
+      "value": 0.0,
+      "reduced_cost": 2.75
+    },
+    "inv_pos_III_3": {
+      "value": 0.0,
+      "reduced_cost": 1.25
+    },
+    "inv_pos_III_4": {
+      "value": 150.0,
+      "reduced_cost": 0.0
+    },
+    "inv_pos_II_1": {
+      "value": 0.0,
+      "reduced_cost": 5.0
+    },
+    "inv_pos_II_2": {
+      "value": 0.0,
+      "reduced_cost": 2.0
+    },
+    "inv_pos_II_3": {
+      "value": 425.0,
+      "reduced_cost": 0.0
+    },
+    "inv_pos_II_4": {
+      "value": 150.0,
+      "reduced_cost": 0.0
+    },
+    "inv_pos_I_1": {
+      "value": 1000.0,
+      "reduced_cost": 0.0
+    },
+    "inv_pos_I_2": {
+      "value": 0.0,
+      "reduced_cost": 8.5
+    },
+    "inv_pos_I_3": {
+      "value": 0.0,
+      "reduced_cost": 2.5
+    },
+    "inv_pos_I_4": {
+      "value": 150.0,
+      "reduced_cost": 0.0
+    },
+    "q_III_1": {
+      "value": 1000.0,
+      "reduced_cost": 0.0
+    },
+    "q_III_2": {
+      "value": 2000.0,
+      "reduced_cost": 0.0
+    },
+    "q_III_3": {
+      "value": 1500.0,
+      "reduced_cost": 0.0
+    },
+    "q_III_4": {
+      "value": 2650.0,
+      "reduced_cost": 0.0
+    },
+    "q_II_1": {
+      "value": 1500.0,
+      "reduced_cost": 0.0
+    },
+    "q_II_2": {
+      "value": 1500.0,
+      "reduced_cost": 0.0
+    },
+    "q_II_3": {
+      "value": 1625.0,
+      "reduced_cost": 0.0
+    },
+    "q_II_4": {
+      "value": 1225.0,
+      "reduced_cost": 0.0
+    },
+    "q_I_1": {
+      "value": 2500.0,
+      "reduced_cost": 0.0
+    },
+    "q_I_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "q_I_3": {
+      "value": 2000.0,
+      "reduced_cost": 0.0
+    },
+    "q_I_4": {
+      "value": 1350.0,
+      "reduced_cost": 0.0
+    },
+    "x_III_1": {
+      "value": 1000.0,
+      "reduced_cost": 0.0
+    },
+    "x_III_2": {
+      "value": 2000.0,
+      "reduced_cost": 0.0
+    },
+    "x_III_3": {
+      "value": 1500.0,
+      "reduced_cost": 0.0
+    },
+    "x_III_4": {
+      "value": 2650.0,
+      "reduced_cost": 0.0
+    },
+    "x_II_1": {
+      "value": 1500.0,
+      "reduced_cost": 0.0
+    },
+    "x_II_2": {
+      "value": 1500.0,
+      "reduced_cost": 0.0
+    },
+    "x_II_3": {
+      "value": 1625.0,
+      "reduced_cost": 0.0
+    },
+    "x_II_4": {
+      "value": 1087.5,
+      "reduced_cost": 0.0
+    },
+    "x_I_1": {
+      "value": 2500.0,
+      "reduced_cost": 0.0
+    },
+    "x_I_2": {
+      "value": 0.0,
+      "reduced_cost": -5.0
+    },
+    "x_I_3": {
+      "value": 2000.0,
+      "reduced_cost": 0.0
+    },
+    "x_I_4": {
+      "value": 1350.0,
+      "reduced_cost": 0.0
+    },
+    "x_peak_III_1": {
+      "value": 0.0,
+      "reduced_cost": 1.5
+    },
+    "x_peak_III_2": {
+      "value": 0.0,
+      "reduced_cost": 3.0
+    },
+    "x_peak_III_3": {
+      "value": 0.0,
+      "reduced_cost": 2.25
+    },
+    "x_peak_III_4": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_peak_II_1": {
+      "value": 0.0,
+      "reduced_cost": 2.0
+    },
+    "x_peak_II_2": {
+      "value": 0.0,
+      "reduced_cost": 4.0
+    },
+    "x_peak_II_3": {
+      "value": 0.0,
+      "reduced_cost": 3.0
+    },
+    "x_peak_II_4": {
+      "value": 137.5,
+      "reduced_cost": 0.0
+    },
+    "x_peak_I_1": {
+      "value": 0.0,
+      "reduced_cost": 1.0
+    },
+    "x_peak_I_2": {
+      "value": 0.0,
+      "reduced_cost": -3.0
+    },
+    "x_peak_I_3": {
+      "value": 0.0,
+      "reduced_cost": 1.5
+    },
+    "x_peak_I_4": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -5.0
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -1.5
+    },
+    "_C4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -4.0
+    },
+    "_C5": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -3.0
+    },
+    "_C8": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -8.0
+    },
+    "_C9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C10": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C11": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -2.25
+    },
+    "_C12": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -6.0
+    },
+    "_C13": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C14": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -5.0
+    },
+    "_C15": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -1.5
+    },
+    "_C16": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -4.0
+    },
+    "_C17": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C18": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C19": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -3.0
+    },
+    "_C20": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -8.0
+    },
+    "_C21": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C22": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C23": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -2.25
+    },
+    "_C24": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -6.0
+    },
+    "_C25": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -5.0
+    },
+    "_C26": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 3.5
+    },
+    "_C27": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -2.5
+    },
+    "_C28": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -5.0
+    },
+    "_C29": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C30": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -3.0
+    },
+    "_C31": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -5.0
+    },
+    "_C32": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -5.0
+    },
+    "_C33": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C34": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -2.25
+    },
+    "_C35": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -3.75
+    },
+    "_C36": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -5.0
+    },
+    "_C37": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 9.0
+    },
+    "_C38": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 13.0
+    },
+    "_C39": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 11.0
+    },
+    "_C40": {
+      "sense": "<=",
+      "slack": 1000.0,
+      "dual_value": 0.0
+    },
+    "_C41": {
+      "sense": "<=",
+      "slack": 3000.0,
+      "dual_value": 0.0
+    },
+    "_C42": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": -0.75
+    },
+    "_C43": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": -2.0
+    },
+    "_C44": {
+      "sense": "<=",
+      "slack": 5000.0,
+      "dual_value": 0.0
+    },
+    "_C45": {
+      "sense": "<=",
+      "slack": 5000.0,
+      "dual_value": 0.0
+    },
+    "_C46": {
+      "sense": "<=",
+      "slack": 5000.0,
+      "dual_value": 0.0
+    },
+    "_C47": {
+      "sense": "<=",
+      "slack": 4450.0,
+      "dual_value": 0.0
+    }
+  }
+}

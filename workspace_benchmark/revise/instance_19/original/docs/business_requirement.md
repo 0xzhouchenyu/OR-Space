@@ -1,0 +1,1 @@
+A furniture store is considering ordering chairs from three different manufacturers to minimize the total cost of the order. The store has specific constraints on the number of chairs per order, the total number of chairs required, and dependencies between manufacturers. Please refer to the corresponding CSV files in the data folder for specific parameter values.

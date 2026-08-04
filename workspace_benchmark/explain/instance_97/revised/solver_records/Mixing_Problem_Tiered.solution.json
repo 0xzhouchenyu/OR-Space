@@ -1,0 +1,140 @@
+{
+  "solver": "gurobi",
+  "model_name": "Mixing_Problem_Tiered",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 60.0,
+  "objective_bound": 60.0,
+  "mip_gap": null,
+  "runtime": 0.0006558895111083984,
+  "node_count": 0.0,
+  "iteration_count": 4.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_vi77lz_2/solver_records/Mixing_Problem_Tiered.gurobi.log",
+  "variables": {
+    "x_A_ProdA_premium": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_A_ProdA_standard": {
+      "value": 45.0,
+      "reduced_cost": 0.0
+    },
+    "x_A_ProdB_premium": {
+      "value": 0.0,
+      "reduced_cost": -1.0
+    },
+    "x_A_ProdB_standard": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_B_ProdA_premium": {
+      "value": 0.0,
+      "reduced_cost": -2.0
+    },
+    "x_B_ProdA_standard": {
+      "value": 0.0,
+      "reduced_cost": -2.0
+    },
+    "x_B_ProdB_premium": {
+      "value": 0.0,
+      "reduced_cost": -1.0
+    },
+    "x_B_ProdB_standard": {
+      "value": 0.0,
+      "reduced_cost": -6.0
+    },
+    "x_C_ProdA_premium": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    },
+    "x_C_ProdA_standard": {
+      "value": 45.0,
+      "reduced_cost": 0.0
+    },
+    "x_C_ProdB_premium": {
+      "value": 3.999999999999999,
+      "reduced_cost": 0.0
+    },
+    "x_C_ProdB_standard": {
+      "value": 0.0,
+      "reduced_cost": -2.0
+    },
+    "x_D_ProdA_premium": {
+      "value": 0.0,
+      "reduced_cost": -1.0
+    },
+    "x_D_ProdA_standard": {
+      "value": 0.0,
+      "reduced_cost": -1.0
+    },
+    "x_D_ProdB_premium": {
+      "value": 16.0,
+      "reduced_cost": 0.0
+    },
+    "x_D_ProdB_standard": {
+      "value": 0.0,
+      "reduced_cost": -5.0
+    }
+  },
+  "constraints": {
+    "Sulfur_A_premium": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 4.0
+    },
+    "Sulfur_A_standard": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 4.0
+    },
+    "Sulfur_B_premium": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 5.0
+    },
+    "Sulfur_B_standard": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 2.0
+    },
+    "Supply_D_total": {
+      "sense": "<=",
+      "slack": 34.0,
+      "dual_value": 0.0
+    },
+    "Demand_A_family": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "Demand_B_family": {
+      "sense": "<=",
+      "slack": 180.0,
+      "dual_value": 0.0
+    },
+    "Min_Premium_A": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Max_Premium_A": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": 0.0
+    },
+    "Min_Premium_B": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -2.0
+    },
+    "Max_Premium_B": {
+      "sense": "<=",
+      "slack": 130.0,
+      "dual_value": 0.0
+    }
+  }
+}

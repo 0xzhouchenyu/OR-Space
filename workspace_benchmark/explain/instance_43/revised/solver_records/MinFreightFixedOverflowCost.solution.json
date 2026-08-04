@@ -1,0 +1,90 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinFreightFixedOverflowCost",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 16500.0,
+  "objective_bound": 16500.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004765033721923828,
+  "node_count": 1.0,
+  "iteration_count": 7.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ga4fv_j4/solver_records/MinFreightFixedOverflowCost.gurobi.log",
+  "variables": {
+    "dual_warehouse_reconciliation": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "trucks_from_A": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "trucks_from_B": {
+      "value": 30.0,
+      "reduced_cost": null
+    },
+    "use_A": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "use_B": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "warehouse_B_overflow": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": -10.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 9990.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 9970.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 25.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

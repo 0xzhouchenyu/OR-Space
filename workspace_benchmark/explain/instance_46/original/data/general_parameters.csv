@@ -1,0 +1,7 @@
+Parameter_Name,Value,Unit,Context_Description
+lab_opening_time,8:00 AM,,Lab operating hours start time
+lab_closing_time,10:00 PM,,Lab operating hours end time
+min_undergrad_hours,8,h,Minimum weekly hours for each undergraduate student
+min_grad_hours,7,h,Minimum weekly hours for each graduate student
+max_shifts_per_student,2,shifts,Maximum number of shifts each student can work per week
+max_students_per_day,3,students,Maximum number of students scheduled for duty each day

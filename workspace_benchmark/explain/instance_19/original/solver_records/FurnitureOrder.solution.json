@@ -1,0 +1,95 @@
+{
+  "solver": "gurobi",
+  "model_name": "FurnitureOrder",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 4000.0,
+  "objective_bound": 4000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0033152103424072266,
+  "node_count": 1.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_4e7bwuav/solver_records/FurnitureOrder.gurobi.log",
+  "variables": {
+    "orders_A": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "orders_B": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "orders_C": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "y_A": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_B": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_C": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "MinChairs": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "MaxChairs": {
+      "sense": "<=",
+      "slack": 400.0,
+      "dual_value": null
+    },
+    "LinkA1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkA2": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkB1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkB2": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkC1": {
+      "sense": "<=",
+      "slack": 491.0,
+      "dual_value": null
+    },
+    "LinkC2": {
+      "sense": ">=",
+      "slack": -9.0,
+      "dual_value": null
+    },
+    "DepAB": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "DepBC": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    }
+  }
+}

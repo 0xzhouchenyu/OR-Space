@@ -1,0 +1,147 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Children set $C$ with elements
+    \[
+    C=\{\text{Alice},\text{Bob},\text{Charlie},\text{Diana},\text{Ella}\}.
+    \]
+    \item Day set $D=\{1,2\}$.
+    \item Index $c \in C$ for children and $d \in D$ for days.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Per-day trip cost for child $c$: $\mathrm{Cost}_c$ (code data: \texttt{costs[c]}).
+    \item Minimum number of children per day: $\underline{N}$ (code: \texttt{min\_children}).
+    \item Maximum number of children per day: $\overline{N}$ (code: \texttt{max\_children}).
+    \item Maximum number of distinct children attending at least once over both days: $\overline{Z}$ (code: \texttt{max\_distinct\_children\_trip}).
+    \item Total net cost budget: $B$ (code: \texttt{total\_cost\_budget}).
+    \item Fixed savings for each child attending both days: $s$ (code: \texttt{bonus\_saving}).
+    \item Minimum number of days Bob must attend: $m^{\text{Bob}}$ (code: \texttt{min\_bob\_days}).
+\end{itemize}
+
+For this instance, the numerical costs are
+\[
+\mathrm{Cost}_{\text{Alice}}=1000,\quad
+\mathrm{Cost}_{\text{Bob}}=900,\quad
+\mathrm{Cost}_{\text{Charlie}}=600,\quad
+\mathrm{Cost}_{\text{Diana}}=500,\quad
+\mathrm{Cost}_{\text{Ella}}=700.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{c,d} \in \{0,1\}$ (code: \texttt{x[(c,d)]}): 1 if child $c$ attends on day $d$, 0 otherwise.
+    \item $y_c \in \{0,1\}$ (code: \texttt{y[c]}): 1 if child $c$ attends on both days, 0 otherwise.
+    \item $z_c \in \{0,1\}$ (code: \texttt{z[c]}): 1 if child $c$ attends on at least one of the two days, 0 otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total two-day cost minus repeat-attendance savings:
+\[
+\min \;
+\sum_{c \in C} \mathrm{Cost}_c \, x_{c,1}
++
+\sum_{c \in C} \mathrm{Cost}_c \, x_{c,2}
+-
+s \sum_{c \in C} y_c.
+\]
+
+\section*{Constraints}
+
+Daily attendance bounds for each day:
+\[
+\underline{N} \le \sum_{c \in C} x_{c,d} \le \overline{N}
+\qquad \forall d \in D.
+\]
+
+Distinct-child logic:
+\[
+z_c \ge x_{c,1} \qquad \forall c \in C,
+\]
+\[
+z_c \ge x_{c,2} \qquad \forall c \in C,
+\]
+\[
+z_c \le x_{c,1}+x_{c,2} \qquad \forall c \in C.
+\]
+
+Limit on total distinct children over the trip:
+\[
+\sum_{c \in C} z_c \le \overline{Z}.
+\]
+
+Bob minimum attendance:
+\[
+x_{\text{Bob},1}+x_{\text{Bob},2} \ge m^{\text{Bob}}.
+\]
+
+Day-specific relationship constraints, for each day $d \in D$:
+\[
+x_{\text{Alice},d}+x_{\text{Diana},d} \le 1,
+\]
+\[
+x_{\text{Bob},d}+x_{\text{Charlie},d} \le 1,
+\]
+\[
+x_{\text{Charlie},d} \le x_{\text{Diana},d},
+\]
+\[
+x_{\text{Diana},d} \le x_{\text{Ella},d}.
+\]
+
+Availability constraints:
+\[
+x_{\text{Charlie},1}=0,
+\]
+\[
+x_{\text{Diana},1}=0,
+\]
+\[
+x_{\text{Alice},2}=0.
+\]
+
+Both-days bonus logic:
+\[
+y_c \le x_{c,1} \qquad \forall c \in C,
+\]
+\[
+y_c \le x_{c,2} \qquad \forall c \in C,
+\]
+\[
+y_c \ge x_{c,1}+x_{c,2}-1 \qquad \forall c \in C.
+\]
+
+Total net cost budget:
+\[
+\sum_{c \in C} \mathrm{Cost}_c \, x_{c,1}
++
+\sum_{c \in C} \mathrm{Cost}_c \, x_{c,2}
+-
+s \sum_{c \in C} y_c
+\le B.
+\]
+
+Binary restrictions:
+\[
+x_{c,d} \in \{0,1\} \qquad \forall c \in C,\; d \in D,
+\]
+\[
+y_c \in \{0,1\} \qquad \forall c \in C,
+\]
+\[
+z_c \in \{0,1\} \qquad \forall c \in C.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The formulation is a binary linear optimization model matching \texttt{current\_heuristic.py} exactly.
+    \item The same net-cost expression is used both in the minimization objective and in the budget constraint.
+    \item The variables $y_c$ and $z_c$ are linked to $x_{c,1},x_{c,2}$ by standard linear equivalence constraints for logical AND and OR, respectively; this is exactly how the code models ``attends both days'' and ``attends at least one day.''
+    \item Relationship constraints are enforced separately for each day, while availability is enforced through fixed zero assignments on unavailable days.
+    \item The implementation solves this MILP with \texttt{GUROBI\_CMD(msg=0)} through the PuLP-compatible interface, not by custom enumeration or dynamic programming.
+\end{itemize}

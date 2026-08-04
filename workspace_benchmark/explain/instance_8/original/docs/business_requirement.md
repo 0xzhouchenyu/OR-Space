@@ -1,0 +1,1 @@
+We need to determine an assignment plan for 4 out of 5 workers to complete one of the four tasks, respectively. Each worker has different technical specialties, and the time required for them to complete each task varies. Please refer to the corresponding CSV files in the data folder for specific parameter values.

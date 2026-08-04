@@ -1,0 +1,80 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $P$: set of products, indexed by $p$. From the data, $P=\{\text{I},\text{II},\text{III}\}$.
+    \item $E$: set of equipment types, indexed by $e$. From the data, $E=\{\text{A},\text{B},\text{C}\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $a_{ep}$: processing time required on equipment $e$ per unit of product $p$ (code: \texttt{processing\_times[(equip, p)]}).
+    \item $H_e$: effective monthly available hours of equipment $e$ (code: \texttt{effective\_hours[equip]}).
+    \item $c_p$: profit per unit of product $p$, in thousand yuan (code: \texttt{profit[p]}).
+\end{itemize}
+
+For instance 54, the values read from \texttt{table\_1.csv} are:
+\[
+(a_{ep})=
+\begin{array}{c|ccc}
+ & \text{I} & \text{II} & \text{III}\\ \hline
+\text{A} & 8 & 2 & 10\\
+\text{B} & 10 & 5 & 8\\
+\text{C} & 2 & 13 & 10
+\end{array}
+\]
+\[
+H_{\text{A}}=300,\qquad H_{\text{B}}=400,\qquad H_{\text{C}}=420,
+\]
+\[
+c_{\text{I}}=3,\qquad c_{\text{II}}=2,\qquad c_{\text{III}}=2.9.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_p \ge 0$: production quantity of product $p$ (code: \texttt{x[p]}). The implementation defines these variables as continuous and nonnegative.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total production profit:
+\[
+\max \sum_{p\in P} c_p x_p.
+\]
+
+For this instance:
+\[
+\max \; 3x_{\text{I}} + 2x_{\text{II}} + 2.9x_{\text{III}}.
+\]
+
+\section*{Constraints}
+
+Equipment-capacity constraints:
+\[
+\sum_{p\in P} a_{ep} x_p \le H_e \qquad \forall e\in E.
+\]
+
+For this instance, explicitly:
+\[
+8x_{\text{I}} + 2x_{\text{II}} + 10x_{\text{III}} \le 300 \qquad (\text{equipment A}),
+\]
+\[
+10x_{\text{I}} + 5x_{\text{II}} + 8x_{\text{III}} \le 400 \qquad (\text{equipment B}),
+\]
+\[
+2x_{\text{I}} + 13x_{\text{II}} + 10x_{\text{III}} \le 420 \qquad (\text{equipment C}),
+\]
+\[
+x_p \ge 0 \qquad \forall p\in P.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear program created with \texttt{LpProblem(..., LpMaximize)}.
+    \item Variables \texttt{x[p]} are continuous; no integrality or upper-bound restrictions are imposed beyond nonnegativity.
+    \item The objective coefficient and constraint data are loaded directly from \texttt{table\_1.csv}; \texttt{general\_parameters.csv} is not used by the code.
+    \item The model is solved by invoking \texttt{GUROBI\_CMD(msg=0)} through the PuLP-compatible interface.
+    \item Although the business statement says to ``fully utilize'' equipment capacity, the implemented model enforces only capacity upper bounds $\sum_{p} a_{ep}x_p \le H_e$ and does not require equality on any equipment.
+\end{itemize}

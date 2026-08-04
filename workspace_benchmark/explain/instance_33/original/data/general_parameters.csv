@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+num_diamonds,3,,Number of diamonds in the inheritance
+value_per_diamond,12000,USD,Value of each diamond
+num_jack_russell_dogs,2,,Number of Jack Russell racing dogs
+value_per_jack_russell_dog,3000,USD,Value of each Jack Russell racing dog
+jack_russell_condition,,must not be separated,Condition that the Jack Russell racing dogs must not be separated

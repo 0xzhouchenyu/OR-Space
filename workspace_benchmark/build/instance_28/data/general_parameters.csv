@@ -1,0 +1,9 @@
+Parameter_Name,Value,Unit,Context_Description
+initial_fund,300000,yuan,Initial fund available for investment
+annual_profit_rate,20,percent,Annual profit rate for investments made at the beginning of each year
+investment_limit_year1,150000,yuan,Maximum investment allowed at the beginning of the first year
+return_rate_year1_to_year2,150,percent,Total principal and interest as a percentage of the investment amount for investments made at the beginning of the first year and recovered at the end of the second year
+investment_limit_year2,200000,yuan,Maximum investment allowed at the beginning of the second year
+return_rate_year2_to_year3,160,percent,Total principal and interest as a percentage of the investment amount for investments made at the beginning of the second year and recovered at the end of the third year
+investment_limit_year3,100000,yuan,Maximum investment allowed at the beginning of the third year
+profit_rate_year3,40,percent,Profit rate for investments made at the beginning of the third year and recovered in one year

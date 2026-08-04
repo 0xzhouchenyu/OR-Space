@@ -1,0 +1,421 @@
+{
+  "solver": "gurobi",
+  "model_name": "ParkingSingleUsableSide",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 57.099999994039536,
+  "objective_bound": 57.099999994039536,
+  "mip_gap": 0.0,
+  "runtime": 0.0005202293395996094,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ul_8xjrn/solver_records/ParkingSingleUsableSide.gurobi.log",
+  "variables": {
+    "L_1": {
+      "value": 57.1,
+      "reduced_cost": null
+    },
+    "L_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "T": {
+      "value": 57.099999994039536,
+      "reduced_cost": null
+    },
+    "a_10_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_10_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_11_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_11_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_12_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_12_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_13_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_13_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_14_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_14_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_15_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_15_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_1_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_1_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_2_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_2_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_3_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_3_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_4_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_4_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_5_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_5_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_6_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_6_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_7_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_7_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_8_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_8_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "a_9_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "a_9_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "exactly_one_usable_side": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_5": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_8": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_10": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_11": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_12": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_13": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_14": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_car_15": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_1_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_1_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_2_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_2_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_3_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_3_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_4_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_4_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_5_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_5_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_6_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_6_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_7_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_7_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_8_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_8_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_9_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_9_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_10_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_10_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_11_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_11_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_12_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_12_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_13_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_13_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_14_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_14_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_15_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_assignment_to_side_15_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "def_length_1": {
+      "sense": "==",
+      "slack": -5.329070518200751e-15,
+      "dual_value": null
+    },
+    "cap_side_1": {
+      "sense": "<=",
+      "slack": 2.8999999999999986,
+      "dual_value": null
+    },
+    "max_side_length_1": {
+      "sense": ">=",
+      "slack": 5.960465898624534e-09,
+      "dual_value": null
+    },
+    "def_length_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "cap_side_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_side_length_2": {
+      "sense": ">=",
+      "slack": -57.099999994039536,
+      "dual_value": null
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "solver": "gurobi",
+  "model_name": "TruckRental_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 4166.666666666667,
+  "runtime": 0.00018906593322753906,
+  "variables": {
+    "TypeA_trucks": {
+      "value": 49.99999999999999,
+      "reduced_cost": 0.0
+    },
+    "TypeB_trucks": {
+      "value": 66.66666666666667,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "RefrigeratedRequirement": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1.1666666666666667
+    },
+    "NonRefrigeratedRequirement": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.16666666666666663
+    }
+  }
+}

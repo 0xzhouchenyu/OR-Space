@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_10_revise_business",
+  "original_instance_id": "IndustryOR_10",
+  "revise_description": "In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. The sponsor was careful about direction. A companion, prerequisite, approval, or follow-on condition runs only the way the business sentence says it runs; the reverse direction is not part of the deal unless it is stated. The rollout team promised the city a visible neighborhood-counter footprint, not only broad coverage from large boxes. At least 6 Small-format stores must be opened as local counters; each Small-format store counts once toward that promise, while Large-format stores still follow the existing cost and coverage rules. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R3",
+  "revise_type_name": "Constraint Modification",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Medium",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+2var, +4constr, mod_2constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 2,
+        "-variable": 0,
+        "+constraint": 4,
+        "-constraint": 0,
+        "modify_constraint": 2,
+        "modify_data": 1
+      },
+      "op_count": 10,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 55.555556
+  }
+}

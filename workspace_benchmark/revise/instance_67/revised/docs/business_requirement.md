@@ -1,0 +1,7 @@
+The market demand for products I and II, as well as their production costs, production capacities, and storage constraints, are provided. The goal is to determine the optimal production schedule from July to December to minimize total production and inventory costs while meeting market demand. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the service manager framed the change in business terms rather than as a spreadsheet checklist. At the latest operating review, the business owner rejected treating this as a cosmetic rerun. The plan has to follow the commercial interpretation below, with the data-pack labels read literally. From July through December, the factory must manage electricity month by month under the local utility quota. Production for Products I and II now consumes product-specific machine hours and electricity. Diesel self-generation can cover part of monthly electricity needs up to its month-specific limit, while the rest comes from the grid under the monthly quota. The old outside warehouse option is no longer available. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

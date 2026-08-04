@@ -1,0 +1,61 @@
+{
+  "solver": "gurobi",
+  "model_name": "Production_Planning",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 1811.0,
+  "objective_bound": 1811.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0006151199340820312,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_exc1qsd_/solver_records/Production_Planning.gurobi.log",
+  "variables": {
+    "Craftsman_Overtime_Hours": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "Craftsman_Regular_Hours": {
+      "value": 25.0,
+      "reduced_cost": null
+    },
+    "X": {
+      "value": 18.0,
+      "reduced_cost": null
+    },
+    "Y": {
+      "value": 60.0,
+      "reduced_cost": null
+    },
+    "product_Y_QA": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Machine_Time_Constraint": {
+      "sense": "<=",
+      "slack": 17.1,
+      "dual_value": null
+    },
+    "Craftsman_Time_Balance": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Min_Production_X": {
+      "sense": ">=",
+      "slack": -8.0,
+      "dual_value": null
+    },
+    "Product_Y_QA_Tier": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

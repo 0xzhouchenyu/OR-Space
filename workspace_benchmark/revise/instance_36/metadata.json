@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_36_revise_business",
+  "original_instance_id": "IndustryOR_36",
+  "revise_description": "Due to a new low-emission zone rule in the CBD, the carrier may use at most three standard diesel trucks inside the restricted area, and overflow demand must be served by outsourced couriers. To comply with the rule, customer 12 and customer 16 are outside the in-house CBD operating scope and must be removed from the internal truck-routing plan. A new outsourced-delivery decision is added for the remaining customers, with a customer-specific outsourcing cost. The objective is changed from minimizing only travel distance to minimizing total in-house travel distance plus outsourcing cost. The model must also enforce a tighter fleet-size limit for in-house trucks and keep all hard time-window and capacity constraints for any customer still served by company trucks.",
+  "revise_type": "R4",
+  "revise_type_name": "structural_change",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "VRPHTW",
+    "diff": {
+      "diff_summary": "+1var, +3constr, -2constr, mod_2constr, mod_obj, mod_2data",
+      "counts": {
+        "+variable": 1,
+        "-variable": 0,
+        "+constraint": 3,
+        "-constraint": 2,
+        "modify_constraint": 2,
+        "modify_data": 2
+      },
+      "op_count": 11,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 38.888889
+  }
+}

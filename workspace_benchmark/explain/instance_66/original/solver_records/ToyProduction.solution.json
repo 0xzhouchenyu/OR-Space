@@ -1,0 +1,58 @@
+{
+  "solver": "gurobi",
+  "model_name": "ToyProduction",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 25000.0,
+  "objective_bound": 25000.0,
+  "mip_gap": null,
+  "runtime": 0.0005409717559814453,
+  "node_count": 0.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage__qgywo1b/solver_records/ToyProduction.gurobi.log",
+  "variables": {
+    "x_High-End": {
+      "value": 0.0,
+      "reduced_cost": -100.0
+    },
+    "x_Low-End": {
+      "value": 150.0,
+      "reduced_cost": 0.0
+    },
+    "x_Mid-Range": {
+      "value": 50.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Labor_Hours": {
+      "sense": "<=",
+      "slack": 200.0,
+      "dual_value": 0.0
+    },
+    "Inspection_Hours": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 50.0
+    },
+    "Demand_High-End": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": 0.0
+    },
+    "Demand_Mid-Range": {
+      "sense": "<=",
+      "slack": 30.0,
+      "dual_value": 0.0
+    },
+    "Demand_Low-End": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": -0.0
+    }
+  }
+}

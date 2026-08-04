@@ -1,0 +1,97 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+\item $J = \{3,4,5\}$: bar types to be produced, indexed by required length $j$ in meters.
+\item $P$: set of all feasible cutting patterns from one raw bar. A pattern $p \in P$ is a triple
+\[
+p=(a_{p3},a_{p4},a_{p5}) \in \mathbb{Z}_+^3
+\]
+such that
+\[
+3a_{p3}+4a_{p4}+5a_{p5} \le L,
+\qquad
+a_{p3}+a_{p4}+a_{p5} \ge 1.
+\]
+\item $p$: index over cutting patterns in $P$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+\item $q_3$ (\texttt{batch\_3m\_quantity}): required number of 3-meter bars.
+\item $q_4$ (\texttt{batch\_4m\_quantity}): required number of 4-meter bars.
+\item $q_5$ (\texttt{batch\_5m\_quantity}): required number of 5-meter bars.
+\item $L$ (\texttt{raw\_bar\_length}): length of each raw steel bar.
+\item $s$ (\texttt{setup\_cost\_per\_pattern}): setup burden per distinct cutting pattern, measured in equivalent meters of waste.
+\item $K$ (\texttt{max\_distinct\_patterns}): maximum number of distinct cutting patterns allowed.
+\item $a_{pj}$: number of bars of type $j \in J$ produced by pattern $p$.
+\item
+\[
+M = q_3+q_4+q_5,
+\]
+the big-$M$ constant used in the implementation.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+\item $n_p$ (code: \texttt{n[i]}): integer number of raw bars cut according to pattern $p$.
+\item $u_p$ (code: \texttt{u[i]}): binary indicator equal to 1 if pattern $p$ is used, 0 otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model minimizes raw material used, minus the total required finished length (a constant), plus the setup burden for each distinct pattern used:
+\[
+\min \;
+\sum_{p \in P} L\,n_p
+-\left(3q_3+4q_4+5q_5\right)
++s\sum_{p \in P} u_p.
+\]
+
+Equivalently, this is trim loss plus any waste caused by overproduction, plus setup waste.
+
+\section*{Constraints}
+
+\paragraph{Demand satisfaction.}
+Production of each required bar length must meet or exceed demand:
+\[
+\sum_{p \in P} a_{p3} n_p \ge q_3,
+\]
+\[
+\sum_{p \in P} a_{p4} n_p \ge q_4,
+\]
+\[
+\sum_{p \in P} a_{p5} n_p \ge q_5.
+\]
+
+\paragraph{Pattern-use linking.}
+A pattern can be assigned positive usage only if it is activated:
+\[
+n_p \le M u_p
+\qquad \forall p \in P.
+\]
+
+\paragraph{Pattern diversity cap.}
+No more than the allowed number of distinct patterns may be used:
+\[
+\sum_{p \in P} u_p \le K.
+\]
+
+\paragraph{Integrality.}
+\[
+n_p \in \mathbb{Z}_+ \qquad \forall p \in P,
+\]
+\[
+u_p \in \{0,1\} \qquad \forall p \in P.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+\item The code fixes the demanded lengths to 3m, 4m, and 5m, with demands taken from \texttt{batch\_3m\_quantity}, \texttt{batch\_4m\_quantity}, and \texttt{batch\_5m\_quantity}.
+\item The business note about a ``gate'' is implemented here as a binary activation decision $u_p$: setup burden \texttt{setup\_cost\_per\_pattern} is charged once per distinct pattern used, and no more than \texttt{max\_distinct\_patterns} patterns may be active.
+\item All feasible patterns are explicitly enumerated in advance as every nonzero integer triple $(a_{p3},a_{p4},a_{p5})$ satisfying $3a_{p3}+4a_{p4}+5a_{p5}\le L$.
+\item Demand constraints are inequalities $\ge$, so overproduction is allowed. The objective matches the code exactly: it subtracts the required total finished length as a constant, rather than explicitly computing per-pattern trim. This makes overproduction and trim both contribute to the minimized waste measure.
+\item The model is solved as a mixed-integer linear program through PuLP with the Gurobi command interface; it is not a heuristic search in the current implementation despite the filename.
+\end{itemize}

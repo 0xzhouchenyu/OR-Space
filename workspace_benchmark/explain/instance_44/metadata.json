@@ -1,0 +1,60 @@
+{
+  "instance_id": "OR_explain_044",
+  "instance_number": 44,
+  "source_revise_instance": "IndustryOR_44_revise_business",
+  "domain": "Network_Flow",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Network_Flow",
+    "question": "Using the revised LP-relaxation diagnostics together with `src/current_heuristic.py` and `src/formulation.tex`, explain why the revised objective is 773.0 instead of the original 685.0. Your answer must identify which exact new code variables and constraint families force positive express flow, trace them back to the business brief terms and exact CSV field names (`qexp_k`, `alpha_j`, `eps`, `M`, `cR_ik`, `cE_ik`, `cR_kj`, `cE_kj`), and use the solver state to name at least two binding constraints with their slack/dual values and business meaning. Also explain why the LP shadow price on a binding constraint such as `Supply_1` or an express-capacity/diversification-related constraint cannot be linearly extrapolated to predict the MIP cost change from 685.0 to 773.0 after the scenario restructuring."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "table_2.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Transportation_Problem.gurobi.log",
+        "Transportation_Problem.lp_relaxation.json",
+        "Transportation_Problem.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "table_2.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Transportation_Problem_Mode_Split_Diversification.gurobi.log",
+        "Transportation_Problem_Mode_Split_Diversification.lp_relaxation.json",
+        "Transportation_Problem_Mode_Split_Diversification.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 52.771667
+  }
+}

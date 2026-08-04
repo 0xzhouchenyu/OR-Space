@@ -1,0 +1,22 @@
+Parameter_Name,Value,Unit,Context_Description
+product_units,1800,units,Total units of product to be transported
+truck_pollution,100,units,Pollution generated per trip by a truck
+van_pollution,50,units,Pollution generated per trip by a van
+motorcycle_pollution,10,units,Pollution generated per trip by a motorcycle
+electric_vehicle_pollution,0,units,Pollution generated per trip by an electric vehicle
+max_total_pollution,2000,units,Maximum allowable total pollution from all trips
+min_truck_trips,8,trips,Minimum total number of truck trips required across all sales points and days
+truck_capacity,100,units,Transport capacity per trip for a truck
+van_capacity,80,units,Transport capacity per trip for a van
+motorcycle_capacity,40,units,Transport capacity per trip for a motorcycle
+electric_vehicle_capacity,60,units,Transport capacity per trip for an electric vehicle
+sales_point_share_sp1,0.4,fraction,Fraction of total product units assigned to sales point 1
+sales_point_share_sp2,0.35,fraction,Fraction of total product units assigned to sales point 2
+sales_point_share_sp3,0.25,fraction,Fraction of total product units assigned to sales point 3
+min_truck_share_sp1,0.3,fraction,Minimum fraction of trips that must be truck trips for sales point 1
+min_truck_share_sp2,0.2,fraction,Minimum fraction of trips that must be truck trips for sales point 2
+min_truck_share_sp3,0.1,fraction,Minimum fraction of trips that must be truck trips for sales point 3
+M_truck_sp_day,20,trips,Binary mode big-M bound for truck trips per sales point and day
+M_ev_sp_day,20,trips,Binary mode big-M bound for electric vehicle trips per sales point and day
+M_van_sp_day,20,trips,Binary mode big-M bound for van trips per sales point and day
+M_moto_sp_day,20,trips,Binary mode big-M bound for motorcycle trips per sales point and day

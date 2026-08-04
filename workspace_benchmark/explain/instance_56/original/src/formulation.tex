@@ -1,0 +1,133 @@
+\section*{Sets and Indices}
+
+\[
+M = \{1,2,3\}
+\]
+set of months in the planning horizon, indexed by \(m\).
+
+\section*{Parameters}
+
+For each month \(m \in M\):
+\[
+p^{\text{buy}}_m
+\]
+purchase price in month \(m\) (code: \texttt{purchase\_prices[m]}),
+
+\[
+p^{\text{sell}}_m
+\]
+selling price in month \(m\) (code: \texttt{selling\_prices[m]}).
+  
+Global parameters:
+\[
+C
+\]
+warehouse capacity (code: \texttt{warehouse\_capacity}),
+
+\[
+I_0
+\]
+initial stock on January 1 (code: \texttt{initial\_stock}),
+
+\[
+F_0
+\]
+initial funds on January 1 (code: \texttt{initial\_funds}),
+
+\[
+I^{\text{end}}
+\]
+required end-of-quarter inventory level (code: \texttt{end\_inventory}).
+
+\section*{Decision Variables}
+
+For each month \(m \in M\):
+\[
+b_m \ge 0
+\]
+quantity purchased in month \(m\) (code: \texttt{buy[m]}),
+
+\[
+s_m \ge 0
+\]
+quantity sold in month \(m\) (code: \texttt{sell[m]}),
+
+\[
+I_m \ge 0
+\]
+stock at the end of month \(m\) (code: \texttt{stock[m]}),
+
+\[
+F_m \ge 0
+\]
+funds at the end of month \(m\) (code: \texttt{funds[m]}).
+
+\section*{Objective}
+
+Maximize final funds net of initial funds:
+\[
+\max \; F_3 - F_0.
+\]
+
+\section*{Constraints}
+
+For month \(m=1\):
+\[
+I_1 = I_0 - s_1 + b_1,
+\]
+\[
+F_1 = F_0 + p^{\text{sell}}_1 s_1 - p^{\text{buy}}_1 b_1,
+\]
+\[
+I_1 \le C,
+\]
+\[
+s_1 \le I_0.
+\]
+
+For months \(m=2,3\):
+\[
+I_m = I_{m-1} - s_m + b_m,
+\]
+\[
+F_m = F_{m-1} + p^{\text{sell}}_m s_m - p^{\text{buy}}_m b_m,
+\]
+\[
+I_m \le C,
+\]
+\[
+s_m \le I_{m-1}.
+\]
+
+End-of-quarter inventory requirement:
+\[
+I_3 \ge I^{\text{end}}.
+\]
+
+Nonnegativity:
+\[
+b_m \ge 0,\quad s_m \ge 0,\quad I_m \ge 0,\quad F_m \ge 0
+\qquad \forall m \in M.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a linear program solved by the code with a mathematical programming solver interface.
+
+The stock transition
+\[
+I_m = I_{m-1} - s_m + b_m
+\]
+treats purchases in month \(m\) as entering inventory in the same month. The restriction
+\[
+s_m \le I_{m-1}
+\]
+enforces the business rule used in the code that grain purchased in month \(m\) cannot be sold in the same month; only stock available before that month's purchase may be sold.
+
+The funds transition
+\[
+F_m = F_{m-1} + p^{\text{sell}}_m s_m - p^{\text{buy}}_m b_m
+\]
+combined with \(F_m \ge 0\) implies that end-of-month funds cannot be negative, but there is no separate explicit constraint of the form \(p^{\text{buy}}_m b_m \le F_{m-1}\). Thus purchases may be financed within the month using same-month sales revenue, exactly as represented in the source code.
+
+The objective in the code is \(\max F_3 - F_0\), which is equivalent to maximizing final funds \(F_3\) since \(F_0\) is constant.

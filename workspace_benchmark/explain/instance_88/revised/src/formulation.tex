@@ -1,0 +1,152 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products $p \in P := \{\ell,s\}$, where $\ell$ denotes liquid fertilizer and $s$ denotes solid fertilizer.
+    \item Machines $m \in M := \{1,2\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter values are taken from \texttt{general\_parameters.csv}.
+
+\begin{itemize}
+    \item Processing time per lot on each machine:
+    \[
+    a_{1\ell}=\texttt{machine\_1\_time\_per\_liquid\_lot},\quad
+    a_{2\ell}=\texttt{machine\_2\_time\_per\_liquid\_lot},\quad
+    a_{1s}=\texttt{machine\_1\_time\_per\_solid\_lot},\quad
+    a_{2s}=\texttt{machine\_2\_time\_per\_solid\_lot}.
+    \]
+    \item Initial inventories:
+    \[
+    I_\ell=\texttt{initial\_liquid\_inventory},\qquad
+    I_s=\texttt{initial\_solid\_inventory}.
+    \]
+    \item Forecast demand:
+    \[
+    D_\ell=\texttt{forecast\_liquid\_demand},\qquad
+    D_s=\texttt{forecast\_solid\_demand}.
+    \]
+    \item Base available machine time (minutes):
+    \[
+    T_1=60\cdot \texttt{machine\_1\_available\_time},\qquad
+    T_2=60\cdot \texttt{machine\_2\_available\_time}.
+    \]
+    \item Extra machine time if extended mode is used:
+    \[
+    E=\texttt{extended\_extra\_minutes}.
+    \]
+    \item Skilled labor consumption per extended machine:
+    \[
+    H=\texttt{labor\_hours\_per\_machine\_extended}.
+    \]
+    \item Shared skilled labor budget:
+    \[
+    B=\texttt{labor\_budget\_hours}.
+    \]
+    \item Full-credit reserve band per product:
+    \[
+    R=\texttt{priority\_reserve\_lots}.
+    \]
+    \item Credit for reserves above the priority band:
+    \[
+    \gamma=\texttt{excess\_reserve\_credit}.
+    \]
+    \item Penalty per machine put into extended mode:
+    \[
+    \pi=\texttt{extended\_mode\_penalty}.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Production lots:
+    \[
+    x_\ell \ge 0 \quad \text{(code: \texttt{liquid\_prod})},\qquad
+    x_s \ge 0 \quad \text{(code: \texttt{solid\_prod})}.
+    \]
+    \item Extended-mode decisions:
+    \[
+    y_1 \in \{0,1\} \quad \text{(code: \texttt{machine1\_extended})},\qquad
+    y_2 \in \{0,1\} \quad \text{(code: \texttt{machine2\_extended})}.
+    \]
+    \item Priority-band ending inventory credited at full weight:
+    \[
+    p_\ell \in [0,R] \quad \text{(code: \texttt{priority\_liquid})},\qquad
+    p_s \in [0,R] \quad \text{(code: \texttt{priority\_solid})}.
+    \]
+    \item Excess ending inventory credited at reduced weight:
+    \[
+    e_\ell \ge 0 \quad \text{(code: \texttt{excess\_liquid})},\qquad
+    e_s \ge 0 \quad \text{(code: \texttt{excess\_solid})}.
+    \]
+\end{itemize}
+
+For convenience, define end-of-week inventories as the linear expressions
+\[
+L_\ell = I_\ell + x_\ell - D_\ell,\qquad
+L_s = I_s + x_s - D_s.
+\]
+
+\section*{Objective}
+
+Maximize the resilience score:
+\[
+\max \quad p_\ell + p_s + \gamma(e_\ell+e_s) - \pi(y_1+y_2).
+\]
+
+This gives full credit to the first $R$ ending lots of each product and reduced credit $\gamma$ to any ending inventory above that band, while penalizing each machine that operates in extended mode.
+
+\section*{Constraints}
+
+Machine-time capacity on each machine:
+\[
+a_{1\ell}x_\ell + a_{1s}x_s \le T_1 + Ey_1,
+\]
+\[
+a_{2\ell}x_\ell + a_{2s}x_s \le T_2 + Ey_2.
+\]
+
+Shared skilled-labor budget for extended operation:
+\[
+H(y_1+y_2) \le B.
+\]
+
+Nonnegative ending inventories:
+\[
+L_\ell \ge 0,
+\]
+\[
+L_s \ge 0.
+\]
+
+Decomposition of ending inventory into priority-band and excess portions:
+\[
+p_\ell + e_\ell = L_\ell,
+\]
+\[
+p_s + e_s = L_s.
+\]
+
+Variable bounds and integrality:
+\[
+x_\ell,x_s,e_\ell,e_s \ge 0,\qquad 0 \le p_\ell \le R,\qquad 0 \le p_s \le R,
+\]
+\[
+y_1,y_2 \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved directly by the optimization solver invoked in \texttt{current\_heuristic.py} (\texttt{GUROBI\_CMD} through the PuLP-compatible interface).
+    \item The code does not create explicit end-inventory variables; instead, it uses the affine expressions
+    \[
+    I_\ell + x_\ell - D_\ell,\qquad I_s + x_s - D_s
+    \]
+    inside constraints. The formulation above introduces $L_\ell$ and $L_s$ only for readability.
+    \item The decomposition constraints with $0 \le p_\ell,p_s \le R$ and $e_\ell,e_s \ge 0$ implement the piecewise-linear reserve score exactly as in the code: the first \texttt{priority\_reserve\_lots} ending lots count with coefficient $1$, and any additional ending lots count with coefficient \texttt{excess\_reserve\_credit}.
+    \item The revised business brief refers to multiple cases, but the current implementation reads a single parameter table and solves one deterministic model. No scenario index, nonanticipativity structure, or case-specific recourse variables are present in \texttt{current\_heuristic.py}; the formulation therefore matches that single-case implementation exactly.
+    \item Production variables are continuous, so fractional lots are allowed.
+\end{itemize}

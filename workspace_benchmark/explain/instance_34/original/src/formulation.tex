@@ -1,0 +1,115 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $G$: set of goods types, indexed by $g$. For this instance,
+    \[
+    G=\{A,B,C,D,E\}.
+    \]
+    \item $N$: ordered set of candidate containers, indexed by $j$. In the implementation,
+    \[
+    N=\{0,1,\dots,14\},
+    \]
+    corresponding to a fixed upper bound of 15 candidate containers.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $Q_g$: available quantity of goods type $g$ to be transported.
+    \[
+    Q_A=120,\quad Q_B=90,\quad Q_C=300,\quad Q_D=90,\quad Q_E=120.
+    \]
+    \item $w_g$: weight per unit of goods type $g$ (tons/unit).
+    \[
+    w_A=0.5,\quad w_B=1,\quad w_C=0.4,\quad w_D=0.6,\quad w_E=0.65.
+    \]
+    \item $C^{\max}$: maximum container capacity (code: \texttt{max\_cap}),
+    \[
+    C^{\max}=60.
+    \]
+    \item $C^{\min}$: minimum load for a used container (code: \texttt{min\_load}),
+    \[
+    C^{\min}=18.
+    \]
+    \item $D^{\min}$: minimum number of type-$D$ goods required in each used container (code: \texttt{min\_d\_per\_container}),
+    \[
+    D^{\min}=12.
+    \]
+    \item $C/A^{\min}$: minimum number of type-$C$ goods required when type-$A$ goods are present (code: \texttt{min\_c\_per\_a}),
+    \[
+    C/A^{\min}=1.
+    \]
+    \item $M_A$: big-$M$ constant used to indicate presence of good $A$ in a container. In the code,
+    \[
+    M_A = Q_A = 120.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{g j}$ (code: \texttt{x[g][j]}): integer number of units of goods type $g$ loaded into container $j$, for all $g\in G$, $j\in N$.
+    \[
+    x_{g j}\in \mathbb{Z}_{\ge 0}.
+    \]
+    \item $y_j$ (code: \texttt{y[j]}): binary variable equal to 1 if container $j$ is used, 0 otherwise.
+    \[
+    y_j\in\{0,1\}.
+    \]
+    \item $z_j$ (code: \texttt{z[j]}): binary indicator used for the logical condition involving goods $A$ and $C$.
+    \[
+    z_j\in\{0,1\}.
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the number of used containers:
+\[
+\min \sum_{j\in N} y_j.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{j\in N} x_{g j} &= Q_g && \forall g\in G
+\label{eq:demand}
+\\
+\sum_{g\in G} w_g x_{g j} &\le C^{\max} y_j && \forall j\in N
+\label{eq:maxcap}
+\\
+\sum_{g\in G} w_g x_{g j} &\ge C^{\min} y_j && \forall j\in N
+\label{eq:minload}
+\\
+x_{D j} &\ge D^{\min} y_j && \forall j\in N
+\label{eq:mind}
+\\
+x_{A j} &\le M_A z_j && \forall j\in N
+\label{eq:aindicator}
+\\
+x_{C j} &\ge C/A^{\min}\, z_j && \forall j\in N
+\label{eq:cifa}
+\\
+y_j &\ge y_{j+1} && \forall j=0,\dots,13
+\label{eq:symmetry}
+\end{align}
+
+Constraints \eqref{eq:demand} require all available units of each goods type to be transported.  
+Constraints \eqref{eq:maxcap}--\eqref{eq:minload} enforce maximum and minimum load on each used container.  
+Constraint \eqref{eq:mind} imposes the minimum number of $D$ goods in every used container.  
+Constraints \eqref{eq:aindicator}--\eqref{eq:cifa} implement the logic used in the code: if any $A$ goods are loaded in container $j$, then $z_j$ may be set to 1, which forces at least one $C$ good in that container.  
+Constraint \eqref{eq:symmetry} is a symmetry-breaking condition that orders used containers before unused ones.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a mixed-integer linear program in \texttt{current\_heuristic.py} and solved with \texttt{GUROBI\_CMD}.
+    \item The candidate container set is not endogenous: the code fixes an upper bound of 15 containers and minimizes the number selected through the binary variables $y_j$.
+    \item The $A$--$C$ packaging rule is modeled exactly as implemented, not as a stronger equivalence. Specifically, the code uses auxiliary binary variables $z_j$ with
+    \[
+    x_{A j}\le M_A z_j,\qquad x_{C j}\ge C/A^{\min}\, z_j,
+    \]
+    so the implication enforced is ``if container $j$ carries any $A$, then it must carry at least one $C$.'' No converse implication is imposed.
+    \item There is no explicit linking constraint of the form $x_{g j}\le Q_g y_j$ for all $g,j$. Thus, unused containers are prevented from carrying goods only indirectly through the capacity constraint \eqref{eq:maxcap}, since $C^{\max}y_j=0$ when $y_j=0$.
+    \item All shipment quantities are integer, and weights enter linearly as given in the CSV data.
+\end{itemize}

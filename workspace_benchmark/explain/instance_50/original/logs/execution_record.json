@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 9100.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nMonth 7: Buy=300.0 @ 28.0, Sell=500.0 @ 29.0, Stock=0.0\nMonth 8: Buy=500.0 @ 24.0, Sell=0.0 @ 24.0, Stock=500.0\nMonth 9: Buy=0.0 @ 25.0, Sell=0.0 @ 26.0, Stock=500.0\nMonth 10: Buy=0.0 @ 27.0, Sell=500.0 @ 28.0, Stock=0.0\nMonth 11: Buy=0.0 @ 23.0, Sell=0.0 @ 22.0, Stock=0.0\nMonth 12: Buy=500.0 @ 23.0, Sell=500.0 @ 25.0, Stock=0.0\nOBJECTIVE_VALUE: 9100.0\n",
+  "stderr": "",
+  "error": null
+}

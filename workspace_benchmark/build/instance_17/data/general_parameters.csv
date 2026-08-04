@@ -1,0 +1,9 @@
+Parameter_Name,Value,Unit,Context_Description
+max_heavy_bombs,28,units,Maximum number of heavy bombs available in the stockpile
+max_light_bombs,12,units,Maximum number of light bombs available in the stockpile
+fuel_limit,10000,liters,Total fuel consumption limit for all bombing runs
+fuel_efficiency_heavy_bomb,2,km_per_liter,Fuel efficiency when carrying heavy bombs
+fuel_efficiency_light_bomb,3,km_per_liter,Fuel efficiency when carrying light bombs
+fuel_efficiency_empty,4,km_per_liter,Fuel efficiency when aircraft is empty
+fuel_takeoff_landing,100,liters,Fuel required for takeoff and landing per trip
+min_parts_destroyed,2,parts,Minimum number of key parts that must be destroyed to achieve mission success

@@ -1,0 +1,170 @@
+{
+  "solver": "gurobi",
+  "model_name": "CandyFactory_Revised",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 5060.000000000001,
+  "objective_bound": 5060.000000000001,
+  "mip_gap": 0.0,
+  "runtime": 0.008359193801879883,
+  "node_count": 1.0,
+  "iteration_count": 7.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_w6c2n522/solver_records/CandyFactory_Revised.gurobi.log",
+  "variables": {
+    "shared_ab_wrapper": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_0_0": {
+      "value": 1526.6666666666667,
+      "reduced_cost": null
+    },
+    "x_0_1": {
+      "value": 473.3333333333333,
+      "reduced_cost": null
+    },
+    "x_0_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_0": {
+      "value": 1017.7777777777778,
+      "reduced_cost": null
+    },
+    "x_1_1": {
+      "value": 1482.2222222222222,
+      "reduced_cost": null
+    },
+    "x_1_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_2_1": {
+      "value": 1200.0,
+      "reduced_cost": null
+    },
+    "x_2_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_0": {
+      "value": 2544.4444444444443,
+      "reduced_cost": null
+    },
+    "y_1": {
+      "value": 3155.5555555555557,
+      "reduced_cost": null
+    },
+    "y_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "z_0": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 3155.5555555555557,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 2544.4444444444443,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": ">=",
+      "slack": -2.2737367544323206e-13,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": "<=",
+      "slack": 508.8888888888889,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": "<=",
+      "slack": 693.3333333333333,
+      "dual_value": null
+    },
+    "_C17": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

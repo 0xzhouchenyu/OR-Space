@@ -1,0 +1,215 @@
+{
+  "solver": "gurobi",
+  "model_name": "FactoryLocationAssignmentWithModes",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 670.0,
+  "objective_bound": 670.0,
+  "mip_gap": 0.0,
+  "runtime": 0.002309083938598633,
+  "node_count": 1.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_dhkvu3r2/solver_records/FactoryLocationAssignmentWithModes.gurobi.log",
+  "variables": {
+    "v_prem_0_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "v_prem_0_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "v_prem_1_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "v_prem_1_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "v_std_0_0": {
+      "value": 30.0,
+      "reduced_cost": null
+    },
+    "v_std_0_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "v_std_1_0": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "v_std_1_1": {
+      "value": 70.0,
+      "reduced_cost": null
+    },
+    "x_0_0": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_0_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_1_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_1_1": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_0_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_0_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_1_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "assign_factory_0": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "assign_factory_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "location_capacity_0": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "location_capacity_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "volume_balance_0": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "volume_balance_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "std_only_if_assigned_0_0": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "prem_only_if_assigned_0_0": {
+      "sense": "<=",
+      "slack": 30.0,
+      "dual_value": null
+    },
+    "std_only_if_assigned_0_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "prem_only_if_assigned_0_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "std_only_if_assigned_1_0": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "prem_only_if_assigned_1_0": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "std_only_if_assigned_1_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "prem_only_if_assigned_1_1": {
+      "sense": "<=",
+      "slack": 70.0,
+      "dual_value": null
+    },
+    "prem_only_if_premium_0_0": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "prem_only_if_premium_0_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "prem_only_if_premium_1_0": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "prem_only_if_premium_1_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_prem_share_0_0": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_prem_share_0_1": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_prem_share_1_0": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_prem_share_1_1": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "premium_only_if_assigned_0_0": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "premium_only_if_assigned_0_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "premium_only_if_assigned_1_0": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "premium_only_if_assigned_1_1": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    }
+  }
+}

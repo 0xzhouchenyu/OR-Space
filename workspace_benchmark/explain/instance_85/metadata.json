@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_085",
+  "instance_number": 85,
+  "source_revise_instance": "IndustryOR_85_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the objective drops from 1866.38 to 1811.00 by tracing the new QA-tier and craftsman split all the way from the business brief to the exact code variables and CSV fields. Your answer must name the revised decision variables `product_Y_QA`, `craft_reg`, and `craft_ot`, the constraint names `Product_Y_QA_Tier` and `Craftsman_Time_Balance`, and the exact CSV parameter names/values that implement the “up to 60 batches of Product Y” and “one-time 10 GBP QA burden” logic; then use the revised solver records to identify which constraints are binding, report their slack/dual values where available, and interpret the business meaning of those marginal values. Finally, compare the original and revised solutions and pinpoint the exact code additions/modifications that force `Y` down to 60 and `X` up to 18, quantifying how much of the 55.38 profit change comes from the QA fee versus the regular/overtime craftsman-cost split, and explain why you cannot linearly extrapolate the LP-relaxation shadow price on `Product_Y_QA_Tier` to predict the integer model’s profit if the threshold were increased above 60."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Production_Planning.gurobi.log",
+        "Production_Planning.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Production_Planning.gurobi.log",
+        "Production_Planning.lp_relaxation.json",
+        "Production_Planning.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 68.952778
+  }
+}

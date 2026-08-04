@@ -1,0 +1,11 @@
+Parameter_Name,Value,Unit,Context_Description
+machine_1_time_per_liquid_lot,50,minutes,Time required on Machine 1 to produce one lot of liquid fertilizer
+machine_2_time_per_liquid_lot,30,minutes,Time required on Machine 2 to produce one lot of liquid fertilizer
+machine_1_time_per_solid_lot,24,minutes,Time required on Machine 1 to produce one lot of solid fertilizer
+machine_2_time_per_solid_lot,33,minutes,Time required on Machine 2 to produce one lot of solid fertilizer
+initial_liquid_inventory,30,lots,Initial inventory of liquid fertilizer at the beginning of the week
+initial_solid_inventory,90,lots,Initial inventory of solid fertilizer at the beginning of the week
+machine_1_available_time,40,hours,Total available time for Machine 1 during the week
+machine_2_available_time,35,hours,Total available time for Machine 2 during the week
+forecast_liquid_demand,75,lots,Forecasted demand for liquid fertilizer during the week
+forecast_solid_demand,95,lots,Forecasted demand for solid fertilizer during the week

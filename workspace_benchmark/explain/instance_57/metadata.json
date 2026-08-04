@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_057",
+  "instance_number": 57,
+  "source_revise_instance": "IndustryOR_57_revise_business",
+  "domain": "Cutting_Stock / Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Cutting_Stock / Production_Planning",
+    "question": "In the revised model, explain exactly why the reported waste rises from 600.0 to 1280.0 by tracing the new business rule all the way from the finance brief into the code and data: name the added decision variable, the linking constraint, the big-M value, and the exact CSV fields/values that make the 2-meter roll incur a different fixed charge than the 1-meter roll. Then, using the revised integer solution and the LP-relaxation diagnostics, identify which pattern activations are used, interpret the business meaning of the relevant binding/slack/dual information on the demand constraints, and explain why you cannot linearly extrapolate the LP shadow prices or fractional activation costs to predict the true MIP objective change."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Minimize_Waste.gurobi.log",
+        "Minimize_Waste.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Minimize_Waste.gurobi.log",
+        "Minimize_Waste.lp_relaxation.json",
+        "Minimize_Waste.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 70.966667
+  }
+}

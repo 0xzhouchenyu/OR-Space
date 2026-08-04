@@ -1,0 +1,7 @@
+A dairy processing plant produces two dairy products using milk. The products are processed using two types of equipment, and each product has specific production rates, labor requirements, and profit margins. The plant has constraints on the daily supply of milk, available labor hours, and the processing capacity of one type of equipment. The goal is to formulate a production plan that maximizes daily profit. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. At the latest operating review, the business owner rejected treating this as a cosmetic rerun. The plan has to follow the commercial interpretation below, with the data-pack labels read literally. The cold-chain yogurt contract now changes the Type A day even before the first yogurt barrel is sold. Running A3 requires a cleaning block that removes `type_A_cleaning_loss_if_A3` kg from the shared Type A ceiling. A separate cold-chain allowance is paid only if A3 reaches `cold_chain_bonus_threshold_kg`. A2 must still satisfy the butter bundle, and all products compete for the same milk and labor day. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

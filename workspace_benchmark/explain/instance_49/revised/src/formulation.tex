@@ -1,0 +1,152 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+\item Months: $T=\{1,2,3,4\}$, indexed by $m$.
+\item Available contract lengths (months): $L=\{1,2,3,4\}$, indexed by $\ell$.
+\item Feasible start-length pairs:
+\[
+P=\{(i,\ell)\in T\times L : i+\ell-1 \le 4\},
+\]
+indexed by $(i,\ell)$, where $i$ is the contract start month.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+\item Monthly required area in units of $100\text{ m}^2$: $d_m$.
+From the data, $d=(15,10,20,12)$.
+\item Rental fee per $100\text{ m}^2$ for a contract of length $\ell$: $c_\ell$.
+\item Fixed startup fee per contract: $f = \texttt{activation\_fee\_per\_contract}$.
+\item Start-month unusable area for a newly opened contract unless expedited: $q = \texttt{onboarding\_loss\_units}$.
+\item Expedite fee per contract: $g = \texttt{expedited\_onboarding\_fee}$.
+\item Minimum rented area per active contract (in $100\text{ m}^2$): $a^{\min}=\texttt{min\_area\_per\_contract\_units}$.
+\item Minimum number of distinct contract lengths used:
+\[
+K^{\min}=\texttt{min\_contract\_types}.
+\]
+\item Maximum number of distinct contract lengths used:
+\[
+K^{\max}=\texttt{max\_contract\_types}.
+\]
+\item Maximum number of active contracts in any month:
+\[
+Z^{\max}=\texttt{monthly\_max\_parallel\_contracts}.
+\]
+\item Big-$M$ constant used in the implementation:
+\[
+M=\sum_{m\in T} d_m + |P|.
+\]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+\item Integer rented area attached to contract $(i,\ell)$:
+\[
+x_{i\ell}\in \mathbb{Z}_{\ge 0}
+\qquad\text{(code: \texttt{x[i,j]})}.
+\]
+This area is constant over all months covered by that contract before applying the start-month onboarding loss.
+\item Binary indicator that contract $(i,\ell)$ is opened:
+\[
+z_{i\ell}\in\{0,1\}
+\qquad\text{(code: \texttt{z[i,j]})}.
+\]
+\item Binary indicator that expedited onboarding is purchased for contract $(i,\ell)$:
+\[
+e_{i\ell}\in\{0,1\}
+\qquad\text{(code: \texttt{e[i,j]})}.
+\]
+\item Binary indicator that contract length $\ell$ is used by at least one contract:
+\[
+y_{\ell}\in\{0,1\}
+\qquad\text{(code: \texttt{y[j]})}.
+\]
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total rental, startup, and expedited-onboarding cost:
+\[
+\min \sum_{(i,\ell)\in P}
+\left(
+c_\ell x_{i\ell} + f z_{i\ell} + g e_{i\ell}
+\right).
+\]
+
+\section*{Constraints}
+
+\paragraph{Exact monthly coverage with start-month onboarding drag.}
+For each month $m\in T$,
+\[
+\sum_{\substack{(i,\ell)\in P\\ i\le m\le i+\ell-1}}
+\left[
+x_{i\ell}
+-
+\mathbf{1}_{\{m=i\}}\,q\,z_{i\ell}
++
+\mathbf{1}_{\{m=i\}}\,q\,e_{i\ell}
+\right]
+= d_m.
+\]
+Thus a newly started contract contributes $x_{i\ell}-q$ in its first month if not expedited, and $x_{i\ell}$ if expedited; later covered months contribute $x_{i\ell}$.
+
+\paragraph{Linking area, activation, and expedite decisions.}
+For all $(i,\ell)\in P$,
+\[
+x_{i\ell} \le M z_{i\ell},
+\]
+\[
+x_{i\ell} \ge a^{\min} z_{i\ell},
+\]
+\[
+e_{i\ell} \le z_{i\ell}.
+\]
+
+\paragraph{Linking contract-length usage indicators.}
+For each $\ell\in L$,
+\[
+\sum_{\substack{(i,\ell')\in P\\ \ell'=\ell}} z_{i\ell'} \le M y_\ell,
+\]
+\[
+\sum_{\substack{(i,\ell')\in P\\ \ell'=\ell}} z_{i\ell'} \ge y_\ell.
+\]
+
+\paragraph{Minimum and maximum number of contract lengths used.}
+\[
+\sum_{\ell\in L} y_\ell \ge K^{\min},
+\qquad
+\sum_{\ell\in L} y_\ell \le K^{\max}.
+\]
+
+\paragraph{Mutual exclusion of 1-month and 4-month lengths.}
+Because \texttt{mutual\_exclusion\_1\_and\_4} is true,
+\[
+y_1 + y_4 \le 1.
+\]
+
+\paragraph{Maximum number of active contracts in any month.}
+For each month $m\in T$,
+\[
+\sum_{\substack{(i,\ell)\in P\\ i\le m\le i+\ell-1}} z_{i\ell}
+\le Z^{\max}.
+\]
+
+\paragraph{Integrality and binary restrictions.}
+\[
+x_{i\ell}\in \mathbb{Z}_{\ge 0},\qquad
+z_{i\ell}\in\{0,1\},\qquad
+e_{i\ell}\in\{0,1\},\qquad
+y_\ell\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+\item The implementation scales all areas to units of $100\text{ m}^2$, so demand, minimum area, and onboarding loss are modeled in those units.
+\item Variable $x_{i\ell}$ represents the contract's nominal area level for every covered month. The onboarding effect is implemented only in the start month by subtracting \texttt{onboarding\_loss\_units} when $z_{i\ell}=1$ and adding it back when $e_{i\ell}=1$.
+\item Startup charges remain per opened contract via $f z_{i\ell}$, and expedited onboarding is also charged per opened contract via $g e_{i\ell}$.
+\item The model allows multiple contracts of the same length at different start months, but at most three contracts may be active simultaneously.
+\item The distinction between ``number of distinct contract lengths'' and ``number of active contracts'' is enforced exactly as coded through $y_\ell$ and $z_{i\ell}$, respectively.
+\item The current implementation solves this formulation as a mixed-integer linear program using the Gurobi command-line interface through PuLP compatibility wrappers.
+\end{itemize}

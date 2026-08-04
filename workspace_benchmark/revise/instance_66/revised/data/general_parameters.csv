@@ -1,0 +1,17 @@
+Parameter_Name,Value,Unit,Context_Description
+available_labor_hours_period1,500,hours,Regular labor hours in period 1
+available_labor_hours_period2,600,hours,Regular labor hours in period 2
+available_inspection_hours_period1,250,hours,Inspection hours in period 1
+available_inspection_hours_period2,260,hours,Inspection hours in period 2
+max_demand_high_end_period1,25,units,Period 1 high-end demand
+max_demand_mid_range_period1,40,units,Period 1 mid-range demand
+max_demand_low_end_period1,75,units,Period 1 low-end demand
+max_demand_high_end_period2,30,units,Period 2 high-end demand
+max_demand_mid_range_period2,45,units,Period 2 mid-range demand
+max_demand_low_end_period2,80,units,Period 2 low-end demand
+overtime_labor_cap,60,hours,Maximum total overtime labor across both periods
+overtime_labor_cost,30,currency/hour,Cost per hour of overtime labor
+period1_overtime_fatigue_threshold,20,hours,Period-1 overtime level that starts period-2 recovery loss
+period2_labor_recovery_loss,25,hours,Regular period-2 labor unavailable after carryover recovery
+overtime_review_threshold,45,hours,Total seasonal overtime level that starts the safety review
+seasonal_safety_review_fee,1200,currency,Fixed cost for the seasonal safety review

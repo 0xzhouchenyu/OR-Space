@@ -1,0 +1,85 @@
+{
+  "solver": "gurobi",
+  "model_name": "Farm_Optimization_Revised",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 150000.0,
+  "objective_bound": 150000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0005838871002197266,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_vck4o2w1/solver_records/Farm_Optimization_Revised.gurobi.log",
+  "variables": {
+    "corn": {
+      "value": 100.0,
+      "reduced_cost": null
+    },
+    "sorghum": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "soybeans": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "wheat": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_corn": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_soybeans": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "total_area": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "corn_wheat_ratio": {
+      "sense": ">=",
+      "slack": -100.0,
+      "dual_value": null
+    },
+    "soybeans_sorghum_ratio": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "wheat_sorghum_ratio": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "corn_min_supply": {
+      "sense": ">=",
+      "slack": -80.0,
+      "dual_value": null
+    },
+    "corn_activation": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "soybeans_activation": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "mutual_exclusion_corn_soybeans": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

@@ -1,0 +1,4 @@
+Parameter_Name,Value,Unit,Context_Description
+min_vegetable_types,3,,Minimum number of different vegetable types Mary must select
+max_budget,20,USD,Maximum budget Mary can spend on dinner
+total_weight_limit,800,grams,Maximum total weight of all food Mary can purchase

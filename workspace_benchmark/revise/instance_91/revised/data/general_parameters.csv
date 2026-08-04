@@ -1,0 +1,13 @@
+Parameter_Name,Value,Unit,Context_Description
+profit_product_A,3,GBP per unit,Profit per unit sold for product A
+profit_product_B,5,GBP per unit,Profit per unit sold for product B
+assembly_time_A,12,minutes per unit,Assembly time required per unit for product A
+assembly_time_B,25,minutes per unit,Assembly time required per unit for product B
+machine_working_time,30,hours per week,Estimated effective machine working time per week
+production_ratio_A_to_B,5:2,None,Technical constraint requiring at least 2 units of product B for every 5 units of product A produced
+max_overtime_hours,15,hours per week,Maximum allowed overtime hours per week
+overtime_penalty_per_hour,10,GBP per hour,Penalty cost incurred for each hour of overtime used
+overtime_review_threshold_hours,10,hours,Overtime level covered by the normal weekly approval
+overtime_review_fee,20,GBP,Fixed review fee if overtime exceeds the threshold
+product_A_senior_batch_threshold,100,units,Product A volume covered by the normal senior-assembler batch plan
+product_A_senior_batch_fee,10,GBP,One-time staffing burden if Product A volume exceeds the senior-assembler batch threshold

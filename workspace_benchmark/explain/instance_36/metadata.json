@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_036",
+  "instance_number": 36,
+  "source_revise_instance": "IndustryOR_36_revise_business",
+  "domain": "Vehicle_Routing_with_Time_Windows",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Vehicle_Routing_with_Time_Windows",
+    "question": "In the revised model, explain exactly why the objective increases from 175.37 to 297.04 by tracing the code changes that implement the low-emission-zone policy. Your answer must name the new decision variable and constant term added to the objective (`y[i]` and `z_force`), identify the exact CSV columns and parameter that drive them (`Outsource_Cost`, `Mandatory_External`, `inhouse_truck_limit=3`), and connect them to the business document statement that customers 12 and 16 must be removed from in-house routing. Then, using the LP-relaxation diagnostics, discuss which revised truck-limit constraint(s) are likely binding, what their shadow prices/slacks mean in business terms, and why you cannot linearly extrapolate that marginal value to predict the effect of allowing a 4th in-house truck in the integer model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "VRPHTW.gurobi.log",
+        "VRPHTW.lp_relaxation.json",
+        "VRPHTW.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "VRPHTW_LEZ_Outsourcing.gurobi.log",
+        "VRPHTW_LEZ_Outsourcing.lp_relaxation.json",
+        "VRPHTW_LEZ_Outsourcing.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 71.837222
+  }
+}

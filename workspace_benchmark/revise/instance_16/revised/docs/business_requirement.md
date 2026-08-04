@@ -1,0 +1,7 @@
+A store plans to formulate the purchasing and sales plan for a certain product for the first quarter of next year. The warehouse has a maximum storage capacity, and there is an initial stock at the end of this year. The store purchases goods once at the beginning of each month. The purchasing and selling prices of the product in each month are provided in the corresponding CSV files. Please refer to the data folder for specific parameter values. The goal is to determine how many units should be purchased and sold each month to maximize the total profit, and express this problem as a linear programming model.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The February buying window has a receiving-office wrinkle. Up to 300 units can pass through the ordinary unloading slot, but a larger February purchase forces a special receiving crew costing 600 Yuan once; all monthly buy, sell, inventory, and fixed ordering rules stay as they were. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

@@ -1,0 +1,133 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Months \(T=\{0,1,2,3,4,5\}\), corresponding to January through June.
+    \item Index \(t \in T\) denotes a month.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item \(d_t\): demand forecast in month \(t\) (code: \texttt{demand[t]}).
+    \item \(W^0\): initial workforce before January (code: \texttt{W0}).
+    \item \(I^0\): initial inventory before January (code: \texttt{I0}).
+    \item \(p\): sales price per unit (code: \texttt{sp}).
+    \item \(c^{\mathrm{rm}}\): raw material cost per in-house produced unit (code: \texttt{rmc}).
+    \item \(c^{\mathrm{out}}\): outsourcing cost per unit (code: \texttt{oc}).
+    \item \(c^{\mathrm{inv}}\): inventory holding cost per end-of-month unit (code: \texttt{hc}).
+    \item \(c^{\mathrm{bo}}\): backorder cost per end-of-month unit (code: \texttt{bc}).
+    \item \(a\): labor hours required per in-house produced unit (code: \texttt{lr}).
+    \item \(h^{\mathrm{reg}}\): regular labor hours per worker per month (code: \texttt{rh}).
+    \item \(c^{\mathrm{reg}}\): regular wage per labor hour (code: \texttt{rw}).
+    \item \(h^{\mathrm{ot}}\): maximum overtime hours per worker per month (code: \texttt{otl}).
+    \item \(c^{\mathrm{ot}}\): overtime wage per hour (code: \texttt{ow}).
+    \item \(c^{\mathrm{hire}}\): hiring cost per worker (code: \texttt{hire\_cost}).
+    \item \(c^{\mathrm{fire}}\): firing cost per worker (code: \texttt{fire\_cost}).
+    \item \(I^{\mathrm{term}}\): required minimum ending inventory at the end of June (code: \texttt{term\_inv}).
+    \item \(B^{\mathrm{term}}\): maximum allowed ending backorders at the end of June (code: \texttt{term\_bo}).
+\end{itemize}
+
+For this instance, the code uses \(B^0=0\) as the initial backorder level, and defines total revenue from the constant
+\[
+\sum_{t\in T} d_t.
+\]
+
+\section*{Decision Variables}
+
+For each \(t \in T\):
+
+\begin{itemize}
+    \item \(W_t \ge 0\): workforce in month \(t\) (code: \texttt{W[t]}).
+    \item \(H_t \ge 0\): workers hired in month \(t\) (code: \texttt{H[t]}).
+    \item \(F_t \ge 0\): workers fired in month \(t\) (code: \texttt{F[t]}).
+    \item \(P_t \ge 0\): in-house production quantity in month \(t\) (code: \texttt{P[t]}).
+    \item \(OT_t \ge 0\): total overtime hours used in month \(t\) (code: \texttt{OT\_total[t]}).
+    \item \(O_t \ge 0\): outsourced quantity in month \(t\) (code: \texttt{O[t]}).
+    \item \(I_t \ge 0\): end-of-month inventory in month \(t\) (code: \texttt{Inv[t]}).
+    \item \(B_t \ge 0\): end-of-month backorders in month \(t\) (code: \texttt{B[t]}).
+\end{itemize}
+
+All variables are modeled as continuous in the implementation.
+
+\section*{Objective}
+
+The implemented model maximizes net profit:
+\[
+\max \; z
+=
+p\sum_{t\in T} d_t
+-\sum_{t\in T}\Bigl(
+c^{\mathrm{rm}} P_t
++c^{\mathrm{out}} O_t
++c^{\mathrm{inv}} I_t
++c^{\mathrm{bo}} B_t
++c^{\mathrm{reg}} h^{\mathrm{reg}} W_t
++c^{\mathrm{ot}} OT_t
++c^{\mathrm{hire}} H_t
++c^{\mathrm{fire}} F_t
+\Bigr).
+\]
+
+Note that the revenue term is implemented as the constant \(p\sum_{t\in T} d_t\), not as a decision-dependent sales quantity.
+
+\section*{Constraints}
+
+For all \(t \in T\), the following constraints are imposed.
+
+\paragraph{Workforce balance}
+\[
+W_0 = W^0 + H_0 - F_0,
+\]
+\[
+W_t = W_{t-1} + H_t - F_t \qquad \forall t=1,\dots,5.
+\]
+
+\paragraph{Production capacity from regular time and overtime}
+\[
+a P_t \le h^{\mathrm{reg}} W_t + OT_t \qquad \forall t \in T.
+\]
+
+\paragraph{Overtime limit}
+\[
+OT_t \le h^{\mathrm{ot}} W_t \qquad \forall t \in T.
+\]
+
+\paragraph{Inventory--backorder balance}
+Using \(I_{-1}=I^0\) and \(B_{-1}=0\),
+\[
+I_t - B_t = I_{t-1} - B_{t-1} + P_t + O_t - d_t
+\qquad \forall t \in T.
+\]
+
+Equivalently, for \(t=0\),
+\[
+I_0 - B_0 = I^0 + P_0 + O_0 - d_0,
+\]
+and for \(t=1,\dots,5\),
+\[
+I_t - B_t = I_{t-1} - B_{t-1} + P_t + O_t - d_t.
+\]
+
+\paragraph{Terminal conditions}
+\[
+I_5 \ge I^{\mathrm{term}},
+\]
+\[
+B_5 \le B^{\mathrm{term}}.
+\]
+
+\paragraph{Nonnegativity}
+\[
+W_t,H_t,F_t,P_t,OT_t,O_t,I_t,B_t \ge 0
+\qquad \forall t \in T.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is a linear program and is solved in the code through PuLP using \texttt{GUROBI\_CMD}.
+    \item Workforce, hiring, and firing are not restricted to be integers; the implementation treats them as continuous variables.
+    \item The inventory and backorder states are represented jointly through the balance equation \(I_t-B_t\), while both \(I_t\) and \(B_t\) are constrained nonnegative. This permits at most one of net inventory or net backlog to be positive in an optimal solution because both carry nonnegative cost, but the code does not enforce complementarity explicitly.
+    \item Revenue is not modeled from realized monthly shipments. Instead, because the terminal backorder cap is \(B^{\mathrm{term}}=0\), the code fixes revenue to sales price times total forecast demand over the horizon.
+    \item Regular labor cost is charged as \(c^{\mathrm{reg}} h^{\mathrm{reg}} W_t\) for every worker in every month, independent of actual production, exactly as implemented.
+\end{itemize}

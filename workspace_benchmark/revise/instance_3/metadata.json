@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_3_revise_business",
+  "original_instance_id": "IndustryOR_3",
+  "revise_description": "To reflect a mid-horizon contract, from April to June at least contract_min_units monthly demand must be fulfilled by in-house production without overtime. Introduce binary indicators and auxiliary variables to enforce min contract units and adjust capacity and inventory balances accordingly.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+5var, +9constr, mod_6constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 5,
+        "-variable": 0,
+        "+constraint": 9,
+        "-constraint": 0,
+        "modify_constraint": 6,
+        "modify_data": 1
+      },
+      "op_count": 22,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 83.333333
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 0.5766,
+  "stdout": "Fuel per heavy bomb per part: [437.5, 460.0, 505.0, 550.0]\nFuel per light bomb per part: [362.5, 380.0, 415.0, 450.0]\nBest allocation: [(0, 3), (11, 0), (0, 6), (0, 3)]\nTotal heavy bombs used: 11\nTotal light bombs used: 12\nTotal fuel used: 9987.5\nOBJECTIVE_VALUE: 0.5766\nSet parameter LicenseID to value 2802670\n",
+  "stderr": "",
+  "error": null
+}

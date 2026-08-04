@@ -1,0 +1,108 @@
+{
+  "solver": "gurobi",
+  "model_name": "Promo_With_Display_Review",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 3960.0,
+  "objective_bound": 3960.0,
+  "mip_gap": 0.0,
+  "runtime": 0.005090951919555664,
+  "node_count": 1.0,
+  "iteration_count": 8.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_tkhhna8f/solver_records/Promo_With_Display_Review.gurobi.log",
+  "variables": {
+    "package_b_review": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "package_c_review": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_a": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_b": {
+      "value": 45.0,
+      "reduced_cost": null
+    },
+    "x_c": {
+      "value": 27.0,
+      "reduced_cost": null
+    },
+    "y_a": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_b": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_c": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 11.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 21.599999999999994,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 255.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": -35.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 273.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": ">=",
+      "slack": -22.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

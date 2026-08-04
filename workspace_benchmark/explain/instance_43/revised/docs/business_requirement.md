@@ -1,0 +1,7 @@
+A production base needs to extract raw materials from warehouses A and B every day for production. The required raw materials include raw material A, raw material B, and raw material C. Each truck from warehouse A and warehouse B can transport specific quantities of these raw materials back to the production base, and each truck has an associated freight cost. The goal is to determine the number of trucks to dispatch daily from warehouse A and warehouse B to minimize the total freight cost while meeting production needs. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the finance partner framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. Dispatch added a daily reconciliation step when both warehouses are in play. Warehouse A and B keep their truck economics and B's overflow desk, but using both warehouses on the same day now costs 700 yuan once for the shared dispatch closeout. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

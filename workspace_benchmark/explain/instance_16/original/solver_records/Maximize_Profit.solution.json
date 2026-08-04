@@ -1,0 +1,117 @@
+{
+  "solver": "gurobi",
+  "model_name": "Maximize_Profit",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 4100.0,
+  "objective_bound": 4100.0,
+  "mip_gap": null,
+  "runtime": 0.0005040168762207031,
+  "node_count": 0.0,
+  "iteration_count": 1.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_n_2rti4y/solver_records/Maximize_Profit.gurobi.log",
+  "variables": {
+    "inventory_1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "inventory_2": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "inventory_3": {
+      "value": 0.0,
+      "reduced_cost": -10.0
+    },
+    "purchase_1": {
+      "value": 300.0,
+      "reduced_cost": 0.0
+    },
+    "purchase_2": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "purchase_3": {
+      "value": 0.0,
+      "reduced_cost": -1.0
+    },
+    "sell_1": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "sell_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "sell_3": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "inventory_balance_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 6.0
+    },
+    "warehouse_after_purchase_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "warehouse_end_1": {
+      "sense": "<=",
+      "slack": 500.0,
+      "dual_value": 0.0
+    },
+    "sell_limit_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 3.0
+    },
+    "inventory_balance_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 8.0
+    },
+    "warehouse_after_purchase_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 2.0
+    },
+    "warehouse_end_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "sell_limit_2": {
+      "sense": "<=",
+      "slack": 500.0,
+      "dual_value": 0.0
+    },
+    "inventory_balance_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 10.0
+    },
+    "warehouse_after_purchase_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 2.0
+    },
+    "warehouse_end_3": {
+      "sense": "<=",
+      "slack": 500.0,
+      "dual_value": 0.0
+    },
+    "sell_limit_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    }
+  }
+}

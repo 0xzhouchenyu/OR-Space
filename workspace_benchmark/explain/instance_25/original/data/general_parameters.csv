@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+initial_investment,100000,yuan,Total amount available for investment
+return_rate_option_1,0.7,yuan per yuan,Return rate for the first investment option after one year
+return_rate_option_2,2,yuan per yuan,Return rate for the second investment option after two years
+investment_time_option_2,2,years,Minimum investment time for the second option
+planning_horizon,3,years,Total time horizon for the investment plan

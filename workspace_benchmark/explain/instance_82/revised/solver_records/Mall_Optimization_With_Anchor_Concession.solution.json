@@ -1,0 +1,113 @@
+{
+  "solver": "gurobi",
+  "model_name": "Mall_Optimization_With_Anchor_Concession",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 22.2,
+  "objective_bound": 22.200000000000003,
+  "mip_gap": 0.0,
+  "runtime": 0.0035560131072998047,
+  "node_count": 1.0,
+  "iteration_count": 7.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_o360hbkm/solver_records/Mall_Optimization_With_Anchor_Concession.gurobi.log",
+  "variables": {
+    "catering_third_store_security": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_0_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_0_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_0_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_1_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_1_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_2_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_2_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_2_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_3_0": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_4_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_4_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_4_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 342.5,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

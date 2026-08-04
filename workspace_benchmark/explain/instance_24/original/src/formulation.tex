@@ -1,0 +1,106 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Vehicle types \(V = \{\text{truck}, \text{van}, \text{motorcycle}, \text{ev}\}\).
+\end{itemize}
+
+No explicit index for sales points is used in the implemented model: demand is aggregated into a single total shipment requirement.
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Total product units to be transported: \(D\) (code: \texttt{product\_units}).
+    \item Maximum total pollution allowed: \(P^{\max}\) (code: \texttt{max\_total\_pollution}).
+    \item Minimum required truck trips: \(L^{\text{truck}}\) (code: \texttt{min\_truck\_trips}).
+    \item Pollution per trip of vehicle type \(v \in V\): \(p_v\), with
+    \[
+    p_{\text{truck}} \text{ (code: \texttt{truck\_pollution})},\quad
+    p_{\text{van}} \text{ (code: \texttt{van\_pollution})},\quad
+    p_{\text{motorcycle}} \text{ (code: \texttt{motorcycle\_pollution})},\quad
+    p_{\text{ev}} \text{ (code: \texttt{ev\_pollution})}.
+    \]
+    \item Capacity per trip of vehicle type \(v \in V\): \(c_v\), with
+    \[
+    c_{\text{truck}} \text{ (code: \texttt{truck\_capacity})},\quad
+    c_{\text{van}} \text{ (code: \texttt{van\_capacity})},\quad
+    c_{\text{motorcycle}} \text{ (code: \texttt{motorcycle\_capacity})},\quad
+    c_{\text{ev}} \text{ (code: \texttt{ev\_capacity})}.
+    \]
+\end{itemize}
+
+For this instance, the data are:
+\[
+D=1800,\quad P^{\max}=2000,\quad L^{\text{truck}}=10,
+\]
+\[
+(p_{\text{truck}},p_{\text{van}},p_{\text{motorcycle}},p_{\text{ev}})=(100,50,10,0),
+\]
+\[
+(c_{\text{truck}},c_{\text{van}},c_{\text{motorcycle}},c_{\text{ev}})=(100,80,40,60).
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Number of truck trips: \(x_{\text{truck}}\) (code: \texttt{x\_truck} / \texttt{truck\_trips}), integer.
+    \item Number of van trips: \(x_{\text{van}}\) (code: \texttt{x\_van} / \texttt{van\_trips}), integer.
+    \item Number of motorcycle trips: \(x_{\text{motorcycle}}\) (code: \texttt{x\_moto} / \texttt{motorcycle\_trips}), integer.
+    \item Number of electric vehicle trips: \(x_{\text{ev}}\) (code: \texttt{x\_ev} / \texttt{ev\_trips}), integer.
+\end{itemize}
+
+All decision variables are nonnegative integers:
+\[
+x_v \in \mathbb{Z}_{\ge 0}\qquad \forall v \in V.
+\]
+
+\section*{Objective}
+
+Minimize total pollution:
+\[
+\min \;
+p_{\text{truck}}x_{\text{truck}}
++p_{\text{van}}x_{\text{van}}
++p_{\text{motorcycle}}x_{\text{motorcycle}}
++p_{\text{ev}}x_{\text{ev}}.
+\]
+
+For the given data, this is
+\[
+\min \; 100x_{\text{truck}} + 50x_{\text{van}} + 10x_{\text{motorcycle}} + 0x_{\text{ev}}.
+\]
+
+\section*{Constraints}
+
+\begin{align*}
+c_{\text{truck}}x_{\text{truck}}
++c_{\text{van}}x_{\text{van}}
++c_{\text{motorcycle}}x_{\text{motorcycle}}
++c_{\text{ev}}x_{\text{ev}}
+&\ge D
+&&\text{(total delivered capacity)}\\[4pt]
+p_{\text{truck}}x_{\text{truck}}
++p_{\text{van}}x_{\text{van}}
++p_{\text{motorcycle}}x_{\text{motorcycle}}
++p_{\text{ev}}x_{\text{ev}}
+&\le P^{\max}
+&&\text{(pollution limit)}\\[4pt]
+x_{\text{truck}} &\ge L^{\text{truck}}
+&&\text{(minimum truck trips)}.
+\end{align*}
+
+With the instance values:
+\begin{align*}
+100x_{\text{truck}} + 80x_{\text{van}} + 40x_{\text{motorcycle}} + 60x_{\text{ev}} &\ge 1800,\\
+100x_{\text{truck}} + 50x_{\text{van}} + 10x_{\text{motorcycle}} + 0x_{\text{ev}} &\le 2000,\\
+x_{\text{truck}} &\ge 10.
+\end{align*}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a linear integer program with four nonnegative integer variables, built in PuLP-compatible syntax and solved using \texttt{GUROBI\_CMD}.
+    \item Although the business description mentions three sales points, the code does not model destinations separately; it aggregates all demand into the single scalar parameter \(D\).
+    \item The business description also mentions incompatibilities among vehicle combinations due to energy constraints, but no such mutual-exclusion or combination constraints are present in \texttt{current\_heuristic.py}; therefore they are not part of the implemented formulation.
+    \item The same linear expression is used both as the objective and in the maximum-pollution constraint.
+    \item After solving, the code reports the selected trip counts, computes total delivered capacity from the chosen trips, and prints the objective value.
+\end{itemize}

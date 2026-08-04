@@ -1,0 +1,10 @@
+Parameter_Name,Value,Unit,Context_Description
+initial_investment,100000,yuan,Total amount available for investment
+return_rate_option_1,0.7,yuan per yuan,Return rate for the first investment option after one year
+return_rate_option_2,2,yuan per yuan,Return rate for the second investment option after two years
+investment_time_option_2,2,years,Minimum investment time for the second option
+planning_horizon,3,years,Total time horizon for the investment plan
+min_reserve_year1,10000,yuan,Minimum emergency cash reserve required at the end of year 1
+min_reserve_year2,15000,yuan,Minimum emergency cash reserve required at the end of year 2
+max_option2_start,30000,yuan,Maximum amount allowed in the two-year option in any eligible start year
+option2_year0_late_settlement_rate,0.02,fraction,Service deduction on year-0 two-year proceeds that settle after the year-2 cut-off

@@ -1,0 +1,15 @@
+Parameter_Name,Value,Unit,Context_Description
+cow_selling_price,500,USD,Selling price of one cow
+sheep_selling_price,200,USD,Selling price of one sheep
+chicken_selling_price,8,USD,Selling price of one chicken
+cow_feed_cost,100,USD,Feed cost for one cow
+sheep_feed_cost,80,USD,Feed cost for one sheep
+chicken_feed_cost,5,USD,Feed cost for one chicken
+cow_manure_production,10,units per day,Manure produced by one cow per day
+sheep_manure_production,5,units per day,Manure produced by one sheep per day
+chicken_manure_production,3,units per day,Manure produced by one chicken per day
+max_manure_capacity,800,units per day,Maximum manure cleaning capacity of the farm per day
+max_chickens,50,animals,Maximum number of chickens that can be raised on the farm
+min_cows,10,animals,Minimum number of cows required to meet customer demand
+min_sheep,20,animals,Minimum number of sheep required to meet customer demand
+max_total_animals,100,animals,Maximum total number of animals that can be raised on the farm

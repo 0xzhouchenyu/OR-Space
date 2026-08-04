@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 21500.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nShirt: 100\nShort-sleeve: 0\nCasual Cloth: 200\nOBJECTIVE_VALUE: 21500.0\n",
+  "stderr": "",
+  "error": null
+}

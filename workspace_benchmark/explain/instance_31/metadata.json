@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_031",
+  "instance_number": 31,
+  "source_revise_instance": "IndustryOR_31_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the objective drops from 1190.57 to 670.57 even though the positive production variables `x_A1_I`, `x_A2_I`, `x_A2_II`, `x_A2_III`, `x_B1_II`, `x_B2_I`, `x_B2_III`, and `x_B3_I` remain numerically unchanged from the original solution. Your answer must trace the exact code additions `y[e]` and `joint_calibration` back to the CSV fields `Fixed_Setup_Cost`, `Effective_Machine_Hours`, and `A2_B2_joint_calibration_fee`, name the specific business brief terms they implement, and quantify the full 519.84 objective change using exact parameter values. Then use the LP-relaxation diagnostics to identify which of `capacity_B1` and `activation_B1` is carrying the marginal value, interpret the shadow price/slack economically, and explain why that dual-based linear extrapolation is not valid for asking “what if B1 were not activated” in the integer revised model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Factory_Production.gurobi.log",
+        "Factory_Production.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv",
+        "setup_costs.csv"
+      ],
+      "solver_records": [
+        "Factory_Production_With_Setup_Costs.gurobi.log",
+        "Factory_Production_With_Setup_Costs.lp_relaxation.json",
+        "Factory_Production_With_Setup_Costs.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 77.721667
+  }
+}

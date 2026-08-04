@@ -1,0 +1,65 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $P = \{0,1,2,3,4,5\}$: set of time periods over the 24-hour day, in the order
+    \[
+    0:\text{2:00--6:00},\;
+    1:\text{6:00--10:00},\;
+    2:\text{10:00--14:00},\;
+    3:\text{14:00--18:00},\;
+    4:\text{18:00--22:00},\;
+    5:\text{22:00--2:00}.
+    \]
+    \item $S = P$: set of allowable shift start periods.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d = 8$: shift duration in hours (\texttt{shift\_duration}); equivalently, each shift covers exactly two consecutive 4-hour periods.
+    \item $r_j$: required number of salespeople in period $j$ (\texttt{req\_values[j]}$/$\texttt{requirements[period]}$). For instance 26,
+    \[
+    (r_0,r_1,r_2,r_3,r_4,r_5) = (10,15,25,20,18,12).
+    \]
+    \item Coverage rule: a shift starting in period $i$ covers periods $i$ and $(i+1)\bmod 6$.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_i \in \mathbb{Z}_{\ge 0}$: number of salespeople assigned to start a shift at period $i$ (code: \texttt{x[i]}), for each $i \in S$.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the total number of salespeople scheduled:
+\[
+\min \sum_{i \in S} x_i.
+\]
+
+\section*{Constraints}
+
+For each period $j \in P$, the salespeople available in that period are exactly those who started in period $j$ and those who started in the immediately preceding period $(j-1)\bmod 6$. Therefore,
+\[
+x_j + x_{(j-1)\bmod 6} \ge r_j
+\qquad \forall j \in P.
+\]
+
+Written explicitly for the six periods:
+\begin{align*}
+x_0 + x_5 &\ge 10,\\
+x_1 + x_0 &\ge 15,\\
+x_2 + x_1 &\ge 25,\\
+x_3 + x_2 &\ge 20,\\
+x_4 + x_3 &\ge 18,\\
+x_5 + x_4 &\ge 12.
+\end{align*}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a pure integer linear program with six nonnegative integer variables (\texttt{cat='Integer'}) and six demand constraints.
+    \item The period set is treated cyclically using modulo arithmetic, so the shift starting at 22:00 also covers the 22:00--2:00 period and contributes to the 2:00--6:00 requirement through the term $x_{(j-1)\bmod 6}$ when $j=0$.
+    \item The objective in code is exactly \texttt{lpSum(x)}, i.e., minimizing the total headcount across all shift starts, with no weighting, costs, or symmetry-breaking constraints.
+    \item The model is solved in the code by a MIP solver interface (\texttt{GUROBI\_CMD}) through PuLP-compatible modeling objects; it is not evaluated by custom enumeration or dynamic programming.
+\end{itemize}

@@ -1,0 +1,49 @@
+{
+  "solver": "gurobi",
+  "model_name": "Fertilizer_Production",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 1.25,
+  "objective_bound": 1.25,
+  "mip_gap": null,
+  "runtime": 0.0003781318664550781,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_bfxh171x/solver_records/Fertilizer_Production.gurobi.log",
+  "variables": {
+    "x_liquid": {
+      "value": 45.0,
+      "reduced_cost": 0.0
+    },
+    "x_solid": {
+      "value": 6.25,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Machine_1_Capacity": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.041666666666666664
+    },
+    "Machine_2_Capacity": {
+      "sense": "<=",
+      "slack": 543.75,
+      "dual_value": 0.0
+    },
+    "Liquid_Demand_Satisfaction": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -1.083333333333333
+    },
+    "Solid_Demand_Satisfaction": {
+      "sense": ">=",
+      "slack": -1.25,
+      "dual_value": 0.0
+    }
+  }
+}

@@ -1,0 +1,8 @@
+Parameter_Name,Value,Unit,Context_Description
+a,2,hours,Time required per furnace for the first steelmaking method
+m,50,dollars,Fuel cost per furnace for the first steelmaking method
+b,3,hours,Time required per furnace for the second steelmaking method
+n,70,dollars,Fuel cost per furnace for the second steelmaking method
+k,10,tons,Steel production per furnace regardless of the method
+d,30,tons,Minimum steel production requirement
+c,12,hours,Maximum time available for steel production

@@ -1,0 +1,122 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Gasoline products $g \in G = \{\mathrm{I}, \mathrm{II}\}$.
+    \item Purchase tiers for crude A $k \in K = \{1,2,3\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Minimum required proportion of crude A in gasoline $g$:
+    \[
+    \alpha_{\mathrm{I}} \text{ (code: \texttt{min\_A\_I})}, \qquad
+    \alpha_{\mathrm{II}} \text{ (code: \texttt{min\_A\_II})}.
+    \]
+    \item Selling price of gasoline $g$:
+    \[
+    r_{\mathrm{I}} \text{ (code: \texttt{price\_I})}, \qquad
+    r_{\mathrm{II}} \text{ (code: \texttt{price\_II})}.
+    \]
+    \item Initial inventory of crude oils:
+    \[
+    I_A \text{ (code: \texttt{inv\_A})}, \qquad
+    I_B \text{ (code: \texttt{inv\_B})}.
+    \]
+    \item Maximum total purchasable amount of crude A:
+    \[
+    \bar P_A \text{ (code: \texttt{max\_purchase\_A})}.
+    \]
+    \item Unit purchase cost of crude A in tier $k$:
+    \[
+    c_1 \text{ (code: \texttt{cost\_tier1})}, \quad
+    c_2 \text{ (code: \texttt{cost\_tier2})}, \quad
+    c_3 \text{ (code: \texttt{cost\_tier3})}.
+    \]
+    \item Tier capacity (implemented identically for all three tiers):
+    \[
+    U = 500.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Amount of crude A blended into gasoline I and II:
+    \[
+    a_1 \ge 0 \text{ (code: \texttt{a1})}, \qquad
+    a_2 \ge 0 \text{ (code: \texttt{a2})}.
+    \]
+    \item Amount of crude B blended into gasoline I and II:
+    \[
+    b_1 \ge 0 \text{ (code: \texttt{b1})}, \qquad
+    b_2 \ge 0 \text{ (code: \texttt{b2})}.
+    \]
+    \item Purchased amount of crude A in each tier:
+    \[
+    p_1 \in [0,U] \text{ (code: \texttt{p1})}, \qquad
+    p_2 \in [0,U] \text{ (code: \texttt{p2})}, \qquad
+    p_3 \in [0,U] \text{ (code: \texttt{p3})}.
+    \]
+    \item Binary variables enforcing sequential use of purchase tiers:
+    \[
+    y_1 \in \{0,1\} \text{ (code: \texttt{y1})}, \qquad
+    y_2 \in \{0,1\} \text{ (code: \texttt{y2})}.
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total gasoline revenue minus crude A purchase cost:
+\[
+\max \;
+r_{\mathrm{I}}(a_1+b_1) + r_{\mathrm{II}}(a_2+b_2)
+- c_1 p_1 - c_2 p_2 - c_3 p_3.
+\]
+
+\section*{Constraints}
+
+Tier-ordering constraints for crude A purchases:
+\begin{align}
+p_1 &\le U, \\
+p_2 &\le U y_1, \\
+p_3 &\le U y_2, \\
+p_1 &\ge U y_1, \\
+p_2 &\ge U y_2.
+\end{align}
+
+Crude availability constraints:
+\begin{align}
+a_1 + a_2 &\le I_A + p_1 + p_2 + p_3, \\
+b_1 + b_2 &\le I_B.
+\end{align}
+
+Minimum crude-A proportion requirements:
+\begin{align}
+a_1 &\ge \alpha_{\mathrm{I}}(a_1+b_1), \\
+a_2 &\ge \alpha_{\mathrm{II}}(a_2+b_2).
+\end{align}
+
+Variable domains:
+\begin{align}
+a_1,a_2,b_1,b_2 &\ge 0, \\
+0 \le p_1,p_2,p_3 &\le U, \\
+y_1,y_2 &\in \{0,1\}.
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved with Gurobi through PuLP.
+    \item The tiered-purchase logic is modeled exactly as in the code: tier 2 can be used only if tier 1 is full, and tier 3 can be used only if tier 2 is full. This is enforced by
+    \[
+    p_1 \ge U y_1,\quad p_2 \le U y_1,\quad
+    p_2 \ge U y_2,\quad p_3 \le U y_2.
+    \]
+    Thus, if $y_1=1$ then necessarily $p_1=U$, and if $y_2=1$ then necessarily $p_2=U$.
+    \item Although parameter $\bar P_A$ (code: \texttt{max\_purchase\_A}) is loaded from data, it is not used in any constraint. The implemented upper limit on total purchased crude A is instead implied by the three tier bounds, i.e.,
+    \[
+    p_1+p_2+p_3 \le 3U = 1500.
+    \]
+    \item No demand limits, processing capacity limits, or disposal variables are included. All available crude B may be used if profitable, and crude inventories need not be exhausted.
+\end{itemize}

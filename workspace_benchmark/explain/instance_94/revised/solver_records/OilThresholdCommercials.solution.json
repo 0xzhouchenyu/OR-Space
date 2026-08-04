@@ -1,0 +1,149 @@
+{
+  "solver": "gurobi",
+  "model_name": "OilThresholdCommercials",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 4700000.0,
+  "objective_bound": 4700000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.005269050598144531,
+  "node_count": 1.0,
+  "iteration_count": 10.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_r8w3cg3_/solver_records/OilThresholdCommercials.gurobi.log",
+  "variables": {
+    "A_to_I": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "A_to_II": {
+      "value": 1500.0,
+      "reduced_cost": null
+    },
+    "B_to_I": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "B_to_II": {
+      "value": 1000.0,
+      "reduced_cost": null
+    },
+    "block2_open": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "block3_open": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "bulk_rebate": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "premium_typeII_output": {
+      "value": 2500.0,
+      "reduced_cost": null
+    },
+    "purchase_block1": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "purchase_block2": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "purchase_block3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "typeII_uplift": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": -500.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 500.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": ">=",
+      "slack": -1000.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": ">=",
+      "slack": -1600.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": "<=",
+      "slack": 1500.0,
+      "dual_value": null
+    }
+  }
+}

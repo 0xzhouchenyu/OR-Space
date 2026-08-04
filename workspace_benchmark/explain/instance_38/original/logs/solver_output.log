@@ -1,0 +1,14 @@
+Number of products: 3
+Number of machines: 3
+Processing times: [[2, 3, 1], [4, 2, 3], [3, 5, 2]]
+Sequence [1, 2, 3]: makespan = 16
+Sequence [1, 3, 2]: makespan = 15
+Sequence [2, 1, 3]: makespan = 16
+Sequence [2, 3, 1]: makespan = 16
+Sequence [3, 1, 2]: makespan = 16
+Sequence [3, 2, 1]: makespan = 14
+
+Optimal sequence: [3, 2, 1]
+Optimal makespan: 14
+OBJECTIVE_VALUE: 14
+Set parameter LicenseID to value 2802670

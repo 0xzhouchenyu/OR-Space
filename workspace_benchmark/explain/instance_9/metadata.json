@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_009",
+  "instance_number": 9,
+  "source_revise_instance": "IndustryOR_9_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "Compare the original and revised models and explain exactly why the objective increases from 623.0 to 801.0. Your answer must trace the change from the revised code additions in `src/current_heuristic.py` (the new variables `xS_t`, `xP_t`, `yS_t`, `yP_t`, the objective terms using `bonus`, `steel_factor`, and `premium_cap`, and the new shift-logic constraints) back to the business brief’s dual-shift interpretation and the CSV fields `Profit_Per_Unit`, `Steel_Required_Per_Unit`, `available_steel`, `profit_premium_bonus`, `premium_steel_factor`, and `premium_shift_capacity`. Then diagnose the solver state: identify which constraints are binding in the revised LP relaxation, report their shadow prices and slack values, and explain the economic meaning of the positive dual on the capacity constraint versus the zero duals on the others. Finally, explain why the optimal solution can’t be extrapolated linearly from the dual price once the premium shift is introduced, even though train production remains 89 units."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "HausToys.gurobi.log",
+        "HausToys.lp_relaxation.json",
+        "HausToys.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "HausToys_DualShift.gurobi.log",
+        "HausToys_DualShift.lp_relaxation.json",
+        "HausToys_DualShift.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 65.069444
+  }
+}

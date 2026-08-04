@@ -1,0 +1,70 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinimizeFeedCost_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 32.43589743589744,
+  "runtime": 0.00020694732666015625,
+  "variables": {
+    "x_1": {
+      "value": 0.0,
+      "reduced_cost": 0.059615384615384626
+    },
+    "x_2": {
+      "value": 0.0,
+      "reduced_cost": 0.5935897435897435
+    },
+    "x_3": {
+      "value": 0.0,
+      "reduced_cost": 0.3525641025641026
+    },
+    "x_4": {
+      "value": 39.74358974358974,
+      "reduced_cost": 0.0
+    },
+    "x_5": {
+      "value": 25.641025641025642,
+      "reduced_cost": 0.0
+    },
+    "y_4": {
+      "value": 0.00039743589743589737,
+      "reduced_cost": 0.0
+    },
+    "y_5": {
+      "value": 0.9996025641025641,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.043589743589743594
+    },
+    "_C2": {
+      "sense": ">",
+      "slack": -62.30769230769229,
+      "dual_value": 0.0
+    },
+    "_C3": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 0.019230769230769225
+    },
+    "_C4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C5": {
+      "sense": "<",
+      "slack": 99934.61538461538,
+      "dual_value": 0.0
+    },
+    "_C6": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    }
+  }
+}

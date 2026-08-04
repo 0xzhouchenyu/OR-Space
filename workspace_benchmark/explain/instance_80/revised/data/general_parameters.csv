@@ -1,0 +1,16 @@
+Parameter_Name,Value,Unit,Context_Description
+skilled_worker_weekly_wage,110,yuan,Weekly wage for skilled workers (after training premium)
+laborer_weekly_wage,80,yuan,Weekly wage for laborers
+skilled_worker_weekly_hours,42,hours,Effective weekly working hours for skilled workers
+laborer_weekly_hours,36,hours,Effective weekly working hours for laborers
+max_skilled_workers,430,workers,Maximum number of skilled workers allowed
+max_laborers,800,workers,Maximum number of laborers allowed
+exclusion_rule_task1_task3,1,boolean,Task 1 using Method B excludes Task 3 using Method A
+min_skilled_workers_task3_methodB,20,workers,Minimum skilled workers required for Task 3 if Method B is chosen
+skilled_worker_hiring_ratio,0.6,ratio,Skilled workers cannot exceed 60% of total laborers hired
+min_skilled_share_task1,0.30,ratio,Minimum fraction of skilled workers in Task 1 workforce
+max_skilled_share_task1,0.70,ratio,Maximum fraction of skilled workers in Task 1 workforce
+min_skilled_share_task2,0.10,ratio,Minimum fraction of skilled workers in Task 2 workforce
+max_skilled_share_task2,0.50,ratio,Maximum fraction of skilled workers in Task 2 workforce
+min_skilled_share_task3,0.20,ratio,Minimum fraction of skilled workers in Task 3 workforce
+max_skilled_share_task3,0.60,ratio,Maximum fraction of skilled workers in Task 3 workforce

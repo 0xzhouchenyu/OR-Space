@@ -1,0 +1,3 @@
+Parameter_Name,Value,Unit,Context_Description
+investment_budget,6000000,dollars,The Zhang family's total investment budget
+restaurant_d_a_constraint,1,None,If Restaurant D is purchased, Restaurant A cannot be purchased

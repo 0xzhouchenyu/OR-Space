@@ -1,0 +1,87 @@
+{
+  "solver": "gurobi",
+  "model_name": "HealthyPetRetailPair",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 71999.99999999999,
+  "objective_bound": 71999.99999999999,
+  "mip_gap": 0.0,
+  "runtime": 0.004019975662231445,
+  "node_count": 1.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_tu_rfja9/solver_records/HealthyPetRetailPair.gurobi.log",
+  "variables": {
+    "line_open": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "meaties": {
+      "value": 70000.0,
+      "reduced_cost": null
+    },
+    "retailer_allowance": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "yummies": {
+      "value": 50000.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 110000.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 15000.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 20000.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 70000.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": ">=",
+      "slack": -100000.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": -35000.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": ">=",
+      "slack": -30000.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

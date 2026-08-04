@@ -1,0 +1,80 @@
+{
+  "solver": "gurobi",
+  "model_name": "Coal_Distribution_Revised",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 925.0,
+  "objective_bound": 925.0,
+  "mip_gap": null,
+  "runtime": 0.0002808570861816406,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ju94s1im/solver_records/Coal_Distribution_Revised.gurobi.log",
+  "variables": {
+    "area3_A_staging_excess": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    },
+    "x_A_1": {
+      "value": 0.0,
+      "reduced_cost": 6.0
+    },
+    "x_A_2": {
+      "value": 75.0,
+      "reduced_cost": 0.0
+    },
+    "x_A_3": {
+      "value": 50.0,
+      "reduced_cost": 0.0
+    },
+    "x_B_1": {
+      "value": 55.0,
+      "reduced_cost": 0.0
+    },
+    "x_B_2": {
+      "value": 0.0,
+      "reduced_cost": 3.0
+    }
+  },
+  "constraints": {
+    "min_dispatch_A": {
+      "sense": ">=",
+      "slack": -45.0,
+      "dual_value": 0.0
+    },
+    "min_dispatch_B": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "demand_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 4.0
+    },
+    "demand_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 5.0
+    },
+    "demand_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 9.0
+    },
+    "area3_min_share_from_A": {
+      "sense": ">=",
+      "slack": -15.0,
+      "dual_value": 0.0
+    },
+    "area3_A_staging_excess": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 3.0
+    }
+  }
+}

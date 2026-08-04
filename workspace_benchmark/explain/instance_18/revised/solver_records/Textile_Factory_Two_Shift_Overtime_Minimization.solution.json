@@ -1,0 +1,98 @@
+{
+  "solver": "gurobi",
+  "model_name": "Textile_Factory_Two_Shift_Overtime_Minimization",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 6.0,
+  "objective_bound": 6.0,
+  "mip_gap": null,
+  "runtime": 0.0005738735198974609,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_gy5tc6_w/solver_records/Textile_Factory_Two_Shift_Overtime_Minimization.gurobi.log",
+  "variables": {
+    "day_clothing_hours": {
+      "value": 45.0,
+      "reduced_cost": 0.0
+    },
+    "day_curtain_hours": {
+      "value": 18.0,
+      "reduced_cost": 0.0
+    },
+    "day_overtime_hours": {
+      "value": 3.0,
+      "reduced_cost": -0.5
+    },
+    "day_regular_hours": {
+      "value": 60.0,
+      "reduced_cost": 0.0
+    },
+    "night_clothing_hours": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "night_curtain_hours": {
+      "value": 52.0,
+      "reduced_cost": 0.0
+    },
+    "night_overtime_hours": {
+      "value": 2.0,
+      "reduced_cost": 0.0
+    },
+    "night_regular_hours": {
+      "value": 50.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Regular_Time_Balance": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -1.5
+    },
+    "Day_Regular_Capacity": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Night_Regular_Capacity": {
+      "sense": "<=",
+      "slack": 10.0,
+      "dual_value": 0.0
+    },
+    "Day_Min_Utilization": {
+      "sense": ">=",
+      "slack": -10.5,
+      "dual_value": 0.0
+    },
+    "Night_Min_Utilization": {
+      "sense": ">=",
+      "slack": -0.5000000000000036,
+      "dual_value": 0.0
+    },
+    "Day_Production_Capacity": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": -1.5
+    },
+    "Night_Production_Capacity": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": -1.5
+    },
+    "Clothing_Demand": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 1.5
+    },
+    "Curtain_Demand": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 1.5
+    }
+  }
+}

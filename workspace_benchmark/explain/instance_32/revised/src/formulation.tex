@@ -1,0 +1,96 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Workshops $w \in W$, where $W=\{\text{A},\text{B},\text{C},\text{D}\}$ (from \texttt{Workshop}).
+    \item Components $c \in C$, where $C=\{1,2,3\}$.
+    \item Shifts $s \in S$, where $S=\{\text{day},\text{night}\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $r_{wc}$: production rate of component $c$ at workshop $w$ in units per hour (code/data: \texttt{rates[(w,c)]}; from \texttt{Production\_Rate\_Component\_\{c\}\_units\_per\_hour}).
+    \item $K_w$: total production-capacity hours available at workshop $w$ across all components and shifts (code/data: \texttt{capacities[w]}; from \texttt{Production\_Capacity\_hours}).
+    \item $H^{\mathrm{reg}}_{ws}$: maximum regular-time hours allowed for workshop $w$ in shift $s$ (code/data: \texttt{params['regular\_hours\_limit\_\{s\}\_\{w\}']}; from \texttt{regular\_hours\_limit\_\{shift\}\_\{workshop\}}).
+    \item $H^{\mathrm{ot}}_{ws}$: maximum overtime hours allowed for workshop $w$ in shift $s$ (code/data: \texttt{params['overtime\_capacity\_\{s\}\_\{w\}']}; from \texttt{overtime\_capacity\_\{shift\}\_\{workshop\}}).
+    \item $M_w$: big-$M$ parameter used to link workshop-shift activity to assigned hours (code/data: \texttt{params['bigM\_shift\_\{w\}']}; from \texttt{bigM\_shift\_\{workshop\}}).
+    \item $p^{\mathrm{night}}$: penalty per regular hour worked in the night shift (code/data: \texttt{penalty\_night\_hour}).
+    \item $p^{\mathrm{ot}}$: penalty per overtime hour in any shift (code/data: \texttt{penalty\_overtime\_hour}).
+    \item $p^{\mathrm{short}}$: penalty per unit of shortfall below the target number of completed products (code/data: \texttt{penalty\_shortage\_per\_unit}).
+    \item $\bar z$: target number of completed products (code/data: \texttt{z\_target}).
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x^{\mathrm{reg}}_{wcs} \ge 0$: regular-time hours of workshop $w$ assigned to component $c$ in shift $s$ (code: \texttt{x\_reg[(w,c,s)]}).
+    \item $x^{\mathrm{ot}}_{wcs} \ge 0$: overtime hours of workshop $w$ assigned to component $c$ in shift $s$ (code: \texttt{x\_ot[(w,c,s)]}).
+    \item $y_{ws} \in \{0,1\}$: equals 1 if workshop $w$ is active in shift $s$ (code: \texttt{y[(w,s)]}).
+    \item $z \ge 0$: number of completed products (code: \texttt{z}).
+    \item $\mathrm{shortfall} \ge 0$: shortfall below the target $\bar z$ (code: \texttt{shortfall}).
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model minimizes penalty cost:
+\[
+\min \;
+p^{\mathrm{night}} \sum_{w\in W}\sum_{c\in C} x^{\mathrm{reg}}_{wc,\mathrm{night}}
+\;+\;
+p^{\mathrm{ot}} \sum_{w\in W}\sum_{c\in C}\sum_{s\in S} x^{\mathrm{ot}}_{wcs}
+\;+\;
+p^{\mathrm{short}} \,\mathrm{shortfall}.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{c\in C} x^{\mathrm{reg}}_{wcs} &\le H^{\mathrm{reg}}_{ws}
+&& \forall w\in W,\; s\in S
+\label{con:reg_limit}
+\\
+\sum_{c\in C} x^{\mathrm{ot}}_{wcs} &\le H^{\mathrm{ot}}_{ws}
+&& \forall w\in W,\; s\in S
+\label{con:ot_limit}
+\\
+\sum_{c\in C}\sum_{s\in S}\left(x^{\mathrm{reg}}_{wcs}+x^{\mathrm{ot}}_{wcs}\right) &\le K_w
+&& \forall w\in W
+\label{con:total_cap}
+\\
+\sum_{c\in C}\left(x^{\mathrm{reg}}_{wcs}+x^{\mathrm{ot}}_{wcs}\right) &\le M_w\, y_{ws}
+&& \forall w\in W,\; s\in S
+\label{con:bigm}
+\\
+\sum_{w\in W} y_{ws} &\le 2
+&& \forall s\in S
+\label{con:max_two}
+\\
+z &\le \sum_{w\in W}\sum_{s\in S} r_{wc}\left(x^{\mathrm{reg}}_{wcs}+x^{\mathrm{ot}}_{wcs}\right)
+&& \forall c\in C
+\label{con:z_component}
+\\
+\mathrm{shortfall} &\ge \bar z - z
+\label{con:shortfall}
+\end{align}
+
+with variable domains
+\[
+x^{\mathrm{reg}}_{wcs}\ge 0,\quad
+x^{\mathrm{ot}}_{wcs}\ge 0,\quad
+z\ge 0,\quad
+\mathrm{shortfall}\ge 0,\quad
+y_{ws}\in\{0,1\}
+\qquad
+\forall w\in W,\; c\in C,\; s\in S.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is a MILP, solved in the code with \texttt{GUROBI\_CMD}.
+    \item Constraint \eqref{con:z_component} implements completed products as the minimum attainable production across the three components: maximizing $z$ is not done directly; instead, because shortfall is penalized in the objective, the model increases $z$ only insofar as it reduces penalized shortfall.
+    \item The code penalizes only regular night hours, not regular day hours, and penalizes all overtime hours equally in both shifts.
+    \item The original workshop capacity $K_w$ is enforced across both shifts and all components in addition to the shift-level regular and overtime bounds.
+    \item Workshop activity indicators $y_{ws}$ are linked to the total assigned hours in a shift through the workshop-specific \texttt{bigM\_shift\_\{w\}} values, and no more than two workshops may be active in any shift.
+    \item There is no explicit upper bound on $z$ other than \eqref{con:z_component}; with a positive shortfall penalty and nonnegative costs, the implemented objective makes $z$ take the largest feasible value relevant to minimizing shortfall.
+\end{itemize}

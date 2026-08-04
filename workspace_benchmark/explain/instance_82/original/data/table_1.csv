@@ -1,0 +1,6 @@
+Code,Store_Type,Area_per_Shop_m2,Min,Max,Profit_1_Store,Profit_2_Stores,Profit_3_Stores
+1,Jewelry,250,1,3,9,8,7
+2,Shoes_and_Hats,350,1,2,10,9,-
+3,General_Merchandise,800,1,3,27,21,20
+4,Bookstore,400,0,2,16,10,-
+5,Catering,500,1,3,17,15,12

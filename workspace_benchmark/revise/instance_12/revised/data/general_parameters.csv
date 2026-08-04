@@ -1,0 +1,8 @@
+Parameter_Name,Value,Unit,Context_Description
+fixed_setup_cost,1200,Yuan,Fixed setup cost incurred for activating production equipment for any container type in any mode
+energy_cost_per_kwh,0.5,Yuan per kWh,Variable electricity cost per kWh consumed by production
+max_total_energy_kwh,10000,kWh,Maximum total energy consumption allowed across all container types and modes
+eco_capacity_share,0.6,dimensionless,Maximum fraction of each container type's production that can be in eco mode
+eco_overhead_cost,300,Yuan,Additional fixed overhead cost when eco mode is activated for a container type
+regular_energy_intensity_kwh_per_unit,2,kWh per unit,Energy used to produce one unit in regular mode for any container type
+eco_energy_intensity_kwh_per_unit,1.2,kWh per unit,Energy used to produce one unit in eco mode for any container type

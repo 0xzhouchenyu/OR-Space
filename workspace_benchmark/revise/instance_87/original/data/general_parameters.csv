@@ -1,0 +1,9 @@
+Parameter_Name,Value,Unit,Context_Description
+refrigerated_capacity_type_a,20,cubic_meters,Refrigerated capacity of Type A trucks
+non_refrigerated_capacity_type_a,40,cubic_meters,Non-refrigerated capacity of Type A trucks
+refrigerated_capacity_type_b,30,cubic_meters,Refrigerated capacity of Type B trucks
+non_refrigerated_capacity_type_b,30,cubic_meters,Non-refrigerated capacity of Type B trucks
+refrigerated_cargo_requirement,3000,cubic_meters,Total refrigerated cargo that needs to be transported
+non_refrigerated_cargo_requirement,4000,cubic_meters,Total non-refrigerated cargo that needs to be transported
+rental_cost_type_a,30,GBP_per_kilometer,Rental cost per kilometer for Type A trucks
+rental_cost_type_b,40,GBP_per_kilometer,Rental cost per kilometer for Type B trucks

@@ -1,0 +1,39 @@
+{
+  "solver": "gurobi",
+  "model_name": "TruckRental",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 4170.0,
+  "objective_bound": 4170.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0033130645751953125,
+  "node_count": 1.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_so7uh051/solver_records/TruckRental.gurobi.log",
+  "variables": {
+    "TypeA_trucks": {
+      "value": 51.0,
+      "reduced_cost": null
+    },
+    "TypeB_trucks": {
+      "value": 66.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "RefrigeratedRequirement": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "NonRefrigeratedRequirement": {
+      "sense": ">=",
+      "slack": -20.0,
+      "dual_value": null
+    }
+  }
+}

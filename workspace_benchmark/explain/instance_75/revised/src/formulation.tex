@@ -1,0 +1,105 @@
+\section*{Sets and Indices}
+
+There are no nontrivial index sets in the implemented model. The formulation uses aggregate variables for:
+\begin{itemize}
+    \item product A,
+    \item product B,
+    \item by-product C sales and disposal,
+    \item process stage 1 and process stage 2 operating mode.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter names below match the data field names in \texttt{general\_parameters.csv}.
+
+\begin{itemize}
+    \item $t^{A}_{1}$ (\texttt{product\_a\_process\_1\_time}): process 1 time per unit of product A.
+    \item $t^{A}_{2}$ (\texttt{product\_a\_process\_2\_time}): process 2 time per unit of product A.
+    \item $t^{B}_{1}$ (\texttt{product\_b\_process\_1\_time}): process 1 time per unit of product B.
+    \item $t^{B}_{2}$ (\texttt{product\_b\_process\_2\_time}): process 2 time per unit of product B.
+    \item $T_{1}$ (\texttt{available\_time\_process\_1}): available process 1 time in normal mode.
+    \item $T_{2}$ (\texttt{available\_time\_process\_2}): available process 2 time in normal mode.
+    \item $T^{H}_{1}$ (\texttt{available\_time\_process\_1\_high}): available process 1 time in high-throughput mode.
+    \item $T^{H}_{2}$ (\texttt{available\_time\_process\_2\_high}): available process 2 time in high-throughput mode.
+    \item $\gamma$ (\texttt{byproduct\_c\_per\_unit\_b}): units of by-product C generated per unit of product B.
+    \item $\bar S^{C}$ (\texttt{max\_byproduct\_c\_sales}): maximum by-product C sales.
+    \item $\tau^{C}$ (\texttt{threshold\_c}): disposal threshold for C at base disposal cost.
+    \item $M^{C}$ (\texttt{bigM\_disposal}): upper bound used on total C disposal.
+    \item $\pi_A$ (\texttt{profit\_per\_unit\_a}): profit per unit of product A.
+    \item $\pi_B$ (\texttt{profit\_per\_unit\_b}): profit per unit of product B.
+    \item $\pi_C$ (\texttt{profit\_per\_unit\_c}): profit per unit of by-product C sold.
+    \item $d_L$ (\texttt{disposal\_cost\_per\_unit\_c}): base disposal cost per unit of C.
+    \item $d_H$ (\texttt{disposal\_cost\_per\_unit\_c\_high}): higher disposal cost per unit of C beyond the threshold.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_A$ (code: \texttt{xA}) $\ge 0$: units of product A produced.
+    \item $x_B$ (code: \texttt{xB}) $\ge 0$: units of product B produced.
+    \item $s_C$ (code: \texttt{cSold}) $\ge 0$: units of by-product C sold.
+    \item $u_C$ (code: \texttt{cDispLow}) $\ge 0$: units of by-product C disposed at base cost.
+    \item $v_C$ (code: \texttt{cDispHigh}) $\ge 0$: units of by-product C disposed at higher cost.
+    \item $z^{H}_{1}$ (code: \texttt{z1\_high}) $\in \{0,1\}$: 1 if process stage 1 uses high-throughput mode.
+    \item $z^{H}_{2}$ (code: \texttt{z2\_high}) $\in \{0,1\}$: 1 if process stage 2 uses high-throughput mode.
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model maximizes total profit:
+\[
+\max \;
+\pi_A x_A + \pi_B x_B + \pi_C s_C - d_L u_C - d_H v_C .
+\]
+
+\section*{Constraints}
+
+\paragraph{Process stage capacities with mode selection.}
+\[
+t^{A}_{1} x_A + t^{B}_{1} x_B \le T_{1} + (T^{H}_{1} - T_{1}) z^{H}_{1},
+\]
+\[
+t^{A}_{2} x_A + t^{B}_{2} x_B \le T_{2} + (T^{H}_{2} - T_{2}) z^{H}_{2}.
+\]
+
+\paragraph{High-throughput mutual exclusion.}
+At most one reaction stage may use the high-throughput setting:
+\[
+z^{H}_{1} + z^{H}_{2} \le 1.
+\]
+
+\paragraph{By-product C balance.}
+\[
+s_C + u_C + v_C = \gamma x_B.
+\]
+
+\paragraph{Sales limit for by-product C.}
+\[
+s_C \le \bar S^{C}.
+\]
+
+\paragraph{Threshold-based disposal structure for by-product C.}
+The amount disposed at base cost is capped by the threshold, and total disposal is capped by the supplied big-$M$ bound:
+\[
+u_C \le \tau^{C},
+\]
+\[
+u_C + v_C \le M^{C}.
+\]
+
+\paragraph{Variable domains.}
+\[
+x_A, x_B, s_C, u_C, v_C \ge 0,
+\qquad
+z^{H}_{1}, z^{H}_{2} \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model in \texttt{current\_heuristic.py} is a MILP solved with Gurobi through the PuLP-compatible interface, not by exact enumeration or dynamic programming.
+    \item The high-throughput rule is implemented as a binary gate on each process-stage capacity: each stage gets either its normal capacity or its high-throughput capacity, and the mutual-exclusion constraint enforces that at most one stage can receive the high-throughput capacity in the period.
+    \item The disposal rule for by-product C is implemented exactly as in code using two disposal variables. The first segment $u_C$ is limited by \texttt{threshold\_c}, and any additional disposal may go to $v_C$ at the higher unit cost.
+    \item The constraint $u_C + v_C \le M^{C}$ uses the data field \texttt{bigM\_disposal} as an explicit upper bound on total disposal. This is part of the implemented model and should not be removed or tightened unless the code is changed.
+    \item Production variables are continuous in the implementation; there are no integrality restrictions on $x_A$ or $x_B$.
+\end{itemize}

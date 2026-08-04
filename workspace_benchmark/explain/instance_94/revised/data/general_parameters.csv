@@ -1,0 +1,18 @@
+Parameter_Name,Value,Unit,Context_Description
+min_proportion_crude_A_type_I,50,percent,Minimum crude A share in Type I
+min_proportion_crude_A_type_II,60,percent,Minimum crude A share in Type II
+selling_price_type_I,4800,yuan/t,Selling price of Type I
+selling_price_type_II,5600,yuan/t,Selling price of Type II
+inventory_crude_A,500,t,Current inventory of crude A
+inventory_crude_B,1000,t,Current inventory of crude B
+max_purchase_crude_A,1500,t,Maximum crude A market purchase
+market_price_crude_A_tier_1,10000,yuan/t,Crude A first block price
+market_price_crude_A_tier_2,8000,yuan/t,Crude A second block price
+market_price_crude_A_tier_3,6000,yuan/t,Crude A third block price
+processing_capacity,2500,t,Maximum total gasoline output
+min_total_gasoline_output,1500,t,Minimum total gasoline output
+processing_cost_per_ton,500,yuan/t,Variable processing cost per ton
+type_II_contract_threshold,900,t,Type II output required for the uplift
+type_II_price_lift,300,yuan/t,Additional Type II revenue if threshold is met
+bulk_purchase_rebate_threshold,1000,t,Crude A purchase level required for rebate
+bulk_purchase_rebate,200000,yuan,Fixed crude A bulk-purchase rebate

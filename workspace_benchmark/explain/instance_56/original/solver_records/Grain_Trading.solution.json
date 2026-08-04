@@ -1,0 +1,134 @@
+{
+  "solver": "gurobi",
+  "model_name": "Grain_Trading",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": -700.0,
+  "objective_bound": -700.0,
+  "mip_gap": null,
+  "runtime": 0.0006928443908691406,
+  "node_count": 0.0,
+  "iteration_count": 4.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_iz7w9jvr/solver_records/Grain_Trading.gurobi.log",
+  "variables": {
+    "buy_1": {
+      "value": 5000.0,
+      "reduced_cost": 0.0
+    },
+    "buy_2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "buy_3": {
+      "value": 2000.0,
+      "reduced_cost": 0.0
+    },
+    "funds_1": {
+      "value": 8850.0,
+      "reduced_cost": 0.0
+    },
+    "funds_2": {
+      "value": 25100.0,
+      "reduced_cost": 0.0
+    },
+    "funds_3": {
+      "value": 19300.0,
+      "reduced_cost": 0.0
+    },
+    "sell_1": {
+      "value": 1000.0,
+      "reduced_cost": 0.0
+    },
+    "sell_2": {
+      "value": 5000.0,
+      "reduced_cost": 0.0
+    },
+    "sell_3": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "stock_1": {
+      "value": 5000.0,
+      "reduced_cost": 0.0
+    },
+    "stock_2": {
+      "value": 0.0,
+      "reduced_cost": -0.09999999999999964
+    },
+    "stock_3": {
+      "value": 2000.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "stock_balance_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 2.85
+    },
+    "funds_balance_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "warehouse_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.3999999999999999
+    },
+    "sell_limit_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.25
+    },
+    "stock_balance_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 3.05
+    },
+    "funds_balance_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "warehouse_2": {
+      "sense": "<=",
+      "slack": 5000.0,
+      "dual_value": 0.0
+    },
+    "sell_limit_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.20000000000000018
+    },
+    "stock_balance_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 2.9
+    },
+    "funds_balance_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "warehouse_3": {
+      "sense": "<=",
+      "slack": 3000.0,
+      "dual_value": 0.0
+    },
+    "sell_limit_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.050000000000000266
+    },
+    "end_inventory": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -2.9
+    }
+  }
+}

@@ -1,0 +1,93 @@
+\section*{Sets and Indices}
+
+There are no nontrivial sets or indices in this model. The formulation has two continuous production decision variables, one for each product:
+\begin{itemize}
+    \item Product A,
+    \item Product B.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $p_A$ (code: \texttt{profit\_A}): profit per kilogram of product A.
+    \item $p_B$ (code: \texttt{profit\_B}): profit per kilogram of product B.
+    \item $H$ (code: \texttt{max\_hours}): maximum production hours available per week.
+    \item $h_A$ (code: \texttt{hours\_A}): production hours required per kilogram of product A.
+    \item $h_B$ (code: \texttt{hours\_B}): production hours required per kilogram of product B.
+    \item $r^{BA}$ (code: \texttt{min\_ratio\_B\_to\_A}): minimum output ratio requiring product B production to be at least $r^{BA}$ times product A production.
+    \item $s^{AB}$ (code: \texttt{storage\_ratio\_A\_to\_B}): storage-space ratio, where one kilogram of product A uses $s^{AB}$ times the storage space of one kilogram of product B.
+    \item $\bar{x}_A^{\text{stor}}$ (code: \texttt{max\_storage\_A}): storage capacity expressed as an equivalent upper bound of product A alone.
+    \item $\bar{S}$ (code: \texttt{max\_storage\_units}): total storage capacity in storage-space units, computed in the code as
+    \[
+    \bar{S} = \bar{x}_A^{\text{stor}} \, s^{AB}.
+    \]
+\end{itemize}
+
+For this instance, the data imply
+\[
+p_A=30,\quad p_B=10,\quad H=40,\quad h_A=6,\quad h_B=3,\quad r^{BA}=3,\quad s^{AB}=4,\quad \bar{x}_A^{\text{stor}}=4,
+\]
+and therefore
+\[
+\bar{S}=4\cdot 4=16.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_A$ (code: \texttt{x\_A}): kilograms of product A to produce.
+    \item $x_B$ (code: \texttt{x\_B}): kilograms of product B to produce.
+\end{itemize}
+
+Both variables are continuous and nonnegative:
+\[
+x_A \ge 0,\qquad x_B \ge 0.
+\]
+
+\section*{Objective}
+
+Maximize total weekly profit:
+\[
+\max \; p_A x_A + p_B x_B.
+\]
+
+For this instance:
+\[
+\max \; 30x_A + 10x_B.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+h_A x_A + h_B x_B &\le H
+&& \text{(production hours)} \\
+x_B &\ge r^{BA} x_A
+&& \text{(market demand ratio)} \\
+s^{AB} x_A + x_B &\le \bar{S}
+&& \text{(storage capacity)} \\
+x_A,\; x_B &\ge 0.
+\end{align}
+
+Substituting the instance values gives:
+\begin{align}
+6x_A + 3x_B &\le 40, \\
+x_B &\ge 3x_A, \\
+4x_A + x_B &\le 16, \\
+x_A,\; x_B &\ge 0.
+\end{align}
+
+\section*{Notes on Implementation}
+
+The source code builds this model as a linear program with two continuous variables using PuLP-compatible syntax and solves it with \texttt{GUROBI\_CMD}.
+
+The storage constraint is implemented exactly as
+\[
+\texttt{storage\_ratio\_A\_to\_B} \cdot x_A + x_B \le \texttt{max\_storage\_A} \cdot \texttt{storage\_ratio\_A\_to\_B},
+\]
+i.e.,
+\[
+s^{AB} x_A + x_B \le \bar{x}_A^{\text{stor}} s^{AB}.
+\]
+Thus, \texttt{max\_storage\_A} is not used as a direct bound on $x_A$; instead, it is converted into total storage-space units before defining the single storage-capacity inequality.
+
+There are no integer restrictions, no additional bounds, and no hidden reformulations beyond the linear constraints shown above.

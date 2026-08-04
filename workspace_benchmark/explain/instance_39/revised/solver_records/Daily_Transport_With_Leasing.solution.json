@@ -1,0 +1,191 @@
+{
+  "solver": "gurobi",
+  "model_name": "Daily_Transport_With_Leasing",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 670.0,
+  "objective_bound": 670.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004617929458618164,
+  "node_count": 1.0,
+  "iteration_count": 4.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_i2uw_g6_/solver_records/Daily_Transport_With_Leasing.gurobi.log",
+  "variables": {
+    "leasing_units_offpeak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "leasing_units_peak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "leasing_used": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "method_active_large_truck_offpeak": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "method_active_large_truck_peak": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "method_active_motorcycle_offpeak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "method_active_motorcycle_peak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "method_active_small_truck_offpeak": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "method_active_small_truck_peak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "trips_large_truck_offpeak": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "trips_large_truck_peak": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "trips_motorcycle_offpeak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "trips_motorcycle_peak": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "trips_small_truck_offpeak": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "trips_small_truck_peak": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Peak_Demand": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Offpeak_Demand": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Motorcycle_Trip_Limit": {
+      "sense": "<=",
+      "slack": 8.0,
+      "dual_value": null
+    },
+    "Total_Trip_Limit": {
+      "sense": "<=",
+      "slack": 13.0,
+      "dual_value": null
+    },
+    "Trip_UB_motorcycle_peak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Trip_LB_motorcycle_peak": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Trip_UB_motorcycle_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Trip_LB_motorcycle_offpeak": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Trip_UB_small_truck_peak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Trip_LB_small_truck_peak": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Trip_UB_small_truck_offpeak": {
+      "sense": "<=",
+      "slack": 19.0,
+      "dual_value": null
+    },
+    "Trip_LB_small_truck_offpeak": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Trip_UB_large_truck_peak": {
+      "sense": "<=",
+      "slack": 16.0,
+      "dual_value": null
+    },
+    "Trip_LB_large_truck_peak": {
+      "sense": ">=",
+      "slack": -3.0,
+      "dual_value": null
+    },
+    "Trip_UB_large_truck_offpeak": {
+      "sense": "<=",
+      "slack": 18.0,
+      "dual_value": null
+    },
+    "Trip_LB_large_truck_offpeak": {
+      "sense": ">=",
+      "slack": -1.0,
+      "dual_value": null
+    },
+    "Active_Method_Limit_peak": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "Active_Method_Limit_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Leasing_Capacity": {
+      "sense": "<=",
+      "slack": 200.0,
+      "dual_value": null
+    },
+    "Leasing_UB_Activation": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Leasing_LB_Activation": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Leasing_Peak_Share_Limit": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": null
+    }
+  }
+}

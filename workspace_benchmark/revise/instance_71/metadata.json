@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_71_revise_business",
+  "original_instance_id": "IndustryOR_71",
+  "revise_description": "To reflect differentiated handling options, each factory must be assigned to exactly one location and choose either standard or premium handling there. Premium handling has higher unit cost but a minimum handled volume share per factory-location if activated. Introduce binary assignment x[i,p] and mode y[i,p]; linearize choice so per-unit cost equals c_std[i,p]+(c_prem[i,p]-c_std[i,p])·y[i,p]. Enforce that premium mode implies handled volume share ≥ min_premium_share and total volume from a factory to its location equals its outbound volume. Objective minimizes total transportation+handling cost using d_ij and mode-specific costs.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Medium",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+6var, +10constr, -0constr, mod_3constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 6,
+        "-variable": 0,
+        "+constraint": 10,
+        "-constraint": 0,
+        "modify_constraint": 3,
+        "modify_data": 1
+      },
+      "op_count": 20,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 55.555556
+  }
+}

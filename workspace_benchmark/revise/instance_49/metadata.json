@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_49_revise_business",
+  "original_instance_id": "IndustryOR_49",
+  "revise_description": "In the stakeholder handoff for this case, the planning lead framed the change in business terms rather than as a spreadsheet checklist. The operations lead described this revision as a timing promise, not a quantity tweak. Work, inventory, cash, or capacity that leaves one ledger position should only reappear when the business clock says it has cleared. The warehouse leases now suffer a first-month onboarding drag. Every newly opened contract loses `onboarding_loss_units` units of usable area in its start month unless expedited onboarding is bought for that contract at `expedited_onboarding_fee`. Later covered months receive the full rented area. Existing rules on exact monthly coverage, lease-length mix, active-contract count, and startup charges remain in force. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+2var, +6constr, -2constr, mod_4constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 2,
+        "-variable": 0,
+        "+constraint": 6,
+        "-constraint": 2,
+        "modify_constraint": 4,
+        "modify_data": 1
+      },
+      "op_count": 15,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 27.777778
+  }
+}

@@ -1,0 +1,7 @@
+The hospital needs to determine the number of nurses required in each time period over a 24-hour schedule. Nurses start shifts in six batches at specific times and work continuously for a fixed duration. Additionally, the hospital is considering hiring contract nurses who have the same working hours as regular nurses but are paid at a different rate. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. The dispatch office is treating activity as something that must be earned by an actual working day, route, crew, or group. A closed day or unused group should stay quiet; an opened one carries the commitments in the memo. The hospital rota now distinguishes full-time and contract nurses by when they may start. Contract nurses cannot begin the overnight 22:00 shift, the 10:00 start is outsourced rather than staffed by full-time nurses, and every daytime period from 6:00 through 22:00 must keep at least the required number of full-time nurses on duty. Total contract starts are also capped for infection-control continuity. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

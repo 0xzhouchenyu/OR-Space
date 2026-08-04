@@ -1,0 +1,241 @@
+{
+  "solver": "gurobi",
+  "model_name": "WorkerAllocation",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 84000.0,
+  "objective_bound": 84000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0025370121002197266,
+  "node_count": 1.0,
+  "iteration_count": 12.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_yvh3t1z3/solver_records/WorkerAllocation.gurobi.log",
+  "variables": {
+    "l_Task_1_Method_A": {
+      "value": 233.33333333333334,
+      "reduced_cost": null
+    },
+    "l_Task_1_Method_B": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "l_Task_2_Method_A": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "l_Task_2_Method_B": {
+      "value": 90.0,
+      "reduced_cost": null
+    },
+    "l_Task_3_Method_A": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "l_Task_3_Method_B": {
+      "value": 476.6666666666667,
+      "reduced_cost": null
+    },
+    "s_Task_1_Method_A": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "s_Task_1_Method_B": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "s_Task_2_Method_A": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "s_Task_2_Method_B": {
+      "value": 180.0,
+      "reduced_cost": null
+    },
+    "s_Task_3_Method_A": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "s_Task_3_Method_B": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "total_laborers": {
+      "value": 800.0,
+      "reduced_cost": null
+    },
+    "total_skilled": {
+      "value": 200.0,
+      "reduced_cost": null
+    },
+    "y_Task_1_Method_A": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_Task_1_Method_B": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_Task_2_Method_A": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_Task_2_Method_B": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_Task_3_Method_A": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_Task_3_Method_B": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "TotalSkilledDef": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "TotalLaborersDef": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "OneMethod_Task_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "OneMethod_Task_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "OneMethod_Task_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Hours_Task_1_Method_A": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkS_Task_1_Method_A": {
+      "sense": "<=",
+      "slack": 10000.0,
+      "dual_value": null
+    },
+    "LinkL_Task_1_Method_A": {
+      "sense": "<=",
+      "slack": 9766.666666666666,
+      "dual_value": null
+    },
+    "Hours_Task_1_Method_B": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkS_Task_1_Method_B": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkL_Task_1_Method_B": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Hours_Task_2_Method_A": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkS_Task_2_Method_A": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkL_Task_2_Method_A": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Hours_Task_2_Method_B": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkS_Task_2_Method_B": {
+      "sense": "<=",
+      "slack": 9820.0,
+      "dual_value": null
+    },
+    "LinkL_Task_2_Method_B": {
+      "sense": "<=",
+      "slack": 9910.0,
+      "dual_value": null
+    },
+    "Hours_Task_3_Method_A": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkS_Task_3_Method_A": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkL_Task_3_Method_A": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Hours_Task_3_Method_B": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkS_Task_3_Method_B": {
+      "sense": "<=",
+      "slack": 9980.0,
+      "dual_value": null
+    },
+    "LinkL_Task_3_Method_B": {
+      "sense": "<=",
+      "slack": 9523.333333333334,
+      "dual_value": null
+    },
+    "MaxSkilled": {
+      "sense": "<=",
+      "slack": 200.0,
+      "dual_value": null
+    },
+    "MaxLaborers": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "SkilledRatio": {
+      "sense": "<=",
+      "slack": 280.0,
+      "dual_value": null
+    },
+    "ExclusionRule": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "MinSkilledTask3B": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

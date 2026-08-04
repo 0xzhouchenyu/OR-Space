@@ -1,0 +1,117 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$ : set of coal yards, indexed by $i$. In this instance,
+    \[
+    I=\{A,B\}.
+    \]
+    \item $J$ : set of residential areas, indexed by $j$. In this instance,
+    \[
+    J=\{1,2,3\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_{ij}$ : transportation distance from coal yard $i$ to residential area $j$ (code: \texttt{distances[(yard, area)]}).
+    
+    From the CSV data:
+    \[
+    d_{A,1}=10,\quad d_{A,2}=5,\quad d_{A,3}=6,
+    \]
+    \[
+    d_{B,1}=4,\quad d_{B,2}=8,\quad d_{B,3}=15.
+    \]
+    
+    \item $m_i$ : minimum monthly coal supply required from coal yard $i$ (code: \texttt{min\_supply[yard]}).
+    
+    For this instance:
+    \[
+    m_A=80,\qquad m_B=100.
+    \]
+    
+    \item $r_j$ : monthly coal demand of residential area $j$ (code: \texttt{demand[area]}).
+    
+    For this instance:
+    \[
+    r_1=55,\qquad r_2=75,\qquad r_3=50.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ij} \ge 0$ : amount of coal shipped from coal yard $i$ to residential area $j$ in tons (code: \texttt{x[(yard, area)]}).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total transportation cost, modeled as distance times shipped quantity:
+\[
+\min \sum_{i\in I}\sum_{j\in J} d_{ij}\,x_{ij}.
+\]
+
+For this instance, the objective is
+\[
+\min\;
+10x_{A,1}+5x_{A,2}+6x_{A,3}
++4x_{B,1}+8x_{B,2}+15x_{B,3}.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Minimum supply from each coal yard}
+    \[
+    \sum_{j\in J} x_{ij} \ge m_i
+    \qquad \forall i\in I.
+    \]
+    Explicitly,
+    \[
+    x_{A,1}+x_{A,2}+x_{A,3} \ge 80,
+    \]
+    \[
+    x_{B,1}+x_{B,2}+x_{B,3} \ge 100.
+    \]
+
+    \item \textbf{Demand satisfaction at each residential area}
+    \[
+    \sum_{i\in I} x_{ij} = r_j
+    \qquad \forall j\in J.
+    \]
+    Explicitly,
+    \[
+    x_{A,1}+x_{B,1}=55,
+    \]
+    \[
+    x_{A,2}+x_{B,2}=75,
+    \]
+    \[
+    x_{A,3}+x_{B,3}=50.
+    \]
+
+    \item \textbf{Nonnegativity}
+    \[
+    x_{ij}\ge 0
+    \qquad \forall i\in I,\; j\in J.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+The implemented model in \texttt{current\_heuristic.py} is a continuous linear program created with PuLP-compatible syntax and solved with \texttt{GUROBI\_CMD}. There are no integer or binary variables.
+
+The code uses the term ``minimum supply'' for each coal yard and enforces it as a lower bound on total outbound shipments:
+\[
+\sum_{j} x_{ij} \ge m_i.
+\]
+This is the exact implemented logic, even though in a standard transportation model one might more commonly see upper-bound supply capacities instead.
+
+Because total minimum required supply equals total demand in this instance,
+\[
+m_A+m_B = 80+100 = 180,
+\qquad
+r_1+r_2+r_3 = 55+75+50 = 180,
+\]
+the two coal-yard minimum-supply constraints are tight at any feasible solution, so each yard's total shipment is forced to equal its stated minimum in the solved instance.

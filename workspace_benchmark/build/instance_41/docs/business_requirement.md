@@ -1,0 +1,1 @@
+You are tasked with determining an investment plan that maximizes total principal plus interest at the end of Year 3. Decisions can be made at the beginning of each year using only currently available cash, including initial capital and proceeds from matured investments. Please refer to the corresponding CSV files in the data folder for specific parameter values.

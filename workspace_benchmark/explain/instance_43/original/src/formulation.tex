@@ -1,0 +1,111 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Warehouses $W=\{A,B\}$.
+    \item Raw materials $M=\{A,B,C\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+For each warehouse $w \in W$ and material $m \in M$:
+\begin{itemize}
+    \item $c_w$: freight cost per truck from warehouse $w$.
+    \item $q_{wm}$: amount of raw material $m$ carried by one truck from warehouse $w$.
+\end{itemize}
+
+For each material $m \in M$:
+\begin{itemize}
+    \item $d_m$: minimum daily requirement of raw material $m$.
+\end{itemize}
+
+Using the CSV data:
+\[
+d_A=240,\qquad d_B=80,\qquad d_C=120.
+\]
+
+\[
+(q_{Am},q_{Bm})=
+\begin{cases}
+(4,7), & m=A,\\
+(2,2), & m=B,\\
+(6,2), & m=C,
+\end{cases}
+\qquad
+c_A=200,\quad c_B=160.
+\]
+
+These correspond to the code parameters
+\[
+d_A=\texttt{min\_A},\;
+d_B=\texttt{min\_B},\;
+d_C=\texttt{min\_C},
+\]
+\[
+q_{AA}=\texttt{cap\_A\_a},\;
+q_{AB}=\texttt{cap\_A\_b},\;
+q_{AC}=\texttt{cap\_A\_c},
+\]
+\[
+q_{BA}=\texttt{cap\_B\_a},\;
+q_{BB}=\texttt{cap\_B\_b},\;
+q_{BC}=\texttt{cap\_B\_c},
+\]
+\[
+c_A=\texttt{cost\_A},\qquad c_B=\texttt{cost\_B}.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_A \in \mathbb{Z}_{\ge 0}$ (code: \texttt{x}): number of trucks dispatched from warehouse A.
+    \item $x_B \in \mathbb{Z}_{\ge 0}$ (code: \texttt{y}): number of trucks dispatched from warehouse B.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total daily freight cost:
+\[
+\min \; c_A x_A + c_B x_B.
+\]
+
+With the given data:
+\[
+\min \; 200x_A + 160x_B.
+\]
+
+\section*{Constraints}
+
+Minimum raw material requirements must be met:
+\[
+q_{AA}x_A + q_{BA}x_B \ge d_A,
+\]
+\[
+q_{AB}x_A + q_{BB}x_B \ge d_B,
+\]
+\[
+q_{AC}x_A + q_{BC}x_B \ge d_C.
+\]
+
+With the given data, this is:
+\[
+4x_A + 7x_B \ge 240,
+\]
+\[
+2x_A + 2x_B \ge 80,
+\]
+\[
+6x_A + 2x_B \ge 120,
+\]
+\[
+x_A, x_B \in \mathbb{Z}_{\ge 0}.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model in \texttt{current\_heuristic.py} is a two-variable integer linear program created with PuLP-compatible syntax:
+\[
+\min \; \texttt{cost\_A} \cdot \texttt{x} + \texttt{cost\_B} \cdot \texttt{y}
+\]
+subject to the three material-demand inequalities and nonnegative integrality of \texttt{x} and \texttt{y}.
+
+Although the file is named as a heuristic, the code does not use a heuristic or custom search procedure. It submits the integer linear program directly to \texttt{GUROBI\_CMD(msg=0)} and reports the resulting optimal integer solution. No upper bounds, fixed-charge terms, routing details, or additional operational constraints are included beyond those written above.

@@ -1,0 +1,4 @@
+Parameter_Name,Value,Unit,Context_Description
+batch_3m_quantity,90,pieces,Number of 3-meter steel bars in the batch
+batch_4m_quantity,60,pieces,Number of 4-meter steel bars in the batch
+raw_bar_length,10,meters,Length of each raw steel bar used

@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_037",
+  "instance_number": 37,
+  "source_revise_instance": "IndustryOR_37_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "Using the revised model only, trace the business owner’s “recovery rule” for Process I from the business brief into the exact code and data fields, and identify which unnamed solver constraints in `TwoWeekRecovery.lp_relaxation.json` correspond to (i) the week-1 fatigue trigger and (ii) the week-2 Process I capacity with recovery loss. Your answer must name the exact code variables (`otI[1]`, `otI[2]`, `recI`, `xB[2]`/etc.), the exact CSV parameter names and values involved, and explain why the LP relaxation shows `_C7` and `_C9` binding with dual value 25 while `recovery_I = 0`, even though `_C1` and `_C3` also bind with dual 75. Then compare original vs revised: pinpoint the exact objective-code addition that causes the objective definition to change from 11250 to 23500, quantify the 12250 change using the reported variable values, and explain why it is invalid to linearly extrapolate the LP shadow price on `_C7` or `_C9` to claim that every extra hour of week-1 overtime threshold or week-2 overtime would always add exactly 25 dollars of net profit."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Microcomputer_Production.gurobi.log",
+        "Microcomputer_Production.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "TwoWeekRecovery.gurobi.log",
+        "TwoWeekRecovery.lp_relaxation.json",
+        "TwoWeekRecovery.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 69.598333
+  }
+}

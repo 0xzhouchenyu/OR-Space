@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 219384.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nWeek 1: trainers_busy=7, grads=0, hIs=160.0, hIIs=1000.0, hIot=840.0, hIIot=0.0, hIg=0.0, hIIg=0.0, bI=0.0, bII=0.0, n_ot=14\nWeek 2: trainers_busy=9, grads=0, hIs=0.0, hIIs=600.0, hIot=1000.0, hIIot=560.0, hIg=0.0, hIIg=0.0, bI=0.0, bII=240.0, n_ot=26\nWeek 3: trainers_busy=5, grads=21, hIs=360.0, hIIs=1440.0, hIot=0.0, hIIot=0.0, hIg=840.0, hIIg=0.0, bI=0.0, bII=0.0, n_ot=0\nWeek 4: trainers_busy=4, grads=27, hIs=120.0, hIIs=1560.0, hIot=0.0, hIIot=240.0, hIg=1080.0, hIIg=0.0, bI=0.0, bII=0.0, n_ot=4\nWeek 5: trainers_busy=1, grads=36, hIs=1600.0, hIIs=360.0, hIot=0.0, hIIot=0.0, hIg=0.0, hIIg=1440.0, bI=0.0, bII=0.0, n_ot=0\nWeek 6: trainers_busy=0, grads=39, hIs=40.0, hIIs=1880.0, hIot=0.0, hIIot=120.0, hIg=1560.0, hIIg=0.0, bI=0.0, bII=0.0, n_ot=2\nWeek 7: trainers_busy=4, grads=39, hIs=1840.0, hIIs=0.0, hIot=0.0, hIIot=0.0, hIg=160.0, hIIg=1400.0, bI=0.0, bII=3600.0, n_ot=0\nWeek 8: trainers_busy=4, grads=39, hIs=440.0, hIIs=1400.0, hIot=0.0, hIIot=0.0, hIg=1560.0, hIIg=0.0, bI=0.0, bII=7200.0, n_ot=0\nTraining start week 1: 7 trainers -> 21 trainees\nTraining start week 2: 2 trainers -> 6 trainees\nTraining start week 3: 3 trainers -> 9 trainees\nTraining start week 4: 1 trainers -> 3 trainees\nTraining start week 5: 0 trainers -> 0 trainees\nTraining start week 6: 0 trainers -> 0 trainees\nTraining start week 7: 4 trainers -> 12 trainees\nTotal trained by end of week 8: 51\n\nOBJECTIVE_VALUE: 219384.0\n",
+  "stderr": "",
+  "error": null
+}

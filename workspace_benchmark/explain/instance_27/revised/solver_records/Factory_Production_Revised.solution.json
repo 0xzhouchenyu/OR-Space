@@ -1,0 +1,115 @@
+{
+  "solver": "gurobi",
+  "model_name": "Factory_Production_Revised",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 568.421978021978,
+  "objective_bound": 568.421978021978,
+  "mip_gap": 0.0,
+  "runtime": 0.0039000511169433594,
+  "node_count": 1.0,
+  "iteration_count": 12.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_6srr5ljs/solver_records/Factory_Production_Revised.gurobi.log",
+  "variables": {
+    "x_A1_Product_I": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_A1_Product_II": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_A2_Product_I": {
+      "value": 324.1758241758242,
+      "reduced_cost": null
+    },
+    "x_A2_Product_II": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "x_A2_Product_III": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B1_Product_I": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B1_Product_II": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "x_B2_Product_I": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B2_Product_III": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_B3_Product_I": {
+      "value": 324.1758241758242,
+      "reduced_cost": null
+    },
+    "z_B2": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "capacity_A1": {
+      "sense": "<=",
+      "slack": 6000.0,
+      "dual_value": null
+    },
+    "capacity_A2": {
+      "sense": "<=",
+      "slack": 3230.7692307692305,
+      "dual_value": null
+    },
+    "capacity_B1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "capacity_B2": {
+      "sense": "<=",
+      "slack": 7000.0,
+      "dual_value": null
+    },
+    "capacity_B3": {
+      "sense": "<=",
+      "slack": 1730.769230769231,
+      "dual_value": null
+    },
+    "b2_activation_link": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "balance_Product_I": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "balance_Product_II": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "balance_Product_III": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "shared_labor_pool": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

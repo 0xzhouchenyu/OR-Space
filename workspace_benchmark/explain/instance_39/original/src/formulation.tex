@@ -1,0 +1,125 @@
+\section*{Sets and Indices}
+
+\[
+M=\{\text{motorcycle},\text{small\_truck},\text{large\_truck}\}
+\]
+set of available transportation methods.
+
+\[
+\mathcal{C}=\{S \subset M : |S|=2\}
+\]
+set of all 2-method combinations enumerated by the code.
+
+Index:
+\[
+m \in S,\qquad S \in \mathcal{C}.
+\]
+
+\section*{Parameters}
+
+For each method \(m \in M\):
+\[
+p_m
+\]
+pollution per trip (code: \texttt{pollution[m]}), with values from the data:
+\[
+p_{\text{motorcycle}}=40,\quad
+p_{\text{small\_truck}}=70,\quad
+p_{\text{large\_truck}}=100.
+\]
+
+\[
+u_m
+\]
+transport capacity per trip (code: \texttt{capacity[m]}), with values:
+\[
+u_{\text{motorcycle}}=10,\quad
+u_{\text{small\_truck}}=20,\quad
+u_{\text{large\_truck}}=50.
+\]
+
+\[
+R = 300
+\]
+minimum transport requirement (code: \texttt{min\_transport}).
+
+\[
+T = 20
+\]
+maximum total number of trips across the chosen methods (code: \texttt{max\_total\_trips}).
+
+\[
+U^{\text{mc}} = 8
+\]
+maximum number of motorcycle trips when motorcycle is among the chosen methods (code: \texttt{max\_motorcycle\_trips}).
+
+\section*{Decision Variables}
+
+For a fixed enumerated combination \(S \in \mathcal{C}\), define:
+\[
+x_m \in \mathbb{Z}_{\ge 0} \qquad \forall m \in S
+\]
+number of trips assigned to method \(m\) (code: \texttt{trips[m]}).
+
+There are no trip variables for methods not in \(S\); those methods are excluded by construction.
+
+\section*{Objective}
+
+For each fixed combination \(S \in \mathcal{C}\), solve
+\[
+\min \sum_{m \in S} p_m x_m .
+\]
+
+The overall implemented optimization is
+\[
+\min_{S \in \mathcal{C}}
+\left\{
+\min_{x}
+\sum_{m \in S} p_m x_m
+:
+\begin{array}{l}
+\sum_{m \in S} u_m x_m \ge R,\\[2mm]
+\sum_{m \in S} x_m \le T,\\[2mm]
+x_{\text{motorcycle}} \le U^{\text{mc}} \quad \text{if } \text{motorcycle}\in S,\\[1mm]
+x_m \in \mathbb{Z}_{\ge 0}\ \forall m\in S
+\end{array}
+\right\}.
+\]
+
+\section*{Constraints}
+
+For each enumerated combination \(S \in \mathcal{C}\), the model includes:
+
+\[
+\sum_{m \in S} u_m x_m \ge R
+\]
+minimum total transported quantity.
+
+\[
+\sum_{m \in S} x_m \le T
+\]
+maximum total trips over the selected two methods.
+
+If motorcycle is included in \(S\), then additionally:
+\[
+x_{\text{motorcycle}} \le U^{\text{mc}}.
+\]
+
+And for all \(m \in S\):
+\[
+x_m \in \mathbb{Z}_{\ge 0}.
+\]
+
+\section*{Notes on Implementation}
+
+The code does not formulate a single model with explicit binary method-selection variables. Instead, it exactly enumerates all three 2-method subsets
+\[
+\{\text{motorcycle},\text{small\_truck}\},\ 
+\{\text{motorcycle},\text{large\_truck}\},\ 
+\{\text{small\_truck},\text{large\_truck}\},
+\]
+solves one integer linear program for each subset, and returns the feasible optimal solution with smallest objective value.
+
+Thus, the ``choose exactly two methods'' logic is enforced by restricting each subproblem to variables only for the current subset \(S\). No variables or constraints are created for the excluded third method in that subproblem.
+
+Each subproblem is solved by the LP/MIP solver interface used in the code (\texttt{pulp.GUROBI\_CMD}), and the final answer is the best optimal subproblem solution among those with status \texttt{LpStatusOptimal}.

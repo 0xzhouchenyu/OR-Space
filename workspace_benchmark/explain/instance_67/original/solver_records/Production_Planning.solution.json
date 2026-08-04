@@ -1,0 +1,315 @@
+{
+  "solver": "gurobi",
+  "model_name": "Production_Planning",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 3160500.0,
+  "objective_bound": 3160500.0,
+  "mip_gap": null,
+  "runtime": 0.0008392333984375,
+  "node_count": 0.0,
+  "iteration_count": 21.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_i1svtdk0/solver_records/Production_Planning.gurobi.log",
+  "variables": {
+    "ext_wh_August": {
+      "value": 0.0,
+      "reduced_cost": 0.5
+    },
+    "ext_wh_December": {
+      "value": 0.0,
+      "reduced_cost": 1.5
+    },
+    "ext_wh_July": {
+      "value": 0.0,
+      "reduced_cost": 1.5
+    },
+    "ext_wh_November": {
+      "value": 0.0,
+      "reduced_cost": 0.5
+    },
+    "ext_wh_October": {
+      "value": 0.0,
+      "reduced_cost": 0.5
+    },
+    "ext_wh_September": {
+      "value": 3000.0,
+      "reduced_cost": 0.0
+    },
+    "inv_('August',_'Product_I')": {
+      "value": 15000.0,
+      "reduced_cost": 0.0
+    },
+    "inv_('August',_'Product_II')": {
+      "value": 0.0,
+      "reduced_cost": 0.20000000000000018
+    },
+    "inv_('December',_'Product_I')": {
+      "value": 0.0,
+      "reduced_cost": 5.4
+    },
+    "inv_('December',_'Product_II')": {
+      "value": 0.0,
+      "reduced_cost": 7.9
+    },
+    "inv_('July',_'Product_I')": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "inv_('July',_'Product_II')": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "inv_('November',_'Product_I')": {
+      "value": 30000.0,
+      "reduced_cost": 0.0
+    },
+    "inv_('November',_'Product_II')": {
+      "value": 0.0,
+      "reduced_cost": 0.1999999999999993
+    },
+    "inv_('October',_'Product_I')": {
+      "value": 60000.0,
+      "reduced_cost": 0.0
+    },
+    "inv_('October',_'Product_II')": {
+      "value": 0.0,
+      "reduced_cost": 0.20000000000000018
+    },
+    "inv_('September',_'Product_I')": {
+      "value": 90000.0,
+      "reduced_cost": 0.0
+    },
+    "inv_('September',_'Product_II')": {
+      "value": 0.0,
+      "reduced_cost": 0.3000000000000007
+    },
+    "own_wh_August": {
+      "value": 3000.0,
+      "reduced_cost": 0.0
+    },
+    "own_wh_December": {
+      "value": 0.0,
+      "reduced_cost": 1.0
+    },
+    "own_wh_July": {
+      "value": 0.0,
+      "reduced_cost": 1.0
+    },
+    "own_wh_November": {
+      "value": 6000.0,
+      "reduced_cost": 0.0
+    },
+    "own_wh_October": {
+      "value": 12000.0,
+      "reduced_cost": 0.0
+    },
+    "own_wh_September": {
+      "value": 15000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('August',_'Product_I')": {
+      "value": 45000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('August',_'Product_II')": {
+      "value": 15000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('December',_'Product_I')": {
+      "value": 70000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('December',_'Product_II')": {
+      "value": 50000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('July',_'Product_I')": {
+      "value": 30000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('July',_'Product_II')": {
+      "value": 15000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('November',_'Product_I')": {
+      "value": 70000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('November',_'Product_II')": {
+      "value": 50000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('October',_'Product_I')": {
+      "value": 70000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('October',_'Product_II')": {
+      "value": 50000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('September',_'Product_I')": {
+      "value": 105000.0,
+      "reduced_cost": 0.0
+    },
+    "prod_('September',_'Product_II')": {
+      "value": 15000.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -4.5
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -7.0
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 75000.0,
+      "dual_value": 0.0
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 15000.0,
+      "dual_value": 0.0
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -4.5
+    },
+    "_C7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -7.0
+    },
+    "_C8": {
+      "sense": "<=",
+      "slack": 60000.0,
+      "dual_value": 0.0
+    },
+    "_C9": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "_C10": {
+      "sense": "<=",
+      "slack": 12000.0,
+      "dual_value": 0.0
+    },
+    "_C11": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -4.7
+    },
+    "_C12": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -7.2
+    },
+    "_C13": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": -0.20000000000000018
+    },
+    "_C14": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 1.5
+    },
+    "_C15": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": -0.5
+    },
+    "_C16": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -5.0
+    },
+    "_C17": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -7.5
+    },
+    "_C18": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": -0.5
+    },
+    "_C19": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "_C20": {
+      "sense": "<=",
+      "slack": 3000.0,
+      "dual_value": 0.0
+    },
+    "_C21": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -5.2
+    },
+    "_C22": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -7.7
+    },
+    "_C23": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": -0.7000000000000002
+    },
+    "_C24": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "_C25": {
+      "sense": "<=",
+      "slack": 9000.0,
+      "dual_value": 0.0
+    },
+    "_C26": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -5.4
+    },
+    "_C27": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": -7.9
+    },
+    "_C28": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": -0.9000000000000004
+    },
+    "_C29": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C30": {
+      "sense": "<=",
+      "slack": 15000.0,
+      "dual_value": 0.0
+    }
+  }
+}

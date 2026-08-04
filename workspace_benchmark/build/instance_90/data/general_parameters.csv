@@ -1,0 +1,11 @@
+Parameter_Name,Value,Unit,Context_Description
+shirts_inventory,200,units,Total number of shirts available for promotion
+pants_inventory,100,units,Total number of pants available for promotion
+package_a_price,30,pounds,Price of Package A
+package_b_price,50,pounds,Price of Package B
+package_a_min_sales,20,units,Minimum number of Package A to be sold
+package_b_min_sales,10,units,Minimum number of Package B to be sold
+package_a_shirts,1,units,Number of shirts included in Package A
+package_a_pants,2,units,Number of pants included in Package A
+package_b_shirts,3,units,Number of shirts included in Package B
+package_b_pants,1,units,Number of pants included in Package B

@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_29_revise_business",
+  "original_instance_id": "IndustryOR_29",
+  "revise_description": "The objective is transformed from minimizing the shortfall of Priority 3 to maximizing the total number of recruits who simultaneously satisfy both their preferred specialty and preferred city, while still enforcing Priority 1 and Priority 2 as hard requirements. This reflects a new HR policy that emphasizes dual-match placement quality after mandatory staffing and specialty satisfaction are secured.",
+  "revise_type": "R5",
+  "revise_type_name": "Objective Function Transformation",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "-7var, +4constr, mod_6constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 0,
+        "-variable": 7,
+        "+constraint": 4,
+        "-constraint": 0,
+        "modify_constraint": 6,
+        "modify_data": 1
+      },
+      "op_count": 19,
+      "distinct_ops": 4,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 77.777778
+  }
+}

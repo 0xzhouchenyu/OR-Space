@@ -1,0 +1,47 @@
+{
+  "solver": "gurobi",
+  "model_name": "RealEstateInvestment",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 135000.0,
+  "objective_bound": 135000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0006620883941650391,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_t_9ej4zr/solver_records/RealEstateInvestment.gurobi.log",
+  "variables": {
+    "Property_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "Property_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "Property_3": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "Property_4": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 700000.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

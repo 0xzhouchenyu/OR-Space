@@ -1,0 +1,85 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$: set of all food items, indexed by $i$.
+    \item $P \subseteq I$: set of protein items.
+    \item $V \subseteq I$: set of vegetable items.
+\end{itemize}
+
+For this instance,
+\[
+P=\{\text{Chicken},\text{Salmon},\text{Tofu}\}, \qquad
+V=\{\text{Broccoli},\text{Carrots},\text{Spinach},\text{Bell\_Pepper},\text{Mushrooms}\}.
+\]
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $p_i$: protein content of item $i$ per 100g (code data field: \texttt{items[i]['protein']}).
+    \item $c_i$: cost of item $i$ per 100g (code data field: \texttt{items[i]['cost']}).
+    \item $B$: maximum budget (code: \texttt{max\_budget}), here $B=20$.
+    \item $W$: total weight limit in grams (code: \texttt{total\_weight}), here $W=800$.
+    \item $L$: minimum number of different vegetable types that must be selected (code: \texttt{min\_veg\_types}), here $L=3$.
+    \item $U$: upper bound on the number of 100g units of any single item (code: \texttt{max\_units}), defined as
+    \[
+    U=\left\lfloor \frac{W}{100} \right\rfloor.
+    \]
+    In this instance, $U=8$.
+\end{itemize}
+
+All protein and cost coefficients come directly from \texttt{table\_1.csv}.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_i$ (code: \texttt{x[i]}): integer number of 100g units of item $i$ selected.
+    \[
+    x_i \in \mathbb{Z}_{\ge 0} \qquad \forall i \in I
+    \]
+    \item $y_i$ (code: \texttt{y[i]}): binary indicator equal to 1 if item $i$ is selected, 0 otherwise.
+    \[
+    y_i \in \{0,1\} \qquad \forall i \in I
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total protein intake:
+\[
+\max \sum_{i \in I} p_i x_i.
+\]
+
+\section*{Constraints}
+
+Budget limit:
+\[
+\sum_{i \in I} c_i x_i \le B.
+\]
+
+Total weight limit:
+\[
+\sum_{i \in I} 100\,x_i \le W.
+\]
+
+Linking constraints between selection and purchased quantity:
+\[
+x_i \le U y_i \qquad \forall i \in I,
+\]
+\[
+x_i \ge y_i \qquad \forall i \in I.
+\]
+
+Minimum number of vegetable types selected:
+\[
+\sum_{i \in V} y_i \ge L.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item Quantities are modeled in discrete 100g units exactly as in the code; the model does not allow fractional 100g amounts.
+    \item The binary variable $y_i$ is used for all items, not only vegetables. Because of the constraints $x_i \le U y_i$ and $x_i \ge y_i$, selecting an item implies purchasing at least 100g, and any positive purchase forces $y_i=1$.
+    \item The per-item upper bound $U=\lfloor W/100 \rfloor$ is a generic big-$M$ derived only from the total weight limit, matching the implementation.
+    \item Although the business description refers to choosing a combination of protein and vegetables, the implemented model does not require at least one protein item, nor does it cap the number of selected items beyond the budget, weight, integrality, and vegetable-count constraints.
+    \item The code solves this formulation as an integer linear program using \texttt{GUROBI\_CMD(msg=0)} through the PuLP-compatible interface.
+\end{itemize}

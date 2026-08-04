@@ -1,0 +1,436 @@
+{
+  "solver": "gurobi",
+  "model_name": "Two_Scenario_Maximize_Fiber_With_Balance",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 27.544285714285714,
+  "objective_bound": 27.544285714285714,
+  "mip_gap": 0.0,
+  "runtime": 0.008081197738647461,
+  "node_count": 1.0,
+  "iteration_count": 18.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_pfgbgv3c/solver_records/Two_Scenario_Maximize_Fiber_With_Balance.gurobi.log",
+  "variables": {
+    "d_cabbage": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "d_carrots": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "d_celery": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "d_okra": {
+      "value": 0.1,
+      "reduced_cost": null
+    },
+    "x_weekday_beef": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_weekday_cabbage": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_weekday_carrots": {
+      "value": 4.085714285714285,
+      "reduced_cost": null
+    },
+    "x_weekday_celery": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_weekday_okra": {
+      "value": 0.9142857142857143,
+      "reduced_cost": null
+    },
+    "x_weekday_pork": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_weekday_salmon": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_weekend_beef": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_weekend_cabbage": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_weekend_carrots": {
+      "value": 4.085714285714285,
+      "reduced_cost": null
+    },
+    "x_weekend_celery": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_weekend_okra": {
+      "value": 0.8142857142857146,
+      "reduced_cost": null
+    },
+    "x_weekend_pork": {
+      "value": 0.1,
+      "reduced_cost": null
+    },
+    "x_weekend_salmon": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_weekday_beef": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_weekday_cabbage": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_weekday_carrots": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_weekday_celery": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_weekday_okra": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_weekday_pork": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_weekday_salmon": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_weekend_beef": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_weekend_cabbage": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_weekend_carrots": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_weekend_celery": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_weekend_okra": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_weekend_pork": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_weekend_salmon": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "z_beef": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "z_pork": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z_salmon": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "total_intake_weekday": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "total_intake_weekend": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "weekday_budget": {
+      "sense": "<=",
+      "slack": 3.5199999999999996,
+      "dual_value": null
+    },
+    "weekend_budget": {
+      "sense": "<=",
+      "slack": 8.881784197001252e-16,
+      "dual_value": null
+    },
+    "total_budget": {
+      "sense": "<=",
+      "slack": 3.5200000000000014,
+      "dual_value": null
+    },
+    "one_protein_activation": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "backlink_z_salmon": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "backlink_z_beef": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "backlink_z_pork": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_yz_weekday_salmon": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_yz_weekday_beef": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_yz_weekday_pork": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "link_yz_weekend_salmon": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_yz_weekend_beef": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "link_yz_weekend_pork": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_two_veg_weekday": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "min_two_veg_weekend": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "min_inclusion_weekday_okra": {
+      "sense": ">=",
+      "slack": -0.8142857142857143,
+      "dual_value": null
+    },
+    "max_inclusion_weekday_okra": {
+      "sense": "<=",
+      "slack": 4.085714285714285,
+      "dual_value": null
+    },
+    "min_inclusion_weekday_carrots": {
+      "sense": ">=",
+      "slack": -3.9857142857142853,
+      "dual_value": null
+    },
+    "max_inclusion_weekday_carrots": {
+      "sense": "<=",
+      "slack": 0.9142857142857146,
+      "dual_value": null
+    },
+    "min_inclusion_weekday_celery": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_inclusion_weekday_celery": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_inclusion_weekday_cabbage": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_inclusion_weekday_cabbage": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_inclusion_weekday_salmon": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_inclusion_weekday_salmon": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_inclusion_weekday_beef": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_inclusion_weekday_beef": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_inclusion_weekday_pork": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_inclusion_weekday_pork": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_inclusion_weekend_okra": {
+      "sense": ">=",
+      "slack": -0.7142857142857146,
+      "dual_value": null
+    },
+    "max_inclusion_weekend_okra": {
+      "sense": "<=",
+      "slack": 4.185714285714285,
+      "dual_value": null
+    },
+    "min_inclusion_weekend_carrots": {
+      "sense": ">=",
+      "slack": -3.9857142857142853,
+      "dual_value": null
+    },
+    "max_inclusion_weekend_carrots": {
+      "sense": "<=",
+      "slack": 0.9142857142857146,
+      "dual_value": null
+    },
+    "min_inclusion_weekend_celery": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_inclusion_weekend_celery": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_inclusion_weekend_cabbage": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_inclusion_weekend_cabbage": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_inclusion_weekend_salmon": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_inclusion_weekend_salmon": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_inclusion_weekend_beef": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_inclusion_weekend_beef": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "min_inclusion_weekend_pork": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "max_inclusion_weekend_pork": {
+      "sense": "<=",
+      "slack": 4.9,
+      "dual_value": null
+    },
+    "prep_time_weekday": {
+      "sense": "<=",
+      "slack": 24.08571428571429,
+      "dual_value": null
+    },
+    "prep_time_weekend": {
+      "sense": "<=",
+      "slack": 28.385714285714286,
+      "dual_value": null
+    },
+    "dev_pos_okra": {
+      "sense": ">=",
+      "slack": -3.3306690738754696e-16,
+      "dual_value": null
+    },
+    "dev_neg_okra": {
+      "sense": ">=",
+      "slack": -0.19999999999999962,
+      "dual_value": null
+    },
+    "dev_pos_carrots": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "dev_neg_carrots": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "dev_pos_celery": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "dev_neg_celery": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "dev_pos_cabbage": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "dev_neg_cabbage": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

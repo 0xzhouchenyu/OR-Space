@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_061",
+  "instance_number": 61,
+  "source_revise_instance": "IndustryOR_61_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the optimal objective increased from 37000.0 to 46980.0 even though the chosen devices remain A and C, and trace that increase through the exact code variables, constraint names, CSV fields, and business brief terms. Your answer must identify which new code terms charge cost to `z[(i,p)]` and `x[(i,p)]`, map them to the exact `general_parameters.csv` fields and the business phrases “peak and off-peak energy windows” and “Every device-period combination that is brought into service consumes startup energy and startup spend,” and quantify the added cost using the realized solution values `x_('A','offpeak')=800`, `x_('C','offpeak')=1200`, `z_('A','offpeak')=1`, and `z_('C','offpeak')=1`. Then use the LP-relaxation diagnostics to name one binding revised constraint with nonzero shadow price and one binding constraint whose marginal value should not be linearly extrapolated to the MIP solution, including the slack/dual numbers and a brief business interpretation of why that marginal is local to the LP relaxation rather than globally valid after the gate-like binary startup logic is enforced."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MinCostProduction.gurobi.log",
+        "MinCostProduction.lp_relaxation.json",
+        "MinCostProduction.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MinCostProduction_EnergyPeriods.gurobi.log",
+        "MinCostProduction_EnergyPeriods.lp_relaxation.json",
+        "MinCostProduction_EnergyPeriods.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 69.860556
+  }
+}

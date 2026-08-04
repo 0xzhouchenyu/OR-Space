@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_050",
+  "instance_number": 50,
+  "source_revise_instance": "IndustryOR_50_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model’s `MaxRevenue.lp_relaxation.json`, explain why the August gate is inactive in the LP relaxation even though `buy_8 = 300`, and identify which constraints are binding versus slack by naming the exact code constraints and their slack/dual values. Then compare the original objective 9100.0 to the revised MIP objective 7300.0: pinpoint the exact code additions that caused the 1800 drop, trace them back to the business brief and the CSV fields `august_bulk_order_threshold`, `august_bulk_receiving_fee`, and `fixed_order_cost`, and quantify which charges are actually incurred in the final integer solution using the variable names `buy_bin_9`, `buy_bin_11`, and `august_bulk_receiving`. Finally, explain the business meaning of the LP shadow price on the binding August threshold gate and why you cannot linearly extrapolate that marginal value to conclude the same per-unit effect beyond the 300-unit threshold in the integer model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MaxRevenue.gurobi.log",
+        "MaxRevenue.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MaxRevenue.gurobi.log",
+        "MaxRevenue.lp_relaxation.json",
+        "MaxRevenue.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 61.167222
+  }
+}

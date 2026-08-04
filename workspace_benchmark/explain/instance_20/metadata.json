@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_020",
+  "instance_number": 20,
+  "source_revise_instance": "IndustryOR_20_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model, explain why the optimal integer plan switches from `x_car=118, x_blocks=1` in the original run to `x_car=0, x_blocks=60` in the revised run, and identify the exact code line(s) and business-rule text responsible for that change. Your explanation must trace the revised mutual-exclusion logic through the code variables `y_car`, `y_blocks`, the added constraint `y_car + y_blocks <= 1`, and the CSV parameters `profit_per_model_car=8`, `profit_per_building_blocks=12`, `plastic_per_model_car=10`, `plastic_per_building_blocks=20`, and `plastic_available=1200`. Then use the LP-relaxation output to name which revised constraints are binding and have nonzero dual values, interpret the business meaning of those shadow prices/slacks, and explain why you cannot linearly extrapolate the LP dual value of the plastic constraint to predict the actual MIP objective gain from adding more plastic under the revised integer model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ToyManufacturing.gurobi.log",
+        "ToyManufacturing.lp_relaxation.json",
+        "ToyManufacturing.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ToyManufacturing_Revised.gurobi.log",
+        "ToyManufacturing_Revised.lp_relaxation.json",
+        "ToyManufacturing_Revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 69.573889
+  }
+}

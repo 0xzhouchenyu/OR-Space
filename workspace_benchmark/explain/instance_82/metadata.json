@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_082",
+  "instance_number": 82,
+  "source_revise_instance": "IndustryOR_82_revise_business",
+  "domain": "Retail_Mall_Lease_Selection",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Retail_Mall_Lease_Selection",
+    "question": "In the revised model, explain exactly how the business sentence about Catering security is encoded and why it changes the optimum from 28.0 to 22.2. Your answer must trace the binary variable `catering_third_store_security` and the constraint `model += catering_security >= catering_count - catering_security_threshold` back to the exact CSV field names and parameter values, identify which `x_(i,k)` variables correspond to Catering and General_Merchandise, and use the LP-relaxation/MIP outputs to state which of `_C6` and `_C8` are binding, what their slack/shadow-price information means in business terms, and why you cannot linearly extrapolate the `_C6` dual to explain the full 5.8-unit objective drop from the original solution. Also compare original vs revised by pinpointing the exact code additions/removals that caused the objective change, including the effect of `common_area_factor`, `x_3_0`, `x_2_3`, and the 0.7 security cost."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Advanced_82.gurobi.log",
+        "Advanced_82.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Mall_Optimization_With_Anchor_Concession.gurobi.log",
+        "Mall_Optimization_With_Anchor_Concession.lp_relaxation.json",
+        "Mall_Optimization_With_Anchor_Concession.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 51.499444
+  }
+}

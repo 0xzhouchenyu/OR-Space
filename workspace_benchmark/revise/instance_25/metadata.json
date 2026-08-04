@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_25_revise_business",
+  "original_instance_id": "IndustryOR_25",
+  "revise_description": "In the stakeholder handoff for this case, the service manager framed the change in business terms rather than as a spreadsheet checklist. The operations lead described this revision as a timing promise, not a quantity tweak. Work, inventory, cash, or capacity that leaves one ledger position should only reappear when the business clock says it has cleared. Treasury is no longer comfortable treating every maturity date as if it lands before the next subscription window. The two-year product started at the opening of the horizon now settles after the year-2 reinvestment cut-off, so those proceeds can strengthen the final cash position but cannot be turned into a fresh year-2 one-year placement. That late settlement also carries `option2_year0_late_settlement_rate`. The reserve floors and the per-start exposure ceiling for the two-year product remain part of the investment policy. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "investment_planning",
+    "diff": {
+      "diff_summary": "+2var, -2var, +3constr, -2constr, mod_3constr, mod_obj, mod_2data",
+      "counts": {
+        "+variable": 2,
+        "-variable": 2,
+        "+constraint": 3,
+        "-constraint": 2,
+        "modify_constraint": 3,
+        "modify_data": 2
+      },
+      "op_count": 15,
+      "distinct_ops": 6,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 50.0
+  }
+}

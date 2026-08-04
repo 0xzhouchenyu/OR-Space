@@ -1,0 +1,55 @@
+{
+  "instance_id": "OR_explain_091",
+  "instance_number": 91,
+  "source_revise_instance": "IndustryOR_91_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain why the optimal MIP solution stops at `A = 100` and `O = 10` even though the LP relaxation pushes `Product_A` above 100 and `Overtime_Hours` to 15. Trace the exact business rule “the first 100 units of Product A fit the normal batch plan; producing more than 100 units of A triggers a one-time 10 GBP staffing burden” back to the code variable and constraint names, the exact CSV field names and parameter values, and the corresponding mathematical statement in `src/formulation.tex`; then use the LP-relaxation slacks/duals for `_C3` and `_C4` to interpret the marginal values of crossing the overtime-review and senior-batch gates, and explain why those duals cannot be linearly extrapolated to predict the MIP objective change from 409.1 to 440.0. Finally, identify the exact new objective terms and constraints added in `src/current_heuristic.py` relative to the original model, and quantify which additions actually matter at the reported optimum with explicit references to `Product_A`, `Product_B`, `Overtime_Hours`, `overtime_review`, and `product_A_senior_batch`."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Product_Mix.gurobi.log",
+        "Product_Mix.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ProductMix_OvertimeReview.gurobi.log",
+        "ProductMix_OvertimeReview.lp_relaxation.json",
+        "ProductMix_OvertimeReview.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 81.561111
+  }
+}

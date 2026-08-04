@@ -1,0 +1,105 @@
+{
+  "solver": "gurobi",
+  "model_name": "ParkingMinStreetLength",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 28.6,
+  "objective_bound": 28.6,
+  "mip_gap": 0.0,
+  "runtime": 0.005578041076660156,
+  "node_count": 1.0,
+  "iteration_count": 7.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_znt_ogij/solver_records/ParkingMinStreetLength.gurobi.log",
+  "variables": {
+    "T": {
+      "value": 28.6,
+      "reduced_cost": null
+    },
+    "x_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_10": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_11": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_12": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_13": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_14": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_15": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_4": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_5": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_6": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_7": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_8": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_9": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "T_geq_side1": {
+      "sense": ">=",
+      "slack": 8.881784197001252e-16,
+      "dual_value": null
+    },
+    "T_geq_side2": {
+      "sense": ">=",
+      "slack": -0.10000000000000853,
+      "dual_value": null
+    },
+    "max_side1": {
+      "sense": "<=",
+      "slack": 1.4000000000000021,
+      "dual_value": null
+    },
+    "max_side2": {
+      "sense": "<=",
+      "slack": 1.4999999999999964,
+      "dual_value": null
+    }
+  }
+}

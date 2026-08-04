@@ -1,0 +1,103 @@
+\section*{Sets and Indices}
+
+No nontrivial index sets are used in the implemented model. The model has two production activities:
+\begin{itemize}
+    \item product A1, processed on Type A equipment,
+    \item product A2, processed on Type B equipment.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter values are read from \texttt{general\_parameters.csv}.
+
+\begin{itemize}
+    \item $y_{1}$ (code: \texttt{a1\_yield}): kilograms of product A1 produced per barrel of milk.
+    \item $t_{1}$ (code: \texttt{a1\_time}): labor hours required per barrel of milk allocated to product A1.
+    \item $y_{2}$ (code: \texttt{a2\_yield}): kilograms of product A2 produced per barrel of milk.
+    \item $t_{2}$ (code: \texttt{a2\_time}): labor hours required per barrel of milk allocated to product A2.
+    \item $p_{1}^{kg}$ (code: \texttt{profit\_a1}): profit per kilogram of product A1.
+    \item $p_{2}^{kg}$ (code: \texttt{profit\_a2}): profit per kilogram of product A2.
+    \item $M$ (code: \texttt{milk\_supply}): daily milk supply, in barrels.
+    \item $L$ (code: \texttt{labor\_hours}): total daily labor hours available.
+    \item $C_A$ (code: \texttt{type\_a\_cap}): daily processing capacity of Type A equipment, in kilograms of A1.
+\end{itemize}
+
+The code also computes profit per barrel:
+\[
+p_1 = y_1 p_1^{kg}
+\qquad\text{(code: \texttt{profit\_per\_barrel\_a1})},
+\]
+\[
+p_2 = y_2 p_2^{kg}
+\qquad\text{(code: \texttt{profit\_per\_barrel\_a2})}.
+\]
+
+For this instance,
+\[
+y_1=3,\; t_1=12,\; y_2=4,\; t_2=8,\; p_1^{kg}=24,\; p_2^{kg}=16,\; M=50,\; L=480,\; C_A=100,
+\]
+so
+\[
+p_1=72,\qquad p_2=64.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_1$ (code: \texttt{x1}): barrels of milk allocated to production of A1.
+    \item $x_2$ (code: \texttt{x2}): barrels of milk allocated to production of A2.
+\end{itemize}
+
+Both variables are continuous and nonnegative:
+\[
+x_1 \ge 0,\qquad x_2 \ge 0.
+\]
+
+\section*{Objective}
+
+Maximize total daily profit:
+\[
+\max \; p_1 x_1 + p_2 x_2.
+\]
+
+Equivalently, using the original per-kilogram profits and yields,
+\[
+\max \; (y_1 p_1^{kg})x_1 + (y_2 p_2^{kg})x_2.
+\]
+
+For this instance, the implemented objective is
+\[
+\max \; 72x_1 + 64x_2.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+x_1 + x_2 &\le M
+&&\text{(milk supply)} \\
+t_1 x_1 + t_2 x_2 &\le L
+&&\text{(labor hours)} \\
+y_1 x_1 &\le C_A
+&&\text{(Type A equipment capacity)} \\
+x_1, x_2 &\ge 0.
+\end{align}
+
+Substituting the instance data gives
+\begin{align}
+x_1 + x_2 &\le 50,\\
+12x_1 + 8x_2 &\le 480,\\
+3x_1 &\le 100,\\
+x_1, x_2 &\ge 0.
+\end{align}
+
+No Type B capacity constraint is included in the model, matching the code and the input data statement that Type B capacity is unlimited.
+
+\section*{Notes on Implementation}
+
+The implementation in \texttt{current\_heuristic.py} constructs exactly the above linear program with two continuous variables using \texttt{LpVariable(..., lowBound=0)} and solves it via \texttt{GUROBI\_CMD}. There are no integrality restrictions, no fixed-charge terms, and no additional constraints beyond milk supply, labor availability, and Type A capacity.
+
+Although product quantities are reported after solution as
+\[
+\text{A1 produced} = y_1 x_1,\qquad \text{A2 produced} = y_2 x_2,
+\]
+these are derived outputs only and are not separate decision variables in the implemented model.

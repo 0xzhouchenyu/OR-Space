@@ -1,0 +1,20 @@
+Parameter_Name,Value,Unit,Context_Description
+milk_per_barrel,1,barrel,Amount of milk in one barrel
+product_A1_yield,3,kg,Amount of product A1 produced from one barrel of milk
+product_A1_time,12,hours,Time required to produce one barrel into A1
+product_A2_yield,4,kg,Amount of product A2 produced from one barrel of milk
+product_A2_time,8,hours,Time required to produce one barrel into A2
+product_A3_yield,2,kg,Amount of product A3 produced from one barrel of milk
+product_A3_time,10,hours,Time required to produce one barrel into A3
+profit_per_kg_A1,24,yuan,Profit per kilogram of product A1
+profit_per_kg_A2,16,yuan,Profit per kilogram of product A2
+profit_per_kg_A3,30,yuan,Profit per kilogram of product A3
+daily_milk_supply,50,barrels,Daily supply of milk available to the plant
+daily_labor_hours,480,hours,Total labor hours available each day
+type_A_capacity,100,kg,Legacy Type A capacity
+cap_A_shared,90,kg,Shared daily capacity of Type A equipment across A1 and A3
+min_A2_kg,40,kg,Minimum daily A2 production
+min_A3_kg,20,kg,Minimum daily A3 production
+type_A_cleaning_loss_if_A3,12,kg,Type A capacity reserved for cleaning when A3 is produced
+cold_chain_bonus_threshold_kg,30,kg,A3 output required for the fixed cold-chain allowance
+cold_chain_bonus_yuan,300,yuan,Fixed allowance paid when A3 reaches the threshold

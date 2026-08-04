@@ -1,0 +1,96 @@
+{
+  "solver": "gurobi",
+  "model_name": "Timber_Profit_Maximization",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 4700.0,
+  "objective_bound": 4700.0,
+  "mip_gap": null,
+  "runtime": 0.0005190372467041016,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_ouke2svw/solver_records/Timber_Profit_Maximization.gurobi.log",
+  "variables": {
+    "x_0_0": {
+      "value": 100.0,
+      "reduced_cost": 0.0
+    },
+    "x_0_1": {
+      "value": 0.0,
+      "reduced_cost": -150.0
+    },
+    "x_0_2": {
+      "value": 0.0,
+      "reduced_cost": -220.0
+    },
+    "x_0_3": {
+      "value": 0.0,
+      "reduced_cost": -330.0
+    },
+    "x_1_1": {
+      "value": 140.0,
+      "reduced_cost": 0.0
+    },
+    "x_1_2": {
+      "value": 0.0,
+      "reduced_cost": -140.0
+    },
+    "x_1_3": {
+      "value": 0.0,
+      "reduced_cost": -250.0
+    },
+    "x_2_2": {
+      "value": 200.0,
+      "reduced_cost": 0.0
+    },
+    "x_2_3": {
+      "value": 0.0,
+      "reduced_cost": -180.0
+    },
+    "x_3_3": {
+      "value": 160.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 15.0
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 10.0
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 5.0
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 5.0
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": 0.0
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": 0.0
+    },
+    "_C7": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": 0.0
+    }
+  }
+}

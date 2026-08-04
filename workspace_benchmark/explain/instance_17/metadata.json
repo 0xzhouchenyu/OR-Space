@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_017",
+  "instance_number": 17,
+  "source_revise_instance": "IndustryOR_17_revise_business",
+  "domain": "Mission_Planning / Robust Bomb Allocation",
+  "difficulty_level": "Medium",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Mission_Planning / Robust Bomb Allocation",
+    "question": "In the revised model, explain why the objective drops from 0.5766 to 0.234 by tracing the exact code additions that enforce robustness, and map them back to the business statement that only one precommitted strike package may be launched under either fleet-availability outcome. Your answer must name the revised code variables/functions `xH[i]`, `xL[i]`, `robust_feasible`, `max_total_sorties`, `fuel_h_A`, and `fuel_h_B`, and cite the exact CSV fields/parameters `fuel_limit`, `max_sorties_A`, `max_sorties_B`, `scenario_prob_A`, `scenario_prob_B`, `sortie_fuel_overhead_A`, `sortie_fuel_overhead_B`, plus at least one `table_1.csv` column used in the fuel/probability calculations. Also, because the Gurobi record contains no actual constraint rows or duals, diagnose what can and cannot be concluded about binding constraints, shadow prices, and slack values here: identify which revised constraints are most likely binding at optimum from the observed state, give their business meaning, and explain why any claimed shadow price or linear extrapolation from this run would be theoretically unsound for this nonlinear exact-search implementation."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "BombAllocationExactSearch.gurobi.log",
+        "BombAllocationExactSearch.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Revise_17_revised.gurobi.log",
+        "Revise_17_revised.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 73.138333
+  }
+}

@@ -1,0 +1,339 @@
+{
+  "solver": "gurobi",
+  "model_name": "Tool_Repair_Problem",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 168.0,
+  "objective_bound": 168.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004949092864990234,
+  "node_count": 1.0,
+  "iteration_count": 15.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_e83n5hxi/solver_records/Tool_Repair_Problem.gurobi.log",
+  "variables": {
+    "buy_1": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "buy_10": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_2": {
+      "value": 5.0,
+      "reduced_cost": null
+    },
+    "buy_3": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "buy_4": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_5": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "buy_6": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_7": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_8": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_9": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "clean_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "clean_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "clean_10": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "clean_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "clean_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "clean_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "clean_5": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "clean_6": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "clean_7": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "clean_8": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "clean_9": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "dirty_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "dirty_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "dirty_10": {
+      "value": 11.0,
+      "reduced_cost": null
+    },
+    "dirty_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "dirty_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "dirty_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "dirty_5": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "dirty_6": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "dirty_7": {
+      "value": 5.0,
+      "reduced_cost": null
+    },
+    "dirty_8": {
+      "value": 8.0,
+      "reduced_cost": null
+    },
+    "dirty_9": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "fast_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "fast_10": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "fast_2": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "fast_3": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "fast_4": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "fast_5": {
+      "value": 4.0,
+      "reduced_cost": null
+    },
+    "fast_6": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "fast_7": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "fast_8": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "fast_9": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "slow_1": {
+      "value": 3.0,
+      "reduced_cost": null
+    },
+    "slow_10": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "slow_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "slow_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "slow_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "slow_5": {
+      "value": 2.0,
+      "reduced_cost": null
+    },
+    "slow_6": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "slow_7": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "slow_8": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "slow_9": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C10": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C11": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C12": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C13": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C14": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C15": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C16": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C17": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C18": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C19": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C20": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C21": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C22": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

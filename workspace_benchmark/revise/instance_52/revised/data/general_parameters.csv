@@ -1,0 +1,8 @@
+Parameter_Name,Value,Unit,Context_Description
+shift_duration,8,hours,Duration of each shift for drivers and crew members
+driver_rest_gap,2,periods,Minimum aggregate rest gap proxy for drivers in late-night cluster periods 5 and 6
+crew_rest_gap,1,periods,Minimum aggregate rest gap proxy for crew in late-night cluster periods 5 and 6
+max_night_driver_fraction,0.4,ratio,Maximum fraction of driver shift starts that can be in late-night periods 5 and 6
+max_night_crew_fraction,0.5,ratio,Maximum fraction of crew shift starts that can be in late-night periods 5 and 6
+max_overtime_shifts,20,shifts,Maximum total number of overtime shifts (drivers plus crew) over all periods
+overtime_cost_factor,1.5,dimensionless,Cost multiplier applied to each overtime shift relative to a regular shift

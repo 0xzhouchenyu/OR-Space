@@ -1,0 +1,73 @@
+{
+  "solver": "gurobi",
+  "model_name": "Beverage_Production_Planning",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 528.0,
+  "objective_bound": 528.0,
+  "mip_gap": null,
+  "runtime": 0.0006330013275146484,
+  "node_count": 0.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_yd2ltgbn/solver_records/Beverage_Production_Planning.gurobi.log",
+  "variables": {
+    "s_1": {
+      "value": 15.0,
+      "reduced_cost": 0.0
+    },
+    "s_2": {
+      "value": 30.0,
+      "reduced_cost": 0.0
+    },
+    "s_3": {
+      "value": 5.0,
+      "reduced_cost": 0.0
+    },
+    "s_4": {
+      "value": 0.0,
+      "reduced_cost": 5.800000000000001
+    },
+    "x_1": {
+      "value": 30.0,
+      "reduced_cost": 0.0
+    },
+    "x_2": {
+      "value": 40.0,
+      "reduced_cost": -0.10000000000000053
+    },
+    "x_3": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    },
+    "x_4": {
+      "value": 20.0,
+      "reduced_cost": -0.10000000000000053
+    }
+  },
+  "constraints": {
+    "balance_week_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 5.0
+    },
+    "balance_week_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 5.2
+    },
+    "balance_week_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 5.4
+    },
+    "balance_week_4": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 5.6000000000000005
+    }
+  }
+}

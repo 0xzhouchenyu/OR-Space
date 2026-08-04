@@ -1,0 +1,86 @@
+{
+  "solver": "gurobi",
+  "model_name": "DairyColdChain",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 3540.0,
+  "objective_bound": 3540.0,
+  "mip_gap": 0.0,
+  "runtime": 0.003943920135498047,
+  "node_count": 1.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage__mylm_xg/solver_records/DairyColdChain.gurobi.log",
+  "variables": {
+    "barrels_A1": {
+      "value": 12.5,
+      "reduced_cost": null
+    },
+    "barrels_A2": {
+      "value": 22.5,
+      "reduced_cost": null
+    },
+    "barrels_A3": {
+      "value": 15.0,
+      "reduced_cost": null
+    },
+    "cold_bonus": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "run_A3": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": "<=",
+      "slack": 10.5,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": -50.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": ">=",
+      "slack": -10.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": "<=",
+      "slack": 70.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": -10.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

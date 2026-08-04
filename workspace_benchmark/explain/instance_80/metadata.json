@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_080",
+  "instance_number": 80,
+  "source_revise_instance": "IndustryOR_80_revise_business",
+  "domain": "Workforce_Allocation",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Workforce_Allocation",
+    "question": "In the revised model, explain why `OneMethod_Task_2`, `TaskSkilledSum_Task_2`, `Hours_Task_2_Method_B`, and `MaxLaborers` are all consistent with the optimal solution even though `y_Task_2_Method_B=1` and `S_Task_2=36.5591` in the solver output. Your answer must trace the change from the original model to the revised one by naming the exact new code constructs (`S_task`, `L_task`, `min_share`, `max_share`, and the new `TaskSkilledSum_{t}` constraints) and the exact CSV fields `min_skilled_share_task2`, `max_skilled_share_task2`, and `skilled_worker_weekly_wage`; then state which previously-binding global constraint was replaced in spirit, and quantify how that redesign changes the objective from 84000 to 86000 yuan. Also interpret the dual/slack meaning of the binding workforce constraints in the LP relaxation (at least `TotalSkilledDef`, `TotalLaborersDef`, and one task-level skill-balance constraint): what does a positive shadow price on a binding constraint mean in business terms, and why would a naive linear extrapolation beyond the reported range be unreliable here?"
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "WorkerAllocation.gurobi.log",
+        "WorkerAllocation.lp_relaxation.json",
+        "WorkerAllocation.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "WorkerAllocation_TaskSkillMix.gurobi.log",
+        "WorkerAllocation_TaskSkillMix.lp_relaxation.json",
+        "WorkerAllocation_TaskSkillMix.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 55.290556
+  }
+}

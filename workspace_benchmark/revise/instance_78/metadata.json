@@ -1,0 +1,19 @@
+{
+  "instance_id": "IndustryOR_78_revise_3",
+  "original_instance_id": "IndustryOR_78",
+  "revise_description": "Added a dependency constraint requiring that part-time overtime hours must be at least 50% of full-time overtime hours to ensure proper store coverage.",
+  "revise_type": "R3",
+  "revise_type_name": "Business Logic / Dependency Constraint",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research"
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 100.0
+  }
+}

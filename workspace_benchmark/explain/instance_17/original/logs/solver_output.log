@@ -1,0 +1,8 @@
+Fuel per heavy bomb per part: [437.5, 460.0, 505.0, 550.0]
+Fuel per light bomb per part: [362.5, 380.0, 415.0, 450.0]
+Best allocation: [(0, 3), (11, 0), (0, 6), (0, 3)]
+Total heavy bombs used: 11
+Total light bombs used: 12
+Total fuel used: 9987.5
+OBJECTIVE_VALUE: 0.5766
+Set parameter LicenseID to value 2802670

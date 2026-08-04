@@ -1,0 +1,98 @@
+{
+  "solver": "gurobi",
+  "model_name": "HausToys",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 623.0,
+  "objective_bound": 623.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0006830692291259766,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_1pt_y0pq/solver_records/HausToys.gurobi.log",
+  "variables": {
+    "x_airplane": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_boat": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_train": {
+      "value": 89.0,
+      "reduced_cost": null
+    },
+    "x_truck": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_airplane": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_boat": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_train": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_truck": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Wood_Constraint": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Steel_Constraint": {
+      "sense": "<=",
+      "slack": 144.0,
+      "dual_value": null
+    },
+    "Link_truck": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Link_airplane": {
+      "sense": "<=",
+      "slack": 1000.0,
+      "dual_value": null
+    },
+    "Link_boat": {
+      "sense": "<=",
+      "slack": 1000.0,
+      "dual_value": null
+    },
+    "Link_train": {
+      "sense": "<=",
+      "slack": 911.0,
+      "dual_value": null
+    },
+    "Truck_Train_Exclusion": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Boat_Airplane_Dependency": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Boat_Train_Limit": {
+      "sense": "<=",
+      "slack": 89.0,
+      "dual_value": null
+    }
+  }
+}

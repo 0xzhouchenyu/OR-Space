@@ -1,0 +1,122 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Planning years in which a new investment decision is made:
+    \[
+    \mathcal{T}_1 = \{0,1,2\}
+    \]
+    for the one-year investment option.
+    \item Planning years in which the two-year investment is allowed by the implementation:
+    \[
+    \mathcal{T}_2 = \{0,1\}.
+    \]
+    \item The planning horizon ends at year
+    \[
+    T=3.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Initial capital:
+    \[
+    W
+    \]
+    (code: \texttt{W}), from \texttt{initial\_investment}.
+    \item Return rate of the one-year investment option:
+    \[
+    r_1
+    \]
+    (code: \texttt{r1}), from \texttt{return\_rate\_option\_1}.
+    Investing amount \(x\) for one year yields \((1+r_1)x\) after maturity.
+    \item Return rate of the two-year investment option:
+    \[
+    r_2
+    \]
+    (code: \texttt{r2}), from \texttt{return\_rate\_option\_2}.
+    Investing amount \(x\) for two years yields \((1+r_2)x\) after maturity.
+    \item Planning horizon:
+    \[
+    T=3
+    \]
+    (code: \texttt{T}), from \texttt{planning\_horizon}.
+\end{itemize}
+
+For Instance 25, the data are
+\[
+W=100000,\qquad r_1=0.7,\qquad r_2=2.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Amount invested in option 1 at year \(0\):
+    \[
+    x_{0,1}\ge 0
+    \]
+    (code: \texttt{x0\_1}).
+    \item Amount invested in option 2 at year \(0\):
+    \[
+    x_{0,2}\ge 0
+    \]
+    (code: \texttt{x0\_2}).
+    \item Amount invested in option 1 at year \(1\):
+    \[
+    x_{1,1}\ge 0
+    \]
+    (code: \texttt{x1\_1}).
+    \item Amount invested in option 2 at year \(1\):
+    \[
+    x_{1,2}\ge 0
+    \]
+    (code: \texttt{x1\_2}).
+    \item Amount invested in option 1 at year \(2\):
+    \[
+    x_{2,1}\ge 0
+    \]
+    (code: \texttt{x2\_1}).
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model maximizes terminal wealth at the end of year \(3\) coming only from investments maturing exactly at that time:
+\[
+\max \; (1+r_1)x_{2,1} + (1+r_2)x_{1,2}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Initial budget at year 0.}
+\[
+x_{0,1}+x_{0,2}\le W.
+\]
+
+\paragraph{Budget available for reinvestment at year 1.}
+Only the one-year investment started at year \(0\) is available at year \(1\):
+\[
+x_{1,1}+x_{1,2}\le (1+r_1)x_{0,1}.
+\]
+
+\paragraph{Budget available for reinvestment at year 2.}
+At year \(2\), funds come from the one-year investment started at year \(1\) and the two-year investment started at year \(0\):
+\[
+x_{2,1}\le (1+r_1)x_{1,1} + (1+r_2)x_{0,2}.
+\]
+
+\paragraph{Nonnegativity.}
+\[
+x_{0,1},x_{0,2},x_{1,1},x_{1,2},x_{2,1}\ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The formulation above matches the linear program implemented in \texttt{current\_heuristic.py} exactly.
+    \item Although the business description refers to carrying all funds through the end of year \(3\), the code does \emph{not} introduce explicit cash-holding or leftover-cash variables for years \(0\), \(1\), or \(2\). Consequently, any uninvested amount is simply omitted from the objective.
+    \item The code also allows a two-year investment decision at year \(1\) via \(x_{1,2}\), because it matures exactly at year \(3\). No two-year decision is defined at year \(2\), and no one-year decision is defined after year \(2\).
+    \item The model is solved as a linear program using PuLP with the Gurobi command-line solver interface:
+    \[
+    \texttt{prob.solve(pulp.GUROBI\_CMD(msg=0))}.
+    \]
+\end{itemize}

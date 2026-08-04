@@ -1,0 +1,135 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item \(S=\{\text{weekday},\text{weekend}\}\): dinner scenarios, indexed by \(s\).
+    \item \(F\): all foods, indexed by \(f\).
+    \item \(P \subseteq F\): proteins, indexed by \(p\).
+    \item \(V \subseteq F\): vegetables, indexed by \(v\).
+\end{itemize}
+
+\section*{Parameters}
+
+All numerical values are read from the CSV files.
+
+\begin{itemize}
+    \item \(B\) (\texttt{budget}): total budget for both dinners.
+    \item \(Q\) (\texttt{food\_intake}): required food intake per scenario, in grams.
+    \item \(\alpha\) (\texttt{weekday\_budget\_share}): fraction of total budget allocated to the weekday dinner.
+    \item \(T^{\text{wd}}\) (\texttt{max\_prep\_time\_weekday}): maximum preparation time for the weekday dinner.
+    \item \(T^{\text{we}}\) (\texttt{max\_prep\_time\_weekend}): maximum preparation time for the weekend dinner.
+    \item \(\beta\) (\texttt{weekend\_protein\_ban}): binary flag; if \(\beta=1\), proteins are forbidden in the weekend dinner.
+    \item \(\lambda\) (\texttt{veg\_balance\_penalty}): penalty per unit vegetable imbalance.
+    \item \(r_f\) (\texttt{Fiber\_Content\_per\_100g}): fiber content of food \(f\) per 100g. Missing values are treated as \(0\) in the implementation.
+    \item \(c_f\) (\texttt{Price\_per\_100g}): price of food \(f\) per 100g.
+    \item \(\tau_f\) (\texttt{prep\_time\_per\_100g}): preparation time of food \(f\) per 100g.
+\end{itemize}
+
+Derived constants used exactly as in the code:
+\[
+M = Q/100, \qquad B^{\text{wd}}=\alpha B, \qquad B^{\text{we}}=(1-\alpha)B.
+\]
+Here \(M\) is the per-scenario intake expressed in 100g units, matching the units of the decision variables.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_{s,f}\) (code: \texttt{x[(s,f)]}) \(\ge 0\): amount of food \(f\) used in scenario \(s\), measured in 100g units.
+    \item \(y_{s,f}\) (code: \texttt{y[(s,f)]}) \(\in \{0,1\}\): 1 if food \(f\) is included in scenario \(s\), 0 otherwise.
+    \item \(z_p\) (code: \texttt{z[p]}) \(\in \{0,1\}\): 1 if protein \(p\) is the single activated protein label used across the two dinners.
+    \item \(d_v\) (code: \texttt{d[v]}) \(\ge 0\): absolute deviation between weekday and weekend use of vegetable \(v\), in 100g units.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total fiber across both dinners minus the vegetable-balance penalty:
+\[
+\max \sum_{s \in S}\sum_{f \in F} r_f x_{s,f}
+\;-\;
+\lambda \sum_{v \in V} d_v.
+\]
+
+\section*{Constraints}
+
+\paragraph{Per-scenario food intake}
+For each scenario \(s \in S\),
+\[
+\sum_{f \in F} x_{s,f} = M.
+\]
+
+\paragraph{Budget constraints}
+\[
+\sum_{f \in F} c_f x_{\text{weekday},f} \le B^{\text{wd}},
+\]
+\[
+\sum_{f \in F} c_f x_{\text{weekend},f} \le B^{\text{we}},
+\]
+\[
+\sum_{s \in S}\sum_{f \in F} c_f x_{s,f} \le B.
+\]
+
+\paragraph{Exactly one activated protein overall}
+\[
+\sum_{p \in P} z_p = 1.
+\]
+
+\paragraph{Activated protein must appear in at least one dinner}
+For each \(p \in P\),
+\[
+z_p \le y_{\text{weekday},p} + y_{\text{weekend},p}.
+\]
+
+\paragraph{Scenario-specific protein usage must respect the common activation}
+For each \(s \in S\) and \(p \in P\),
+\[
+y_{s,p} \le z_p.
+\]
+
+\paragraph{Weekend protein ban, if triggered}
+If \(\beta=1\), then for each \(p \in P\),
+\[
+y_{\text{weekend},p} \le 0.
+\]
+
+\paragraph{At least two vegetables per scenario}
+For each \(s \in S\),
+\[
+\sum_{v \in V} y_{s,v} \ge 2.
+\]
+
+\paragraph{Linking amount and inclusion decisions}
+For each \(s \in S\) and \(f \in F\),
+\[
+x_{s,f} \ge 0.1\, y_{s,f},
+\]
+\[
+x_{s,f} \le M\, y_{s,f}.
+\]
+
+\paragraph{Preparation time limits}
+\[
+\sum_{f \in F} \tau_f x_{\text{weekday},f} \le T^{\text{wd}},
+\]
+\[
+\sum_{f \in F} \tau_f x_{\text{weekend},f} \le T^{\text{we}}.
+\]
+
+\paragraph{Vegetable balance deviations}
+For each \(v \in V\),
+\[
+d_v \ge x_{\text{weekday},v} - x_{\text{weekend},v},
+\]
+\[
+d_v \ge x_{\text{weekend},v} - x_{\text{weekday},v}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The formulation is a mixed-integer linear program implemented in \texttt{current\_heuristic.py} and solved with \texttt{GUROBI\_CMD}.
+    \item Food quantities \(x_{s,f}\) are expressed in 100g units, because the code sets \(M=Q/100\) and uses price, fiber, and preparation-time data that are all given per 100g.
+    \item Protein fiber values missing in the data are explicitly filled with \(0.0\) before optimization.
+    \item The model enforces exactly one activated protein label across the two dinners via \(z\), but that protein may appear in the weekday dinner, the weekend dinner, or both, unless the weekend protein ban is active.
+    \item The ``avoid using a protein label on paper unless that protein appears in at least one of the two meals'' rule is modeled by \(z_p \le y_{\text{weekday},p}+y_{\text{weekend},p}\).
+    \item The vegetable swing penalty is modeled through auxiliary variables \(d_v\) representing \(|x_{\text{weekday},v}-x_{\text{weekend},v}|\), and the penalty coefficient \(\lambda\) is applied directly exactly as in the code.
+    \item No additional logical restrictions are imposed beyond those shown above; in particular, the model does not require exactly one protein per scenario, only one globally activated protein type.
+\end{itemize}

@@ -1,0 +1,8 @@
+Set parameter LicenseID to value 2802670
+Period 1: x_driver=60, x_crew=60, y_driver=0, y_crew=0
+Period 2: x_driver=10, x_crew=10, y_driver=0, y_crew=0
+Period 3: x_driver=50, x_crew=50, y_driver=0, y_crew=0
+Period 4: x_driver=0, x_crew=0, y_driver=0, y_crew=0
+Period 5: x_driver=30, x_crew=30, y_driver=0, y_crew=0
+Period 6: x_driver=0, x_crew=0, y_driver=0, y_crew=0
+OBJECTIVE_VALUE: 300.0

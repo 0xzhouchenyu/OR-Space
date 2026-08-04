@@ -1,0 +1,102 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I = \{1,\dots,n\}$: set of inheritance items, indexed by $i$.
+    \item $J \subseteq I$: indices of the Jack Russell racing dogs that must not be separated. In this instance, $J=\{9,10\}$ when using the row order of \texttt{table\_1.csv}.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $n$: number of items (code: \texttt{n}).
+    \item $v_i \in \mathbb{Z}_{+}$: value of item $i$ in USD, taken from \texttt{table\_1.csv} (code: \texttt{values[i]}$)$.
+    \item $V^{\text{tot}} = \sum_{i \in I} v_i$: total inheritance value (code: \texttt{total\_value}).
+\end{itemize}
+
+Using the CSV row order, the items are:
+\[
+\begin{array}{rcl}
+1&:&\text{Painting by Caillebotte},\quad v_1=25000,\\
+2&:&\text{Bust of Diocletian},\quad v_2=5000,\\
+3&:&\text{Yuan dynasty Chinese vase},\quad v_3=20000,\\
+4&:&\text{911 Porsche},\quad v_4=40000,\\
+5&:&\text{Diamond 1},\quad v_5=12000,\\
+6&:&\text{Diamond 2},\quad v_6=12000,\\
+7&:&\text{Diamond 3},\quad v_7=12000,\\
+8&:&\text{Louis XV sofa},\quad v_8=3000,\\
+9&:&\text{Jack Russell racing dog 1},\quad v_9=3000,\\
+10&:&\text{Jack Russell racing dog 2},\quad v_{10}=3000,\\
+11&:&\text{Sculpture from 200 AD},\quad v_{11}=10000,\\
+12&:&\text{Sailing boat},\quad v_{12}=15000,\\
+13&:&\text{Harley Davidson motorcycle},\quad v_{13}=10000,\\
+14&:&\text{Furniture once belonging to Cavour},\quad v_{14}=13000.
+\end{array}
+\]
+Hence,
+\[
+n=14,\qquad V^{\text{tot}}=183000.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_i \in \{0,1\}$ for each $i \in I$ (code: \texttt{x[i]}): equals 1 if item $i$ is assigned to son 1, and 0 if it is assigned to son 2.
+    \item $d \ge 0$ (code: \texttt{diff}): absolute difference in total value between the two sons' allocations, represented through linear inequalities.
+\end{itemize}
+
+Define the value assigned to son 1 as
+\[
+V_1 = \sum_{i \in I} v_i x_i,
+\]
+which corresponds to the code expression \texttt{value\_son1}. The value assigned to son 2 is
+\[
+V_2 = V^{\text{tot}} - V_1.
+\]
+
+\section*{Objective}
+
+\[
+\min d
+\]
+
+\section*{Constraints}
+
+Absolute-difference linearization:
+\[
+d \ge 2\sum_{i \in I} v_i x_i - V^{\text{tot}},
+\]
+\[
+d \ge V^{\text{tot}} - 2\sum_{i \in I} v_i x_i.
+\]
+
+Jack Russell racing dogs must not be separated:
+\[
+x_9 = x_{10}.
+\]
+
+Binary assignment:
+\[
+x_i \in \{0,1\} \qquad \forall i \in I.
+\]
+
+Nonnegativity of the difference variable:
+\[
+d \ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a binary linear optimization problem solved with \texttt{GUROBI\_CMD} through the PuLP-compatible interface.
+
+There is no explicit ``each item assigned exactly once'' constraint in the code because this is implied by the binary definition of $x_i$: each item goes to son 1 if $x_i=1$ and to son 2 otherwise.
+
+The absolute difference is modeled exactly as in the code via the auxiliary variable $d$ and the two inequalities
+\[
+d \ge V_1 - V_2,\qquad d \ge V_2 - V_1,
+\]
+written in the implementation as
+\[
+d \ge 2V_1 - V^{\text{tot}},\qquad d \ge V^{\text{tot}} - 2V_1.
+\]
+
+The dog-separation rule is imposed only if exactly two item names contain the substring \texttt{Jack Russell}; for this instance that condition holds, producing the single equality $x_9=x_{10}$. No other grouping or symmetry-breaking constraints are included.

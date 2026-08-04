@@ -1,0 +1,5 @@
+Parameter_Name,Value,Unit,Context_Description
+d_A,100,yuan,One-time setup cost for machine A
+d_B,135,yuan,One-time setup cost for machine B
+d_C,200,yuan,One-time setup cost for machine C
+max_parts_on_C,3,types,Maximum number of parts that can be processed on machine C

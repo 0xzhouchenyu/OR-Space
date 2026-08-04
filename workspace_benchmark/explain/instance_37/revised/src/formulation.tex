@@ -1,0 +1,196 @@
+\section*{Sets and Indices}
+
+\[
+W=\{1,2\}
+\]
+set of weeks, indexed by \(w\).
+
+\[
+M=\{A,B\}
+\]
+set of microcomputer models.
+
+\[
+P=\{I,II\}
+\]
+set of processes.
+
+\section*{Parameters}
+
+All numerical values are read from \texttt{table\_1.csv} and \texttt{general\_parameters.csv}.
+
+For process times per unit:
+\[
+a_I=\texttt{Model\_A\_hours\_per\_unit for Process I},\qquad
+a_{II}=\texttt{Model\_A\_hours\_per\_unit for Process II},
+\]
+\[
+b_I=\texttt{Model\_B\_hours\_per\_unit for Process I},\qquad
+b_{II}=\texttt{Model\_B\_hours\_per\_unit for Process II}.
+\]
+
+For unit sales profit:
+\[
+\pi_A=\texttt{Profit\_per\_unit for Model A},\qquad
+\pi_B=\texttt{Profit\_per\_unit for Model B}.
+\]
+
+Regular weekly process capacities:
+\[
+H_I=\texttt{process\_I\_hours},\qquad H_{II}=\texttt{process\_II\_hours}.
+\]
+
+Maximum overtime per week:
+\[
+\overline{O}_I=\texttt{max\_overtime\_I\_per\_week},\qquad
+\overline{O}_{II}=\texttt{max\_overtime\_II\_per\_week}.
+\]
+
+Overtime cost rates:
+\[
+c_I=\texttt{overtime\_premium\_I},\qquad
+c_{II}=\texttt{overtime\_premium\_II}.
+\]
+
+Week-1 fatigue thresholds:
+\[
+T_I=\texttt{week1\_overtime\_fatigue\_threshold\_I},\qquad
+T_{II}=\texttt{week1\_overtime\_fatigue\_threshold\_II}.
+\]
+
+Week-2 recovery losses in regular hours:
+\[
+L_I=\texttt{week2\_recovery\_loss\_I},\qquad
+L_{II}=\texttt{week2\_recovery\_loss\_II}.
+\]
+
+Weekly minimum delivery requirements:
+\[
+d_{A1}=\texttt{week1\_min\_model\_A\_units},\quad
+d_{A2}=\texttt{week2\_min\_model\_A\_units},
+\]
+\[
+d_{B1}=\texttt{week1\_min\_model\_B\_units},\quad
+d_{B2}=\texttt{week2\_min\_model\_B\_units}.
+\]
+
+Two-week minimum production requirements:
+\[
+D_A=\texttt{min\_model\_A\_units},\qquad
+D_B=\texttt{min\_model\_B\_units}.
+\]
+
+Minimum average utilization fractions of regular hours:
+\[
+u_I=\texttt{min\_avg\_utilization\_I},\qquad
+u_{II}=\texttt{min\_avg\_utilization\_II}.
+\]
+
+Minimum required net two-week profit:
+\[
+\Pi^{\min}=\texttt{min\_weekly\_profit}.
+\]
+
+\section*{Decision Variables}
+
+Production quantities:
+\[
+x_{Aw}\ge 0 \quad \text{(code: \texttt{xA[w]})}, \qquad
+x_{Bw}\ge 0 \quad \text{(code: \texttt{xB[w]})}
+\]
+for \(w\in W\).
+
+Overtime hours:
+\[
+o_{Iw}\ge 0 \quad \text{(code: \texttt{otI[w]})}, \qquad
+o_{IIw}\ge 0 \quad \text{(code: \texttt{otII[w]})}
+\]
+for \(w\in W\).
+
+Recovery activation indicators:
+\[
+r_I\in\{0,1\}\quad \text{(code: \texttt{recovery\_I})},\qquad
+r_{II}\in\{0,1\}\quad \text{(code: \texttt{recovery\_II})}.
+\]
+
+\section*{Objective}
+
+Maximize net two-week profit after overtime spending:
+\[
+\max \;
+\pi_A(x_{A1}+x_{A2})+\pi_B(x_{B1}+x_{B2})
+-c_I(o_{I1}+o_{I2})-c_{II}(o_{II1}+o_{II2}).
+\]
+
+\section*{Constraints}
+
+Week 1 process capacities:
+\[
+a_I x_{A1}+b_I x_{B1}\le H_I+o_{I1},
+\]
+\[
+a_{II} x_{A1}+b_{II} x_{B1}\le H_{II}+o_{II1}.
+\]
+
+Week 2 process capacities with recovery loss:
+\[
+a_I x_{A2}+b_I x_{B2}\le H_I-L_I r_I+o_{I2},
+\]
+\[
+a_{II} x_{A2}+b_{II} x_{B2}\le H_{II}-L_{II} r_{II}+o_{II2}.
+\]
+
+Weekly overtime limits:
+\[
+o_{Iw}\le \overline{O}_I \qquad \forall w\in W,
+\]
+\[
+o_{IIw}\le \overline{O}_{II} \qquad \forall w\in W.
+\]
+
+Week-1 overtime/recovery linking:
+\[
+o_{I1}\le T_I+\overline{O}_I\, r_I,
+\]
+\[
+o_{II1}\le T_{II}+\overline{O}_{II}\, r_{II}.
+\]
+
+Weekly minimum deliveries:
+\[
+x_{A1}\ge d_{A1},\qquad x_{A2}\ge d_{A2},
+\]
+\[
+x_{B1}\ge d_{B1},\qquad x_{B2}\ge d_{B2}.
+\]
+
+Two-week minimum production:
+\[
+x_{A1}+x_{A2}\ge D_A,
+\]
+\[
+x_{B1}+x_{B2}\ge D_B.
+\]
+
+Minimum average utilization of regular process hours over two weeks:
+\[
+a_I x_{A1}+b_I x_{B1}+a_I x_{A2}+b_I x_{B2}\ge 2H_Iu_I,
+\]
+\[
+a_{II} x_{A1}+b_{II} x_{B1}+a_{II} x_{A2}+b_{II} x_{B2}\ge 2H_{II}u_{II}.
+\]
+
+Minimum net two-week profit:
+\[
+\pi_A(x_{A1}+x_{A2})+\pi_B(x_{B1}+x_{B2})
+-c_I(o_{I1}+o_{I2})-c_{II}(o_{II1}+o_{II2})
+\ge \Pi^{\min}.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program with continuous production and overtime variables and binary recovery indicators. It is solved directly with the optimizer invoked in \texttt{current\_heuristic.py}.
+
+The recovery logic is modeled exactly as in the code: if week-1 overtime for a process exceeds its threshold, then the corresponding binary \(r_p\) must take value \(1\), which reduces week-2 regular capacity by the fixed loss \(L_p\). However, the converse is not enforced: the formulation does not require \(r_p=0\) when week-1 overtime is at or below the threshold, so the model may choose \(r_p=1\) voluntarily, though this only tightens week-2 capacity.
+
+The parameter named \texttt{min\_weekly\_profit} is used in the code as a lower bound on total net profit across both weeks, not as a separate per-week profit requirement.

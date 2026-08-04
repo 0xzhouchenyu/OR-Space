@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_5_revise_business",
+  "original_instance_id": "IndustryOR_5",
+  "revise_description": "In the stakeholder handoff for this case, the risk reviewer framed the change in business terms rather than as a spreadsheet checklist. The risk review no longer accepts a plan that is only good in the central case. The same front-office choices have to make sense across the cases in the data pack, while the case-specific consequences settle afterward. Mary is planning a weekday dinner and a weekend dinner together rather than one isolated meal. The pair must share the same shopping logic, respect the prep-time limits `max_prep_time_weekday` and `max_prep_time_weekend`, keep banned weekend proteins out of the weekend plate, and avoid using a protein label on paper unless that protein appears in at least one of the two meals. Vegetable swings between the two nights count against the weekly fiber goal through `veg_balance_penalty`. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+4var, -0var, +8constr, -1constr, mod_6constr, mod_obj, mod_3data",
+      "counts": {
+        "+variable": 4,
+        "-variable": 0,
+        "+constraint": 8,
+        "-constraint": 1,
+        "modify_constraint": 6,
+        "modify_data": 3
+      },
+      "op_count": 19,
+      "distinct_ops": 6,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 38.888889
+  }
+}

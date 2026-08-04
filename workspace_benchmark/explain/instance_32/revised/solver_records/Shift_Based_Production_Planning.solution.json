@@ -1,0 +1,423 @@
+{
+  "solver": "gurobi",
+  "model_name": "Shift_Based_Production_Planning",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 90.33793103448276,
+  "objective_bound": 90.33793103448276,
+  "mip_gap": 0.0,
+  "runtime": 0.005452156066894531,
+  "node_count": 1.0,
+  "iteration_count": 20.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_iisql8ke/solver_records/Shift_Based_Production_Planning.gurobi.log",
+  "variables": {
+    "shortfall": {
+      "value": 1806.7586206896551,
+      "reduced_cost": null
+    },
+    "x_ot_A_1_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_A_1_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_A_2_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_A_2_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_A_3_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_A_3_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_B_1_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_B_1_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_B_2_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_B_2_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_B_3_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_B_3_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_C_1_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_C_1_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_C_2_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_C_2_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_C_3_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_C_3_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_D_1_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_D_1_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_D_2_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_D_2_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_D_3_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_ot_D_3_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_A_1_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_A_1_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_A_2_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_A_2_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_A_3_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_A_3_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_B_1_day": {
+      "value": 74.48275862068965,
+      "reduced_cost": null
+    },
+    "x_reg_B_1_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_B_2_day": {
+      "value": 15.51724137931034,
+      "reduced_cost": null
+    },
+    "x_reg_B_2_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_B_3_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_B_3_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_C_1_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_C_1_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_C_2_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_C_2_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_C_3_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_C_3_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_D_1_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_D_1_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_D_2_day": {
+      "value": 64.13793103448276,
+      "reduced_cost": null
+    },
+    "x_reg_D_2_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_reg_D_3_day": {
+      "value": 55.862068965517246,
+      "reduced_cost": null
+    },
+    "x_reg_D_3_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_A_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_A_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_B_day": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_B_night": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_C_day": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_C_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_D_day": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_D_night": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "z": {
+      "value": 1117.2413793103449,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "RegLimit_A_day": {
+      "sense": "<=",
+      "slack": 60.0,
+      "dual_value": null
+    },
+    "RegLimit_A_night": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "RegLimit_B_day": {
+      "sense": "<=",
+      "slack": 1.4210854715202004e-14,
+      "dual_value": null
+    },
+    "RegLimit_B_night": {
+      "sense": "<=",
+      "slack": 30.0,
+      "dual_value": null
+    },
+    "RegLimit_C_day": {
+      "sense": "<=",
+      "slack": 50.0,
+      "dual_value": null
+    },
+    "RegLimit_C_night": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "RegLimit_D_day": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "RegLimit_D_night": {
+      "sense": "<=",
+      "slack": 40.0,
+      "dual_value": null
+    },
+    "OTCap_A_day": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "OTCap_A_night": {
+      "sense": "<=",
+      "slack": 10.0,
+      "dual_value": null
+    },
+    "OTCap_B_day": {
+      "sense": "<=",
+      "slack": 30.0,
+      "dual_value": null
+    },
+    "OTCap_B_night": {
+      "sense": "<=",
+      "slack": 15.0,
+      "dual_value": null
+    },
+    "OTCap_C_day": {
+      "sense": "<=",
+      "slack": 15.0,
+      "dual_value": null
+    },
+    "OTCap_C_night": {
+      "sense": "<=",
+      "slack": 10.0,
+      "dual_value": null
+    },
+    "OTCap_D_day": {
+      "sense": "<=",
+      "slack": 40.0,
+      "dual_value": null
+    },
+    "OTCap_D_night": {
+      "sense": "<=",
+      "slack": 20.0,
+      "dual_value": null
+    },
+    "TotalCap_A": {
+      "sense": "<=",
+      "slack": 100.0,
+      "dual_value": null
+    },
+    "TotalCap_B": {
+      "sense": "<=",
+      "slack": 60.000000000000014,
+      "dual_value": null
+    },
+    "TotalCap_C": {
+      "sense": "<=",
+      "slack": 80.0,
+      "dual_value": null
+    },
+    "TotalCap_D": {
+      "sense": "<=",
+      "slack": 80.0,
+      "dual_value": null
+    },
+    "LinkY_A_day": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkY_A_night": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkY_B_day": {
+      "sense": "<=",
+      "slack": 60.000000000000014,
+      "dual_value": null
+    },
+    "LinkY_B_night": {
+      "sense": "<=",
+      "slack": 150.0,
+      "dual_value": null
+    },
+    "LinkY_C_day": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkY_C_night": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "LinkY_D_day": {
+      "sense": "<=",
+      "slack": 80.0,
+      "dual_value": null
+    },
+    "LinkY_D_night": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MaxActive_day": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "MaxActive_night": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "Min_component_1": {
+      "sense": "<=",
+      "slack": -2.2737367544323206e-13,
+      "dual_value": null
+    },
+    "Min_component_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Min_component_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Shortfall_def": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    }
+  }
+}

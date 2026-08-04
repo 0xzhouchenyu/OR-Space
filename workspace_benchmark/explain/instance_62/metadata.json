@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_062",
+  "instance_number": 62,
+  "source_revise_instance": "IndustryOR_62_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model and solver artifacts, explain why the objective increases from 90000.0 to 105000.0, but why the LP-relaxation shadow price on `Budget` cannot be used to linearly predict the MIP objective if `investment_budget` is increased slightly. Your answer must trace the premium choice for Restaurant D through the exact code variables `x['Restaurant_D']` and `p['Restaurant_D']`, the objective term in `src/current_heuristic.py`, and the CSV fields/parameter values `Annual_Revenue`, `premium_revenue_uplift`, `premium_upgrade_cost`, and `investment_budget`. Also identify which revised constraints are binding or slack in both the LP relaxation and final MIP solution (`Budget`, `Staff_Hours`, `D_A_Exclusion`, and at least one `Mode_Coupling_*` constraint), and interpret the business meaning of the LP dual value on `Budget` together with why that marginal value breaks at the integer gate introduced by Premium mode."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Restaurant_Investment.gurobi.log",
+        "Restaurant_Investment.lp_relaxation.json",
+        "Restaurant_Investment.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Restaurant_Investment_Modes.gurobi.log",
+        "Restaurant_Investment_Modes.lp_relaxation.json",
+        "Restaurant_Investment_Modes.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 73.87
+  }
+}

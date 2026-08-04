@@ -1,0 +1,5 @@
+Set parameter LicenseID to value 2802670
+Month 1: Purchase = 300.0, Sell = 500.0, End Inventory = 0.0
+Month 2: Purchase = 500.0, Sell = 0.0, End Inventory = 500.0
+Month 3: Purchase = 0.0, Sell = 500.0, End Inventory = 0.0
+OBJECTIVE_VALUE: 4100.0

@@ -1,0 +1,156 @@
+\section*{Sets and Indices}
+
+No nontrivial sets or indices are used; this is a single-period continuous production planning model with aggregate process-capacity constraints.
+
+\section*{Parameters}
+
+\[
+t^{A}_{1}=2
+\]
+time required in process 1 per unit of product A (code: \texttt{a\_p1}).
+
+\[
+t^{A}_{2}=3
+\]
+time required in process 2 per unit of product A (code: \texttt{a\_p2}).
+
+\[
+t^{B}_{1}=3
+\]
+time required in process 1 per unit of product B (code: \texttt{b\_p1}).
+
+\[
+t^{B}_{2}=4
+\]
+time required in process 2 per unit of product B (code: \texttt{b\_p2}).
+
+\[
+T_{1}=16
+\]
+total available time in process 1 (code: \texttt{T1}).
+
+\[
+T_{2}=24
+\]
+total available time in process 2 (code: \texttt{T2}).
+
+\[
+\gamma = 2
+\]
+units of by-product C generated per unit of product B (code: \texttt{c\_per\_b}).
+
+\[
+\overline{C}^{\mathrm{sell}}=5
+\]
+maximum amount of by-product C that can be sold (code: \texttt{max\_c\_sales}).
+
+\[
+\pi_A = 4
+\]
+profit per unit of product A (code: \texttt{profit\_a}).
+
+\[
+\pi_B = 10
+\]
+profit per unit of product B (code: \texttt{profit\_b}).
+
+\[
+\pi_C = 3
+\]
+profit per unit of by-product C sold (code: \texttt{profit\_c}).
+
+\[
+d_C = 2
+\]
+disposal cost per unit of by-product C disposed (code: \texttt{disposal\_cost}).
+
+\section*{Decision Variables}
+
+\[
+x_A \ge 0
+\]
+units of product A produced (code: \texttt{xA}).
+
+\[
+x_B \ge 0
+\]
+units of product B produced (code: \texttt{xB}).
+
+\[
+c^{\mathrm{sell}} \ge 0
+\]
+units of by-product C sold (code: \texttt{cSold}).
+
+\[
+c^{\mathrm{disp}} \ge 0
+\]
+units of by-product C disposed (code: \texttt{cDisposed}).
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+\pi_A x_A + \pi_B x_B + \pi_C c^{\mathrm{sell}} - d_C c^{\mathrm{disp}}.
+\]
+
+With the instance data, this is
+\[
+\max \; 4x_A + 10x_B + 3c^{\mathrm{sell}} - 2c^{\mathrm{disp}}.
+\]
+
+\section*{Constraints}
+
+Process 1 capacity:
+\[
+t^{A}_{1}x_A + t^{B}_{1}x_B \le T_1.
+\]
+
+Process 2 capacity:
+\[
+t^{A}_{2}x_A + t^{B}_{2}x_B \le T_2.
+\]
+
+By-product C balance:
+\[
+c^{\mathrm{sell}} + c^{\mathrm{disp}} = \gamma x_B.
+\]
+
+Upper bound on sales of by-product C:
+\[
+c^{\mathrm{sell}} \le \overline{C}^{\mathrm{sell}}.
+\]
+
+Nonnegativity:
+\[
+x_A,\;x_B,\;c^{\mathrm{sell}},\;c^{\mathrm{disp}} \ge 0.
+\]
+
+Substituting the numerical values:
+\[
+2x_A + 3x_B \le 16,
+\]
+\[
+3x_A + 4x_B \le 24,
+\]
+\[
+c^{\mathrm{sell}} + c^{\mathrm{disp}} = 2x_B,
+\]
+\[
+c^{\mathrm{sell}} \le 5,
+\]
+\[
+x_A,\;x_B,\;c^{\mathrm{sell}},\;c^{\mathrm{disp}} \ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+The implementation in \texttt{current\_heuristic.py} builds exactly the above continuous linear program using PuLP-compatible syntax and solves it with \texttt{GUROBI\_CMD}. No integrality restrictions are imposed, so all variables are continuous.
+
+The model does not introduce an explicit production variable for by-product C; instead, C generation is enforced solely through the balance equation
+\[
+c^{\mathrm{sell}} + c^{\mathrm{disp}} = \gamma x_B.
+\]
+Thus every unit of C generated from product B must be either sold or disposed.
+
+The formulation should not be simplified further when documenting the implemented model; in particular, \texttt{cSold} and \texttt{cDisposed} remain explicit decision variables rather than being eliminated algebraically.

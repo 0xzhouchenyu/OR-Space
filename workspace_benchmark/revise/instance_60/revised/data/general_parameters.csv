@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+num_customers,7,,Number of locations including depot and customers
+start_location,1,,Starting location (depot) for the salesman
+end_location,1,,Ending location (depot) for the salesman
+max_route_length_day,1000,distance,Maximum allowed route length for each service day
+route_cost_day,20,cost per route,Fixed cost for operating the route on a day with at least one assigned customer

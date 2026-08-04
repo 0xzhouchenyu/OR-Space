@@ -1,0 +1,82 @@
+\section*{Sets and Indices}
+
+There are no nontrivial index sets in the implemented model. The problem uses two truck types:
+\[
+\{\text{Type A}, \text{Type B}\}.
+\]
+
+\section*{Parameters}
+
+From \texttt{general\_parameters.csv}, let:
+\begin{align*}
+R_A &:= \text{refrigerated capacity of a Type A truck} 
+&& (\texttt{refrigerated\_capacity\_type\_a}) = 20,\\
+N_A &:= \text{non-refrigerated capacity of a Type A truck} 
+&& (\texttt{non\_refrigerated\_capacity\_type\_a}) = 40,\\
+R_B &:= \text{refrigerated capacity of a Type B truck} 
+&& (\texttt{refrigerated\_capacity\_type\_b}) = 30,\\
+N_B &:= \text{non-refrigerated capacity of a Type B truck} 
+&& (\texttt{non\_refrigerated\_capacity\_type\_b}) = 30,\\
+D_R &:= \text{required refrigerated cargo volume} 
+&& (\texttt{refrigerated\_cargo\_requirement}) = 3000,\\
+D_N &:= \text{required non-refrigerated cargo volume} 
+&& (\texttt{non\_refrigerated\_cargo\_requirement}) = 4000,\\
+c_A &:= \text{rental cost per Type A truck per kilometer} 
+&& (\texttt{rental\_cost\_type\_a}) = 30,\\
+c_B &:= \text{rental cost per Type B truck per kilometer} 
+&& (\texttt{rental\_cost\_type\_b}) = 40.
+\end{align*}
+
+\section*{Decision Variables}
+
+\begin{align*}
+x &:= \text{number of Type A trucks rented} && (\texttt{x}) \in \mathbb{Z}_{\ge 0},\\
+y &:= \text{number of Type B trucks rented} && (\texttt{y}) \in \mathbb{Z}_{\ge 0}.
+\end{align*}
+
+\section*{Objective}
+
+Minimize total rental cost per kilometer:
+\[
+\min \; c_A x + c_B y.
+\]
+
+With the instance data, this is
+\[
+\min \; 30x + 40y.
+\]
+
+\section*{Constraints}
+
+Refrigerated cargo requirement:
+\[
+R_A x + R_B y \ge D_R.
+\]
+
+Non-refrigerated cargo requirement:
+\[
+N_A x + N_B y \ge D_N.
+\]
+
+Integrality and nonnegativity:
+\[
+x, y \in \mathbb{Z}_{\ge 0}.
+\]
+
+With the instance data, the capacity constraints are
+\begin{align*}
+20x + 30y &\ge 3000,\\
+40x + 30y &\ge 4000.
+\end{align*}
+
+\section*{Notes on Implementation}
+
+The code constructs exactly the above integer linear program in PuLP:
+\begin{itemize}
+\item \texttt{x} is created as \texttt{LpVariable("TypeA\_trucks", lowBound=0, cat='Integer')}.
+\item \texttt{y} is created as \texttt{LpVariable("TypeB\_trucks", lowBound=0, cat='Integer')}.
+\item The objective is \texttt{cost\_a * x + cost\_b * y}.
+\item The two constraints are added with ``\(\ge\)'' sense exactly as written above.
+\end{itemize}
+
+The model is solved using \texttt{pulp.GUROBI\_CMD(msg=0)}. No upper bounds, fixed truck limits, distance scaling, or additional logical constraints are included in the implemented model. The output reports the integer values of \texttt{x} and \texttt{y} and the resulting objective value.

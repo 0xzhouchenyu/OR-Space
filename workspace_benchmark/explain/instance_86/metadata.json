@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_086",
+  "instance_number": 86,
+  "source_revise_instance": "IndustryOR_86_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model, explain why the optimal objective drops from 77499.99999999999 to 71999.99999999999 even though the raw-material limits are still loose, and identify the exact code changes that created this change in economic state. Your answer must name the CSV fields and parameter values behind the new `line_open` and `retailer_allowance` logic (including `line_fixed_cost`, `line_capacity_packs`, `min_batch_packs`, `min_yummies`, `retailer_rebate_yummies_threshold`, `retailer_rebate_min_meaties`, and `retailer_rebate_fixed`), and must reference the code variable names `xm`, `xy`, `line`, and `rebate` together with the binding constraints/solver slacks and duals visible in the revised output. Finally, interpret why the active constraint with zero slack in the LP relaxation has a marginal value of 0.6499999999999999, why the Yummies threshold gate does not admit a local linear sensitivity explanation, and quantify which added term(s) and gate(s) account for the 5500 objective decrease relative to the original continuous model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "HealthyPetFoods.gurobi.log",
+        "HealthyPetFoods.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "HealthyPetRetailPair.gurobi.log",
+        "HealthyPetRetailPair.lp_relaxation.json",
+        "HealthyPetRetailPair.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 78.747222
+  }
+}

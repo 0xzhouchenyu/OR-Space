@@ -1,0 +1,44 @@
+{
+  "solver": "gurobi",
+  "model_name": "Maximize_Profit",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 146.66666666666669,
+  "objective_bound": 146.66666666666669,
+  "mip_gap": null,
+  "runtime": 0.0005540847778320312,
+  "node_count": 0.0,
+  "iteration_count": 1.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_nw3aw5kh/solver_records/Maximize_Profit.gurobi.log",
+  "variables": {
+    "product_A": {
+      "value": 1.333333333333334,
+      "reduced_cost": 0.0
+    },
+    "product_B": {
+      "value": 10.666666666666666,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Production_Hours": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 1.666666666666667
+    },
+    "Market_Demand": {
+      "sense": ">=",
+      "slack": -6.666666666666664,
+      "dual_value": 0.0
+    },
+    "Storage_Capacity": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 5.0
+    }
+  }
+}

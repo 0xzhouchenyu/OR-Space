@@ -1,0 +1,87 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Children set $C$ (code: \texttt{children})$=\{\text{Alice},\text{Bob},\text{Charlie},\text{Diana},\text{Ella}\}$.
+    \item Index $i \in C$ denotes a child.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Trip cost for child $i$, $c_i$ (code: \texttt{costs[child]}):
+    \[
+    c_{\text{Alice}}=1000,\quad
+    c_{\text{Bob}}=900,\quad
+    c_{\text{Charlie}}=600,\quad
+    c_{\text{Diana}}=500,\quad
+    c_{\text{Ella}}=700.
+    \]
+    \item Minimum number of children to take, $L$ (code: \texttt{min\_children})$=2$.
+    \item Maximum number of children to take, $U$ (code: \texttt{max\_children})$=3$.
+\end{itemize}
+
+\section*{Decision Variables}
+
+For each child $i \in C$, define a binary selection variable
+\[
+x_i \in \{0,1\} \qquad \text{(code: \texttt{x[child]})},
+\]
+where $x_i=1$ if child $i$ is taken on the trip, and $x_i=0$ otherwise.
+
+\section*{Objective}
+
+Minimize total trip cost:
+\[
+\min \sum_{i \in C} c_i x_i .
+\]
+
+\section*{Constraints}
+
+Cardinality bounds:
+\[
+L \le \sum_{i \in C} x_i \le U.
+\]
+
+Bob must be taken:
+\[
+x_{\text{Bob}} = 1.
+\]
+
+Alice and Diana cannot both be taken:
+\[
+x_{\text{Alice}} + x_{\text{Diana}} \le 1.
+\]
+
+Bob and Charlie cannot both be taken:
+\[
+x_{\text{Bob}} + x_{\text{Charlie}} \le 1.
+\]
+
+Charlie requires Diana:
+\[
+x_{\text{Charlie}} \le x_{\text{Diana}}.
+\]
+
+Diana requires Ella:
+\[
+x_{\text{Diana}} \le x_{\text{Ella}}.
+\]
+
+Binary restrictions:
+\[
+x_i \in \{0,1\} \qquad \forall i \in C.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a binary linear optimization model created with PuLP-compatible syntax and solved by Gurobi via \texttt{GUROBI\_CMD(msg=0)}.
+    \item The child set and costs are read from \texttt{table\_1.csv}; the minimum and maximum trip sizes are read from \texttt{general\_parameters.csv}.
+    \item The implementation uses the explicit logical implications exactly as linear inequalities:
+    \[
+    x_{\text{Charlie}} \le x_{\text{Diana}}, \qquad
+    x_{\text{Diana}} \le x_{\text{Ella}}.
+    \]
+    No additional symmetry-breaking, preprocessing, or redundant strengthening constraints are added.
+    \item Although the business table text for Ella says ``Must be taken with Diana,'' the code enforces only $x_{\text{Diana}} \le x_{\text{Ella}}$ and does not enforce the reverse implication $x_{\text{Ella}} \le x_{\text{Diana}}$. The formulation above matches the implemented model exactly.
+\end{itemize}

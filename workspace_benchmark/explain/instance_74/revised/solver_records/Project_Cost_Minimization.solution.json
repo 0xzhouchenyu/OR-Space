@@ -1,0 +1,102 @@
+{
+  "solver": "gurobi",
+  "model_name": "Project_Cost_Minimization",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 115000.0,
+  "objective_bound": 115000.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0005500316619873047,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_8gw448u0/solver_records/Project_Cost_Minimization.gurobi.log",
+  "variables": {
+    "S_A": {
+      "value": 5.0,
+      "reduced_cost": null
+    },
+    "S_B": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "S_C": {
+      "value": 20.0,
+      "reduced_cost": null
+    },
+    "S_D": {
+      "value": 18.0,
+      "reduced_cost": null
+    },
+    "S_E": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "S_F": {
+      "value": 10.0,
+      "reduced_cost": null
+    },
+    "S_G": {
+      "value": 9.0,
+      "reduced_cost": null
+    },
+    "T": {
+      "value": 25.0,
+      "reduced_cost": null
+    },
+    "use_ot": {
+      "value": 0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": ">=",
+      "slack": -9.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C6": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C7": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C8": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C9": {
+      "sense": ">=",
+      "slack": -2.0,
+      "dual_value": null
+    }
+  }
+}

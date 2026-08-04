@@ -1,0 +1,321 @@
+{
+  "solver": "gurobi",
+  "model_name": "MinCostProduction_EnergyPeriods",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 46980.0,
+  "objective_bound": 46980.0,
+  "mip_gap": 0.0,
+  "runtime": 0.004467010498046875,
+  "node_count": 1.0,
+  "iteration_count": 9.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_7mw_j2s8/solver_records/MinCostProduction_EnergyPeriods.gurobi.log",
+  "variables": {
+    "x_('A',_'offpeak')": {
+      "value": 800.0,
+      "reduced_cost": null
+    },
+    "x_('A',_'peak')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_('B',_'offpeak')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_('B',_'peak')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_('C',_'offpeak')": {
+      "value": 1200.0,
+      "reduced_cost": null
+    },
+    "x_('C',_'peak')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_('D',_'offpeak')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_('D',_'peak')": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_A": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_B": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_C": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_D": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "z_('A',_'offpeak')": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z_('A',_'peak')": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "z_('B',_'offpeak')": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "z_('B',_'peak')": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "z_('C',_'offpeak')": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "z_('C',_'peak')": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "z_('D',_'offpeak')": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "z_('D',_'peak')": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "TotalDemand": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "DailyCap_A": {
+      "sense": "<=",
+      "slack": 100.0,
+      "dual_value": null
+    },
+    "DailyCap_B": {
+      "sense": "<=",
+      "slack": 1000.0,
+      "dual_value": null
+    },
+    "DailyCap_C": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "DailyCap_D": {
+      "sense": "<=",
+      "slack": 1600.0,
+      "dual_value": null
+    },
+    "YLinkUB_A_peak": {
+      "sense": "<=",
+      "slack": 900.0,
+      "dual_value": null
+    },
+    "YLinkUB_A_offpeak": {
+      "sense": "<=",
+      "slack": 100.0,
+      "dual_value": null
+    },
+    "YLinkLB_A": {
+      "sense": ">=",
+      "slack": -799.999,
+      "dual_value": null
+    },
+    "YLinkUB_B_peak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YLinkUB_B_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YLinkLB_B": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YLinkUB_C_peak": {
+      "sense": "<=",
+      "slack": 1200.0,
+      "dual_value": null
+    },
+    "YLinkUB_C_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YLinkLB_C": {
+      "sense": ">=",
+      "slack": -1199.999,
+      "dual_value": null
+    },
+    "YLinkUB_D_peak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YLinkUB_D_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YLinkLB_D": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkUB_A_peak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkLB_A_peak": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkUB_A_offpeak": {
+      "sense": "<=",
+      "slack": 100.0,
+      "dual_value": null
+    },
+    "ZLinkLB_A_offpeak": {
+      "sense": ">=",
+      "slack": -799.999,
+      "dual_value": null
+    },
+    "ZLinkUB_B_peak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkLB_B_peak": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkUB_B_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkLB_B_offpeak": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkUB_C_peak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkLB_C_peak": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkUB_C_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkLB_C_offpeak": {
+      "sense": ">=",
+      "slack": -1199.999,
+      "dual_value": null
+    },
+    "ZLinkUB_D_peak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkLB_D_peak": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkUB_D_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "ZLinkLB_D_offpeak": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YZConsist_A_peak": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "YZConsist_A_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YZConsist_B_peak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YZConsist_B_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YZConsist_C_peak": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "YZConsist_C_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YZConsist_D_peak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "YZConsist_D_offpeak": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "EnergyBudget_peak": {
+      "sense": "<=",
+      "slack": 15000.0,
+      "dual_value": null
+    },
+    "EnergyBudget_offpeak": {
+      "sense": "<=",
+      "slack": 5900.0,
+      "dual_value": null
+    },
+    "StartupBudget": {
+      "sense": "<=",
+      "slack": 1200.0,
+      "dual_value": null
+    }
+  }
+}

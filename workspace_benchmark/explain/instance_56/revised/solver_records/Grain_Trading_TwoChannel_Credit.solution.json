@@ -1,0 +1,203 @@
+{
+  "solver": "gurobi",
+  "model_name": "Grain_Trading_TwoChannel_Credit",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": -850.0,
+  "objective_bound": -850.0,
+  "mip_gap": null,
+  "runtime": 0.0005331039428710938,
+  "node_count": 0.0,
+  "iteration_count": 7.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_64ijfmos/solver_records/Grain_Trading_TwoChannel_Credit.gurobi.log",
+  "variables": {
+    "buy_fast_1": {
+      "value": 0.0,
+      "reduced_cost": -0.14250000000000007
+    },
+    "buy_fast_2": {
+      "value": 0.0,
+      "reduced_cost": -0.1525000000000003
+    },
+    "buy_fast_3": {
+      "value": 0.0,
+      "reduced_cost": -0.14500000000000002
+    },
+    "buy_regular_1": {
+      "value": 5000.0,
+      "reduced_cost": 0.0
+    },
+    "buy_regular_2": {
+      "value": 1500.0,
+      "reduced_cost": 0.0
+    },
+    "buy_regular_3": {
+      "value": 2000.0,
+      "reduced_cost": 0.0
+    },
+    "credit_used_1": {
+      "value": 0.0,
+      "reduced_cost": -1.02
+    },
+    "credit_used_2": {
+      "value": 0.0,
+      "reduced_cost": -1.02
+    },
+    "credit_used_3": {
+      "value": 0.0,
+      "reduced_cost": -1.02
+    },
+    "funds_1": {
+      "value": 8850.0,
+      "reduced_cost": 0.0
+    },
+    "funds_2": {
+      "value": 20525.0,
+      "reduced_cost": 0.0
+    },
+    "funds_3": {
+      "value": 19150.0,
+      "reduced_cost": 0.0
+    },
+    "sell_1": {
+      "value": 1000.0,
+      "reduced_cost": 0.0
+    },
+    "sell_2": {
+      "value": 5000.0,
+      "reduced_cost": 0.0
+    },
+    "sell_3": {
+      "value": 1500.0,
+      "reduced_cost": 0.0
+    },
+    "stock_1": {
+      "value": 5000.0,
+      "reduced_cost": 0.0
+    },
+    "stock_2": {
+      "value": 1500.0,
+      "reduced_cost": 0.0
+    },
+    "stock_3": {
+      "value": 2000.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "stock_balance_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 2.85
+    },
+    "sell_limit_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.25
+    },
+    "warehouse_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.3999999999999999
+    },
+    "min_inventory_1": {
+      "sense": ">=",
+      "slack": -3800.0,
+      "dual_value": 0.0
+    },
+    "fast_capacity_1": {
+      "sense": "<=",
+      "slack": 1500.0,
+      "dual_value": 0.0
+    },
+    "credit_limit_1": {
+      "sense": "<=",
+      "slack": 5000.0,
+      "dual_value": 0.0
+    },
+    "funds_balance_1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "stock_balance_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 3.05
+    },
+    "sell_limit_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.20000000000000018
+    },
+    "warehouse_2": {
+      "sense": "<=",
+      "slack": 3500.0,
+      "dual_value": 0.0
+    },
+    "min_inventory_2": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -0.09999999999999964
+    },
+    "fast_capacity_2": {
+      "sense": "<=",
+      "slack": 1500.0,
+      "dual_value": 0.0
+    },
+    "credit_limit_2": {
+      "sense": "<=",
+      "slack": 5000.0,
+      "dual_value": 0.0
+    },
+    "funds_balance_2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "stock_balance_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 2.9
+    },
+    "sell_limit_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.050000000000000266
+    },
+    "warehouse_3": {
+      "sense": "<=",
+      "slack": 3000.0,
+      "dual_value": 0.0
+    },
+    "min_inventory_3": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": -2.9
+    },
+    "fast_capacity_3": {
+      "sense": "<=",
+      "slack": 1500.0,
+      "dual_value": 0.0
+    },
+    "credit_limit_3": {
+      "sense": "<=",
+      "slack": 5000.0,
+      "dual_value": 0.0
+    },
+    "funds_balance_3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.0
+    },
+    "end_inventory": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": 0.0
+    }
+  }
+}

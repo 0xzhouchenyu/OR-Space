@@ -1,0 +1,1 @@
+A company plans to produce three types of products. It can operate for a specified number of days in a month. The business requirements include constraints on maximum demand, selling price, production cost, production quota, fixed activation costs, and minimum production batch sizes. Please refer to the corresponding CSV files in the data folder for specific parameter values.

@@ -1,0 +1,7 @@
+A transportation company has two types of trucks, Type A and Type B. Type A trucks have different capacities for refrigerated and non-refrigerated cargo, while Type B trucks have equal capacities for both types of cargo. A grocer needs to rent trucks to transport a certain amount of refrigerated and non-refrigerated cargo. The rental cost per kilometer differs between the two types of trucks. The goal is to determine how many of each type of truck the grocer should rent to minimize the total cost. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. Dispatch now watches total fleet size as well as Type B recovery. If Type A plus Type B trucks exceed 115 in total, the carrier opens a regional recovery desk costing 100; the existing Type B threshold still applies separately. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

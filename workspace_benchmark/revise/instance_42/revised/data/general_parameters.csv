@@ -1,0 +1,17 @@
+Parameter_Name,Value,Unit,Context_Description
+a,2,hours,Time required per furnace for the first steelmaking method
+m_offpeak,50,dollars,Fuel cost per furnace batch for method 1 in off-peak hours
+b,3,hours,Time required per furnace for the second steelmaking method
+n_offpeak,70,dollars,Fuel cost per furnace batch for method 2 in off-peak hours
+k,10,tons,Steel production per furnace batch regardless of the method and period
+d,30,tons,Minimum steel production requirement per month
+c_offpeak,12,hours,Maximum off-peak time available per furnace per month
+c_peak,8,hours,Maximum peak time available per furnace per month
+cap_offpeak,24,hours,Plant-wide maximum off-peak time across both furnaces per month
+cap_peak,16,hours,Plant-wide maximum peak time across both furnaces per month
+m_peak,60,dollars,Fuel cost per furnace batch for method 1 in peak hours
+n_peak,80,dollars,Fuel cost per furnace batch for method 2 in peak hours
+f_offpeak,5,dollars per month per furnace,Fixed activation overhead cost if a furnace is used in off-peak hours
+f_peak,10,dollars per month per furnace,Fixed activation overhead cost if a furnace is used in peak hours
+offpeak_cooldown_batch_threshold,2,batches_per_furnace,Off-peak batches a single furnace can take before refractory cooldown work is needed
+offpeak_cooldown_fee,20,dollars,One-time cooldown burden for each furnace whose off-peak batch count exceeds the threshold

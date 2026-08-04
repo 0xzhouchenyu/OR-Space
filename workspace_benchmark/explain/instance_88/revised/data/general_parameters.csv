@@ -1,0 +1,17 @@
+Parameter_Name,Value,Unit,Context_Description
+machine_1_time_per_liquid_lot,50,minutes,Time required on Machine 1 for liquid
+machine_2_time_per_liquid_lot,30,minutes,Time required on Machine 2 for liquid
+machine_1_time_per_solid_lot,24,minutes,Time required on Machine 1 for solid
+machine_2_time_per_solid_lot,33,minutes,Time required on Machine 2 for solid
+initial_liquid_inventory,30,lots,Initial liquid inventory
+initial_solid_inventory,90,lots,Initial solid inventory
+machine_1_available_time,40,hours,Machine 1 base weekly time
+machine_2_available_time,35,hours,Machine 2 base weekly time
+forecast_liquid_demand,75,lots,Forecast liquid demand
+forecast_solid_demand,95,lots,Forecast solid demand
+extended_extra_minutes,600,minutes,Extra minutes when a machine uses extended pattern
+labor_hours_per_machine_extended,8,hours,Skilled labor hours per extended machine
+labor_budget_hours,10,hours,Shared skilled labor budget
+extended_mode_penalty,0.5,score,Score deduction per extended machine
+priority_reserve_lots,10,lots,Closing lots per product that count fully
+excess_reserve_credit,0.35,score/lot,Score credit for closing lots above the priority band

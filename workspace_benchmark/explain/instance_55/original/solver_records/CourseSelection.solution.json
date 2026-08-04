@@ -1,0 +1,84 @@
+{
+  "solver": "gurobi",
+  "model_name": "CourseSelection",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 4.0,
+  "objective_bound": 4.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0041010379791259766,
+  "node_count": 1.0,
+  "iteration_count": 8.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_i_fl5fjk/solver_records/CourseSelection.gurobi.log",
+  "variables": {
+    "x_Calculus": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_Computer_Programming": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_Computer_Simulation": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_Data_Structures": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_Forecasting": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_Management_Statistics": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "x_Operations_Research": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "Min_Mathematics": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Min_Computer_Science": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Min_Operations_Research": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "Prereq_Computer_Simulation_needs_Computer_Programming": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Prereq_Data_Structures_needs_Computer_Programming": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    },
+    "Prereq_Management_Statistics_needs_Calculus": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "Prereq_Forecasting_needs_Management_Statistics": {
+      "sense": "<=",
+      "slack": 1.0,
+      "dual_value": null
+    }
+  }
+}

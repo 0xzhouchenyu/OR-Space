@@ -1,0 +1,55 @@
+{
+  "instance_id": "OR_explain_042",
+  "instance_number": 42,
+  "source_revise_instance": "IndustryOR_42_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "The objective rises from 150.0 in the original model to 160.0 in the revised model even though the revised optimal production still uses only off-peak method-1 batches. Trace that +10 change to the exact revised code additions: identify the new variable names and objective terms that cause it, and map each one back to the exact CSV field names and the business brief phrases about a \"gate\" and the furnace \"cooldown burden.\" Then use the solver records to explain which constraints are binding versus slack in the revised LP relaxation and MIP solution—specifically `Min_Production`, `Offpeak_Activation_Link_1`, `Offpeak_Activation_Link_2`, and `Offpeak_Cooldown_i`—including the reported slack/dual values where available, the business meaning of those marginal values, and why you cannot linearly extrapolate the LP-relaxation shadow-price logic to predict the integer revised optimum when off-peak batches on one furnace cross the threshold 2."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "SteelFurnace.gurobi.log",
+        "SteelFurnace.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "SteelFurnace_Peak_Offpeak_Activation.gurobi.log",
+        "SteelFurnace_Peak_Offpeak_Activation.lp_relaxation.json",
+        "SteelFurnace_Peak_Offpeak_Activation.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 76.118889
+  }
+}

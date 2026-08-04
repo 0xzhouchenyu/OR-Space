@@ -1,0 +1,134 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Planning stages: $T=\{1,\dots,n\}$.
+    \item Inventory state indices: $\{0\}\cup T$, where index $0$ denotes the state before stage $1$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Number of stages: $n$.
+    \item Tool requirement in stage $t\in T$: $r_t$ (code data: \texttt{demand[t]} / \texttt{tool\_requirement[t]}).
+    \item Cost per newly purchased tool: $c^{\text{buy}}$ (code: \texttt{cost\_new}).
+    \item Cost per tool sent to fast repair: $c^{\text{fast}}$ (code: \texttt{cost\_fast}).
+    \item Cost per tool sent to slow repair: $c^{\text{slow}}$ (code: \texttt{cost\_slow}).
+    \item Fast repair duration in stages: $\tau^{\text{fast}}$ (code: \texttt{dur\_fast}).
+    \item Slow repair duration in stages: $\tau^{\text{slow}}$ (code: \texttt{dur\_slow}).
+    \item Maximum number of tools that can be sent to fast repair in any stage: $\bar y$ (code: \texttt{max\_fast\_stage}).
+    \item Maximum number of tools that can be sent to slow repair in any stage: $\bar z$ (code: \texttt{max\_slow\_stage}).
+    \item Carbon emitted per newly purchased tool: $e^{\text{buy}}$ (code: \texttt{emission\_buy}).
+    \item Carbon emitted per tool sent to fast repair: $e^{\text{fast}}$ (code: \texttt{emission\_fast}).
+    \item Carbon emitted per tool sent to slow repair: $e^{\text{slow}}$ (code: \texttt{emission\_slow}).
+    \item Total carbon budget over the planning horizon: $B^{\text{CO}_2}$ (code: \texttt{carbon\_budget}).
+    \item Penalty per unit of unmet demand: $p^{\text{short}}$ (code: \texttt{penalty\_shortage}).
+\end{itemize}
+
+For compactness, define the repair completions available in stage $t$ exactly as in the code:
+\[
+R^{\text{fast}}_t =
+\begin{cases}
+y_{t-\tau^{\text{fast}}-1}, & \text{if } t-\tau^{\text{fast}}-1 \ge 1,\\
+0, & \text{otherwise,}
+\end{cases}
+\qquad
+R^{\text{slow}}_t =
+\begin{cases}
+z_{t-\tau^{\text{slow}}-1}, & \text{if } t-\tau^{\text{slow}}-1 \ge 1,\\
+0, & \text{otherwise.}
+\end{cases}
+\]
+
+\section*{Decision Variables}
+
+All decision variables are nonnegative integers.
+
+\begin{itemize}
+    \item $x_t$ (code: \texttt{x[t]}): number of new tools purchased in stage $t$, for $t\in T$.
+    \item $y_t$ (code: \texttt{y[t]}): number of tools sent to fast repair in stage $t$, for $t\in T$.
+    \item $z_t$ (code: \texttt{z[t]}): number of tools sent to slow repair in stage $t$, for $t\in T$.
+    \item $c_t$ (code: \texttt{c[t]}): clean tools carried at the end of stage/state $t$, for $t\in \{0\}\cup T$.
+    \item $d_t$ (code: \texttt{d[t]}): dirty tools carried at the end of stage/state $t$, for $t\in \{0\}\cup T$.
+    \item $u_t$ (code: \texttt{u[t]}): tools used to satisfy demand in stage $t$, for $t\in T$.
+    \item $s_t$ (code: \texttt{s[t]}): shortage in stage $t$, for $t\in T$.
+    \item $p_0$ (code: \texttt{prebuy0} / \texttt{prebuy\_clean0}): clean tools pre-bought before stage $1$.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total purchasing, repair, and shortage-penalty cost:
+\[
+\min \;
+c^{\text{buy}} p_0
++\sum_{t\in T}\left(
+c^{\text{buy}} x_t
++c^{\text{fast}} y_t
++c^{\text{slow}} z_t
++p^{\text{short}} s_t
+\right).
+\]
+
+\section*{Constraints}
+
+Initial conditions:
+\[
+c_0 = p_0,
+\qquad
+d_0 = 0.
+\]
+
+For each stage $t\in T$, clean-flow balance:
+\[
+c_{t-1} + x_t + R^{\text{fast}}_t + R^{\text{slow}}_t = u_t + c_t.
+\]
+
+For each stage $t\in T$, dirty-flow balance:
+\[
+u_t + d_{t-1} = y_t + z_t + d_t.
+\]
+
+For each stage $t\in T$, demand satisfaction with explicit shortage:
+\[
+u_t + s_t = r_t.
+\]
+
+For each stage $t\in T$, repair-stage capacity limits:
+\[
+y_t \le \bar y,
+\qquad
+z_t \le \bar z.
+\]
+
+Global carbon-budget constraint:
+\[
+e^{\text{buy}} p_0
++\sum_{t\in T}\left(
+e^{\text{buy}} x_t
++e^{\text{fast}} y_t
++e^{\text{slow}} z_t
+\right)
+\le B^{\text{CO}_2}.
+\]
+
+Integrality and nonnegativity:
+\[
+x_t,y_t,z_t,u_t,s_t \in \mathbb{Z}_{\ge 0}\quad (t\in T),
+\qquad
+c_t,d_t \in \mathbb{Z}_{\ge 0}\quad (t\in \{0\}\cup T),
+\qquad
+p_0\in \mathbb{Z}_{\ge 0}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The formulation above matches the implemented mixed-integer linear program in \texttt{current\_heuristic.py}, solved through PuLP with a Gurobi backend.
+    \item The repair-return timing is implemented literally via the terms
+    \[
+    y_{t-\tau^{\text{fast}}-1},\qquad z_{t-\tau^{\text{slow}}-1},
+    \]
+    when the referenced stage index is at least $1$, and $0$ otherwise. Thus a fast repair sent in stage $k$ becomes available in stage $k+\tau^{\text{fast}}+1$, and similarly for slow repair.
+    \item New purchases $x_t$ are available immediately within the same stage $t$ through the clean-balance equation, and pre-bought clean stock $p_0$ is available from the start via $c_0=p_0$.
+    \item Dirty tools not assigned to repair in a stage remain in the dirty inventory $d_t$ and may be assigned to repair in later stages through the dirty-balance equation.
+    \item Shortage is allowed in every stage and is penalized linearly through $p^{\text{short}} s_t$.
+\end{itemize}

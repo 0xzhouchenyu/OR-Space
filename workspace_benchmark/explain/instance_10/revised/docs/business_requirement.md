@@ -1,0 +1,7 @@
+A convenience supermarket is planning to open several chain stores in a newly built residential area in the northwest suburb of the city. For shopping convenience, the distance from any residential area to one of the chain stores should not exceed a specified distance. Please refer to the corresponding CSV files in the data folder for specific parameter values and residential area relationships. Question: What is the minimum number of chain stores the supermarket needs to build among the mentioned residential areas, and in which residential areas should they be built?
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. The sponsor was careful about direction. A companion, prerequisite, approval, or follow-on condition runs only the way the business sentence says it runs; the reverse direction is not part of the deal unless it is stated. The rollout team promised the city a visible neighborhood-counter footprint, not only broad coverage from large boxes. At least 6 Small-format stores must be opened as local counters; each Small-format store counts once toward that promise, while Large-format stores still follow the existing cost and coverage rules. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

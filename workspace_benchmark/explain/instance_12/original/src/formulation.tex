@@ -1,0 +1,88 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I=\{1,\dots,6\}$: set of container types, indexed by $i$ and $j$.
+    \item For each demand type $j \in I$, the admissible substitute production types are
+    \[
+    A(j)=\{\, i \in I \mid v_i \ge v_j \,\},
+    \]
+    i.e., container type $i$ can satisfy demand of type $j$ only if its volume is at least as large.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $v_i$: volume (cm$^3$) of container type $i$.
+    \item $d_i$: market demand (units) for container type $i$.
+    \item $c_i$: unit variable production cost (Yuan/unit) for container type $i$.
+    \item $F$: fixed setup cost (Yuan) incurred if production equipment for a type is activated.
+    \item $M$: big-$M$ constant used in setup linking constraints, defined in the code as
+    \[
+    M=\sum_{k \in I} d_k.
+    \]
+\end{itemize}
+
+Using the provided data, $F=1200$ and
+\[
+(v_i,d_i,c_i)_{i \in I}=
+\{(1500,500,5),(2500,550,8),(4000,700,10),(6000,900,12),(9000,400,16),(12000,300,18)\}.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ij}$ (code: \texttt{x[i,j]}): nonnegative integer number of units of container type $i$ produced to fulfill demand of type $j$, defined only for pairs $(i,j)$ such that $v_i \ge v_j$.
+    \[
+    x_{ij} \in \mathbb{Z}_{\ge 0} \qquad \forall i \in I,\ \forall j \in I \text{ with } v_i \ge v_j.
+    \]
+    \item $y_i$ (code: \texttt{y[i]}): binary setup variable equal to 1 if container type $i$ is produced, 0 otherwise.
+    \[
+    y_i \in \{0,1\} \qquad \forall i \in I.
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total variable production cost plus total fixed setup cost:
+\[
+\min \;
+\sum_{j \in I}\sum_{i \in A(j)} c_i\, x_{ij}
+\;+\;
+\sum_{i \in I} F\, y_i.
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Demand satisfaction.} Each demand type must be met by its own type or a larger-volume substitute:
+    \[
+    \sum_{i \in A(j)} x_{ij} \ge d_j
+    \qquad \forall j \in I.
+    \]
+
+    \item \textbf{Setup-production linking.} Production of type $i$ is allowed only if its setup is activated:
+    \[
+    \sum_{\substack{j \in I:\\ v_i \ge v_j}} x_{ij} \le M\, y_i
+    \qquad \forall i \in I.
+    \]
+
+    \item \textbf{Integrality and domains.}
+    \[
+    x_{ij} \in \mathbb{Z}_{\ge 0}
+    \qquad \forall (i,j): v_i \ge v_j,
+    \]
+    \[
+    y_i \in \{0,1\}
+    \qquad \forall i \in I.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implementation creates variables only for feasible substitution pairs $(i,j)$ with $v_i \ge v_j$; infeasible pairs do not exist in the model.
+    \item Demand constraints are modeled with ``$\ge$'' rather than equality. Thus the implemented model permits over-satisfying a demand type, although positive costs make unnecessary overproduction unattractive in optimal solutions.
+    \item There are no capacity constraints, raw material constraints, or upper bounds on total production other than the setup link through $M$.
+    \item The big-$M$ value is set exactly to the sum of all demands, $M=\sum_{k\in I} d_k$, matching the code.
+    \item The model is solved as a mixed-integer linear program using the Gurobi solver through PuLP-compatible calls.
+\end{itemize}

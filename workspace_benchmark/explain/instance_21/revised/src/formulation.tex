@@ -1,0 +1,182 @@
+\section*{Sets and Indices}
+
+There are no nontrivial indexing sets in the implemented model. The decision is over the three suppliers
+\[
+S=\{A,B,C\}.
+\]
+
+\section*{Parameters}
+
+All parameter names below correspond to the data fields in \texttt{general_parameters.csv}.
+
+\[
+c_A = \texttt{cost\_supplier\_a},\quad
+c_B = \texttt{cost\_supplier\_b},\quad
+c_C = \texttt{cost\_supplier\_c}
+\]
+unit purchase cost per table from suppliers \(A,B,C\).
+
+\[
+q_A = \texttt{order\_size\_supplier\_a},\quad
+q_B = \texttt{order\_size\_supplier\_b},\quad
+q_C = \texttt{order\_size\_supplier\_c}
+\]
+tables per order from suppliers \(A,B,C\).
+
+\[
+L = \texttt{min\_tables\_required},\qquad
+U = \texttt{max\_tables\_allowed}
+\]
+minimum and maximum total tables to be ordered.
+
+\[
+B^{\min} = \texttt{min\_tables\_supplier\_b\_if\_a}
+\]
+minimum number of tables from supplier \(B\) whenever supplier \(A\) is used.
+
+\[
+r_{BC} = \texttt{supplier\_b\_requires\_c}\in\{0,1\}
+\]
+indicator for the dependency that using supplier \(B\) requires using supplier \(C\).
+
+\[
+F_C = \texttt{max\_free\_orders\_c},\qquad
+p_C = \texttt{penalty\_per\_extra\_order\_c}
+\]
+free-order threshold and penalty per extra order for supplier \(C\).
+
+\[
+f_{BC} = \texttt{supplier\_bc\_shared\_inbound\_fee}
+\]
+one-time shared inbound fee incurred when suppliers \(B\) and \(C\) are both used.
+
+\[
+M = 1000
+\]
+big-\(M\) constant used exactly as in the code.
+
+\section*{Decision Variables}
+
+\[
+x_A \in \mathbb{Z}_{\ge 0}\quad \text{(code: \texttt{x\_a})}
+\]
+number of orders placed with supplier \(A\).
+
+\[
+x_B \in \mathbb{Z}_{\ge 0}\quad \text{(code: \texttt{x\_b})}
+\]
+number of orders placed with supplier \(B\).
+
+\[
+x_C \in \mathbb{Z}_{\ge 0}\quad \text{(code: \texttt{x\_c})}
+\]
+number of orders placed with supplier \(C\).
+
+\[
+x_C^{\text{extra}} \in \mathbb{Z}_{\ge 0}\quad \text{(code: \texttt{x\_c\_extra})}
+\]
+number of penalized supplier-\(C\) orders beyond the free threshold, as modeled by the implementation.
+
+\[
+y_A \in \{0,1\}\quad \text{(code: \texttt{y\_a})}
+\]
+equals \(1\) when supplier \(A\) is used.
+
+\[
+y_B \in \{0,1\}\quad \text{(code: \texttt{y\_b})}
+\]
+equals \(1\) when supplier \(B\) is used.
+
+\[
+y_C \in \{0,1\}\quad \text{(code: \texttt{y\_c})}
+\]
+equals \(1\) when supplier \(C\) is used.
+
+\[
+z_{BC} \in \{0,1\}\quad \text{(code: \texttt{shared\_bc})}
+\]
+indicator that the shared inbound desk for the \(B\)-and-\(C\) combination is activated.
+
+\section*{Objective}
+
+Minimize total procurement and surcharge cost:
+\[
+\min\;
+c_A q_A x_A + c_B q_B x_B + c_C q_C x_C
++ p_C x_C^{\text{extra}} + f_{BC} z_{BC}.
+\]
+
+\section*{Constraints}
+
+Total tables ordered must lie within the required band:
+\[
+q_A x_A + q_B x_B + q_C x_C \ge L,
+\]
+\[
+q_A x_A + q_B x_B + q_C x_C \le U.
+\]
+
+Binary--usage linking constraints, implemented with big-\(M\):
+\[
+x_A \le M y_A,\qquad x_A \ge y_A,
+\]
+\[
+x_B \le M y_B,\qquad x_B \ge y_B,
+\]
+\[
+x_C \le M y_C,\qquad x_C \ge y_C.
+\]
+
+If supplier \(A\) is used, then a minimum number of tables must come from supplier \(B\):
+\[
+q_B x_B \ge B^{\min} y_A.
+\]
+
+If the parameter \(\texttt{supplier\_b\_requires\_c}=1\), then using supplier \(B\) requires at least one order from supplier \(C\):
+\[
+x_C \ge y_B
+\qquad \text{(included only when } r_{BC}=1\text{)}.
+\]
+
+Supplier \(C\) extra-order penalty definition:
+\[
+x_C^{\text{extra}} \ge x_C - F_C.
+\]
+
+Shared inbound fee for combining suppliers \(B\) and \(C\):
+\[
+z_{BC} \ge y_B + y_C - 1,
+\]
+\[
+z_{BC} \le y_B,
+\]
+\[
+z_{BC} \le y_C.
+\]
+
+Integrality and binary restrictions:
+\[
+x_A,x_B,x_C,x_C^{\text{extra}} \in \mathbb{Z}_{\ge 0},
+\qquad
+y_A,y_B,y_C,z_{BC}\in\{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a mixed-integer linear program solved by \texttt{GUROBI\_CMD}.
+
+The cost terms \(c_s q_s x_s\) mean the CSV unit costs are interpreted as cost per table, while \(x_s\) counts orders and \(q_s\) converts orders to tables.
+
+The supplier-\(C\) penalty is modeled through the auxiliary integer variable \(x_C^{\text{extra}}\) with only the lower bound
+\[
+x_C^{\text{extra}} \ge x_C - F_C,\quad x_C^{\text{extra}} \ge 0.
+\]
+Because \(p_C>0\) and the problem is a minimization, this yields
+\[
+x_C^{\text{extra}} = \max\{0,\,x_C-F_C\}
+\]
+at optimality, but no explicit equality is imposed.
+
+The shared inbound desk rule for suppliers \(B\) and \(C\) is represented exactly by the binary variable \(z_{BC}\) and the three linear constraints above, so \(z_{BC}=1\) iff both \(y_B=1\) and \(y_C=1\), and the one-time fee \(f_{BC}\) is then charged once.
+
+No additional constraints are imposed from \texttt{supplier\_bc\_shared\_inbound\_trigger}; the code reads and applies only the fee parameter \(\texttt{supplier\_bc\_shared\_inbound\_fee}\).

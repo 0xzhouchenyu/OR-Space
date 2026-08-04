@@ -1,0 +1,95 @@
+\section*{Sets and Indices}
+
+There are no nontrivial sets or indices in the implemented model. The transportation modes are represented explicitly:
+\[
+\{\text{horse},\text{bicycle},\text{handcart}\}.
+\]
+
+\section*{Parameters}
+
+All parameters are scalars read from \texttt{general\_parameters.csv}:
+
+\begin{itemize}
+    \item $P^{\text{req}}$ (\texttt{min\_produce}): minimum total produce that must be transported.
+    \item $P^{\text{target}}$ (\texttt{produce}): stated produce-to-transport amount. This value is loaded by the code but not used in the optimization model.
+    \item $u_h$ (\texttt{horse\_cap}): produce capacity per horse trip.
+    \item $u_b$ (\texttt{bike\_cap}): produce capacity per bicycle trip.
+    \item $u_c$ (\texttt{cart\_cap}): produce capacity per handcart trip.
+    \item $e_h$ (\texttt{horse\_poll}): pollution per horse trip.
+    \item $e_b$ (\texttt{bike\_poll}): pollution per bicycle trip.
+    \item $e_c$ (\texttt{cart\_poll}): pollution per handcart trip.
+    \item $E^{\max}$ (\texttt{max\_poll}): maximum allowable total pollution.
+    \item $L_h$ (\texttt{min\_horse}): minimum required number of horse trips.
+    \item $M$ (\texttt{M}): big-\(M\) constant used to enforce the either/or choice between bicycle and handcart; in the code, \(M=10000\).
+\end{itemize}
+
+For Instance 63, the loaded values are:
+\[
+P^{\text{target}}=1000,\quad P^{\text{req}}=1000,\quad
+u_h=55,\quad u_b=30,\quad u_c=40,
+\]
+\[
+e_h=80,\quad e_b=0,\quad e_c=0,\quad
+E^{\max}=1000,\quad L_h=8,\quad M=10000.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_h$ (code: \texttt{x\_horse}): number of horse trips, integer and nonnegative.
+    \item $x_b$ (code: \texttt{x\_bike}): number of bicycle trips, integer and nonnegative.
+    \item $x_c$ (code: \texttt{x\_cart}): number of handcart trips, integer and nonnegative.
+    \item $y$ (code: \texttt{y} / \texttt{choose\_bike}): binary selector, where \(y=1\) allows bicycle trips and forbids handcart trips, while \(y=0\) allows handcart trips and forbids bicycle trips.
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total pollution:
+\[
+\min \; e_h x_h + e_b x_b + e_c x_c.
+\]
+
+\section*{Constraints}
+
+Minimum transported produce:
+\[
+u_h x_h + u_b x_b + u_c x_c \ge P^{\text{req}}.
+\]
+
+Maximum total pollution:
+\[
+e_h x_h + e_b x_b + e_c x_c \le E^{\max}.
+\]
+
+Minimum number of horse trips:
+\[
+x_h \ge L_h.
+\]
+
+Exclusive choice between bicycle and handcart via big-\(M\):
+\[
+x_b \le My,
+\]
+\[
+x_c \le M(1-y).
+\]
+
+Integrality and binary restrictions:
+\[
+x_h, x_b, x_c \in \mathbb{Z}_{\ge 0},
+\qquad
+y \in \{0,1\}.
+\]
+
+\section*{Notes on Implementation}
+
+The model is implemented as a mixed-integer linear program and solved with \texttt{GUROBI\_CMD} through a PuLP-compatible interface.
+
+The formulation should be interpreted exactly as coded:
+
+\begin{itemize}
+    \item The optimization uses \texttt{min\_produce} as the required transported amount, not \texttt{produce\_to\_transport}. Although both are loaded, only \texttt{min\_produce} appears in the constraints.
+    \item The exclusivity requirement is modeled as ``at most one of bicycle and handcart can be used,'' enforced by the binary variable \(y\) and big-\(M\) bounds. The model does not require that either bicycle or handcart be used; one of them may be zero and the other positive, or both may be zero if the other constraints permit it.
+    \item Because \(e_b=e_c=0\) in this instance, the objective minimizes only horse-trip pollution, while the lower bound \(x_h \ge L_h\) and produce requirement determine how much of the remaining transport is assigned to the chosen zero-pollution mode.
+    \item No upper bounds are placed directly on trip counts other than those implied by the pollution limit, produce requirement, and the big-\(M\) logic.
+\end{itemize}

@@ -1,0 +1,101 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $C$: set of crop activities. In this instance,
+    \[
+    C=\{\text{Soybean},\text{Corn},\text{Wheat}\}.
+    \]
+    \item $c \in C$: crop index.
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter names below are aligned with the data loaded in the implementation.
+
+\begin{itemize}
+    \item $L$ (\texttt{land\_area}): total farm land available.
+    \item $F$ (\texttt{funds\_available}): total funds available for livestock investment.
+    \item $H^{AW}$ (\texttt{labor\_aw}): labor available in autumn/winter.
+    \item $H^{SS}$ (\texttt{labor\_ss}): labor available in spring/summer.
+    \item $r^{AW}$ (\texttt{ext\_rate\_aw}): earnings per person-day of external work in autumn/winter.
+    \item $r^{SS}$ (\texttt{ext\_rate\_ss}): earnings per person-day of external work in spring/summer.
+    
+    \item $a_c^{AW}$ (\texttt{crop\_aw[c]}): autumn/winter labor required per hectare of crop $c$.
+    \item $a_c^{SS}$ (\texttt{crop\_ss[c]}): spring/summer labor required per hectare of crop $c$.
+    \item $p_c$ (\texttt{crop\_income[c]}): annual net income per hectare of crop $c$.
+    
+    \item $k^D$ (\texttt{inv\_dairy}): investment required per dairy cow.
+    \item $k^K$ (\texttt{inv\_chicken}): investment required per chicken.
+    \item $\ell^D$ (\texttt{land\_dairy}): land required per dairy cow.
+    \item $h_D^{AW}$ (\texttt{labor\_aw\_dairy}): autumn/winter labor required per dairy cow.
+    \item $h_D^{SS}$ (\texttt{labor\_ss\_dairy}): spring/summer labor required per dairy cow.
+    \item $q^D$ (\texttt{income\_dairy}): annual net income per dairy cow.
+    \item $h_K^{AW}$ (\texttt{labor\_aw\_chicken}): autumn/winter labor required per chicken.
+    \item $h_K^{SS}$ (\texttt{labor\_ss\_chicken}): spring/summer labor required per chicken.
+    \item $q^K$ (\texttt{income\_chicken}): annual net income per chicken.
+    \item $\overline{D}$ (\texttt{max\_dairy\_cows}): maximum dairy-cow capacity.
+    \item $\overline{K}$ (\texttt{max\_chickens}): maximum chicken capacity.
+\end{itemize}
+
+For instance 47, the crop parameters are:
+\[
+(a_c^{AW})_{c \in C}=(20,35,10),\quad
+(a_c^{SS})_{c \in C}=(50,75,40),\quad
+(p_c)_{c \in C}=(175,300,120)
+\]
+for Soybean, Corn, and Wheat, respectively.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_c$ (code: \texttt{x[c]}): hectares allocated to crop $c$, for each $c \in C$.
+    \item $y^D$ (code: \texttt{y\_dairy}): number of dairy cows.
+    \item $y^K$ (code: \texttt{y\_chicken}): number of chickens.
+    \item $s^{AW}$ (code: \texttt{surplus\_aw}): surplus autumn/winter labor allocated to external work.
+    \item $s^{SS}$ (code: \texttt{surplus\_ss}): surplus spring/summer labor allocated to external work.
+\end{itemize}
+
+All decision variables are continuous and nonnegative in the implemented model; only $y^D$ and $y^K$ also have explicit upper bounds.
+
+\section*{Objective}
+
+Maximize annual net income from crops, livestock, and external work:
+\[
+\max \;
+\sum_{c \in C} p_c x_c
++ q^D y^D
++ q^K y^K
++ r^{AW} s^{AW}
++ r^{SS} s^{SS}.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+\sum_{c \in C} x_c + \ell^D y^D &\le L
+&& \text{(land)} \\
+k^D y^D + k^K y^K &\le F
+&& \text{(funds)} \\
+\sum_{c \in C} a_c^{AW} x_c + h_D^{AW} y^D + h_K^{AW} y^K + s^{AW} &\le H^{AW}
+&& \text{(autumn/winter labor)} \\
+\sum_{c \in C} a_c^{SS} x_c + h_D^{SS} y^D + h_K^{SS} y^K + s^{SS} &\le H^{SS}
+&& \text{(spring/summer labor)} \\
+0 \le y^D &\le \overline{D}
+&& \text{(dairy capacity)} \\
+0 \le y^K &\le \overline{K}
+&& \text{(chicken capacity)} \\
+x_c &\ge 0 \qquad \forall c \in C
+&& \text{(crop nonnegativity)} \\
+s^{AW},\, s^{SS} &\ge 0
+&& \text{(external work nonnegativity)}.
+\end{align}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The source code builds this model as a linear program and solves it with \texttt{pulp.GUROBI\_CMD(msg=0)}.
+    \item Livestock counts are \emph{not} constrained to be integer in the implementation; \texttt{y\_dairy} and \texttt{y\_chicken} are continuous variables with upper bounds.
+    \item External work is modeled through the nonnegative variables $s^{AW}$ and $s^{SS}$ that enter both the labor constraints and the objective. Because their objective coefficients are positive, the optimal solution will set them equal to unused seasonal labor whenever labor is not fully consumed by crops and livestock.
+    \item The funds constraint applies only to dairy cows and chickens in the code; crop activities do not consume funds in the implemented model.
+    \item There is no explicit lower or upper bound on total cropped area beyond the land constraint, and no additional coupling constraints between crop choices.
+\end{itemize}

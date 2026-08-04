@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_010",
+  "instance_number": 10,
+  "source_revise_instance": "IndustryOR_10_revise_business",
+  "domain": "Facility_Location / Set_Covering",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Facility_Location / Set_Covering",
+    "question": "In the revised model, explain why the objective increases from 3.0 to 6.0 by tracing the city promise from the business brief into the exact code and data artifacts. Your answer must name the exact code variables and constraint names that enforce the promise, the exact CSV parameter names and values that make it equivalent to opening at least six Small-format stores, and use the LP-relaxation diagnostics to identify at least one binding constraint with its slack/dual value and interpret its business meaning. Also contrast this with the original model by naming the original decision variable and objective term that were replaced, and explain—using the directional note in the brief and a specific assignment variable such as `a_D_J` or `a_L_J`—why linear/shadow-price extrapolation from the LP relaxation would fail to predict the integer revised solution if the minimum counter requirement were changed again."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MinChainStores.gurobi.log",
+        "MinChainStores.lp_relaxation.json",
+        "MinChainStores.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "FranchiseTieredCovering.gurobi.log",
+        "FranchiseTieredCovering.lp_relaxation.json",
+        "FranchiseTieredCovering.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 63.680556
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_026",
+  "instance_number": 26,
+  "source_revise_instance": "IndustryOR_26_revise_business",
+  "domain": "Workforce_Scheduling",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Workforce_Scheduling",
+    "question": "In the revised model, explain why the objective drops from 53.0 to 51.2 by tracing the exact code additions relative to the original model: name the new variable arrays, the modified objective expression, and the two new constraint families, then connect each to the business terms in `business_requirement.md` and the exact parameter rows in `general_parameters.csv` (`full_time_cost=1.0`, `part_time_cost=0.7`, `part_time_cap_per_period=6`, and `min_full_time_per_period`). Using the revised LP relaxation and MIP outputs, analyze period 4 (`Time_Period = 18:00-22:00`): identify which of `demand_4`, `pt_cap_4`, and `ft_min_4` are binding or slack, cite the relevant slack and dual/shadow-price values, and interpret the business meaning of the marginal value of increasing `Required_Salespeople` in that period by one. Finally, quantify why a naive linear extrapolation from the LP dual for `demand_4` can fail for the integer model, using the actual MIP solution values of `xFT_3`, `xFT_4`, `xPT_4` (and any adjacent variables you need) to show the role of integrality and cross-period coupling."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MinSalespeople.gurobi.log",
+        "MinSalespeople.lp_relaxation.json",
+        "MinSalespeople.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "MinStaffCost.gurobi.log",
+        "MinStaffCost.lp_relaxation.json",
+        "MinStaffCost.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 63.375
+  }
+}

@@ -1,0 +1,19 @@
+Parameter_Name,Value,Unit,Context_Description
+min_weekly_profit,3000,Yuan,The total weekly profit should be at least 3000 yuan in each week
+min_type_a_production,5,units,At least 5 units of Type A must be produced each week
+idle_time_minimization_weights,proportional_to_hourly_cost,None,Idle time of each process should be minimized with weights proportional to the corresponding hourly cost
+overtime_allowed,False,None,Overtime is not allowed
+insp_a_M,3,hours_per_unit,In-house inspection hours per unit of Type A under Manual inspection mode
+insp_b_M,6,hours_per_unit,In-house inspection hours per unit of Type B under Manual inspection mode
+insp_a_E,2,hours_per_unit,In-house inspection hours per unit of Type A under Enhanced inspection mode
+insp_b_E,4,hours_per_unit,In-house inspection hours per unit of Type B under Enhanced inspection mode
+cap_ext,20,hours_per_week,External inspection capacity per week available under Enhanced mode
+cost_insp_M,10,Yuan_per_hour,Cost per in-house inspection hour under Manual inspection mode
+cost_insp_E,12,Yuan_per_hour,Cost per in-house inspection hour under Enhanced inspection mode
+cost_ext,15,Yuan_per_hour,Cost per external inspection hour under Enhanced inspection mode
+mode_fee_M,50,Yuan_per_week,Fixed weekly fee when Manual inspection mode is used
+mode_fee_E,80,Yuan_per_week,Fixed weekly fee when Enhanced inspection mode is used
+risk_penalty_M,200,Yuan_per_week,Weekly risk penalty cost when Manual inspection mode is used
+cost_insp_weight,11,Yuan_per_hour,Weighting coefficient for in-house inspection idle time in idle cost calculation
+planning_horizon_weeks,2,weeks,Number of weeks in the planning horizon for which production and inspection decisions are made
+idle_tolerance,0.00001,dimensionless,Tolerance for enforcing minimal idle-time cost in the second-stage lexicographic optimization

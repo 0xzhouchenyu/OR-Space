@@ -1,0 +1,86 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $R=\{\mathrm{FT},\mathrm{PT}\}$: clerk types, where $\mathrm{FT}$ denotes full-time and $\mathrm{PT}$ denotes part-time.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $H_r$: regular monthly working hours per clerk of type $r$, from \texttt{Monthly\_Working\_Hours}.
+    \item $s_r$: sales volume in pairs per hour for clerk type $r$, from \texttt{Sales\_Volume\_Pairs\_Per\_Hour}.
+    \item $N_r$: number of clerks of type $r$. In the implemented code, these default to
+    \[
+    N_{\mathrm{FT}}=5,\qquad N_{\mathrm{PT}}=4,
+    \]
+    unless a clerk-count column is detected in the CSV.
+    \item $G$ (code: \texttt{sales\_goal}): monthly sales goal.
+    \item $\rho$ (code: \texttt{pt\_ft\_ratio}): minimum ratio of part-time overtime to full-time overtime.
+    \item $S^{\textnormal{reg}}$: total sales achievable under full regular employment,
+    \[
+    S^{\textnormal{reg}}=\sum_{r\in R} N_r H_r s_r.
+    \]
+    \item $D$: sales shortfall to be covered by overtime,
+    \[
+    D=G-S^{\textnormal{reg}}.
+    \]
+\end{itemize}
+
+Using the provided data,
+\[
+H_{\mathrm{FT}}=160,\quad s_{\mathrm{FT}}=5,\quad
+H_{\mathrm{PT}}=80,\quad s_{\mathrm{PT}}=2,\quad
+G=5500,\quad \rho=0.5.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $y_{\mathrm{FT}}$ (code: \texttt{y\_ft}): overtime hours assigned in total to full-time clerks.
+    \item $y_{\mathrm{PT}}$ (code: \texttt{y\_pt}): overtime hours assigned in total to part-time clerks.
+\end{itemize}
+
+Both variables are continuous and nonnegative.
+
+\section*{Objective}
+
+Minimize total overtime hours:
+\[
+\min \; y_{\mathrm{FT}} + y_{\mathrm{PT}}.
+\]
+
+\section*{Constraints}
+
+\begin{align}
+s_{\mathrm{FT}} y_{\mathrm{FT}} + s_{\mathrm{PT}} y_{\mathrm{PT}} &\ge D
+&&\text{(overtime sales must cover the sales shortfall)},\\
+y_{\mathrm{PT}} &\ge \rho\, y_{\mathrm{FT}}
+&&\text{(part-time overtime coverage requirement)},\\
+y_{\mathrm{FT}},\, y_{\mathrm{PT}} &\ge 0.
+\end{align}
+
+Equivalently, after substituting $D=G-\sum_{r\in R}N_rH_rs_r$,
+\[
+s_{\mathrm{FT}} y_{\mathrm{FT}} + s_{\mathrm{PT}} y_{\mathrm{PT}}
+\;\ge\;
+G-\sum_{r\in R}N_rH_rs_r.
+\]
+
+With the default clerk counts used by the code,
+\[
+S^{\textnormal{reg}}=5\cdot160\cdot5 + 4\cdot80\cdot2 = 4640,
+\]
+so the implemented sales-shortfall constraint becomes
+\[
+5y_{\mathrm{FT}} + 2y_{\mathrm{PT}} \ge 5500-4640=860.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code solves a linear program with \texttt{pulp} using \texttt{GUROBI\_CMD}.
+    \item Although the business description mentions profit, wages, overtime pay, full employment, and minimizing overtime, the implemented model uses only the sales goal and the overtime-ratio requirement in the optimization. Profit and wage parameters are read from the CSV but do not appear in the mathematical program.
+    \item Full employment is not a decision in the code; it is imposed implicitly by computing regular sales from all available clerks and treating only overtime as variable.
+    \item The number of clerks is hard-coded as 5 full-time and 4 part-time unless a count-related column is found in the clerk data table.
+    \item No upper bounds on overtime are imposed in the implementation.
+\end{itemize}

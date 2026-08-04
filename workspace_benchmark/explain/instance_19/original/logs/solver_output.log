@@ -1,0 +1,7 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+Orders from A: 0, Chairs: 0
+Orders from B: 0, Chairs: 0
+Orders from C: 10, Chairs: 100
+Total chairs: 100
+OBJECTIVE_VALUE: 4000.0

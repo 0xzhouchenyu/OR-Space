@@ -1,0 +1,109 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products \(P = \{\mathrm{M}, \mathrm{W}\}\), where
+    \begin{itemize}
+        \item \(\mathrm{M}\): microwave oven,
+        \item \(\mathrm{W}\): water heater.
+    \end{itemize}
+\end{itemize}
+
+\section*{Parameters}
+
+For each product \(p \in P\):
+
+\begin{itemize}
+    \item \(a_p\): hours required in workshop A per unit of product \(p\)
+    (code fields: \texttt{products[p]['a\_hrs']}).
+    \item \(b_p\): hours required in workshop B per unit of product \(p\)
+    (code fields: \texttt{products[p]['b\_hrs']}).
+    \item \(c_p\): inspection and sales cost per unit of product \(p\)
+    (code fields: \texttt{products[p]['insp\_cost']}).
+\end{itemize}
+
+Plant-wide parameters:
+
+\begin{itemize}
+    \item \(H_A\): available monthly hours in workshop A
+    (code: \texttt{params['workshop\_a\_available\_hours']}).
+    \item \(H_B\): available monthly hours in workshop B
+    (code: \texttt{params['workshop\_b\_available\_hours']}).
+    \item \(O_A\): overtime limit in workshop A
+    (code: \texttt{params['workshop\_a\_overtime\_limit']}).
+    \item \(r_A\): hourly cost in workshop A
+    (code: \texttt{params['workshop\_a\_hourly\_cost']}).
+    \item \(r_B\): hourly cost in workshop B
+    (code: \texttt{params['workshop\_b\_hourly\_cost']}).
+    \item \(C\): monthly limit on inspection and sales cost
+    (code: \texttt{params['inspection\_sales\_cost\_limit']}).
+    \item \(L_{\mathrm{M}}\): minimum monthly sales requirement for microwave ovens
+    (code: \texttt{params['microwave\_minimum\_sales']}).
+    \item \(L_{\mathrm{W}}\): minimum monthly sales requirement for water heaters
+    (code: \texttt{params['water\_heater\_minimum\_sales']}).
+\end{itemize}
+
+The code defines per-unit objective coefficients:
+\[
+\alpha_{\mathrm{M}} = a_{\mathrm{M}} r_A + b_{\mathrm{M}} r_B + c_{\mathrm{M}},
+\qquad
+\alpha_{\mathrm{W}} = a_{\mathrm{W}} r_A + b_{\mathrm{W}} r_B + c_{\mathrm{W}},
+\]
+(code: \texttt{rev\_m}, \texttt{rev\_w}).
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_{\mathrm{M}}\) (code: \texttt{x1}): production/sales quantity of microwave ovens.
+    \item \(x_{\mathrm{W}}\) (code: \texttt{x2}): production/sales quantity of water heaters.
+\end{itemize}
+
+Both variables are continuous in the implementation, with lower bounds:
+\[
+x_{\mathrm{M}} \ge L_{\mathrm{M}}, \qquad x_{\mathrm{W}} \ge L_{\mathrm{W}}.
+\]
+
+\section*{Objective}
+
+The implemented model maximizes
+\[
+\max \; \alpha_{\mathrm{M}} x_{\mathrm{M}} + \alpha_{\mathrm{W}} x_{\mathrm{W}},
+\]
+i.e.,
+\[
+\max \; (a_{\mathrm{M}} r_A + b_{\mathrm{M}} r_B + c_{\mathrm{M}}) x_{\mathrm{M}}
+      + (a_{\mathrm{W}} r_A + b_{\mathrm{W}} r_B + c_{\mathrm{W}}) x_{\mathrm{W}}.
+\]
+
+\section*{Constraints}
+
+Workshop A capacity with overtime:
+\[
+a_{\mathrm{M}} x_{\mathrm{M}} + a_{\mathrm{W}} x_{\mathrm{W}} \le H_A + O_A.
+\]
+
+Workshop B utilization lower bound:
+\[
+b_{\mathrm{M}} x_{\mathrm{M}} + b_{\mathrm{W}} x_{\mathrm{W}} \ge H_B.
+\]
+
+Inspection and sales cost limit:
+\[
+c_{\mathrm{M}} x_{\mathrm{M}} + c_{\mathrm{W}} x_{\mathrm{W}} \le C.
+\]
+
+Minimum sales requirements, implemented as variable lower bounds:
+\[
+x_{\mathrm{M}} \ge L_{\mathrm{M}},
+\qquad
+x_{\mathrm{W}} \ge L_{\mathrm{W}}.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is a linear program solved by PuLP through \texttt{GUROBI\_CMD}.
+    \item The quantities \(x_{\mathrm{M}}\) and \(x_{\mathrm{W}}\) are not declared integer; they are continuous nonnegative variables with the stated lower bounds.
+    \item The code reads monthly sales estimates from the data file, but these estimates are not used in the optimization model.
+    \item The objective coefficients are constructed directly from workshop hourly costs plus inspection/sales cost per unit. Thus the implemented objective is exactly the maximization of \(\alpha_{\mathrm{M}} x_{\mathrm{M}} + \alpha_{\mathrm{W}} x_{\mathrm{W}}\), not profit or revenue net of costs unless that interpretation is imposed externally.
+    \item The workshop B condition is implemented as a lower bound (\(\ge H_B\)) on utilized hours, not as an upper-capacity restriction.
+\end{itemize}

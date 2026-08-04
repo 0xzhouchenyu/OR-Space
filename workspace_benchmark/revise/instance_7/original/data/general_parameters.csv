@@ -1,0 +1,3 @@
+Parameter_Name,Value,Unit,Context_Description
+cost_per_km,30,euros,Cost to transport each container per kilometer traveled
+truck_capacity,2,containers,Maximum capacity of each truck

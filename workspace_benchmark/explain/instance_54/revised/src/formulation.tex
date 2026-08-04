@@ -1,0 +1,150 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products $p \in P$ (code: \texttt{products}), where
+    \[
+    P=\{\mathrm{I},\mathrm{II},\mathrm{III}\}.
+    \]
+    \item Equipment types $e \in E$ (code: \texttt{equipment\_names}), where
+    \[
+    E=\{\mathrm{A},\mathrm{B},\mathrm{C}\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Processing time of one unit of product $p$ on equipment $e$, $a_{ep}$ (code: \texttt{processing\_times[(e, p)]}), in hours/unit.
+    \item Effective monthly available hours on equipment $e$, $H_e$ (code: \texttt{effective\_hours[e]}), in hours.
+    \item Base per-unit economic value used as regular production cost for product $p$, $c_p$ (code: \texttt{base\_profit[p]}).
+    \item Overtime cost multiplier, $\alpha$ (code: \texttt{overtime\_cost\_multiplier}).
+    \item Plant-wide overtime processing-hours cap, $\bar{O}$ (code: \texttt{overtime\_hours\_cap}), in hours.
+    \item Minimum required monthly production for product $p$, $m_p$ (code: \texttt{min\_prod[p]}), where
+    \[
+    m_{\mathrm{I}}=\texttt{min\_prod\_I},\quad
+    m_{\mathrm{II}}=\texttt{min\_prod\_II},\quad
+    m_{\mathrm{III}}=\texttt{min\_prod\_III}.
+    \]
+\end{itemize}
+
+For this instance, the implemented data are:
+\[
+H_{\mathrm{A}}=300,\quad H_{\mathrm{B}}=400,\quad H_{\mathrm{C}}=420,
+\]
+\[
+\bar{O}=350,\qquad \alpha=1.4,
+\]
+\[
+(c_{\mathrm{I}},c_{\mathrm{II}},c_{\mathrm{III}})=(3,2,2.9),
+\]
+\[
+(m_{\mathrm{I}},m_{\mathrm{II}},m_{\mathrm{III}})=(5,4,3),
+\]
+and
+\[
+[a_{ep}]_{e \in E,\, p \in P}
+=
+\begin{array}{c|ccc}
+ & \mathrm{I} & \mathrm{II} & \mathrm{III}\\ \hline
+\mathrm{A} & 8 & 2 & 10\\
+\mathrm{B} & 10 & 5 & 8\\
+\mathrm{C} & 2 & 13 & 10
+\end{array}.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Regular-time production quantity of product $p$, $x^{\mathrm{reg}}_p$ (code: \texttt{x\_reg[p]}), with $x^{\mathrm{reg}}_p \ge 0$.
+    \item Overtime production quantity of product $p$, $x^{\mathrm{ot}}_p$ (code: \texttt{x\_ot[p]}), with $x^{\mathrm{ot}}_p \ge 0$.
+\end{itemize}
+
+\section*{Objective}
+
+The code minimizes total production cost:
+\[
+\min \sum_{p \in P} \left(c_p x^{\mathrm{reg}}_p + \alpha c_p x^{\mathrm{ot}}_p\right).
+\]
+
+For this instance:
+\[
+\min\;
+3x^{\mathrm{reg}}_{\mathrm{I}} + 2x^{\mathrm{reg}}_{\mathrm{II}} + 2.9x^{\mathrm{reg}}_{\mathrm{III}}
++ 1.4\left(3x^{\mathrm{ot}}_{\mathrm{I}} + 2x^{\mathrm{ot}}_{\mathrm{II}} + 2.9x^{\mathrm{ot}}_{\mathrm{III}}\right).
+\]
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Shared equipment-capacity constraints} (regular and overtime both consume the same monthly equipment hours):
+    \[
+    \sum_{p \in P} a_{ep}\left(x^{\mathrm{reg}}_p + x^{\mathrm{ot}}_p\right) \le H_e
+    \qquad \forall e \in E.
+    \]
+
+    For this instance:
+    \[
+    8(x^{\mathrm{reg}}_{\mathrm{I}}+x^{\mathrm{ot}}_{\mathrm{I}})
+    +2(x^{\mathrm{reg}}_{\mathrm{II}}+x^{\mathrm{ot}}_{\mathrm{II}})
+    +10(x^{\mathrm{reg}}_{\mathrm{III}}+x^{\mathrm{ot}}_{\mathrm{III}})
+    \le 300,
+    \]
+    \[
+    10(x^{\mathrm{reg}}_{\mathrm{I}}+x^{\mathrm{ot}}_{\mathrm{I}})
+    +5(x^{\mathrm{reg}}_{\mathrm{II}}+x^{\mathrm{ot}}_{\mathrm{II}})
+    +8(x^{\mathrm{reg}}_{\mathrm{III}}+x^{\mathrm{ot}}_{\mathrm{III}})
+    \le 400,
+    \]
+    \[
+    2(x^{\mathrm{reg}}_{\mathrm{I}}+x^{\mathrm{ot}}_{\mathrm{I}})
+    +13(x^{\mathrm{reg}}_{\mathrm{II}}+x^{\mathrm{ot}}_{\mathrm{II}})
+    +10(x^{\mathrm{reg}}_{\mathrm{III}}+x^{\mathrm{ot}}_{\mathrm{III}})
+    \le 420.
+    \]
+
+    \item \textbf{Global overtime-hours cap}:
+    \[
+    \sum_{e \in E}\sum_{p \in P} a_{ep}x^{\mathrm{ot}}_p \le \bar{O}.
+    \]
+
+    For this instance:
+    \[
+    (8+10+2)x^{\mathrm{ot}}_{\mathrm{I}}
+    +(2+5+13)x^{\mathrm{ot}}_{\mathrm{II}}
+    +(10+8+10)x^{\mathrm{ot}}_{\mathrm{III}}
+    \le 350,
+    \]
+    i.e.,
+    \[
+    20x^{\mathrm{ot}}_{\mathrm{I}} + 20x^{\mathrm{ot}}_{\mathrm{II}} + 28x^{\mathrm{ot}}_{\mathrm{III}} \le 350.
+    \]
+
+    \item \textbf{Minimum production requirements}:
+    \[
+    x^{\mathrm{reg}}_p + x^{\mathrm{ot}}_p \ge m_p
+    \qquad \forall p \in P.
+    \]
+
+    For this instance:
+    \[
+    x^{\mathrm{reg}}_{\mathrm{I}} + x^{\mathrm{ot}}_{\mathrm{I}} \ge 5,\qquad
+    x^{\mathrm{reg}}_{\mathrm{II}} + x^{\mathrm{ot}}_{\mathrm{II}} \ge 4,\qquad
+    x^{\mathrm{reg}}_{\mathrm{III}} + x^{\mathrm{ot}}_{\mathrm{III}} \ge 3.
+    \]
+
+    \item \textbf{Nonnegativity}:
+    \[
+    x^{\mathrm{reg}}_p \ge 0,\qquad x^{\mathrm{ot}}_p \ge 0
+    \qquad \forall p \in P.
+    \]
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implementation builds this model as a linear program with continuous variables using \texttt{LpProblem(..., LpMinimize)}.
+    \item The objective coefficients are taken directly from \texttt{base\_profit[p]} for regular production and from \texttt{overtime\_cost\_multiplier * base\_profit[p]} for overtime production.
+    \item The overtime cap is implemented exactly as a single plant-wide sum of processing hours over all equipment-product pairs applied only to \texttt{x\_ot[p]}; it is not product-specific and does not create separate overtime capacity by equipment.
+    \item Equipment capacities are shared by regular and overtime production through the combined term \texttt{x\_reg[p] + x\_ot[p]} in each equipment constraint.
+    \item The model is solved by the Gurobi command-line backend via \texttt{prob.solve(GUROBI\_CMD(msg=0))}.
+\end{itemize}

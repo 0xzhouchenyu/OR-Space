@@ -1,0 +1,118 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I$ : set of store types, indexed by $i$.
+    \item For this instance,
+    \[
+    I=\{\text{Jewelry},\ \text{Shoes\_and\_Hats},\ \text{General\_Merchandise},\ \text{Bookstore},\ \text{Catering}\}.
+    \]
+    \item $K_i$ : set of admissible shop counts for store type $i$ that are explicitly evaluated in the code, i.e.,
+    \[
+    K_i=\{\ell_i,\ell_i+1,\dots,u_i\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Total mall space $S$ (code: \texttt{total\_space})$=5000$.
+    \item Rent percentage $r$ (code: \texttt{rent\_pct})$=0.20$.
+    \item Area required per shop of type $i$, $a_i$ (code field: \texttt{stores[i]['area']}):
+    \[
+    \begin{array}{c|ccccc}
+    i & \text{Jewelry} & \text{Shoes\_and\_Hats} & \text{General\_Merchandise} & \text{Bookstore} & \text{Catering}\\
+    \hline
+    a_i & 250 & 350 & 800 & 400 & 500
+    \end{array}
+    \]
+    \item Minimum and maximum number of shops for type $i$, $\ell_i,u_i$ (code fields: \texttt{stores[i]['min']}, \texttt{stores[i]['max']}):
+    \[
+    \begin{array}{c|ccccc}
+    i & \text{Jewelry} & \text{Shoes\_and\_Hats} & \text{General\_Merchandise} & \text{Bookstore} & \text{Catering}\\
+    \hline
+    \ell_i & 1 & 1 & 1 & 0 & 1\\
+    u_i    & 3 & 2 & 3 & 2 & 3
+    \end{array}
+    \]
+    \item Per-store annual profit for type $i$ when exactly $k$ shops of that type are leased, $p_{ik}$ (code field: \texttt{stores[i]['profits'][k]}). Only the following values are defined:
+    \[
+    \begin{array}{c|ccc}
+    i & p_{i1} & p_{i2} & p_{i3}\\
+    \hline
+    \text{Jewelry} & 9 & 8 & 7\\
+    \text{Shoes\_and\_Hats} & 10 & 9 & \text{undefined}\\
+    \text{General\_Merchandise} & 27 & 21 & 20\\
+    \text{Bookstore} & 16 & 10 & \text{undefined}\\
+    \text{Catering} & 17 & 15 & 12
+    \end{array}
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Number of shops leased for store type $i$, $x_i$ (code: \texttt{combo[i]}), with
+    \[
+    x_i \in K_i=\{\ell_i,\ell_i+1,\dots,u_i\}.
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+The code maximizes total rental income, computed as the rent percentage times total tenant profit:
+\[
+\max \ r \sum_{i\in I} \pi_i(x_i),
+\]
+where
+\[
+\pi_i(x_i)=
+\begin{cases}
+x_i\,p_{i,x_i}, & \text{if } x_i=0, \text{ or } p_{i,x_i}\text{ is defined},\\
+\text{infeasible}, & \text{otherwise}.
+\end{cases}
+\]
+Since $x_i=0$ can occur only for Bookstore in this instance, the code contributes zero profit in that case.
+
+Equivalently, for feasible choices,
+\[
+\max \ r \sum_{i\in I:\ x_i>0} x_i\,p_{i,x_i}.
+\]
+
+\section*{Constraints}
+
+\begin{itemize}
+    \item Total space limit:
+    \[
+    \sum_{i\in I} a_i x_i \le S.
+    \]
+    \item Enumerated bounds on shop counts:
+    \[
+    x_i \in \{\ell_i,\ell_i+1,\dots,u_i\}, \qquad \forall i\in I.
+    \]
+    \item Validity of profit lookup:
+    \[
+    x_i=0 \quad \text{or} \quad p_{i,x_i}\text{ is defined}, \qquad \forall i\in I.
+    \]
+    This reproduces the code logic that discards combinations for which a positive selected count has no corresponding profit entry.
+\end{itemize}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented method does \emph{not} build an LP/MIP model. It performs exact exhaustive enumeration over the Cartesian product
+    \[
+    \prod_{i\in I} \{\ell_i,\ell_i+1,\dots,u_i\}
+    \]
+    using \texttt{itertools.product}.
+    \item For each candidate tuple $(x_i)_{i\in I}$, the code first checks the space constraint, then computes
+    \[
+    \sum_{i:\ x_i>0} x_i\,p_{i,x_i},
+    \]
+    marking the tuple invalid if some required $p_{i,x_i}$ is missing.
+    \item The reported objective value is total rent,
+    \[
+    r \times \text{(best total profit)}.
+    \]
+    Because $r$ is a positive constant, this is equivalent to maximizing total tenant profit, but the code explicitly multiplies by \texttt{rent\_pct} only after finding the best feasible combination.
+    \item The initialization \texttt{best\_profit = -1} implies the search assumes at least one feasible combination exists; this holds for the given data.
+\end{itemize}

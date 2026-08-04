@@ -1,0 +1,16 @@
+{
+  "solver": "gurobi",
+  "model_name": "Advanced_35",
+  "diagnostic_type": "reported_objective_record",
+  "status_code": 2,
+  "status": "OPTIMAL",
+  "objective_value": 14.1,
+  "runtime": 0.0003437995910644531,
+  "variables": {
+    "reported_objective": {
+      "value": 14.1
+    }
+  },
+  "constraints": {},
+  "note": "The optimization logic in current_heuristic.py is exact search or custom nonlinear evaluation; this Gurobi model records the reported objective for lifecycle diagnostics."
+}

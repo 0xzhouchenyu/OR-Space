@@ -1,0 +1,7 @@
+A steel reinforcement workshop produces a batch of steel bars with the same diameter. The batch consists of two types of steel bars: one type with a specific length and another type with a different length. Each piece of raw steel bar used has a fixed length. The goal is to determine how the raw material can be cut most efficiently to minimize total waste. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the site coordinator framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The cutting batch now includes a rush order for 5-meter bars, with `batch_5m_quantity` required in addition to the existing lengths. Every distinct blade pattern used brings the setup burden `setup_cost_per_pattern` measured as equivalent waste, and the crew may use no more than `max_distinct_patterns` distinct patterns for the batch. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

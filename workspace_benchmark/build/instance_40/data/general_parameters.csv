@@ -1,0 +1,27 @@
+Parameter_Name,Value,Unit,Context_Description
+steel_price,500,Klunz,Unit price of steel on the world market
+engine_price,1500,Klunz,Unit price of engines on the world market
+electronics_price,300,Klunz,Unit price of electronic components on the world market
+plastic_price,1200,Klunz,Unit price of plastic on the world market
+steel_engine_requirement,0.02,units,Units of engines required to produce 1 unit of steel
+steel_plastic_requirement,0.01,units,Units of plastic required to produce 1 unit of steel
+steel_import_cost,250,Klunz,Cost of other imported goods required to produce 1 unit of steel
+steel_labor_requirement,6,person-months,Labor required to produce 1 unit of steel
+engine_steel_requirement,0.8,units,Units of steel required to produce 1 unit of engines
+engine_electronics_requirement,0.15,units,Units of electronic components required to produce 1 unit of engines
+engine_plastic_requirement,0.11,units,Units of plastic required to produce 1 unit of engines
+engine_import_cost,300,Klunz,Cost of other imported goods required to produce 1 unit of engines
+engine_labor_requirement,12,person-months,Labor required to produce 1 unit of engines
+electronics_steel_requirement,0.01,units,Units of steel required to produce 1 unit of electronic components
+electronics_engine_requirement,0.01,units,Units of engines required to produce 1 unit of electronic components
+electronics_plastic_requirement,0.05,units,Units of plastic required to produce 1 unit of electronic components
+electronics_import_cost,50,Klunz,Cost of other imported goods required to produce 1 unit of electronic components
+electronics_labor_requirement,6,person-months,Labor required to produce 1 unit of electronic components
+plastic_engine_requirement,0.03,units,Units of engines required to produce 1 unit of plastic
+plastic_steel_requirement,0.2,units,Units of steel required to produce 1 unit of plastic
+plastic_electronics_requirement,0.05,units,Units of electronic components required to produce 1 unit of plastic
+plastic_import_cost,300,Klunz,Cost of other imported goods required to produce 1 unit of plastic
+plastic_labor_requirement,24,person-months,Labor required to produce 1 unit of plastic
+engine_production_limit,650000,units,Maximum production limit for engines
+plastic_production_limit,60000,units,Maximum production limit for plastic
+labor_force,830000,person-months,Total available labor force per year

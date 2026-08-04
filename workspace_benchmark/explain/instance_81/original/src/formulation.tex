@@ -1,0 +1,74 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $I = \{1,\dots,15\}$: set of cars, indexed by $i$.
+    \item $s \in \{1,2\}$: parking side index, used only descriptively. The implemented model represents side assignment with a single binary variable per car.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $\lambda_i$: length of car $i$ in meters.
+    \[
+    (\lambda_1,\ldots,\lambda_{15}) = (4,\,4.5,\,5,\,4.1,\,2.4,\,5.2,\,3.7,\,3.5,\,3.2,\,4.5,\,2.3,\,3.3,\,3.8,\,4.6,\,3).
+    \]
+    \item $L = 30$: maximum total parked length allowed on either side of the street (\texttt{max\_length\_one\_side}).
+    \item $\Lambda = \sum_{i \in I} \lambda_i$: total length of all cars. For this instance,
+    \[
+    \Lambda = 59.1.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_i \in \{0,1\}$ for all $i \in I$ (code: \texttt{x[i]}):
+    \[
+    x_i = 
+    \begin{cases}
+    1, & \text{if car } i \text{ is assigned to side 1},\\
+    0, & \text{if car } i \text{ is assigned to side 2}.
+    \end{cases}
+    \]
+    \item $T \ge 0$ (code: \texttt{T}): upper bound on the occupied length of each side; the objective minimizes this maximum side length.
+\end{itemize}
+
+Define the induced side lengths
+\[
+S_1 = \sum_{i \in I} \lambda_i x_i,
+\qquad
+S_2 = \Lambda - S_1 = \sum_{i \in I} \lambda_i(1-x_i).
+\]
+
+\section*{Objective}
+
+\[
+\min \; T
+\]
+
+\section*{Constraints}
+
+\begin{align}
+T &\ge \sum_{i \in I} \lambda_i x_i \label{c:max1} \\
+T &\ge \Lambda - \sum_{i \in I} \lambda_i x_i \label{c:max2} \\
+\sum_{i \in I} \lambda_i x_i &\le L \label{c:side1cap} \\
+\Lambda - \sum_{i \in I} \lambda_i x_i &\le L \label{c:side2cap} \\
+x_i &\in \{0,1\} \qquad \forall i \in I \label{c:binary} \\
+T &\ge 0 \label{c:tnonneg}
+\end{align}
+
+Equivalently, constraints \eqref{c:max1}--\eqref{c:max2} enforce
+\[
+T \ge \max\{S_1,S_2\},
+\]
+so the model minimizes the larger of the two occupied side lengths while also requiring each side length not to exceed $L$.
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The source code builds exactly the mixed-integer linear optimization model above in PuLP and solves it with Gurobi (\texttt{GUROBI\_CMD}).
+    \item Only one binary variable per car is used. Side 2 is not modeled with separate assignment variables; instead its occupied length is computed as $\Lambda - S_1$.
+    \item The business statement mentions minimizing the total street length occupied. The implemented model interprets this as minimizing the maximum occupied length over the two sides, i.e., the span required on the more heavily loaded side.
+    \item Feasibility requires both side-capacity constraints \eqref{c:side1cap} and \eqref{c:side2cap}. Since $\Lambda=59.1 \le 2L = 60$, feasible assignments exist in principle.
+    \item No explicit sequencing, gaps between cars, curb geometry, or participant-based decisions are modeled; only partitioning the 15 cars between the two sides by length is considered.
+\end{itemize}

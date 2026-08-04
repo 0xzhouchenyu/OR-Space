@@ -1,0 +1,26 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+Total inheritance value: 183000
+
+Son 1 receives:
+  Painting by Caillebotte: 25000
+  Yuan dynasty Chinese vase: 20000
+  Louis XV sofa: 3000
+  Jack Russell racing dog 1: 3000
+  Jack Russell racing dog 2: 3000
+  Sculpture from 200 AD: 10000
+  Sailing boat: 15000
+  Furniture once belonging to Cavour: 13000
+  Total: 92000
+
+Son 2 receives:
+  Bust of Diocletian: 5000
+  911 Porsche: 40000
+  Diamond 1: 12000
+  Diamond 2: 12000
+  Diamond 3: 12000
+  Harley Davidson motorcycle: 10000
+  Total: 91000
+
+Difference: 1000
+OBJECTIVE_VALUE: 1000.0

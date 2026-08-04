@@ -1,0 +1,94 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $F = \{1,\dots,n\}$: set of factories, indexed by $i$.
+    \item $L = \{1,\dots,n\}$: set of locations, indexed by $p$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $n$: number of factories and locations.
+    \item $d_{ip}$: transportation volume value taken from the CSV field \texttt{Transportation\_volume\_to\_Location\_$p$} for factory $i$ (code data: \texttt{d[i][p]}).
+    \item $c_{ip}$: transportation cost value taken from the CSV field \texttt{Transportation\_cost\_to\_Location\_$p$} for factory $i$ (code data: \texttt{c[i][p]}).
+    \item $a_{ip} = d_{ip}\,c_{ip}$: assignment cost used by the implemented search (code: \texttt{assignment\_cost[i][p]}).
+\end{itemize}
+
+For instance 71, the implemented data are
+\[
+d = \begin{bmatrix}
+10 & 20\\
+30 & 40
+\end{bmatrix},
+\qquad
+c = \begin{bmatrix}
+5 & 8\\
+6 & 7
+\end{bmatrix},
+\qquad
+a = \begin{bmatrix}
+50 & 160\\
+180 & 280
+\end{bmatrix}.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ip} \in \{0,1\}$ (code-equivalent to assigning \texttt{perm[i] = p}): equals $1$ if factory $i$ is assigned to location $p$, and $0$ otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+The implemented optimization minimizes the total assignment cost
+\[
+\min \sum_{i\in F}\sum_{p\in L} a_{ip}\,x_{ip}
+=
+\min \sum_{i\in F}\sum_{p\in L} d_{ip}\,c_{ip}\,x_{ip}.
+\]
+
+\section*{Constraints}
+
+Each factory is assigned to exactly one location:
+\[
+\sum_{p\in L} x_{ip} = 1
+\qquad \forall i\in F.
+\]
+
+Each location receives exactly one factory:
+\[
+\sum_{i\in F} x_{ip} = 1
+\qquad \forall p\in L.
+\]
+
+Binary restrictions:
+\[
+x_{ip} \in \{0,1\}
+\qquad \forall i\in F,\; p\in L.
+\]
+
+\section*{Notes on Implementation}
+
+The source code first evaluates several alternative interpretations of the CSV data, including a quadratic assignment objective of the form
+\[
+\sum_{i}\sum_{j} d_{ij}\,c_{\pi(i)\pi(j)},
+\]
+but this is only printed for inspection and is \emph{not} the final optimized objective.
+
+The objective value actually reported by the code is obtained from the ``Linear assignment interpretation,'' where
+\[
+a_{ip} = d_{ip}c_{ip},
+\]
+and the model is solved by exhaustive enumeration over all permutations \texttt{perm} of locations. Thus, the optimization is an exact finite search over all one-to-one assignments, not an LP/MIP solve.
+
+Equivalently, for each permutation $\pi$ of $\{1,\dots,n\}$, the code evaluates
+\[
+\sum_{i\in F} a_{i,\pi(i)},
+\]
+and returns the minimum. For instance 71, the two assignments have costs
+\[
+\pi=(1,2): 50+280=330,
+\qquad
+\pi=(2,1): 160+180=340,
+\]
+so the implemented optimum is $330$.

@@ -1,0 +1,101 @@
+{
+  "solver": "gurobi",
+  "model_name": "Factory_Production",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 1146.5665024630543,
+  "objective_bound": 1146.5665024630543,
+  "mip_gap": null,
+  "runtime": 0.0006389617919921875,
+  "node_count": 0.0,
+  "iteration_count": 4.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage__9itdzgp/solver_records/Factory_Production.gurobi.log",
+  "variables": {
+    "x_A1_Product_I": {
+      "value": 1200.0,
+      "reduced_cost": 0.0
+    },
+    "x_A1_Product_II": {
+      "value": 0.0,
+      "reduced_cost": -0.31034482758620696
+    },
+    "x_A2_Product_I": {
+      "value": 230.04926108374366,
+      "reduced_cost": 0.0
+    },
+    "x_A2_Product_II": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "x_A2_Product_III": {
+      "value": 324.13793103448285,
+      "reduced_cost": 0.0
+    },
+    "x_B1_Product_I": {
+      "value": 0.0,
+      "reduced_cost": -0.25301724137931036
+    },
+    "x_B1_Product_II": {
+      "value": 500.0,
+      "reduced_cost": 0.0
+    },
+    "x_B2_Product_I": {
+      "value": 858.6206896551722,
+      "reduced_cost": 0.0
+    },
+    "x_B2_Product_III": {
+      "value": 324.13793103448285,
+      "reduced_cost": 0.0
+    },
+    "x_B3_Product_I": {
+      "value": 571.4285714285714,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "capacity_A1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.036896551724137916
+    },
+    "capacity_A2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.02996896551724137
+    },
+    "capacity_B1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.07392241379310346
+    },
+    "capacity_B2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.029522167487684728
+    },
+    "capacity_B3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.030788177339901468
+    },
+    "balance_Product_I": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 0.5655172413793104
+    },
+    "balance_Product_II": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.0913793103448277
+    },
+    "balance_Product_III": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.5551724137931036
+    }
+  }
+}

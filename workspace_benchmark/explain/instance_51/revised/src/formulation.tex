@@ -1,0 +1,85 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Let $P=\{0,1,\dots,5\}$ be the set of 4-hour time periods over the day (code: \texttt{range(num\_periods)}).
+    \item Let $J=\{0,1,\dots,5\}$ be the set of shift start batches (code: \texttt{shift\_starts}). The start times are given by \texttt{shift\_start\_times}.
+    \item Each shift lasts 8 hours, so a start batch $j\in J$ covers exactly periods
+    \[
+    C_j=\{j,\ (j+1)\bmod |P|\}
+    \]
+    (code: \texttt{cover\_periods[j] = [j, (j + 1) \% num\_periods]}).
+    \item Let $D \subseteq P$ be the set of daytime periods requiring minimum full-time coverage (code: \texttt{daytime\_period\_indices}).
+    \item Let $j^{R}\in J$ be the regular-nurse start batch that is not allowed for full-time nurses (code: \texttt{outsourced\_regular\_start\_index}).
+    \item Let $j^{C}\in J$ be the contract-nurse start batch that is not allowed for contract nurses (code: \texttt{banned\_contract\_start\_index}).
+    \item Define the allowed start sets
+    \[
+    J^R = J \setminus \{j^R\}, \qquad J^C = J \setminus \{j^C\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $r_i$ : required total nurses in period $i\in P$ (code/data: \texttt{demand[i]}, from \texttt{Required\_Nurses}).
+    \item $H$ : shift duration in hours (code: \texttt{shift\_duration}).
+    \item $c^R$ : hourly pay for a regular nurse (code: \texttt{regular\_pay}, data field \texttt{regular\_nurse\_pay}).
+    \item $c^C$ : hourly pay for a contract nurse (code: \texttt{contract\_pay}, data field \texttt{contract\_nurse\_pay}).
+    \item $U^C$ : maximum total contract starts across the day (code: \texttt{max\_total\_contract\_starts}).
+    \item $L^R$ : minimum regular-nurse daytime coverage per daytime period (code: \texttt{min\_regular\_daytime\_coverage}).
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_j \in \mathbb{Z}_{\ge 0}$ for each $j\in J^R$: number of regular nurses starting in batch $j$ (code: \texttt{x[j]}).
+    \item $y_j \in \mathbb{Z}_{\ge 0}$ for each $j\in J^C$: number of contract nurses starting in batch $j$ (code: \texttt{y[j]}).
+\end{itemize}
+
+No variable is created for disallowed starts $j^R$ (regular) and $j^C$ (contract); those starts are excluded from the model exactly as implemented.
+
+\section*{Objective}
+
+Minimize total wage cost:
+\[
+\min \sum_{j\in J^R} (c^R H)\,x_j \;+\; \sum_{j\in J^C} (c^C H)\,y_j .
+\]
+
+\section*{Constraints}
+
+\paragraph{1. Total coverage in each period}
+For every period $i\in P$,
+\[
+\sum_{j\in J^R:\, i\in C_j} x_j \;+\; \sum_{j\in J^C:\, i\in C_j} y_j \;\ge\; r_i .
+\]
+
+\paragraph{2. Minimum daytime regular-nurse coverage}
+For every daytime period $i\in D$,
+\[
+\sum_{j\in J^R:\, i\in C_j} x_j \;\ge\; L^R .
+\]
+
+\paragraph{3. Cap on total contract starts}
+\[
+\sum_{j\in J^C} y_j \;\le\; U^C .
+\]
+
+\paragraph{4. Integrality and nonnegativity}
+\[
+x_j \in \mathbb{Z}_{\ge 0}\quad \forall j\in J^R,
+\qquad
+y_j \in \mathbb{Z}_{\ge 0}\quad \forall j\in J^C.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code indexes periods and starts by position $0,\dots,5$, not by clock labels. Thus the restrictions use the numerical indices from the data packet exactly as read:
+    \begin{itemize}
+        \item \texttt{outsourced\_regular\_start\_index}: no regular variable $x_j$ is created for that start.
+        \item \texttt{banned\_contract\_start\_index}: no contract variable $y_j$ is created for that start.
+        \item \texttt{daytime\_period\_indices}: the minimum regular-coverage constraints are imposed on exactly those listed indices.
+    \end{itemize}
+    \item Coverage is modeled by the fixed 8-hour shift length, which in this implementation means each start batch covers exactly two consecutive 4-hour periods with wrap-around from the last period to the first.
+    \item The formulation is a mixed-integer linear optimization model and is solved in the code with \texttt{GUROBI\_CMD}.
+    \item The implemented model does not create explicit binary ``open/closed'' variables for batches; the business rule is represented operationally by omitting forbidden start variables and by counting starts directly in the coverage and cap constraints.
+\end{itemize}

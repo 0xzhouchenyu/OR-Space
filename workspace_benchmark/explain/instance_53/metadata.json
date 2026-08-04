@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_053",
+  "instance_number": 53,
+  "source_revise_instance": "IndustryOR_53_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Production_Planning",
+    "question": "Using the revised model’s LP relaxation diagnostics and the original model as a baseline, explain why the revised objective drops from 3050 to 2520 even after adding fairness machinery. Your answer must trace the selected budget-mode costs from the business terms (“family-wide pace policy” and fairness spread) through the exact CSV columns `Cost_budget`, `Cost_balanced`, `Cost_premium` and the code variables `z_budget`, `y[child]`, `max_child_cost`, and `min_child_cost`; then identify at least two binding revised LP-relaxation constraints by exact name with their slack/dual values and interpret their shadow prices in business terms. Finally, pinpoint the exact code additions relative to the original model that changed the objective structure, quantify the -530 change using the chosen children’s parameter values, and explain why the LP dual values cannot be linearly extrapolated to predict the effect of switching from `z_budget=1` to balanced or premium mode in the integer model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ZhangFamilyTrip.gurobi.log",
+        "ZhangFamilyTrip.lp_relaxation.json",
+        "ZhangFamilyTrip.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "ZhangFamilyTripPaceMode.gurobi.log",
+        "ZhangFamilyTripPaceMode.lp_relaxation.json",
+        "ZhangFamilyTripPaceMode.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 57.243889
+  }
+}

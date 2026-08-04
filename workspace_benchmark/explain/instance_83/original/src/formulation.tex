@@ -1,0 +1,76 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $P = \{0,1,\dots,n-1\}$: set of time periods, listed in the same order as the CSV file (code: \texttt{time\_periods}).
+    \item For Instance 83, $n=6$ periods:
+    \[
+    0:\text{ }2\text{-}6,\quad
+    1:\text{ }6\text{-}10,\quad
+    2:\text{ }10\text{-}14,\quad
+    3:\text{ }14\text{-}18,\quad
+    4:\text{ }18\text{-}22,\quad
+    5:\text{ }22\text{-}2.
+    \]
+    \item Index $j \in P$: demand period.
+    \item Index $i \in P$: start period for a waiter shift.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $d_j$: minimum number of waiters required in period $j$ (code: \texttt{min\_waiters[j]}$)$.
+    \item $h = 8$: waiter work length in hours (code: \texttt{work\_hours}).
+    \item Each period has length $4$ hours, so one waiter works exactly two consecutive periods.
+    \item Demands for Instance 83 are
+    \[
+    d_0=4,\quad d_1=8,\quad d_2=10,\quad d_3=7,\quad d_4=12,\quad d_5=4.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_i \in \mathbb{Z}_{\ge 0}$: number of waiters starting work at the beginning of period $i$ (code: \texttt{x[i]}).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize the total number of waiters started across the day:
+\[
+\min \sum_{i \in P} x_i.
+\]
+
+\section*{Constraints}
+
+A waiter who starts in period $i$ works in periods $i$ and $(i+1) \bmod n$. Therefore, period $j$ is covered by waiters who started in period $j$ and in period $(j-1) \bmod n$.
+
+\[
+x_{(j-1)\bmod n} + x_j \ge d_j
+\qquad \forall j \in P.
+\]
+
+For Instance 83, these are explicitly:
+\begin{align*}
+x_5 + x_0 &\ge 4,\\
+x_0 + x_1 &\ge 8,\\
+x_1 + x_2 &\ge 10,\\
+x_2 + x_3 &\ge 7,\\
+x_3 + x_4 &\ge 12,\\
+x_4 + x_5 &\ge 4.
+\end{align*}
+
+Integrality and nonnegativity:
+\[
+x_i \in \mathbb{Z}_{\ge 0}
+\qquad \forall i \in P.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implementation reads the ordered period labels from \texttt{table\_1.csv} and uses their row order as the index set $P$.
+    \item The model uses cyclic wrap-around coverage through the expression \texttt{prev = (j - 1) \% n}, so the last start period also covers the first demand period.
+    \item The objective is implemented exactly as \texttt{lpSum(x)}, i.e., minimizing the sum of all shift-start variables.
+    \item The decision variables are integer and nonnegative as created by \texttt{LpVariable(..., lowBound=0, cat='Integer')}.
+    \item The model is solved as an integer linear program using \texttt{GUROBI\_CMD(msg=0)}.
+\end{itemize}

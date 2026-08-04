@@ -1,0 +1,39 @@
+{
+  "solver": "gurobi",
+  "model_name": "Transport_small_truck_large_truck",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 600.0,
+  "objective_bound": 600.0,
+  "mip_gap": 0.0,
+  "runtime": 0.0013740062713623047,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_g8tjttz1/solver_records/Transport_small_truck_large_truck.gurobi.log",
+  "variables": {
+    "trips_large_truck": {
+      "value": 6.0,
+      "reduced_cost": null
+    },
+    "trips_small_truck": {
+      "value": -0.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 14.0,
+      "dual_value": null
+    }
+  }
+}

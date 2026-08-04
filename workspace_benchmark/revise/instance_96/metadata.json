@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_96_revise_business",
+  "original_instance_id": "IndustryOR_96",
+  "revise_description": "Due to supplier contract tiers, raw pipes can be bought from up to two suppliers with different lengths and base costs. Introduce supplier-specific pattern variables, per-supplier max patterns, purchase costs, shared demand coverage, and nonlinear tiered discount via binary tiers.",
+  "revise_type": "R5",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+7var, +8constr, mod_6constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 7,
+        "-variable": 0,
+        "+constraint": 8,
+        "-constraint": 0,
+        "modify_constraint": 6,
+        "modify_data": 1
+      },
+      "op_count": 23,
+      "distinct_ops": 5,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 50.0
+  }
+}

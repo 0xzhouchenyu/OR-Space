@@ -1,0 +1,104 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $L = \{1,\dots,n\}$: set of locations, with depot at location $1$.
+    \item $C = L \setminus \{1\}$: set of customer locations.
+    \item $K = \{1,2\}$: set of candidate service days.
+    \item Indices:
+    \begin{itemize}
+        \item $i,j \in L$ for locations,
+        \item $d \in K$ for days.
+    \end{itemize}
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $n$ (code: \texttt{num\_customers}): number of locations including the depot; here $n=7$.
+    \item $D_{ij}$ (code: \texttt{D[i][j]}): travel distance from location $i$ to location $j$, with $D_{ii}=0$ and symmetric values taken from the distance table.
+    \item $M$ (code: \texttt{max\_route\_length\_day}): maximum allowed route length for each day.
+    \item $f$ (code: \texttt{route\_cost\_day}): fixed cost incurred if day $d$ is operated.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{ijd}$ (code: \texttt{x[i,j,d]}) $\in \{0,1\}$ for $i,j \in L$, $i \neq j$, $d \in K$:
+    equals $1$ if arc $(i,j)$ is used on day $d$.
+    \item $y_{id}$ (code: \texttt{y[i,d]}) $\in \{0,1\}$ for $i \in C$, $d \in K$:
+    equals $1$ if customer $i$ is assigned to day $d$.
+    \item $z_d$ (code: \texttt{z[d]}) $\in \{0,1\}$ for $d \in K$:
+    equals $1$ if day $d$ is active.
+    \item $u_{id}$ (code: \texttt{u[i,d]}) for $i \in C$, $d \in K$:
+    MTZ ordering variable with
+    \[
+    1 \le u_{id} \le n-1.
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total travel distance plus the fixed cost of each active day:
+\[
+\min \;
+\sum_{d \in K} \sum_{\substack{i \in L \\ }} \sum_{\substack{j \in L \\ j \neq i}} D_{ij}\, x_{ijd}
+\;+\;
+\sum_{d \in K} f\, z_d .
+\]
+
+\section*{Constraints}
+
+Each customer is assigned to exactly one day:
+\[
+\sum_{d \in K} y_{id} = 1
+\qquad \forall i \in C.
+\]
+
+If a customer is assigned to a day, exactly one outgoing arc and one incoming arc are used for that customer on that day:
+\[
+\sum_{\substack{j \in L \\ j \neq i}} x_{ijd} = y_{id}
+\qquad \forall i \in C,\; d \in K,
+\]
+\[
+\sum_{\substack{j \in L \\ j \neq i}} x_{jid} = y_{id}
+\qquad \forall i \in C,\; d \in K.
+\]
+
+For each day, the depot has exactly one departure and one return if the day is active, and none otherwise:
+\[
+\sum_{j \in C} x_{1jd} = z_d
+\qquad \forall d \in K,
+\]
+\[
+\sum_{j \in C} x_{j1d} = z_d
+\qquad \forall d \in K.
+\]
+
+A customer can only be assigned to an active day:
+\[
+y_{id} \le z_d
+\qquad \forall i \in C,\; d \in K.
+\]
+
+MTZ subtour elimination within each day, over customer nodes only:
+\[
+u_{id} - u_{jd} + (n-1)x_{ijd} \le n-2
+\qquad \forall d \in K,\; \forall i,j \in C,\; i \neq j.
+\]
+
+Daily route-length limit:
+\[
+\sum_{\substack{i \in L \\ }} \sum_{\substack{j \in L \\ j \neq i}} D_{ij}\, x_{ijd} \le M
+\qquad \forall d \in K.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code uses zero-based Python indices for locations, where Python node \texttt{0} corresponds to business location $1$ (the depot). The mathematical formulation above uses the business numbering directly.
+    \item The model is implemented as a mixed-integer linear program and solved with Gurobi through PuLP.
+    \item The variables $u_{id}$ are created as continuous, not integer, with bounds $[1,n-1]$; this matches the implementation exactly.
+    \item No $u$ variable is defined for the depot, and the MTZ constraints are imposed only for customer-customer arcs on each day.
+    \item The formulation permits one of the two days to be unused: if $z_d=0$, then depot flow is zero and, by $y_{id}\le z_d$, no customer can be assigned to that day.
+    \item Because every customer must be assigned exactly once across the two days, at least one day must be active.
+\end{itemize}

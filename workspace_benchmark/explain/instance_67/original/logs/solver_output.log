@@ -1,0 +1,20 @@
+Set parameter LicenseID to value 2802670
+July Product_I: produce=30000, inv=0, demand=30000
+July Product_II: produce=15000, inv=0, demand=15000
+  Own WH: 0, Ext WH: 0
+August Product_I: produce=45000, inv=15000, demand=30000
+August Product_II: produce=15000, inv=0, demand=15000
+  Own WH: 3000, Ext WH: 0
+September Product_I: produce=105000, inv=90000, demand=30000
+September Product_II: produce=15000, inv=0, demand=15000
+  Own WH: 15000, Ext WH: 3000
+October Product_I: produce=70000, inv=60000, demand=100000
+October Product_II: produce=50000, inv=0, demand=50000
+  Own WH: 12000, Ext WH: 0
+November Product_I: produce=70000, inv=30000, demand=100000
+November Product_II: produce=50000, inv=0, demand=50000
+  Own WH: 6000, Ext WH: 0
+December Product_I: produce=70000, inv=0, demand=100000
+December Product_II: produce=50000, inv=0, demand=50000
+  Own WH: 0, Ext WH: 0
+OBJECTIVE_VALUE: 3160500.0

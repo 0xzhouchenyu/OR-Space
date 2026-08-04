@@ -1,0 +1,53 @@
+{
+  "solver": "gurobi",
+  "model_name": "FarmTransport_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 640.0,
+  "runtime": 0.0002620220184326172,
+  "variables": {
+    "bike_trips": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "cart_trips": {
+      "value": 10000.0,
+      "reduced_cost": 0.0
+    },
+    "choose_bike": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "horse_trips": {
+      "value": 8.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">",
+      "slack": -399440.0,
+      "dual_value": 0.0
+    },
+    "_C2": {
+      "sense": "<",
+      "slack": 360.0,
+      "dual_value": 0.0
+    },
+    "_C3": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 80.0
+    },
+    "_C4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    }
+  }
+}

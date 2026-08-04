@@ -1,0 +1,117 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products $i \in P$: the rows of \texttt{table\_1.csv}, namely Shirt, Short-sleeve, and Casual Cloth.
+    \item Sales segments $s \in S = \{\mathrm{reg},\mathrm{pro}\}$, corresponding to regular and promotional sales.
+\end{itemize}
+
+\section*{Parameters}
+
+All numerical values are read from the CSV files.
+
+\begin{itemize}
+    \item $a_i$: labor per unit of product $i$ from column \texttt{Labor per unit}.
+    \item $m_i$: material per unit of product $i$ from column \texttt{Material per unit}.
+    \item $p_i$: base selling price of product $i$ from column \texttt{Selling Price}.
+    \item $c_i$: variable cost per unit of product $i$ from column \texttt{Variable Cost}.
+    \item $L$ (\texttt{available\_labor}): total weekly labor capacity.
+    \item $M$ (\texttt{available\_material}): total weekly material capacity.
+    \item $F_i$: weekly fixed equipment cost for product $i$, from
+    \texttt{fixed\_cost\_shirts},
+    \texttt{fixed\_cost\_short\_sleeves},
+    \texttt{fixed\_cost\_casual\_clothes}.
+    \item $\delta_{\mathrm{reg}}$ (\texttt{segment\_regular\_discount}): regular-segment price multiplier.
+    \item $\delta_{\mathrm{pro}}$ (\texttt{segment\_promo\_discount}): promotional-segment price multiplier.
+    \item $L^{\mathrm{pro}}$ (\texttt{segment\_promo\_labor\_cap}): labor capacity available to the promotional segment.
+    \item $M^{\mathrm{pro}}$ (\texttt{segment\_promo\_material\_cap}): material capacity available to the promotional segment.
+    \item $B_i$: minimum total weekly production for product $i$ when its equipment is activated, from
+    \texttt{min\_batch\_shirts},
+    \texttt{min\_batch\_short\_sleeves},
+    \texttt{min\_batch\_casual\_clothes}.
+    \item $U_i$: product-specific upper bound used in the linking constraints, from
+    \texttt{max\_prod\_shirts},
+    \texttt{max\_prod\_short\_sleeves},
+    \texttt{max\_prod\_casual\_clothes}.
+    \item $\pi_{is}$: unit contribution margin of product $i$ in segment $s$, defined by
+    \[
+    \pi_{i,\mathrm{reg}}=\delta_{\mathrm{reg}}p_i-c_i,
+    \qquad
+    \pi_{i,\mathrm{pro}}=\delta_{\mathrm{pro}}p_i-c_i.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $q_{is}$ (code: \texttt{q[i][seg]}) $\in \mathbb{Z}_{\ge 0}$: units of product $i$ assigned to segment $s$.
+    \item $y_i$ (code: \texttt{y[i]}) $\in \{0,1\}$: 1 if the equipment/product line for product $i$ is activated, 0 otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize weekly profit:
+\[
+\max \sum_{i \in P}\sum_{s \in S}\pi_{is} q_{is} \;-\; \sum_{i \in P} F_i y_i.
+\]
+
+\section*{Constraints}
+
+Overall labor and material capacities:
+\[
+\sum_{i \in P}\sum_{s \in S} a_i q_{is} \le L,
+\]
+\[
+\sum_{i \in P}\sum_{s \in S} m_i q_{is} \le M.
+\]
+
+Promotional-segment resource caps:
+\[
+\sum_{i \in P} a_i q_{i,\mathrm{pro}} \le L^{\mathrm{pro}},
+\]
+\[
+\sum_{i \in P} m_i q_{i,\mathrm{pro}} \le M^{\mathrm{pro}}.
+\]
+
+Activation-linking constraints, imposed separately for each segment:
+\[
+q_{i,\mathrm{reg}} \le U_i y_i \qquad \forall i \in P,
+\]
+\[
+q_{i,\mathrm{pro}} \le U_i y_i \qquad \forall i \in P.
+\]
+
+Minimum batch if activated:
+\[
+q_{i,\mathrm{reg}} + q_{i,\mathrm{pro}} \ge B_i y_i
+\qquad \forall i \in P.
+\]
+
+Variable domains:
+\[
+q_{is} \in \mathbb{Z}_{\ge 0} \qquad \forall i \in P,\; s \in S,
+\]
+\[
+y_i \in \{0,1\} \qquad \forall i \in P.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear optimization model solved through \texttt{GUROBI\_CMD} from PuLP compatibility wrappers.
+    \item The code uses one binary activation variable per product line, not separate activation variables by segment. Thus opening a product line permits production in either or both segments, while paying the fixed cost only once.
+    \item The business brief describes segment presence as a gate based on segment-specific minimum batch size. The current implementation does \emph{not} introduce segment-specific binary variables or segment-level minimum-batch constraints. Instead, it enforces only a product-level minimum total production across both segments:
+    \[
+    q_{i,\mathrm{reg}} + q_{i,\mathrm{pro}} \ge B_i y_i.
+    \]
+    A positive quantity in a segment can therefore be below the product's minimum batch, provided the product line is activated and the total across segments meets the minimum.
+    \item The linking constraints use $U_i$ separately on each segment variable:
+    \[
+    q_{i,\mathrm{reg}} \le U_i y_i,\qquad q_{i,\mathrm{pro}} \le U_i y_i.
+    \]
+    Hence, if $y_i=1$, the model allows up to $U_i$ units in each segment individually; there is no explicit constraint
+    \[
+    q_{i,\mathrm{reg}} + q_{i,\mathrm{pro}} \le U_i.
+    \]
+    This matches the source code exactly.
+    \item All production variables are integer-valued in the implementation.
+\end{itemize}

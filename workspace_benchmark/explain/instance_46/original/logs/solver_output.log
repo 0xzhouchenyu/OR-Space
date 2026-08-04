@@ -1,0 +1,15 @@
+Set parameter LicenseID to value 2802670
+Status: Optimal
+  Student 1 on Monday: 6.0h
+  Student 1 on Friday: 7.0h
+  Student 2 on Tuesday: 6.0h
+  Student 2 on Wednesday: 8.0h
+  Student 3 on Tuesday: 8.0h
+  Student 3 on Friday: 5.0h
+  Student 4 on Monday: 5.0h
+  Student 4 on Wednesday: 6.0h
+  Student 5 on Monday: 3.0h
+  Student 5 on Thursday: 8.0h
+  Student 6 on Thursday: 6.0h
+  Student 6 on Friday: 2.0h
+OBJECTIVE_VALUE: 715.6999999999999

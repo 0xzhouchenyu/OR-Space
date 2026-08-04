@@ -1,0 +1,62 @@
+{
+  "solver": "gurobi",
+  "model_name": "FarmTransport",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 640.0,
+  "objective_bound": 640.0,
+  "mip_gap": 0.0,
+  "runtime": 0.00043511390686035156,
+  "node_count": 0.0,
+  "iteration_count": 0.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_gbbk6t50/solver_records/FarmTransport.gurobi.log",
+  "variables": {
+    "bike_trips": {
+      "value": 10000.0,
+      "reduced_cost": null
+    },
+    "cart_trips": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "choose_bike": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "horse_trips": {
+      "value": 8.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": ">=",
+      "slack": -299440.0,
+      "dual_value": null
+    },
+    "_C2": {
+      "sense": "<=",
+      "slack": 360.0,
+      "dual_value": null
+    },
+    "_C3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

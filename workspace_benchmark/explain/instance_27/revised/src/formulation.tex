@@ -1,0 +1,108 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products $P=\{\text{Product\_I},\text{Product\_II},\text{Product\_III}\}$, indexed by $p$.
+    \item Equipment $E=\{\text{A1},\text{A2},\text{B1},\text{B2},\text{B3}\}$, indexed by $e$.
+    \item Process-A equipment set $E^A=\{e\in E: e \text{ starts with A}\}=\{\text{A1},\text{A2}\}$.
+    \item Process-B equipment set $E^B=\{e\in E: e \text{ starts with B}\}=\{\text{B1},\text{B2},\text{B3}\}$.
+    \item Compatibility set
+    \[
+    K=\{(e,p)\in E\times P : \texttt{proc\_times[e][p]} \text{ is defined in } \texttt{table\_1.csv}\}.
+    \]
+    Decision variables exist only for compatible pairs $(e,p)\in K$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Unit selling price $u_p$ (code/data: \texttt{prices[p]} from \texttt{unit\_price\_product\_*}) for each $p\in P$.
+    \item Unit raw-material cost $r_p$ (code/data: \texttt{raw\_costs[p]} from \texttt{raw\_material\_cost\_product\_*}) for each $p\in P$.
+    \item Processing time coefficient $a_{ep}$ (code/data: \texttt{proc\_times[e][p]}) for $(e,p)\in K$, measured in machine-hours per unit of product.
+    \item Effective machine-hours capacity $H_e$ (code/data: \texttt{eff\_hours[e]}) for each $e\in E$.
+    \item Operating cost at full capacity $C_e$ (code/data: \texttt{op\_costs[e]} from \texttt{Operating\_Costs\_Full\_Capacity\_Yuan}) for each $e\in E$.
+    \item Shared labor coefficient $\ell_e$ (code/data: \texttt{labor\_coeff[e]} from \texttt{labor\_coeff\_*}) for each $e\in E$, in operator-hours per machine-hour.
+    \item Total shared skilled labor available $L$ (code/data: \texttt{shared\_labor\_hours}).
+    \item One-time activation fee for equipment B2, $F^{B2}$ (code/data: \texttt{b2\_activation\_fee}).
+\end{itemize}
+
+For convenience, the model uses the linearized operating cost rate
+\[
+c_e := \frac{C_e}{H_e}\qquad \forall e\in E,
+\]
+which is exactly how the code computes operating cost.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Production flow on equipment $e$ for product $p$:
+    \[
+    x_{ep}\ge 0 \qquad \text{for } (e,p)\in K
+    \]
+    (code: \texttt{x[e][p]}).
+    \item Binary activation indicator for equipment B2:
+    \[
+    z_{B2}\in\{0,1\}
+    \]
+    (code: \texttt{z\_B2}).
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+\sum_{p\in P}(u_p-r_p)\left(\sum_{e\in E^A:(e,p)\in K} x_{ep}\right)
+\;-\;
+\sum_{e\in E} c_e \left(\sum_{p:(e,p)\in K} a_{ep}x_{ep}\right)
+\;-\;
+F^{B2} z_{B2}.
+\]
+
+This matches the code, where total product output for product $p$ is defined from the process-A side:
+\[
+\texttt{total\_prod[p]}=\sum_{e\in E^A:(e,p)\in K} x_{ep},
+\]
+and revenue and raw-material cost are both applied to that quantity.
+
+\section*{Constraints}
+
+\begin{enumerate}
+    \item \textbf{Equipment capacity constraints}
+    \[
+    \sum_{p:(e,p)\in K} a_{ep}x_{ep}\le H_e
+    \qquad \forall e\in E.
+    \]
+
+    \item \textbf{B2 activation gate}
+    \[
+    \sum_{p:(\text{B2},p)\in K} a_{\text{B2},p}x_{\text{B2},p}
+    \le H_{\text{B2}}\, z_{B2}.
+    \]
+    Thus B2 may be used only if activated, and any positive use triggers the one-time fee in the objective.
+
+    \item \textbf{Process-flow balance by product}
+    \[
+    \sum_{e\in E^A:(e,p)\in K} x_{ep}
+    =
+    \sum_{e\in E^B:(e,p)\in K} x_{ep}
+    \qquad \forall p\in P.
+    \]
+    Each unit produced for a product must have matching throughput in process A and process B.
+
+    \item \textbf{Shared skilled-labor pool}
+    \[
+    \sum_{e\in E}\ell_e\left(\sum_{p:(e,p)\in K} a_{ep}x_{ep}\right)\le L.
+    \]
+    Every machine-hour used on equipment $e$ consumes operator-hours from the common \texttt{shared\_labor\_hours} pool according to \texttt{labor\_coeff[e]}.
+\end{enumerate}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved with Gurobi through PuLP (\texttt{pulp.GUROBI\_CMD}).
+    \item Variables $x_{ep}$ are created only for compatible equipment--product pairs appearing in \texttt{table\_1.csv}; infeasible pairings are omitted entirely rather than represented with zero coefficients.
+    \item Operating cost is modeled exactly as in the code: proportional to utilized machine-hours, with rate $C_e/H_e$. It is not a fixed charge for merely using equipment.
+    \item The revised business rule for B2 is implemented as a gate: B2 usage is linked to binary variable \texttt{z\_B2}, and the one-time fee \texttt{b2\_activation\_fee} is charged if B2 is opened.
+    \item The shared labor rule is also implemented exactly as stated in the code: labor consumption depends on equipment-hours used across all equipment through \texttt{labor\_coeff[e]}, and all such usage draws from the single pool \texttt{shared\_labor\_hours}.
+    \item No integrality is imposed on production quantities $x_{ep}$; they are continuous nonnegative variables.
+\end{itemize}

@@ -1,0 +1,7 @@
+Parameter_Name,Value,Unit,Context_Description
+shift_duration,8,hours,Duration of each full-time salesperson's shift
+shift_start_times,2:00;6:00;10:00;14:00;18:00;22:00,N/A,Start times for full-time salesperson shifts
+full_time_cost,1.0,currency per day,Cost per full-time salesperson per 8-hour shift
+part_time_cost,0.7,currency per day,Cost per part-time salesperson per 4-hour shift
+part_time_cap_per_period,6,people,Maximum number of part-time salespeople allowed to work in any single 4-hour period
+min_full_time_per_period,8,people,Minimum number of full-time salespeople that must be present in every 4-hour period

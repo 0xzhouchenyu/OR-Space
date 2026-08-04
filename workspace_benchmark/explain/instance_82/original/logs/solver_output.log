@@ -1,0 +1,11 @@
+Best combination: (2, 2, 3, 1, 2)
+  Jewelry: 2 stores
+  Shoes_and_Hats: 2 stores
+  General_Merchandise: 3 stores
+  Bookstore: 1 stores
+  Catering: 2 stores
+Total area used: 5000
+Total profit: 140.0
+Total rent (objective): 28.0
+OBJECTIVE_VALUE: 28.0
+Set parameter LicenseID to value 2802670

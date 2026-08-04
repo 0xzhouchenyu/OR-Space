@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 14.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\n\nAssignment:\n  Worker II -> Task A (time: 4)\n  Worker III -> Task B (time: 4)\n  Worker IV -> Task C (time: 2)\n  Worker V -> Task D (time: 4)\n\nOBJECTIVE_VALUE: 14.0\n",
+  "stderr": "",
+  "error": null
+}

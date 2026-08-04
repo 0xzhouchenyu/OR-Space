@@ -1,0 +1,87 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $M$ : set of machines, $M=\{A,B,C\}$.
+    \item $P$ : set of part types, $P=\{1,2,\dots,10\}$.
+    \item $m \in M$ : machine index.
+    \item $p \in P$ : part index.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $c_{mp}$ : processing cost of assigning part $p$ to machine $m$ (code: \texttt{cost[(m,p)]}). Values are taken from \texttt{table\_1.csv}.
+    \item $d_m$ : one-time setup cost incurred if machine $m$ is used at least once (code: \texttt{d[m]}). Values are taken from \texttt{general\_parameters.csv}.
+    \item $U_C$ : maximum number of part types that may be processed on machine $C$ (code: \texttt{max\_C}); here $U_C=3$.
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $x_{mp} \in \{0,1\}$ : equals 1 if part $p$ is assigned to machine $m$, and 0 otherwise (code: \texttt{x[(m,p)]}).
+    \item $y_m \in \{0,1\}$ : equals 1 if machine $m$ is used by at least one part, and 0 otherwise (code: \texttt{y[m]}).
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total processing cost plus machine setup cost:
+\[
+\min \sum_{m \in M}\sum_{p \in P} c_{mp}\,x_{mp}
+\;+\;
+\sum_{m \in M} d_m\,y_m.
+\]
+
+\section*{Constraints}
+
+Each part must be assigned to exactly one machine:
+\[
+\sum_{m \in M} x_{mp} = 1
+\qquad \forall p \in P.
+\]
+
+Machine-use linking constraints:
+\[
+x_{mp} \le y_m
+\qquad \forall m \in M,\ \forall p \in P.
+\]
+
+Logical relationship between parts 1 and 2 as implemented in the code:
+\[
+x_{A,1} + x_{A,2} = 1.
+\]
+
+Fixed assignments:
+\[
+x_{A,3} = 1,
+\qquad
+x_{B,4} = 1,
+\qquad
+x_{C,5} = 1.
+\]
+
+Capacity limit on machine $C$:
+\[
+\sum_{p \in P} x_{C,p} \le U_C.
+\]
+
+Binary restrictions:
+\[
+x_{mp} \in \{0,1\}
+\qquad \forall m \in M,\ \forall p \in P,
+\]
+\[
+y_m \in \{0,1\}
+\qquad \forall m \in M.
+\]
+
+\section*{Notes on Implementation}
+
+The implemented model is a binary linear optimization problem solved with a MIP solver through \texttt{GUROBI\_CMD}. The formulation above matches the code exactly.
+
+In particular, the business rule relating parts 1 and 2 is encoded in the source as
+\[
+x_{A,1}+x_{A,2}=1,
+\]
+which enforces that exactly one of parts 1 and 2 is assigned to machine $A$. This is the precise implemented logic and should not be replaced by a different linearization.
+
+The setup variables $y_m$ are linked only through constraints $x_{mp}\le y_m$. Because the setup costs $d_m$ are positive and appear in the minimization objective, the solver will set $y_m=1$ exactly when machine $m$ is used in an optimal solution.

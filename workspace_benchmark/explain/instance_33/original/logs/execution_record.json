@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 1000.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nTotal inheritance value: 183000\n\nSon 1 receives:\n  Painting by Caillebotte: 25000\n  Yuan dynasty Chinese vase: 20000\n  Louis XV sofa: 3000\n  Jack Russell racing dog 1: 3000\n  Jack Russell racing dog 2: 3000\n  Sculpture from 200 AD: 10000\n  Sailing boat: 15000\n  Furniture once belonging to Cavour: 13000\n  Total: 92000\n\nSon 2 receives:\n  Bust of Diocletian: 5000\n  911 Porsche: 40000\n  Diamond 1: 12000\n  Diamond 2: 12000\n  Diamond 3: 12000\n  Harley Davidson motorcycle: 10000\n  Total: 91000\n\nDifference: 1000\nOBJECTIVE_VALUE: 1000.0\n",
+  "stderr": "",
+  "error": null
+}

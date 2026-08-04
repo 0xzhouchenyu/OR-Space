@@ -1,0 +1,88 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Years in the planning horizon: $T = \{1,2\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $a_1$ (code: \texttt{a1}): fighter jets produced in year 1.
+    \item $a_2$ (code: \texttt{a2}): fighter jets produced in year 2.
+    \item $c$ (code: \texttt{training\_capacity}): number of pilots that one training jet can train in one year.
+    \item $D$ (code: \texttt{training\_duration}): duration of the training program in years. In this instance, $D=2$.
+\end{itemize}
+
+For Instance 2, the data are
+\[
+a_1=10,\qquad a_2=15,\qquad c=5,\qquad D=2.
+\]
+
+\section*{Decision Variables}
+
+The implemented logic comments describe the following variables:
+
+\begin{itemize}
+    \item $x_1$: number of jets allocated to training in year 1.
+    \item $x_2$: number of training jets available in year 2 (including year-1 training jets that continue training).
+\end{itemize}
+
+However, the current implementation does not optimize over these variables; instead it directly sets the reported quantities using parameter values only.
+
+\section*{Objective}
+
+The search logic effectively evaluates
+\[
+\max \; c\,(a_1+a_2),
+\]
+which for this instance gives
+\[
+\max \; 5(10+15)=125.
+\]
+
+Equivalently, in terms of the commented variable interpretation, the intended objective expression is
+\[
+\max \; c(x_1+x_2),
+\]
+but the code substitutes the specific choice
+\[
+x_1=a_1,\qquad x_2=a_2,
+\]
+and therefore computes
+\[
+c(x_1+x_2)=c(a_1+a_2).
+\]
+
+\section*{Constraints}
+
+The source code contains only commented model logic and no enforced optimization constraints. The commented logic states:
+
+\begin{align}
+x_1 &\le a_1,\\
+x_2 &\le a_1+a_2,\\
+x_1 &\le x_2.
+\end{align}
+
+In the actual implementation, these constraints are not instantiated or solved. Instead, the code directly reports
+\[
+x_1=a_1,\qquad x_2=a_2,
+\]
+so the computed total pilots is
+\[
+c(a_1+a_2).
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The file \texttt{current\_heuristic.py} does not build an LP, MIP, or any other optimization model.
+    \item No solver is called. The objective value is computed explicitly as
+    \[
+    \texttt{total\_pilots}=\texttt{training\_capacity}\times(\texttt{a1}+\texttt{a2}).
+    \]
+    \item The printed lines label year-1 training jets as \texttt{a1} and year-2 training jets as \texttt{a2}. Thus the implementation treats all year-1 production and all year-2 production as contributing once to pilot training, without enforcing jet availability linkage beyond this direct arithmetic.
+    \item Although the comments describe a 2-year training-allocation problem with variables $(x_1,x_2)$, the executable logic is simply a closed-form evaluation:
+    \[
+    \text{Objective value} = c(a_1+a_2)=125.
+    \]
+\end{itemize}

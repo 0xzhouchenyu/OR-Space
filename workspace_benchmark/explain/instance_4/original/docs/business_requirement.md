@@ -1,0 +1,1 @@
+A farmer needs to decide how many cows, sheep, and chickens to raise in order to achieve maximum profit. The farmer must consider selling prices, feed costs, manure production, and constraints related to cleaning capacity, farm size, and customer demand. Please refer to the corresponding CSV files in the data folder for specific parameter values.

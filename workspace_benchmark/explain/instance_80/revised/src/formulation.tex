@@ -1,0 +1,194 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Tasks: $T=\{\text{Task\_1},\text{Task\_2},\text{Task\_3}\}$.
+    \item Methods available for each task: $M=\{\text{Method\_A},\text{Method\_B}\}$.
+    \item Indices:
+    \begin{itemize}
+        \item $t \in T$ for tasks,
+        \item $m \in M$ for methods.
+    \end{itemize}
+\end{itemize}
+
+\section*{Parameters}
+
+All parameter names below follow the data fields used by the code and CSV files.
+
+\begin{itemize}
+    \item Skilled weekly wage $c^S$ (\texttt{skilled\_worker\_weekly\_wage}).
+    \item Laborer weekly wage $c^L$ (\texttt{laborer\_weekly\_wage}).
+    \item Effective weekly hours per skilled worker $h^S$ (\texttt{skilled\_worker\_weekly\_hours}).
+    \item Effective weekly hours per laborer $h^L$ (\texttt{laborer\_weekly\_hours}).
+    \item Maximum skilled workers $\overline S$ (\texttt{max\_skilled\_workers}).
+    \item Maximum laborers $\overline L$ (\texttt{max\_laborers}).
+    \item Global skilled-to-laborer hiring ratio $\rho$ (\texttt{skilled\_worker\_hiring\_ratio}).
+    \item Minimum skilled workers required for Task 3 if Method B is chosen:
+    $\underline s^{3B}$ (\texttt{min\_skilled\_workers\_task3\_methodB}).
+    \item Required effective hours for task--method pair $(t,m)$:
+    $H_{tm}$ (\texttt{Effective\_Hours} in \texttt{table\_1.csv}).
+    \item Fixed cost for task--method pair $(t,m)$:
+    $F_{tm}$ (\texttt{Fixed\_Cost} in \texttt{table\_1.csv}).
+    \item Task-specific minimum skilled share for task $t$:
+    $\underline \alpha_t$, from
+    \texttt{min\_skilled\_share\_task1},
+    \texttt{min\_skilled\_share\_task2},
+    \texttt{min\_skilled\_share\_task3}.
+    \item Task-specific maximum skilled share for task $t$:
+    $\overline \alpha_t$, from
+    \texttt{max\_skilled\_share\_task1},
+    \texttt{max\_skilled\_share\_task2},
+    \texttt{max\_skilled\_share\_task3}.
+    \item Big-$M$ constant used for method-allocation linking:
+    $M=10000$ (hard-coded as \texttt{M\_big}).
+\end{itemize}
+
+For this instance, the directional exclusion parameter \texttt{exclusion\_rule\_task1\_task3} is implemented as:
+\[
+y_{\text{Task\_1},\text{Method\_B}} + y_{\text{Task\_3},\text{Method\_A}} \le 1.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Method selection binary:
+    \[
+    y_{tm} \in \{0,1\}
+    \qquad\text{(code: \texttt{y[t, m]})}
+    \]
+    where $y_{tm}=1$ if task $t$ uses method $m$.
+    
+    \item Skilled workers assigned to task--method pair:
+    \[
+    s_{tm} \ge 0
+    \qquad\text{(code: \texttt{s[t, m]})}
+    \]
+    
+    \item Laborers assigned to task--method pair:
+    \[
+    \ell_{tm} \ge 0
+    \qquad\text{(code: \texttt{l[t, m]})}
+    \]
+    
+    \item Total skilled workers:
+    \[
+    S^{\mathrm{tot}} \ge 0
+    \qquad\text{(code: \texttt{total\_skilled})}
+    \]
+    
+    \item Total laborers:
+    \[
+    L^{\mathrm{tot}} \ge 0
+    \qquad\text{(code: \texttt{total\_laborers})}
+    \]
+    
+    \item Total skilled workers on task $t$:
+    \[
+    S_t \ge 0
+    \qquad\text{(code: \texttt{S\_task[t]})}
+    \]
+    
+    \item Total laborers on task $t$:
+    \[
+    L_t \ge 0
+    \qquad\text{(code: \texttt{L\_task[t]})}
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Minimize total weekly wage cost plus fixed method costs:
+\[
+\min \;
+c^S S^{\mathrm{tot}}
++
+c^L L^{\mathrm{tot}}
++
+\sum_{t\in T}\sum_{m\in M} F_{tm}\, y_{tm}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Aggregate workforce definitions}
+\[
+S^{\mathrm{tot}} = \sum_{t\in T}\sum_{m\in M} s_{tm},
+\]
+\[
+L^{\mathrm{tot}} = \sum_{t\in T}\sum_{m\in M} \ell_{tm}.
+\]
+
+\paragraph{Task-level aggregation}
+For each $t \in T$,
+\[
+S_t = \sum_{m\in M} s_{tm},
+\]
+\[
+L_t = \sum_{m\in M} \ell_{tm}.
+\]
+
+\paragraph{Exactly one method per task}
+For each $t \in T$,
+\[
+\sum_{m\in M} y_{tm} = 1.
+\]
+
+\paragraph{Hours requirement for each task--method option}
+For each $(t,m)\in T\times M$,
+\[
+h^S s_{tm} + h^L \ell_{tm} \ge H_{tm}\, y_{tm}.
+\]
+
+\paragraph{Linking of staffing to chosen method}
+For each $(t,m)\in T\times M$,
+\[
+s_{tm} \le M\, y_{tm},
+\]
+\[
+\ell_{tm} \le M\, y_{tm}.
+\]
+
+\paragraph{Total workforce capacity}
+\[
+S^{\mathrm{tot}} \le \overline S,
+\]
+\[
+L^{\mathrm{tot}} \le \overline L.
+\]
+
+\paragraph{Global skilled-to-laborer hiring ratio}
+\[
+S^{\mathrm{tot}} \le \rho\, L^{\mathrm{tot}}.
+\]
+
+\paragraph{Directional exclusion rule}
+\[
+y_{\text{Task\_1},\text{Method\_B}} + y_{\text{Task\_3},\text{Method\_A}} \le 1.
+\]
+
+\paragraph{Minimum skilled workers if Task 3 uses Method B}
+\[
+s_{\text{Task\_3},\text{Method\_B}}
+\ge
+\underline s^{3B}\, y_{\text{Task\_3},\text{Method\_B}}.
+\]
+
+\paragraph{Task-level skilled share lower bounds}
+For each $t\in T$,
+\[
+S_t \ge \underline \alpha_t (S_t + L_t).
+\]
+
+\paragraph{Task-level skilled share upper bounds}
+For each $t\in T$,
+\[
+S_t \le \overline \alpha_t (S_t + L_t).
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The implemented model is a mixed-integer linear program solved with \texttt{GUROBI\_CMD(msg=0)} through the PuLP-compatible interface, not by heuristic search or exact enumeration.
+    \item The task-level skilled-share constraints are implemented exactly in the linear form shown above, using auxiliary task totals \texttt{S\_task[t]} and \texttt{L\_task[t]}.
+    \item The business-direction rule is modeled only in the stated direction: Task 1 using Method B excludes Task 3 using Method A. No reverse implication is added.
+    \item Staffing variables are continuous nonnegative variables in the code; integrality is imposed only on method-selection variables $y_{tm}$.
+    \item Each task has exactly one selected method, but staffing variables exist for both methods and are forced to zero for unselected methods through the big-$M$ linking constraints.
+\end{itemize}

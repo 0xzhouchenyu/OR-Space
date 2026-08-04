@@ -1,0 +1,7 @@
+Parameter_Name,Value,Unit,Context_Description
+min_vegetable_types,2,,Minimum number of different vegetable types Mary must select in each meal
+max_budget,20,USD,Maximum budget Mary can spend on all purchases for the day
+total_weight_limit,800,grams,Maximum total weight of all food Mary can purchase in the day
+min_daily_calories,400,kcal,Minimum total calories from lunch and dinner combined
+max_daily_calories,900,kcal,Maximum total calories from lunch and dinner combined
+max_daily_sodium,1500,mg,Maximum total sodium intake from lunch and dinner combined

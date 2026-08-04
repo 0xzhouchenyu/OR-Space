@@ -1,0 +1,88 @@
+{
+  "solver": "gurobi",
+  "model_name": "FarmBiosecurity_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 20260.869565217392,
+  "runtime": 0.00026607513427734375,
+  "variables": {
+    "aw_outside": {
+      "value": 0.0,
+      "reduced_cost": -0.808695652173913
+    },
+    "chickens": {
+      "value": 0.0,
+      "reduced_cost": -0.4
+    },
+    "coop_open": {
+      "value": 0.0,
+      "reduced_cost": -3035.6521739130435
+    },
+    "cows": {
+      "value": 21.30434782608696,
+      "reduced_cost": 0.0
+    },
+    "crop_Corn": {
+      "value": 39.130434782608695,
+      "reduced_cost": 0.0
+    },
+    "crop_Soybean": {
+      "value": 0.0,
+      "reduced_cost": -16.304347826086953
+    },
+    "crop_Wheat": {
+      "value": 0.0,
+      "reduced_cost": -17.39130434782608
+    },
+    "large_flock_review": {
+      "value": 0.0,
+      "reduced_cost": -1800.0
+    },
+    "ss_outside": {
+      "value": 0.0,
+      "reduced_cost": -0.6826086956521737
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<",
+      "slack": 28.913043478260864,
+      "dual_value": 0.0
+    },
+    "_C2": {
+      "sense": "<",
+      "slack": 6478.260869565216,
+      "dual_value": 0.0
+    },
+    "_C3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 2.608695652173913
+    },
+    "_C4": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 2.782608695652174
+    },
+    "_C5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "_C6": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C7": {
+      "sense": "<",
+      "slack": 1800.0,
+      "dual_value": 0.0
+    },
+    "_C8": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    }
+  }
+}

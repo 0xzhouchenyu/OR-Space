@@ -1,0 +1,5 @@
+Type,Manufacturing_hours_per_unit,Assembly_hours_per_unit,Inspection_hours_per_unit,Selling_Price_Yuan_per_unit
+Type_A,20,5,3,650
+Type_B,0,7,6,725
+Max_weekly_capacity,120,80,40,-
+Process_cost_Yuan_per_hour,12,8,10,-

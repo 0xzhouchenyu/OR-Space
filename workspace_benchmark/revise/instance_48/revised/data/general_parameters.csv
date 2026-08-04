@@ -1,0 +1,8 @@
+Parameter_Name,Value,Unit,Context_Description
+min_weekly_profit,10000,yuan,The total weekly profit should not be less than this amount
+min_model_A_units,10,units,Minimum production requirement for model A
+min_model_B_units,15,units,Minimum production requirement for model B
+process_I_hours,150,hours,Exact weekly processing time for Process I
+process_II_max_overtime,30,hours,Maximum allowable overtime for Process II
+model_A_overtime_profit_reduction,20,yuan,Profit reduction per unit of model A produced during overtime in Process II
+model_B_overtime_profit_reduction,25,yuan,Profit reduction per unit of model B produced during overtime in Process II

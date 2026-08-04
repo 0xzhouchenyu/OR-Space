@@ -1,0 +1,6 @@
+Parameter_Name,Value,Unit,Context_Description
+company_budget,40000,dollars,Maximum budget allocated for hiring candidates
+max_employees,4,employees,Maximum number of employees the company can hire
+min_skill_level,8,skill points,Minimum total skill level required for the hired team
+min_project_experience,8,years,Minimum total project management experience required for the hired team
+max_one_candidate_g_j,1,candidate,Maximum number of candidates that can be hired between G and J due to similar technical background

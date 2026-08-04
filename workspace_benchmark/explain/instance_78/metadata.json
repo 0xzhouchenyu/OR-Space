@@ -1,0 +1,56 @@
+{
+  "instance_id": "OR_explain_078",
+  "instance_number": 78,
+  "source_revise_instance": "IndustryOR_78_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Comparative Dynamics",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain exactly why the objective increases from 172.0 to 215.0 by tracing the new business rule from `docs/business_requirement.md` through `general_parameters.csv` and into the added code/formulation constraint on `y_pt` and `y_ft`. Using the solver solution and duals, identify which constraints are binding in the revised run, name the exact code variable names and CSV column names/parameter values involved, and quantify the 43.0 increase in minimum overtime relative to the original model. Also interpret the revised shadow prices and slack values in business terms, and explain why you cannot linearly extrapolate those dual values to arbitrarily tighten the part-time coverage ratio beyond 0.5 without re-solving."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_3_3.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Minimize_Overtime.gurobi.log",
+        "Minimize_Overtime.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_3_3.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Minimize_Overtime.gurobi.log",
+        "Minimize_Overtime.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 83.968889
+  }
+}

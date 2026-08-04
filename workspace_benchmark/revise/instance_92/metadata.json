@@ -1,0 +1,19 @@
+{
+  "instance_id": "IndustryOR_92_revise_2",
+  "original_instance_id": "IndustryOR_92",
+  "revise_description": "Added bound and conditional constraints requiring at least two buses per minibus for safety reasons, and a minimum of one minibus to be rented.",
+  "revise_type": "R2",
+  "revise_type_name": "Bound / Conditional Capacity Constraint",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research"
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 83.333333
+  }
+}

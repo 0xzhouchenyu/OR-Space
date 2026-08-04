@@ -1,0 +1,10 @@
+Parameter_Name,Value,Unit,Context_Description
+activity_A_duration,4,days,Duration of activity A
+activity_B_duration,3,days,Duration of activity B
+activity_C_duration,5,days,Duration of activity C
+activity_D_duration,2,days,Duration of activity D
+activity_E_duration,10,days,Duration of activity E
+activity_F_duration,10,days,Duration of activity F
+activity_G_duration,1,days,Duration of activity G
+work_cost_per_day,1000,Euros,Cost of work per day
+machine_rental_cost_per_day,5000,Euros,Cost of renting the special machine per day

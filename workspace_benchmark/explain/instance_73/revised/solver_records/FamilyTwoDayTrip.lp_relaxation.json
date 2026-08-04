@@ -1,0 +1,332 @@
+{
+  "solver": "gurobi",
+  "model_name": "FamilyTwoDayTrip_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 2600.0,
+  "runtime": 0.0005857944488525391,
+  "variables": {
+    "x_Alice_day1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_Alice_day2": {
+      "value": 0.0,
+      "reduced_cost": 200.0
+    },
+    "x_Bob_day1": {
+      "value": 1.0,
+      "reduced_cost": -100.0
+    },
+    "x_Bob_day2": {
+      "value": 0.0,
+      "reduced_cost": 100.0
+    },
+    "x_Charlie_day1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_Charlie_day2": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_Diana_day1": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "x_Diana_day2": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "x_Ella_day1": {
+      "value": 1.0,
+      "reduced_cost": -500.0
+    },
+    "x_Ella_day2": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "y_Alice": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_Bob": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_Charlie": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_Diana": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_Ella": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "z_Alice": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z_Bob": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "z_Charlie": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "z_Diana": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    },
+    "z_Ella": {
+      "value": 1.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "MinChildren_day1": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 1000.0
+    },
+    "MaxChildren_day1": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "MinChildren_day2": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 600.0
+    },
+    "MaxChildren_day2": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "Z_ge_X1_Alice": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "Z_ge_X2_Alice": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Z_le_sumX_Alice": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Z_ge_X1_Bob": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "Z_ge_X2_Bob": {
+      "sense": ">",
+      "slack": -1.0,
+      "dual_value": 0.0
+    },
+    "Z_le_sumX_Bob": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Z_ge_X1_Charlie": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Z_ge_X2_Charlie": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "Z_le_sumX_Charlie": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Z_ge_X1_Diana": {
+      "sense": ">",
+      "slack": -1.0,
+      "dual_value": 0.0
+    },
+    "Z_ge_X2_Diana": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "Z_le_sumX_Diana": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Z_ge_X1_Ella": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": -0.0
+    },
+    "Z_ge_X2_Ella": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Z_le_sumX_Ella": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "MaxDistinctChildren": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "BobMinDays": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "AliceDianaConflict_day1": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "BobCharlieConflict_day1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "CharlieRequiresDiana_day1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "DianaRequiresElla_day1": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "AliceDianaConflict_day2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "BobCharlieConflict_day2": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "CharlieRequiresDiana_day2": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "DianaRequiresElla_day2": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -100.0
+    },
+    "CharlieNotDay1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": -600.0
+    },
+    "DianaNotDay1": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": -700.0
+    },
+    "AliceNotDay2": {
+      "sense": "=",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Y_le_X1_Alice": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Y_le_X2_Alice": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -200.0
+    },
+    "Y_ge_sumXminus1_Alice": {
+      "sense": ">",
+      "slack": -1.0,
+      "dual_value": 0.0
+    },
+    "Y_le_X1_Bob": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "Y_le_X2_Bob": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -200.0
+    },
+    "Y_ge_sumXminus1_Bob": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Y_le_X1_Charlie": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -200.0
+    },
+    "Y_le_X2_Charlie": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Y_ge_sumXminus1_Charlie": {
+      "sense": ">",
+      "slack": -1.0,
+      "dual_value": 0.0
+    },
+    "Y_le_X1_Diana": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -200.0
+    },
+    "Y_le_X2_Diana": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "Y_ge_sumXminus1_Diana": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "Y_le_X1_Ella": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -200.0
+    },
+    "Y_le_X2_Ella": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": 0.0
+    },
+    "Y_ge_sumXminus1_Ella": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "TotalCostBudget": {
+      "sense": "<",
+      "slack": 2400.0,
+      "dual_value": 0.0
+    }
+  }
+}

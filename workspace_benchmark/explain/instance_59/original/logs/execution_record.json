@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 6160.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nBrand A production: 2544.44 kg\nBrand B production: 3155.56 kg\nBrand C production: 0.00 kg\n  RM A in Brand A: 1526.67\n  RM A in Brand B: 473.33\n  RM B in Brand A: 1017.78\n  RM B in Brand B: 1482.22\n  RM C in Brand B: 1200.00\nOBJECTIVE_VALUE: 6160.0\n",
+  "stderr": "",
+  "error": null
+}

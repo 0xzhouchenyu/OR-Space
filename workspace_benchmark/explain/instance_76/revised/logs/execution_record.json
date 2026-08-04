@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 4800.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nBuy in Winter, sell in Winter (store 0q): 100.00 10k m^3\nBuy in Spring, sell in Spring (store 0q): 140.00 10k m^3\nBuy in Summer, sell in Summer (store 0q): 200.00 10k m^3\nBuy in Autumn, sell in Autumn (store 0q): 160.00 10k m^3\nEnd-of-autumn reserve inventory: 20.00 10k m^3\nOver-stock above safety level: 0.00 10k m^3\nOBJECTIVE_VALUE: 4800.0\n",
+  "stderr": "",
+  "error": null
+}

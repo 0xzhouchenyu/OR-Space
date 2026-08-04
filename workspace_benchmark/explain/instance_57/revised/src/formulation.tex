@@ -1,0 +1,114 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+\item $J$: set of orders, indexed by $j$.
+\item $S$: set of standard roll widths read from \texttt{general\_parameters.csv}, indexed by $s$.
+\item For each standard width $s \in S$, let $P_s$ be the set of all feasible cutting patterns on that width, indexed by $p$.
+\end{itemize}
+
+A pattern $p \in P_s$ is an integer vector
+\[
+a_{jsp} \in \mathbb{Z}_{+} \qquad (j \in J)
+\]
+such that
+\[
+\sum_{j \in J} w_j a_{jsp} \le W_s,
+\]
+and not all $a_{jsp}$ are zero. The code enumerates these patterns exhaustively by recursion.
+
+\section*{Parameters}
+
+\begin{itemize}
+\item $w_j$: required order width in meters for order $j$ (from \texttt{Width\_meters}).
+\item $L_j$: required order length in meters for order $j$ (from \texttt{Length\_meters}).
+\item $W_s$: standard roll width in meters for width option $s$ (from \texttt{standard\_width\_*}).
+\item $\pi$: pattern setup penalty in square meters (from \texttt{pattern\_setup\_penalty}).
+\item $\tau$: wide-roll threshold width in meters (from \texttt{wide\_roll\_threshold\_width}).
+\item $\rho$: additional setup-equivalent waste in square meters for each used pattern on a wide roll (from \texttt{wide\_roll\_extra\_setup\_penalty}).
+\item $a_{jsp}$: number of strips of order $j$ produced by pattern $p \in P_s$ on standard width $s$.
+\item $M$: big-$M$ constant used to link usage and activation variables; in the implementation, $M=100000$.
+\item $c_s$: setup penalty applied if pattern $p \in P_s$ is used on standard width $s$:
+\[
+c_s =
+\begin{cases}
+\pi + \rho, & \text{if } W_s \ge \tau,\\
+\pi, & \text{otherwise.}
+\end{cases}
+\]
+This is a gate at the threshold, matching the code logic \texttt{data['sw'] >= wide\_roll\_threshold\_width}.
+\end{itemize}
+
+For reporting waste, define the total required order area
+\[
+A^{\mathrm{req}} = \sum_{j \in J} w_j L_j.
+\]
+
+\section*{Decision Variables}
+
+\begin{itemize}
+\item $x_{sp} \ge 0$ (code: \texttt{x\_vars[(idx,i)]}): length in meters cut using pattern $p \in P_s$ on standard width $s$.
+\item $y_{sp} \in \{0,1\}$ (code: \texttt{y\_vars[(idx,i)]}): equals 1 if pattern $p \in P_s$ is used, 0 otherwise.
+\end{itemize}
+
+\section*{Objective}
+
+The implemented model minimizes total roll area consumed plus setup-equivalent penalties:
+\[
+\min \quad
+\sum_{s \in S}\sum_{p \in P_s} W_s x_{sp}
+\;+\;
+\sum_{s \in S}\sum_{p \in P_s} c_s y_{sp}.
+\]
+
+The printed waste value is computed after solution as
+\[
+\text{waste}
+=
+\left(
+\sum_{s \in S}\sum_{p \in P_s} W_s x_{sp}
++
+\sum_{s \in S}\sum_{p \in P_s} c_s y_{sp}
+\right)
+-
+A^{\mathrm{req}}.
+\]
+
+\section*{Constraints}
+
+\paragraph{Demand satisfaction.}
+Each order's required length must be met or exceeded:
+\[
+\sum_{s \in S}\sum_{p \in P_s} a_{jsp} x_{sp} \ge L_j
+\qquad \forall j \in J.
+\]
+
+\paragraph{Pattern activation linking.}
+A pattern can carry positive cutting length only if it is activated:
+\[
+x_{sp} \le M y_{sp}
+\qquad \forall s \in S,\; p \in P_s.
+\]
+
+\paragraph{Variable domains.}
+\[
+x_{sp} \ge 0
+\qquad \forall s \in S,\; p \in P_s,
+\]
+\[
+y_{sp} \in \{0,1\}
+\qquad \forall s \in S,\; p \in P_s.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+\item Patterns are generated separately for each standard width by exhaustive recursive enumeration over nonnegative integer counts of each order, keeping only nonzero patterns whose total packed width does not exceed the standard width.
+\item The model uses continuous pattern lengths $x_{sp}$, so roll length is treated as divisible and can be spliced, exactly as assumed in the business statement and code.
+\item The wide-roll allowance is implemented as a threshold rule, not a proportional surcharge: if a standard width satisfies $W_s \ge \tau$, every used pattern on that width receives the additional penalty $\rho$. With the provided data, the 2-meter roll is therefore treated as a wide roll.
+\item The additional wide-roll penalty is added on top of the base \texttt{pattern\_setup\_penalty} for each activated pattern, matching
+\[
+\texttt{pattern\_setup\_penalty + (wide\_roll\_extra\_setup\_penalty if data['sw'] >= wide\_roll\_threshold\_width else 0.0)}.
+\]
+\item The optimization model itself is a mixed-integer linear program and is solved in the code via \texttt{GUROBI\_CMD}. The reported objective in the console is not the raw model objective; it subtracts the constant required area $A^{\mathrm{req}}$ to report waste.
+\item The formulation intentionally matches the current implementation and does not replace the big-$M$ link, tighten bounds, or impose equality on demand fulfillment.
+\end{itemize}

@@ -1,0 +1,152 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item $F$: set of fruit types, indexed by $f$, with
+    \[
+    F=\{\text{apples},\text{pears},\text{oranges},\text{lemons}\}.
+    \]
+    \item $S$: set of growing seasons, indexed by $s$, with
+    \[
+    S=\{\text{spring},\text{autumn}\}.
+    \]
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item $p_f$: profit per acre for fruit $f$ (code: \texttt{profit[f]}), from
+    \texttt{profit\_per\_acre\_apples}, \texttt{profit\_per\_acre\_pears},
+    \texttt{profit\_per\_acre\_oranges}, \texttt{profit\_per\_acre\_lemons}.
+    \item $A$: total farm area available in each season (code: \texttt{total\_area}), from \texttt{total\_farm\_area}.
+    \item $\rho^{ap}$: minimum apples-to-pears annual area ratio (code: \texttt{min\_a\_to\_p}), from \texttt{min\_apples\_to\_pears\_ratio}.
+    \item $\rho^{al}$: minimum apples-to-lemons annual area ratio (code: \texttt{min\_a\_to\_l}), from \texttt{min\_apples\_to\_lemons\_ratio}.
+    \item $\rho^{ol}$: oranges-to-lemons annual area ratio (code: \texttt{o\_to\_l}), from \texttt{oranges\_to\_lemons\_ratio}.
+    \item $K$: maximum number of fruit types allowed annually (code: \texttt{max\_types}), from \texttt{max\_fruit\_types}.
+    \item $w_{fs}$: water required per acre of fruit $f$ in season $s$ (code: \texttt{water\_per\_acre[(f,s)]}), from the corresponding \texttt{water\_per\_acre\_<fruit>\_<season>} entries.
+    \item $W^{sp}$: spring water cap (code: \texttt{water\_cap\_spring}), from \texttt{water\_cap\_spring}.
+    \item $W^{au}$: autumn water cap (code: \texttt{water\_cap\_autumn}), from \texttt{water\_cap\_autumn}.
+    \item $W^{tot}$: annual total water budget (code: \texttt{total\_water\_budget}), from \texttt{total\_water\_budget}.
+    \item $\underline{W}$: minimum annual water required for any activated fruit type (code: \texttt{min\_annual\_water\_per\_fruit}), from \texttt{min\_annual\_water\_per\_fruit}.
+    \item $R$: diversification reward (code: \texttt{diversification\_reward}), from \texttt{diversification\_reward}.
+    \item $M^A$: area big-$M$ constant (code: \texttt{big\_M\_area}),
+    \[
+    M^A = A\cdot |S|.
+    \]
+    \item $M^W$: water big-$M$ constant (code: \texttt{big\_M\_water}),
+    \[
+    M^W = \Big(\max_{f\in F,\ s\in S} w_{fs}\Big)\, M^A.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item $a_{fs}\ge 0$: acres of fruit $f$ grown in season $s$ (code: \texttt{area[(f,s)]}).
+    \item $u_{fs}\ge 0$: water used by fruit $f$ in season $s$ (code: \texttt{water[(f,s)]}).
+    \item $y_f\in\{0,1\}$: 1 if fruit $f$ is counted as an active fruit type in the annual plan (code: \texttt{y[f]}).
+    \item $z_f\in\{0,1\}$: binary indicator linked to annual water use of fruit $f$ (code: \texttt{z[f]}).
+    \item $v\in\{0,1\}$: diversification-reward indicator (code: \texttt{v}).
+\end{itemize}
+
+For convenience, define annual totals
+\[
+A_f := \sum_{s\in S} a_{fs}, \qquad U_f := \sum_{s\in S} u_{fs}.
+\]
+
+\section*{Objective}
+
+\[
+\max \sum_{f\in F}\sum_{s\in S} p_f\, a_{fs} + R\, v.
+\]
+
+\section*{Constraints}
+
+Seasonal land availability:
+\[
+\sum_{f\in F} a_{fs} \le A \qquad \forall s\in S.
+\]
+
+Annual crop-mix rules:
+\[
+A_{\text{apples}} \ge \rho^{ap}\, A_{\text{pears}},
+\]
+\[
+A_{\text{apples}} \ge \rho^{al}\, A_{\text{lemons}},
+\]
+\[
+A_{\text{oranges}} = \rho^{ol}\, A_{\text{lemons}}.
+\]
+
+Activation of fruit types through annual area:
+\[
+A_f \le M^A\, y_f \qquad \forall f\in F.
+\]
+
+Maximum number of fruit types:
+\[
+\sum_{f\in F} y_f \le K.
+\]
+
+Seasonal water-definition constraints:
+\[
+u_{fs} = w_{fs}\, a_{fs} \qquad \forall f\in F,\ \forall s\in S.
+\]
+
+Seasonal water caps:
+\[
+\sum_{f\in F} u_{f,\text{spring}} \le W^{sp},
+\]
+\[
+\sum_{f\in F} u_{f,\text{autumn}} \le W^{au}.
+\]
+
+Annual water budget:
+\[
+\sum_{f\in F}\sum_{s\in S} u_{fs} \le W^{tot}.
+\]
+
+Water-based activation and minimum operating threshold:
+\[
+U_f \le M^W\, z_f \qquad \forall f\in F,
+\]
+\[
+U_f \ge \underline{W}\, z_f \qquad \forall f\in F.
+\]
+
+Consistency between area-based and water-based activation:
+\[
+z_f = y_f \qquad \forall f\in F.
+\]
+
+Diversification reward logic. Let
+\[
+N := \sum_{f\in F} y_f.
+\]
+Then
+\[
+2v \le N,
+\]
+\[
+N \le 1 + 4v.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a mixed-integer linear program in \texttt{current\_heuristic.py} and solved with \texttt{pulp.GUROBI\_CMD}.
+    \item Profit is earned per acre and is not season-dependent in the code; only water coefficients vary by season.
+    \item The farm area constraint is enforced separately in spring and autumn, so the same physical land may be reused across seasons.
+    \item The annual ratio constraints are applied to total annual acreage $A_f=\sum_s a_{fs}$, not season by season.
+    \item A fruit can have positive area only if $y_f=1$ because of $A_f\le M^A y_f$. Since $z_f=y_f$ and $U_f\ge \underline{W} z_f$, any activated fruit must also consume at least \texttt{min\_annual\_water\_per\_fruit} over the year.
+    \item The diversification logic is encoded exactly as in the source:
+    \[
+    2v \le \sum_f y_f,\qquad \sum_f y_f \le 1+4v.
+    \]
+    With four fruit candidates and binary $v$, this makes $v=1$ when at least two fruit types are active, and forces $v=0$ when at most one fruit type is active.
+    \item The code computes
+    \[
+    M^A=A|S|,\qquad
+    M^W=\Big(\max_{f,s} w_{fs}\Big)M^A,
+    \]
+    and these exact big-$M$ values should be retained to match the implementation.
+\end{itemize}

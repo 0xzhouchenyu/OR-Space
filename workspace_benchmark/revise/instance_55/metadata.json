@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_55_revise_business",
+  "original_instance_id": "IndustryOR_55",
+  "revise_description": "In the stakeholder handoff for this case, the site coordinator framed the change in business terms rather than as a spreadsheet checklist. The dispatch office is treating activity as something that must be earned by an actual working day, route, crew, or group. A closed day or unused group should stay quiet; an opened one carries the commitments in the memo. The university's curriculum reform changes how the student's course plan is credited. Category requirements must be met with distinct courses, the programming foundation must be completed before any course is counted toward the computer-science portion, and a cross-listed course can no longer satisfy multiple category minima at the same time. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R4",
+  "revise_type_name": "structural policy revision",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Medium",
+    "source_dataset": "IndustryOR",
+    "problem_type": "course selection optimization",
+    "diff": {
+      "diff_summary": "+2var, +4constr, -3constr, mod_2constr, mod_2data",
+      "counts": {
+        "+variable": 2,
+        "-variable": 0,
+        "+constraint": 4,
+        "-constraint": 3,
+        "modify_constraint": 2,
+        "modify_data": 2
+      },
+      "op_count": 13,
+      "distinct_ops": 4,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Medium",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 66.666667
+  }
+}

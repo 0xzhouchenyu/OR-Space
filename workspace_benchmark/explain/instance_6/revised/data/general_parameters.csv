@@ -1,0 +1,24 @@
+Parameter_Name,Value,Unit,Context_Description
+initial_inventory,0,units,Initial inventory for all products at the beginning of the first quarter
+end_inventory_requirement,150,units,Required inventory for each product by the end of the fourth quarter
+production_hours_per_quarter,15000,hours,Total production hours available per quarter before splitting into normal and peak segments
+product_I_hours_per_unit,2,hours,Production time required per unit of product I
+product_II_hours_per_unit,4,hours,Production time required per unit of product II
+product_III_hours_per_unit,3,hours,Production time required per unit of product III
+product_I_no_production_q2,0,units,Product I cannot be produced in the second quarter in either normal or peak hours
+delay_penalty_product_I,20,yuan,Compensation per unit per quarter delay for product I
+delay_penalty_product_II,20,yuan,Compensation per unit per quarter delay for product II
+delay_penalty_product_III,10,yuan,Compensation per unit per quarter delay for product III
+inventory_cost_per_unit,5,yuan,Cost per unit per quarter for products produced but not delivered
+normal_hours_cap_fraction_q1,1.0,fraction,Fraction of total hours_per_quarter that can be used as normal hours in quarter 1
+normal_hours_cap_fraction_q2,1.0,fraction,Fraction of total hours_per_quarter that can be used as normal hours in quarter 2
+normal_hours_cap_fraction_q3,1.0,fraction,Fraction of total hours_per_quarter that can be used as normal hours in quarter 3
+normal_hours_cap_fraction_q4,1.0,fraction,Fraction of total hours_per_quarter that can be used as normal hours in quarter 4
+peak_hours_cap_q1,5000,hours,Maximum peak production hours available in quarter 1
+peak_hours_cap_q2,5000,hours,Maximum peak production hours available in quarter 2
+peak_hours_cap_q3,5000,hours,Maximum peak production hours available in quarter 3
+peak_hours_cap_q4,5000,hours,Maximum peak production hours available in quarter 4
+peak_cost_per_hour_q1,0.5,yuan per hour,Additional cost per peak-production hour in quarter 1
+peak_cost_per_hour_q2,1.0,yuan per hour,Additional cost per peak-production hour in quarter 2
+peak_cost_per_hour_q3,1.5,yuan per hour,Additional cost per peak-production hour in quarter 3
+peak_cost_per_hour_q4,2.0,yuan per hour,Additional cost per peak-production hour in quarter 4

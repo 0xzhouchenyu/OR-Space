@@ -1,0 +1,133 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products: $P = \{\mathrm{I}, \mathrm{II}, \mathrm{III}\}$, indexed by $p$.
+    \item Stage-A equipment: $E^A = \{\mathrm{A1}, \mathrm{A2}\}$.
+    \item Stage-B equipment: $E^B = \{\mathrm{B1}, \mathrm{B2}, \mathrm{B3}\}$.
+    \item All equipment: $E = E^A \cup E^B$.
+    \item Feasible stage-A equipment for product $p$: $E^A_p \subseteq E^A$.
+    \item Feasible stage-B equipment for product $p$: $E^B_p \subseteq E^B$.
+    \item Feasible equipment--product pairs:
+    \[
+    \mathcal{X} = \{(e,p): e \in E^A_p \cup E^B_p\}.
+    \]
+\end{itemize}
+
+For this instance,
+\[
+E^A_{\mathrm{I}}=\{\mathrm{A1},\mathrm{A2}\},\quad
+E^A_{\mathrm{II}}=\{\mathrm{A1},\mathrm{A2}\},\quad
+E^A_{\mathrm{III}}=\{\mathrm{A2}\},
+\]
+\[
+E^B_{\mathrm{I}}=\{\mathrm{B1},\mathrm{B2},\mathrm{B3}\},\quad
+E^B_{\mathrm{II}}=\{\mathrm{B1}\},\quad
+E^B_{\mathrm{III}}=\{\mathrm{B2}\}.
+\]
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Processing time in machine-hours per unit of product $p$ on equipment $e$:
+    \[
+    t_{ep} \quad \text{(code: \texttt{proc\_time[(e, p)]})}, \qquad (e,p)\in\mathcal{X}.
+    \]
+    \item Available machine-hours of equipment $e$:
+    \[
+    H_e \quad \text{(code: \texttt{capacity[e]})}, \qquad e\in E.
+    \]
+    \item Processing cost per machine-hour on equipment $e$:
+    \[
+    c_e \quad \text{(code: \texttt{cost\_rate[e]})}, \qquad e\in E.
+    \]
+    \item Raw material cost per finished unit of product $p$:
+    \[
+    r_p \quad \text{(code: \texttt{raw\_cost[p]})}, \qquad p\in P.
+    \]
+    \item Selling price per finished unit of product $p$:
+    \[
+    \pi_p \quad \text{(code: \texttt{price[p]})}, \qquad p\in P.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Units of product $p$ processed on equipment $e$:
+    \[
+    x_{ep} \ge 0 \quad \text{(code: \texttt{x[(e, p)]})}, \qquad (e,p)\in\mathcal{X}.
+    \]
+    These variables are defined separately for each allowed equipment choice in stage A and stage B.
+    \item Total production of product $p$:
+    \[
+    y_p \quad \text{(code concept: \texttt{total[p]})}, \qquad p\in P,
+    \]
+    where in the implementation
+    \[
+    y_p = \sum_{e\in E^A_p} x_{ep}.
+    \]
+\end{itemize}
+
+\section*{Objective}
+
+Maximize total profit:
+\[
+\max \;
+\sum_{p\in P} \pi_p y_p
+\;-\;
+\sum_{p\in P} r_p y_p
+\;-\;
+\sum_{(e,p)\in\mathcal{X}} c_e\, t_{ep}\, x_{ep}.
+\]
+
+Using the stage-A definition of total production, this is equivalently
+\[
+\max \;
+\sum_{p\in P} (\pi_p-r_p)\sum_{e\in E^A_p} x_{ep}
+\;-\;
+\sum_{(e,p)\in\mathcal{X}} c_e\, t_{ep}\, x_{ep}.
+\]
+
+\section*{Constraints}
+
+\begin{itemize}
+    \item \textbf{Stage-flow conservation for each product:}
+    \[
+    \sum_{e\in E^A_p} x_{ep}
+    =
+    \sum_{e\in E^B_p} x_{ep},
+    \qquad \forall p\in P.
+    \]
+    This enforces that each product's total amount processed in stage A equals its total amount processed in stage B.
+
+    \item \textbf{Equipment capacity constraints:}
+    \[
+    \sum_{p:\,(e,p)\in\mathcal{X}} t_{ep}\,x_{ep}
+    \le
+    H_e,
+    \qquad \forall e\in E.
+    \]
+
+    \item \textbf{Nonnegativity:}
+    \[
+    x_{ep}\ge 0,
+    \qquad \forall (e,p)\in\mathcal{X}.
+    \]
+\end{itemize}
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code creates variables only for equipment--product pairs that are explicitly allowed by the processing rules; no binary assignment variables are used.
+    \item The quantity $y_p$ is not introduced as an independent optimization variable in the code. Instead, \texttt{total[p]} is defined as the linear expression
+    \[
+    \sum_{e\in E^A_p} x_{ep},
+    \]
+    and flow conservation ensures this equals the corresponding stage-B total.
+    \item Processing cost is modeled as machine-hour cost multiplied by processing time and assigned quantity, i.e.,
+    \[
+    c_e\, t_{ep}\, x_{ep}.
+    \]
+    \item The implemented model is a linear program and is solved in the code with Gurobi through PuLP's \texttt{GUROBI\_CMD} interface.
+    \item Consistent with the implementation, there are no explicit demand limits, integrality restrictions, startup costs, or coupling constraints beyond per-equipment hour capacities and per-product stage-balance equalities.
+\end{itemize}

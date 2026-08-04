@@ -1,0 +1,105 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Products $i \in P = \{X,Y\}$.
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item Available machine time in the week, in hours: $A^{M}$ (code: \texttt{machine\_avail}) $=40$.
+    \item Available craftsman time in the week, in hours: $A^{C}$ (code: \texttt{craftsman\_avail}) $=35$.
+    \item Machine-time cost, in GBP per hour: $c^{M}$ (code: \texttt{machine\_cost}) $=10$.
+    \item Craftsman-time cost, in GBP per hour: $c^{C}$ (code: \texttt{craftsman\_cost}) $=2$.
+    \item Revenue per batch of product $i$: $r_i$, with
+    \[
+    r_X \text{ (code: \texttt{rev\_X}) } = 20,\qquad
+    r_Y \text{ (code: \texttt{rev\_Y}) } = 30.
+    \]
+    \item Minimum required batches of product $X$: $L_X$ (code: \texttt{min\_X}) $=10$.
+    \item Machine processing time per batch of product $i$, in minutes: $m_i$, with
+    \[
+    m_X = 13,\qquad m_Y = 19.
+    \]
+    \item Craftsman processing time per batch of product $i$, in minutes: $k_i$, with
+    \[
+    k_X = 20,\qquad k_Y = 29.
+    \]
+\end{itemize}
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item Batches of product $X$ to produce: $x_X$ (code: \texttt{X}), continuous, $x_X \ge 0$.
+    \item Batches of product $Y$ to produce: $x_Y$ (code: \texttt{Y}), continuous, $x_Y \ge 0$.
+\end{itemize}
+
+\section*{Objective}
+
+Maximize weekly profit, defined as revenue minus machine-time and craftsman-time costs:
+\[
+\max \; z
+=
+r_X x_X + r_Y x_Y
+- c^{M}\left(\frac{m_X x_X + m_Y x_Y}{60}\right)
+- c^{C}\left(\frac{k_X x_X + k_Y x_Y}{60}\right).
+\]
+
+With the instance data substituted,
+\[
+\max \; z
+=
+20x_X + 30x_Y
+- 10\left(\frac{13x_X+19x_Y}{60}\right)
+- 2\left(\frac{20x_X+29x_Y}{60}\right).
+\]
+
+\section*{Constraints}
+
+Machine-time availability:
+\[
+\frac{m_X x_X + m_Y x_Y}{60} \le A^{M}.
+\]
+
+Craftsman-time availability:
+\[
+\frac{k_X x_X + k_Y x_Y}{60} \le A^{C}.
+\]
+
+Minimum contractual production of product $X$:
+\[
+x_X \ge L_X.
+\]
+
+Nonnegativity:
+\[
+x_X \ge 0,\qquad x_Y \ge 0.
+\]
+
+For this instance, the constraints are
+\[
+\frac{13x_X+19x_Y}{60} \le 40,
+\]
+\[
+\frac{20x_X+29x_Y}{60} \le 35,
+\]
+\[
+x_X \ge 10,
+\]
+\[
+x_X,x_Y \ge 0.
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The code constructs a linear program with two continuous decision variables using \texttt{LpProblem(..., LpMaximize)}.
+    \item Resource usage expressions are formed in hours by dividing the per-batch minute coefficients from \texttt{table\_1.csv} by $60$:
+    \[
+    \texttt{machine\_hours\_used}=\frac{13\,\texttt{X}+19\,\texttt{Y}}{60},\qquad
+    \texttt{craftsman\_hours\_used}=\frac{20\,\texttt{X}+29\,\texttt{Y}}{60}.
+    \]
+    \item The objective includes only the costs of \emph{used} machine and craftsman hours. Idle time has no explicit variable and no cost term.
+    \item No integrality restrictions are imposed; fractional batches are allowed exactly as implemented.
+    \item The model is solved by the Gurobi command-line solver through \texttt{GUROBI\_CMD(msg=0)}.
+\end{itemize}

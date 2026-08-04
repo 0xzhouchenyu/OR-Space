@@ -1,0 +1,57 @@
+{
+  "instance_id": "OR_explain_035",
+  "instance_number": 35,
+  "source_revise_instance": "IndustryOR_35_revise_business",
+  "domain": "Scheduling",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Dual-Theory Soundness & State Interpretation",
+    "domain": "Scheduling",
+    "question": "Using the revised model only, explain why the LP relaxation can report a feasible objective 32.747162426614494 while the MIP solve is infeasible, and identify one binding/active mechanism from the relaxation and one hard integrality-driven conflict from the integer model. Your answer must trace the exact start variable family `x[(b,v,t)]` and active indicator family `y[(v,t)]` back to the business terms and the CSV inputs, explicitly naming the columns `Vat_2_Time`, `planning_horizon_T`, `peak_energy_cap`, `peak_energy_multiplier`, and the rounded processing times for at least batches 2 and 3 on Vat 2. Also interpret the business meaning of the shadow price of the peak-energy-cap constraint (or, if its dual value is unavailable in the integer solve, the LP-relaxation marginal meaning), state what zero slack would mean, and explain why that marginal value cannot be linearly extrapolated to large policy changes such as relaxing the Vat 2 outage or changing the cap by several units; finally, compare to the original model and pinpoint the exact code/model additions that caused the objective to move from 14.1 to 34.75."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Advanced_35.gurobi.log",
+        "Advanced_35.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "Dyeing_Scheduling_Energy.gurobi.log",
+        "Dyeing_Scheduling_Energy.lp_relaxation.json",
+        "Dyeing_Scheduling_Energy.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 63.052778
+  }
+}

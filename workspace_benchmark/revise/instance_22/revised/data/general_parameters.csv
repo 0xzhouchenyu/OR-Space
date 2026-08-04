@@ -1,0 +1,10 @@
+Parameter_Name,Value,Unit,Context_Description
+production_days,22,days,Number of days the factory can operate in a month
+unit_weight,100,kg,Weight unit used for product measurements
+a1_watch_threshold,3000,units,A1 output level where the quality-release crew is required
+a1_deep_service_threshold,3600,units,A1 output level where the deeper service visit is required
+maintenance_penalty_watch,1,days,Operating days lost when A1 clears the watch level
+maintenance_penalty_deep,1,days,Additional operating days lost when A1 clears the deep service level
+a1_quality_release_fee,45000,currency,Monthly quality-release crew charge when A1 clears the watch level
+a1_deep_service_fee,35000,currency,Additional teardown charge when A1 clears the deep service level
+a1_priority_price_lift,8,currency/unit,Extra revenue for A1 units above the watch level

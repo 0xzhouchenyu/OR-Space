@@ -1,0 +1,362 @@
+{
+  "solver": "gurobi",
+  "model_name": "PlasticContainers_EnergyModes",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 46550.0,
+  "objective_bound": 46550.0,
+  "mip_gap": 0.0,
+  "runtime": 0.013007164001464844,
+  "node_count": 1.0,
+  "iteration_count": 39.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_14pzxbzg/solver_records/PlasticContainers_EnergyModes.gurobi.log",
+  "variables": {
+    "x_eco_0_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_1_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_1_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_2_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_2_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_2_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_eco_3_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_3_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_3_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_3_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_4_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_4_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_4_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_4_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_4_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_5_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_5_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_5_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_5_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_5_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_eco_5_5": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_0_0": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "x_regular_1_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_1_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_2_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_2_1": {
+      "value": 550.0,
+      "reduced_cost": null
+    },
+    "x_regular_2_2": {
+      "value": 700.0,
+      "reduced_cost": null
+    },
+    "x_regular_3_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_3_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_3_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_3_3": {
+      "value": 900.0,
+      "reduced_cost": null
+    },
+    "x_regular_4_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_4_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_4_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_4_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_4_4": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "x_regular_5_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_5_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_5_2": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_5_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "x_regular_5_4": {
+      "value": 400.0,
+      "reduced_cost": null
+    },
+    "x_regular_5_5": {
+      "value": 300.0,
+      "reduced_cost": null
+    },
+    "y_eco_0": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_eco_1": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_eco_2": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_eco_3": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_eco_4": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_eco_5": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_regular_0": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_regular_1": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "y_regular_2": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_regular_3": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "y_regular_4": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "y_regular_5": {
+      "value": 1.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "demand_0": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_1": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_2": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_3": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_4": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "demand_5": {
+      "sense": ">=",
+      "slack": -0.0,
+      "dual_value": null
+    },
+    "setup_regular_0": {
+      "sense": "<=",
+      "slack": 2850.0,
+      "dual_value": null
+    },
+    "setup_eco_0": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "setup_regular_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "setup_eco_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "setup_regular_2": {
+      "sense": "<=",
+      "slack": 2100.0,
+      "dual_value": null
+    },
+    "setup_eco_2": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "setup_regular_3": {
+      "sense": "<=",
+      "slack": 2450.0,
+      "dual_value": null
+    },
+    "setup_eco_3": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "setup_regular_4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "setup_eco_4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "setup_regular_5": {
+      "sense": "<=",
+      "slack": 2650.0,
+      "dual_value": null
+    },
+    "setup_eco_5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "eco_share_0": {
+      "sense": "<=",
+      "slack": 300.0,
+      "dual_value": null
+    },
+    "eco_share_1": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "eco_share_2": {
+      "sense": "<=",
+      "slack": 750.0,
+      "dual_value": null
+    },
+    "eco_share_3": {
+      "sense": "<=",
+      "slack": 540.0,
+      "dual_value": null
+    },
+    "eco_share_4": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "eco_share_5": {
+      "sense": "<=",
+      "slack": 420.0,
+      "dual_value": null
+    },
+    "energy_cap": {
+      "sense": "<=",
+      "slack": 3300.0,
+      "dual_value": null
+    }
+  }
+}

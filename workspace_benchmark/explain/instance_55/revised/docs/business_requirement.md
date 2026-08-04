@@ -1,0 +1,7 @@
+A master's student in Operations Research at a certain university is required to select courses in mathematics, operations research, and computer science from a list of available courses. Some courses belong to only one category, while others belong to multiple categories and can fulfill requirements for more than one category simultaneously. Additionally, certain courses have prerequisites that must be completed before enrolling in them. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the site coordinator framed the change in business terms rather than as a spreadsheet checklist. The dispatch office is treating activity as something that must be earned by an actual working day, route, crew, or group. A closed day or unused group should stay quiet; an opened one carries the commitments in the memo. The university's curriculum reform changes how the student's course plan is credited. Category requirements must be met with distinct courses, the programming foundation must be completed before any course is counted toward the computer-science portion, and a cross-listed course can no longer satisfy multiple category minima at the same time. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

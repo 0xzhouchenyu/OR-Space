@@ -1,0 +1,12 @@
+Set parameter LicenseID to value 2802670
+Start period 2-6, pattern 0: 8 waiters
+Start period 10-14, pattern 0: 10 waiters
+Start period 14-18, pattern 0: 0 waiters
+Start period 18-22, pattern 0: 12 waiters
+Waiters in period 2-6: 8
+Waiters in period 6-10: 8
+Waiters in period 10-14: 10
+Waiters in period 14-18: 10
+Waiters in period 18-22: 12
+Waiters in period 22-2: 12
+OBJECTIVE_VALUE: 102.0

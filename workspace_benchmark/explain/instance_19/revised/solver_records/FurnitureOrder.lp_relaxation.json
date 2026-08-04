@@ -1,0 +1,160 @@
+{
+  "solver": "gurobi",
+  "model_name": "FurnitureOrder_lp_relaxation",
+  "diagnostic_type": "lp_relaxation",
+  "status_code": 2,
+  "objective_value": 4029.4117647058824,
+  "runtime": 0.0004839897155761719,
+  "variables": {
+    "orders_A_express": {
+      "value": -0.0,
+      "reduced_cost": 153.23529411764696
+    },
+    "orders_A_regular": {
+      "value": -0.0,
+      "reduced_cost": 151.47058823529403
+    },
+    "orders_B_express": {
+      "value": -0.0,
+      "reduced_cost": 51.76470588235287
+    },
+    "orders_B_regular": {
+      "value": -0.0,
+      "reduced_cost": 50.58823529411757
+    },
+    "orders_C_express": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "orders_C_regular": {
+      "value": 10.0,
+      "reduced_cost": 0.0
+    },
+    "y_A_express": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_A_regular": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_B_express": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_B_regular": {
+      "value": 0.0,
+      "reduced_cost": 0.0
+    },
+    "y_C_express": {
+      "value": 0.0,
+      "reduced_cost": 59.99999999999727
+    },
+    "y_C_regular": {
+      "value": 0.19607843137254902,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -5.882352941176471
+    },
+    "_C2": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C3": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -7.647058823529412
+    },
+    "_C4": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C5": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -3.5294117647058822
+    },
+    "_C6": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C7": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -4.705882352941177
+    },
+    "_C8": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C9": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -2.9411764705882355
+    },
+    "_C10": {
+      "sense": ">",
+      "slack": -9.803921568627452,
+      "dual_value": 0.0
+    },
+    "_C11": {
+      "sense": "<",
+      "slack": 0.0,
+      "dual_value": -2.941176470588289
+    },
+    "_C12": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C13": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "_C14": {
+      "sense": "<",
+      "slack": 1.0,
+      "dual_value": 0.0
+    },
+    "_C15": {
+      "sense": "<",
+      "slack": 0.803921568627451,
+      "dual_value": 0.0
+    },
+    "_C16": {
+      "sense": "<",
+      "slack": 1.803921568627451,
+      "dual_value": 0.0
+    },
+    "_C17": {
+      "sense": ">",
+      "slack": 0.0,
+      "dual_value": 40.294117647058826
+    },
+    "_C18": {
+      "sense": "<",
+      "slack": 400.0,
+      "dual_value": 0.0
+    },
+    "_C19": {
+      "sense": ">",
+      "slack": -0.0,
+      "dual_value": 0.0
+    },
+    "_C20": {
+      "sense": "<",
+      "slack": 0.19607843137254902,
+      "dual_value": 0.0
+    }
+  }
+}

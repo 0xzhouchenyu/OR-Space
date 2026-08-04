@@ -1,0 +1,80 @@
+{
+  "solver": "gurobi",
+  "model_name": "Factory_Production_Optimization_With_Overtime",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 31.7,
+  "objective_bound": 31.7,
+  "mip_gap": null,
+  "runtime": 0.00046896934509277344,
+  "node_count": 0.0,
+  "iteration_count": 3.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_yke6yer_/solver_records/Factory_Production_Optimization_With_Overtime.gurobi.log",
+  "variables": {
+    "x_ot_I": {
+      "value": 0.0,
+      "reduced_cost": 1.1999999999999993
+    },
+    "x_ot_II": {
+      "value": 0.0,
+      "reduced_cost": 0.7999999999999998
+    },
+    "x_ot_III": {
+      "value": 0.0,
+      "reduced_cost": 1.1599999999999997
+    },
+    "x_reg_I": {
+      "value": 5.0,
+      "reduced_cost": 0.0
+    },
+    "x_reg_II": {
+      "value": 4.0,
+      "reduced_cost": 0.0
+    },
+    "x_reg_III": {
+      "value": 3.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "Equipment_A_capacity_shared": {
+      "sense": "<=",
+      "slack": 222.0,
+      "dual_value": 0.0
+    },
+    "Equipment_B_capacity_shared": {
+      "sense": "<=",
+      "slack": 306.0,
+      "dual_value": 0.0
+    },
+    "Equipment_C_capacity_shared": {
+      "sense": "<=",
+      "slack": 328.0,
+      "dual_value": 0.0
+    },
+    "Global_Overtime_Hours_Cap": {
+      "sense": "<=",
+      "slack": 350.0,
+      "dual_value": 0.0
+    },
+    "Min_Production_I": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 3.0
+    },
+    "Min_Production_II": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 2.0
+    },
+    "Min_Production_III": {
+      "sense": ">=",
+      "slack": 0.0,
+      "dual_value": 2.9
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_094",
+  "instance_number": 94,
+  "source_revise_instance": "IndustryOR_94_revise_business",
+  "domain": "Production_Planning",
+  "difficulty_level": "Hard",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Production_Planning",
+    "question": "In the revised model, explain exactly how the commercial phrase “Type II receives `type_II_price_lift` only when its output reaches `type_II_contract_threshold`, and crude A purchases receive `bulk_purchase_rebate` only when total market purchase clears `bulk_purchase_rebate_threshold`” is implemented in code and tied to the data packet. Your answer must name the exact code variables (`premium`, `prem_out`, `rebate`, `total_purchase`, etc.), the exact CSV field names and parameter values that are already visible in the workspace (for example `selling_price_type_II=5600`, `inventory_crude_A=500`, `inventory_crude_B=1000`, `max_purchase_crude_A=1500`, and the 500-ton purchase blocks), and identify which revised code additions caused the objective to drop from 5,000,000 to 4,700,000 relative to the original model. Then use the revised LP-relaxation solver record to identify at least two binding constraints by constraint ID and dual value, interpret their business marginal meaning, and explain why you cannot linearly extrapolate those shadow prices to changing the contract-threshold or rebate-threshold logic in the integer model."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "general_parameters.csv",
+        "table_1.csv"
+      ],
+      "solver_records": [
+        "Oil_Blending.gurobi.log",
+        "Oil_Blending.lp_relaxation.json",
+        "Oil_Blending.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "OilThresholdCommercials.gurobi.log",
+        "OilThresholdCommercials.lp_relaxation.json",
+        "OilThresholdCommercials.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 59.549444
+  }
+}

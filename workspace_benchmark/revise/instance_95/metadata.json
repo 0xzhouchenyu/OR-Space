@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_95_revise_business",
+  "original_instance_id": "IndustryOR_95",
+  "revise_description": "In the stakeholder handoff for this case, the service manager framed the change in business terms rather than as a spreadsheet checklist. The operations lead described this revision as a timing promise, not a quantity tweak. Work, inventory, cash, or capacity that leaves one ledger position should only reappear when the business clock says it has cleared. Line sanitation added a Week 2 micro-clean trigger. Week 2 production up to 30 thousand boxes uses the ordinary cleaning plan; producing more than 30 thousand boxes in Week 2 costs 1 thousand yuan once, while the existing Week 2-to-Week 3 recovery rule still applies. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R4",
+  "revise_type_name": "Scenario Restructuring",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Hard",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+1var, +1constr, mod_4constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 1,
+        "-variable": 0,
+        "+constraint": 1,
+        "-constraint": 0,
+        "modify_constraint": 4,
+        "modify_data": 1
+      },
+      "op_count": 8,
+      "distinct_ops": 4,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Hard",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 50.0
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "solver": "gurobi",
+  "model_name": "InvestmentLateSettlement",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": false,
+  "objective_value": 472200.0,
+  "objective_bound": 472200.0,
+  "mip_gap": null,
+  "runtime": 0.0005140304565429688,
+  "node_count": 0.0,
+  "iteration_count": 2.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage__7r7blx5/solver_records/InvestmentLateSettlement.gurobi.log",
+  "variables": {
+    "c0": {
+      "value": 0.0,
+      "reduced_cost": -2.0229999999999997
+    },
+    "reserve1": {
+      "value": 10000.0,
+      "reduced_cost": -1.1899999999999997
+    },
+    "reserve2": {
+      "value": 15000.0,
+      "reduced_cost": -0.7
+    },
+    "terminal": {
+      "value": 472200.0,
+      "reduced_cost": 0.0
+    },
+    "x01": {
+      "value": 100000.0,
+      "reduced_cost": 0.0
+    },
+    "x02": {
+      "value": 0.0,
+      "reduced_cost": -1.9729999999999994
+    },
+    "x11": {
+      "value": 130000.0,
+      "reduced_cost": 0.0
+    },
+    "x12": {
+      "value": 30000.0,
+      "reduced_cost": 0.0
+    },
+    "x21": {
+      "value": 216000.0,
+      "reduced_cost": 0.0
+    }
+  },
+  "constraints": {
+    "_C1": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 4.912999999999999
+    },
+    "_C2": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 2.8899999999999997
+    },
+    "_C3": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.7
+    },
+    "_C4": {
+      "sense": "<=",
+      "slack": 30000.0,
+      "dual_value": 0.0
+    },
+    "_C5": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": 0.11000000000000032
+    },
+    "_C6": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": 1.0
+    }
+  }
+}

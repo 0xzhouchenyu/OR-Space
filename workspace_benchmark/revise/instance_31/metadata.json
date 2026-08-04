@@ -1,0 +1,36 @@
+{
+  "instance_id": "IndustryOR_31_revise_business",
+  "original_instance_id": "IndustryOR_31",
+  "revise_description": "In the stakeholder handoff for this case, the commercial owner framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. Production engineering added a calibration wrinkle between A2 and B2. Each machine can still run under its own setup cost, but if both A2 and B2 are active in the same monthly plan, a 100-unit joint calibration burden is charged once. The names shown in backticks are the exact field names used by the data packet and the audit trail.",
+  "revise_type": "R4",
+  "revise_type_name": "Penalty / Fixed Cost Addition",
+  "tolerance": 0.01,
+  "metadata": {
+    "difficulty": "Easy",
+    "source_dataset": "IndustryOR",
+    "problem_type": "Operations Research",
+    "diff": {
+      "diff_summary": "+2var, +2constr, mod_4constr, mod_obj, mod_1data",
+      "counts": {
+        "+variable": 2,
+        "-variable": 0,
+        "+constraint": 2,
+        "-constraint": 0,
+        "modify_constraint": 4,
+        "modify_data": 1
+      },
+      "op_count": 10,
+      "distinct_ops": 4,
+      "involves_coupling": true,
+      "cascading_effect": true,
+      "complexity_level": "L5",
+      "level_name": "structural"
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "pass_rate_percent",
+    "value": 72.222222
+  }
+}

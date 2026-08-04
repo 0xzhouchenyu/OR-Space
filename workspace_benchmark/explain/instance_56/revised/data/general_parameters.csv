@@ -1,0 +1,12 @@
+Parameter_Name,Value,Unit,Context_Description
+warehouse_capacity,5000,dan,Maximum storage capacity of the warehouse
+initial_stock,1000,dan,Initial stock of grain on January 1
+initial_funds,20000,yuan,Initial funds available on January 1
+end_of_quarter_inventory,2000,dan,Target inventory level at the end of the first quarter
+buy_fast_capacity,1500,dan,Maximum quantity that can be purchased through the fast channel in any single month
+fast_purchase_premium_ratio,0.05,dimensionless,Relative price premium of fast purchases compared to regular purchases for each month
+credit_limit,5000,yuan,Maximum credit that can be used at the end of any month
+monthly_interest_rate,0.01,dimensionless,Monthly interest rate charged on the used credit amount
+min_inventory_month_1,1200,dan,Required minimum inventory at the end of month 1 due to internal risk policy
+min_inventory_month_2,1500,dan,Required minimum inventory at the end of month 2 due to internal risk policy
+min_inventory_month_3,2000,dan,Required minimum inventory at the end of month 3 due to internal risk policy

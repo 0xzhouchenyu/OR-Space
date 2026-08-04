@@ -1,0 +1,5 @@
+Workshop,Production_Capacity_hours,Production_Rate_Component_1_units_per_hour,Production_Rate_Component_2_units_per_hour,Production_Rate_Component_3_units_per_hour
+A,100,10,15,5
+B,150,15,10,5
+C,80,20,5,10
+D,200,10,15,20

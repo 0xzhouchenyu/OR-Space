@@ -1,0 +1,8 @@
+{
+  "returncode": 0,
+  "timed_out": false,
+  "objective_value": 180000.0,
+  "stdout": "Set parameter LicenseID to value 2802670\nStatus: Optimal\nCorn: 0.00 acres\nWheat: 0.00 acres\nSoybeans: 100.00 acres\nSorghum: 0.00 acres\nOBJECTIVE_VALUE: 180000.0\n",
+  "stderr": "",
+  "error": null
+}

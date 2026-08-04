@@ -1,0 +1,7 @@
+The Li family is considering investing their retirement fund in commercial real estate. They aim to maximize their annual income by deciding which properties to purchase. Each property can only be purchased once, and the family has a fixed budget. Additionally, there is a restriction that if one specific property is purchased, another cannot be purchased. Please refer to the corresponding CSV files in the data folder for specific parameter values.
+
+Revision brief from the business owner:
+
+In the stakeholder handoff for this case, the operations desk framed the change in business terms rather than as a spreadsheet checklist. The commercial owner described the rule as a gate, not a smooth surcharge. Crossing a named business line changes eligibility for the allowance, desk, setup, waiver, or fee; staying on the other side does not. The Li family now wants each purchased property split between dependable long-term tenancy and riskier short-term leasing. Risky space has scenario-dependent income using `scen_1_prob` and `scen_2_prob`, and it is allowed only on properties actually bought. Total risky exposure must stay within `total_risky_budget`, and each individual property has its own `per_property_risky_cap`. The names shown in backticks are the exact field names used by the data packet and the audit trail.
+
+The revised plan should be prepared from the original workspace and this business brief. The data files remain the source of the numerical values named in the brief.

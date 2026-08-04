@@ -1,0 +1,123 @@
+\section*{Sets and Indices}
+
+\begin{itemize}
+    \item Children set \(C=\{\text{Harry},\text{Hermione},\text{Ron},\text{Fred},\text{George},\text{Ginny}\}\), indexed by \(c\).
+    \item Pace-mode set \(M=\{\text{budget},\text{balanced},\text{premium}\}\), indexed by \(m\).
+\end{itemize}
+
+\section*{Parameters}
+
+\begin{itemize}
+    \item \(L\) (code: \texttt{min\_children}): minimum number of selected children.
+    \item \(U\) (code: \texttt{max\_children}): maximum number of selected children.
+    \item \(K\) (code: \texttt{min\_children\_per\_mode}): minimum number of selected children required when balanced or premium mode is chosen.
+    \item \(\lambda\) (code: \texttt{fairness\_penalty}): penalty weight on the spread between the maximum and minimum mode-based child costs.
+    \item \(B\) (code: \texttt{max\_total\_cost}): maximum allowed total monetary cost.
+    \item \(a_{c,m}\): cost of taking child \(c\) under mode \(m\), from the CSV pace-mode cost fields
+    (code data: \texttt{cost\_budget[c]}, \texttt{cost\_balanced[c]}, \texttt{cost\_premium[c]}).
+    \item \(M_c=\max_{m\in M} a_{c,m}\) (code: \texttt{bigM[c]}).
+\end{itemize}
+
+Using the provided data, \(a_{c,m}\) corresponds to the mode-specific costs in \texttt{table\_1.csv} / \texttt{general\_parameters.csv}.
+
+\section*{Decision Variables}
+
+\begin{itemize}
+    \item \(x_c \in \{0,1\}\) for \(c\in C\) (code: \texttt{x[child]}): equals 1 if child \(c\) joins the trip.
+    \item \(z_{\text{budget}}, z_{\text{balanced}}, z_{\text{premium}} \in \{0,1\}\) (code: \texttt{z\_budget}, \texttt{z\_balanced}, \texttt{z\_premium}): pace-mode selection binaries.
+    \item \(y_c \ge 0\) for \(c\in C\) (code: \texttt{y[child]}): auxiliary variable for the selected cost contribution of child \(c\).
+    \item \(u \ge 0\) (code: \texttt{max\_child\_cost}): auxiliary variable representing an upper envelope of mode-based child costs.
+    \item \(\ell \ge 0\) (code: \texttt{min\_child\_cost}): auxiliary variable representing a lower envelope of mode-based child costs.
+\end{itemize}
+
+Define the mode-cost expression used in the code for each child:
+\[
+\alpha_c(z)=a_{c,\text{budget}}z_{\text{budget}}+a_{c,\text{balanced}}z_{\text{balanced}}+a_{c,\text{premium}}z_{\text{premium}}.
+\]
+
+\section*{Objective}
+
+The implemented model minimizes total selected monetary cost plus a fairness spread penalty:
+\[
+\min \quad \sum_{c\in C} y_c + \lambda (u-\ell).
+\]
+
+\section*{Constraints}
+
+\paragraph{Child-cost linearization.}
+For each \(c\in C\),
+\[
+y_c \le M_c x_c,
+\]
+\[
+y_c \le \alpha_c(z) + M_c(1-x_c),
+\]
+\[
+y_c \ge \alpha_c(z) - M_c(1-x_c).
+\]
+
+These are exactly the linking constraints used in the code; together with \(y_c\ge 0\), they enforce \(y_c=0\) when \(x_c=0\), and \(y_c=\alpha_c(z)\) when \(x_c=1\).
+
+\paragraph{Group size and mandatory child.}
+\[
+x_{\text{Ginny}}=1,
+\]
+\[
+L \le \sum_{c\in C} x_c \le U.
+\]
+
+\paragraph{Compatibility and implication rules.}
+\[
+x_{\text{Harry}} + x_{\text{Fred}} \le 1,
+\]
+\[
+x_{\text{Harry}} + x_{\text{George}} \le 1,
+\]
+\[
+x_{\text{George}} \le x_{\text{Fred}},
+\]
+\[
+x_{\text{George}} \le x_{\text{Hermione}}.
+\]
+
+\paragraph{Exactly one pace mode.}
+\[
+z_{\text{budget}} + z_{\text{balanced}} + z_{\text{premium}} = 1.
+\]
+
+\paragraph{Mode-size coupling.}
+\[
+\sum_{c\in C} x_c \ge K\, z_{\text{balanced}},
+\]
+\[
+\sum_{c\in C} x_c \ge K\, z_{\text{premium}}.
+\]
+
+Note that there is no analogous strengthening for budget mode in the code; budget mode is governed only by the general lower bound \(L\).
+
+\paragraph{Budget constraint.}
+\[
+\sum_{c\in C} y_c \le B.
+\]
+
+\paragraph{Fairness spread linking.}
+For each \(c\in C\),
+\[
+u \ge \alpha_c(z),
+\]
+\[
+\ell \le \alpha_c(z).
+\]
+
+\section*{Notes on Implementation}
+
+\begin{itemize}
+    \item The model is implemented as a mixed-integer linear optimization model in \texttt{current\_heuristic.py} and solved with \texttt{GUROBI\_CMD}.
+    \item The fairness term is implemented exactly as
+    \[
+    \lambda(u-\ell),
+    \]
+    where \(u\) and \(\ell\) are linked to the mode-dependent costs \(\alpha_c(z)\) for all children \(c\), regardless of whether a child is selected. Thus, the spread is over the full set of children under the chosen mode table, not only over selected children. This is an exact reflection of the current code and should not be replaced by a selected-children-only spread.
+    \item Likewise, the budget constraint applies only to \(\sum_c y_c\), i.e., the total monetary cost of selected children, and does not include the fairness penalty term.
+    \item Because exactly one mode is chosen, \(\alpha_c(z)\) equals the corresponding single mode cost \(a_{c,m}\) for the selected mode.
+\end{itemize}

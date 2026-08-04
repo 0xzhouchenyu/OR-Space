@@ -1,0 +1,216 @@
+{
+  "solver": "gurobi",
+  "model_name": "MaxRevenue",
+  "status_code": 2,
+  "status": "2",
+  "pulp_status_code": 1,
+  "pulp_status": "Optimal",
+  "is_mip": true,
+  "objective_value": 7300.0,
+  "objective_bound": 7300.0,
+  "mip_gap": 0.0,
+  "runtime": 0.007439136505126953,
+  "node_count": 1.0,
+  "iteration_count": 6.0,
+  "barrier_iteration_count": 0.0,
+  "log_file": "/tmp/or_space_gurobi_stage_j7v88ak3/solver_records/MaxRevenue.gurobi.log",
+  "variables": {
+    "august_bulk_receiving": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "buy_10": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_11": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "buy_12": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_7": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_8": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_9": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "buy_bin_10": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "buy_bin_11": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "buy_bin_12": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_bin_7": {
+      "value": -0.0,
+      "reduced_cost": null
+    },
+    "buy_bin_8": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "buy_bin_9": {
+      "value": 1.0,
+      "reduced_cost": null
+    },
+    "sell_10": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "sell_11": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "sell_12": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "sell_7": {
+      "value": 200.0,
+      "reduced_cost": null
+    },
+    "sell_8": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "sell_9": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "stock_10": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "stock_11": {
+      "value": 500.0,
+      "reduced_cost": null
+    },
+    "stock_12": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "stock_7": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "stock_8": {
+      "value": 0.0,
+      "reduced_cost": null
+    },
+    "stock_9": {
+      "value": 500.0,
+      "reduced_cost": null
+    }
+  },
+  "constraints": {
+    "balance_7": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_after_buy_7": {
+      "sense": "<=",
+      "slack": 300.0,
+      "dual_value": null
+    },
+    "fixed_cost_7": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "balance_8": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_after_buy_8": {
+      "sense": "<=",
+      "slack": 500.0,
+      "dual_value": null
+    },
+    "fixed_cost_8": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "august_bulk_receiving": {
+      "sense": "<=",
+      "slack": 300.0,
+      "dual_value": null
+    },
+    "balance_9": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_after_buy_9": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "fixed_cost_9": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "balance_10": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_after_buy_10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "fixed_cost_10": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "balance_11": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_after_buy_11": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "fixed_cost_11": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "balance_12": {
+      "sense": "==",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "warehouse_after_buy_12": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    },
+    "fixed_cost_12": {
+      "sense": "<=",
+      "slack": 0.0,
+      "dual_value": null
+    }
+  }
+}

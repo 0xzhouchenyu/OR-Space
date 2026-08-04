@@ -1,0 +1,58 @@
+{
+  "instance_id": "OR_explain_064",
+  "instance_number": 64,
+  "source_revise_instance": "IndustryOR_64_revise_business",
+  "domain": "Workforce_Hiring",
+  "difficulty_level": "Easy",
+  "explain_task": {
+    "dimension": "Logical-Physical Alignment",
+    "domain": "Workforce_Hiring",
+    "question": "In the revised model, explain exactly why the objective increases from 38000 to 39000 even though the hired set remains G, H, and I. Your answer must trace the new net-cost terms from `src/current_heuristic.py` and `src/formulation.tex` back to the business phrases “Lead premium” and “mentorship pair,” name the exact CSV parameter names and values used (`lead_premium`, `mentor_bonus`, `min_leads`, `max_pairs`), and identify the revised code variables (`lead[c]`, `eng[c]`, `p`, `x[c]`) and constraints that make one Lead and one counted pair appear. Then use the revised LP-relaxation diagnostics to state which constraints are binding and their shadow prices/slacks (`MinSkill`, `MinLeads`, `PairLeadCap`, `Budget`), interpret the business meaning of those marginal values, and explain why you cannot linearly extrapolate the `MinLeads` or `PairLeadCap` duals to predict the integer model’s cost under a larger policy change such as requiring 2 leads or allowing more than 2 pairs."
+  },
+  "workspace_layout": {
+    "original": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "HiringOptimization.gurobi.log",
+        "HiringOptimization.lp_relaxation.json",
+        "HiringOptimization.solution.json"
+      ]
+    },
+    "revised": {
+      "files": [
+        "docs/business_requirement.md",
+        "src/formulation.tex",
+        "src/optimization_model.py",
+        "src/utility_code.py",
+        "logs/solver_output.log",
+        "logs/execution_record.json"
+      ],
+      "data_files": [
+        "table_1.csv",
+        "general_parameters.csv"
+      ],
+      "solver_records": [
+        "HiringWithRoles.gurobi.log",
+        "HiringWithRoles.lp_relaxation.json",
+        "HiringWithRoles.solution.json"
+      ]
+    }
+  },
+  "difficulty_evidence": {
+    "label": "Easy",
+    "basis": "empirical performance from actual benchmark evaluations; tie-aware approximate tertiles within this task",
+    "metric": "mean_rubric_score",
+    "value": 88.053889
+  }
+}
