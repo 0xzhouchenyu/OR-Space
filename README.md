@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="figs/logo.png" width="96" alt="OR-Space logo">
+  <img src="supporting_files/assets/or_space_logo.png" width="96" alt="OR-Space logo">
 </p>
 
 # OR-Space
@@ -16,7 +16,7 @@ separates business requirements, structured data, code artifacts, solver state,
 and evaluation targets instead of flattening the problem into one prompt.
 
 <p align="center">
-  <img src="figs/main.png" width="860" alt="Overview of the OR-Space Build, Revise, and Explain benchmark">
+  <img src="supporting_files/assets/or_space_overview.png" width="860" alt="Overview of the OR-Space Build, Revise, and Explain benchmark">
 </p>
 
 ## Benchmark

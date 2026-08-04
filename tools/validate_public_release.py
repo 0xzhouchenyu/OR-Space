@@ -117,8 +117,8 @@ def validate_results(repo: Path, errors: list[str]) -> None:
                     errors.append(f"Missing Explain {directory} files for {model}: {missing}")
 
 
-def validate_benchmark_metadata(repo: Path, errors: list[str]) -> None:
-    metadata = repo / "benchmark_metadata"
+def validate_release_metadata(repo: Path, errors: list[str]) -> None:
+    metadata = repo / "supporting_files" / "metadata"
     with (metadata / "workspace_index.csv").open(newline="", encoding="utf-8") as handle:
         index = list(csv.DictReader(handle))
     with (metadata / "empirical_difficulty.csv").open(
@@ -143,7 +143,12 @@ def validate_benchmark_metadata(repo: Path, errors: list[str]) -> None:
         if dict(observed.get(task, Counter())) != counts:
             errors.append(f"Unexpected {task} difficulty distribution: {dict(observed.get(task, {}))}")
     index_labels = {
-        row["workspace_id"]: row.get("difficulty") for row in index
+        row["workspace_id"]: (
+            row.get("difficulty_level")
+            if row.get("task_type") == "explain"
+            else row.get("difficulty")
+        )
+        for row in index
     }
     for row in difficulty:
         if index_labels.get(row["workspace_id"]) != row["difficulty"]:
@@ -247,7 +252,7 @@ def main() -> int:
     args = parser.parse_args()
     errors: list[str] = []
     validate_results(args.repo, errors)
-    validate_benchmark_metadata(args.repo, errors)
+    validate_release_metadata(args.repo, errors)
     scan_secrets(args.repo, errors)
     if args.rubrics:
         validate_rubrics(args.rubrics, errors)

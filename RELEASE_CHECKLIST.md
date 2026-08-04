@@ -8,10 +8,11 @@ Use this checklist before publishing a new GitHub and Hugging Face snapshot.
 - Add or confirm a root `LICENSE` file. The current dataset terms are
   CC BY-NC 4.0-compatible, which is a non-commercial research release rather
   than an OSI open-source license.
-- Check that `README.md` renders with `figs/logo.png` and `figs/main.png`.
+- Check that `README.md` renders with the images in `supporting_files/assets/`.
 - Set repository topics: `operations-research`, `optimization`, `benchmark`,
   `llm-agents`, `agent-evaluation`, `mathematical-optimization`.
-- Add a repository social preview image using `figs/main.png` or a cropped
+- Add a repository social preview image using
+  `supporting_files/assets/or_space_overview.png` or a cropped
   project banner.
 - Replace the "Paper coming soon" line once the arXiv URL is live.
 - Create a GitHub release or tag that matches the Hugging Face dataset snapshot.
