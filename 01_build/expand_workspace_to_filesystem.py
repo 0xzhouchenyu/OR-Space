@@ -1,32 +1,33 @@
 #!/usr/bin/env python3
-"""把 IndustryOR_Revise_100_business/*.json 拆成真实 workspace 文件夹结构
+"""Expand Revise JSON records into on-disk workspace directories.
 
-输出：
-workspaces_revise/
-    i001/
+Output layout::
+
+    workspaces_revise/
+      i001/
         docs/
-            business_requirement.md
-            revise_note.md          (从 JSON metadata 推导)
+          business_requirement.md
+          revise_note.md
         data/
-            *.csv                  (按文件名)
+          *.csv
         src/
-            current_heuristic.py    (original model)
-            utils.py               (原 utils)
-    i002/
-    ...
+          current_heuristic.py
+          utils.py
 
-保留 original_workspace 信息用于调试，不实际写入（因为 revise 任务只需要 revised）"""
+The script retains original-workspace metadata in the source JSON for
+debugging, but materializes only the revised task view.
+"""
 
 import json
 import os
-import pathlib
+
 
 INPUT_DIR = "IndustryOR_Revise_100_business"
 OUTPUT_DIR = "workspaces_revise"
 
 
 def extract_revise_note(json_obj):
-    """从 JSON 元数据推导 revise_note.md"""
+    """Derive the participant-facing revision note from JSON metadata."""
     return f"""# Revise Note
 
 - Revise Type: {json_obj['revise_type_name']}
@@ -34,67 +35,78 @@ def extract_revise_note(json_obj):
 - Original Instance ID: {json_obj['original_instance_id']}
 - Revised Instance ID: {json_obj['instance_id']}
 
-You are in a workspace that contains an existing solving approach (src/current_heuristic.py).
-Your task is to REVISE it to satisfy the business requirement (docs/business_requirement.md).
-Use the data files in data/ as the source of truth for parameter values and structure.
+This workspace contains an existing solution approach in
+`src/current_heuristic.py`. Revise it to satisfy the updated business
+requirement in `docs/business_requirement.md`. Treat the files under `data/`
+as the source of truth for parameter values and schema.
 
-## What's Changed
+## What Changed
 
 {json_obj['revise_description']}
 
-Read the revised business requirement carefully and modify the model accordingly.
+Read the revised business requirement carefully and update the model
+accordingly.
 """
 
 
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    for fname in sorted(os.listdir(INPUT_DIR)):
-        if not fname.endswith(".json"):
+    for filename in sorted(os.listdir(INPUT_DIR)):
+        if not filename.endswith(".json"):
             continue
 
-        num = int(fname.replace("IndustryOR_", "").replace("_revise_business.json", ""))
-        workspace_id = f"i{num:03d}"
+        number = int(
+            filename.replace("IndustryOR_", "").replace(
+                "_revise_business.json", ""
+            )
+        )
+        workspace_id = f"i{number:03d}"
         workspace_dir = os.path.join(OUTPUT_DIR, workspace_id)
 
-        # Load JSON
-        with open(os.path.join(INPUT_DIR, fname)) as f:
-            obj = json.load(f)
+        with open(os.path.join(INPUT_DIR, filename), encoding="utf-8") as handle:
+            record = json.load(handle)
 
-        revised = obj["revised_workspace"]
+        revised = record["revised_workspace"]
+        for directory in ("docs", "data", "src"):
+            os.makedirs(os.path.join(workspace_dir, directory), exist_ok=True)
 
-        # Create folders
-        os.makedirs(os.path.join(workspace_dir, "docs"), exist_ok=True)
-        os.makedirs(os.path.join(workspace_dir, "data"), exist_ok=True)
-        os.makedirs(os.path.join(workspace_dir, "src"), exist_ok=True)
+        for name, content in revised["docs"].items():
+            with open(
+                os.path.join(workspace_dir, "docs", name), "w", encoding="utf-8"
+            ) as handle:
+                handle.write(content)
 
-        # Write docs
-        for doc_name, content in revised["docs"].items():
-            with open(os.path.join(workspace_dir, "docs", doc_name), "w") as f:
-                f.write(content)
+        with open(
+            os.path.join(workspace_dir, "docs", "revise_note.md"),
+            "w",
+            encoding="utf-8",
+        ) as handle:
+            handle.write(extract_revise_note(record))
 
-        # Write revise_note.md
-        with open(os.path.join(workspace_dir, "docs", "revise_note.md"), "w") as f:
-            f.write(extract_revise_note(obj))
+        for name, content in revised["data"].items():
+            with open(
+                os.path.join(workspace_dir, "data", name), "w", encoding="utf-8"
+            ) as handle:
+                handle.write(content)
 
-        # Write data
-        for csv_name, content in revised["data"].items():
-            with open(os.path.join(workspace_dir, "data", csv_name), "w") as f:
-                f.write(content)
+        for name, content in revised["src"].items():
+            with open(
+                os.path.join(workspace_dir, "src", name), "w", encoding="utf-8"
+            ) as handle:
+                handle.write(content)
 
-        # Write src (original model)
-        for src_name, content in revised["src"].items():
-            with open(os.path.join(workspace_dir, "src", src_name), "w") as f:
-                f.write(content)
-
-        # Write evaluation info for reference (not used by LLM)
-        eval_info = {
-            "revised_ground_truth": obj["evaluation"]["revised_ground_truth"],
-            "original_ground_truth": obj["evaluation"]["original_ground_truth"],
-            "tolerance": obj["evaluation"]["tolerance"]
+        evaluation = {
+            "revised_ground_truth": record["evaluation"]["revised_ground_truth"],
+            "original_ground_truth": record["evaluation"]["original_ground_truth"],
+            "tolerance": record["evaluation"]["tolerance"],
         }
-        with open(os.path.join(workspace_dir, "_eval_info.json"), "w") as f:
-            json.dump(eval_info, f, indent=2)
+        with open(
+            os.path.join(workspace_dir, "_eval_info.json"),
+            "w",
+            encoding="utf-8",
+        ) as handle:
+            json.dump(evaluation, handle, indent=2)
 
         print(f"Prepared workspace: {workspace_id}")
 

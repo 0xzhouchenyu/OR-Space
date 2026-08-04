@@ -13,7 +13,7 @@ must be complete programs for the selected solver API (`gurobipy`, `coptpy`,
 PuLP/CBC, or `highspy`). The public scorer does not translate one solver API
 to another and does not mount a backend behind a common PuLP model.
 
-For paper comparisons, pin this repository commit. Also report the model
+For reproducible comparisons, pin the repository commit and report the model
 endpoint, prompt, solver version, timeout, and, for Explain, the independent
 judge model.
 
