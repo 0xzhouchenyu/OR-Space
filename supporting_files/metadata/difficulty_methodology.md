@@ -10,11 +10,12 @@ All instances within a task use the same evaluation panel and protocol.
 
 ## Task-specific signals
 
-- **Build:** empirical percentage of submitted programs that pass executable
+- **Build:** empirical percentage of evaluated Build runs that pass executable
   objective evaluation.
-- **Revise:** empirical percentage of released Revise-code results that pass
+- **Revise:** empirical percentage of evaluated Revise-code runs that pass
   executable objective evaluation.
-- **Explain:** empirical mean final rubric score. Explain has a
+- **Explain:** empirical mean final rubric score across evaluated Explain runs.
+  Explain has a
   continuous score and no binary pass/fail threshold, so it is not converted
   into an artificial error count.
 
