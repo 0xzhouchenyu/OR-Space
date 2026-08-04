@@ -23,7 +23,7 @@ semantic items. The exact-match items contain 1,011 atomic entities.
 3. Compute Exact Coverage over all atomic entities and semantic items with
    equal atomic weight: `35 * hits / total`.
 4. The judge assigns Reasoning (0--35), Grounding (0--20), Answer Quality
-   (0--10), and a Hallucination Penalty (0--12).
+   (0--10), and a Hallucination Penalty (0--20).
 5. The final score is:
 
 ```text

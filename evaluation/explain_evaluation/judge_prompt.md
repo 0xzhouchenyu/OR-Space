@@ -18,7 +18,7 @@ Then score the complete answer on four positive/penalty dimensions:
   evidence, not generic knowledge or unstated assumptions.
 - Answer Quality (0--10): the answer is direct, coherent, concise, and uses
   the terminology and units needed by the question.
-- Hallucination Penalty (0--12): 0 when all substantive claims are supported;
+- Hallucination Penalty (0--20): 0 when all substantive claims are supported;
   use a positive penalty for unsupported variables, constraints, parameters,
   solver facts, values, or causal claims, with larger penalties for claims that
   alter the conclusion.
@@ -28,4 +28,3 @@ binary judgment for every supplied `llm_boolean_judgment` criterion id. Base
 every decision only on the supplied question, checklist, exact-match results,
 and verified evidence. Do not return an Exact Coverage or final score; the
 deterministic scorer computes both.
-

@@ -109,7 +109,7 @@ and [`supporting_files/metadata/empirical_difficulty.csv`](supporting_files/meta
 [`evaluation/`](evaluation/) contains task references and Explain rubrics. The
 Explain release includes normalized exact checks, semantic checklist judgments,
 evidence verification, the judge prompt and schema, and the final 35/35/20/10
-rubric with an unsupported-claim penalty of up to 12 points.
+rubric with an unsupported-claim penalty of up to 20 points.
 
 Representative model traces and their release metadata are documented under
 [`baseline_outputs/gurobi/`](baseline_outputs/gurobi/).
