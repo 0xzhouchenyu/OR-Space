@@ -44,7 +44,7 @@ paper snapshots, and representative model-run evidence.
 
 ```text
 .
-├── 01_build/ ...                  Benchmark construction and analysis code
+├── 01_build/ ... 03_revise_business/  Benchmark construction code
 ├── workspace_benchmark/           Build, Revise, and Explain workspaces
 ├── evaluation/                    Task references and Explain rubrics
 ├── evaluation_programs/           Build, Revise, and Explain evaluators
