@@ -50,7 +50,7 @@ and representative model-run evidence.
 ├── evaluation_programs/           Build, Revise, and Explain evaluators
 ├── supporting_files/              Metadata, task splits, and visual assets
 ├── baseline_outputs/gurobi/       Representative Gurobi traces for two models
-├── tools/                         Packaging and release-validation utilities
+├── tools/                         Staging and release-validation utilities
 └── tests/                         Evaluator tests
 ```
 
