@@ -35,7 +35,8 @@ Use this checklist before publishing or tagging a new OR-Space snapshot.
   rows for Revise, with the released relative tolerance.
 - Confirm that `rubrics.jsonl` contains 100 Explain rubrics.
 - Confirm that the Explain judge prompt, JSON schema, and scorer consistently
-  use the 35/35/20/10 rubric and a hallucination penalty of up to 20 points.
+  use the Appendix C protocol: exact-only Coverage, item-wise Reasoning,
+  anchored Grounding/Quality, and discrete 0/5/12/20 hallucination penalties.
 - Confirm that Build and Revise scorers require an `Optimal` status and compare
   the reported objective with the appropriate reference value.
 - Confirm that documentation describes solver-specific programs rather than a

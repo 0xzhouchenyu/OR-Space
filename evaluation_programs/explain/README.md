@@ -18,22 +18,49 @@ semantic items. The exact-match items contain 1,011 atomic entities.
 
 ## Score definition
 
-1. Normalize the candidate answer and check every required exact entity.
-2. Ask an independent judge for a binary decision on every semantic item.
-3. Compute Exact Coverage over all atomic entities and semantic items with
-   equal atomic weight: `35 * hits / total`.
-4. The judge assigns Reasoning (0--35), Grounding (0--20), Answer Quality
-   (0--10), and a Hallucination Penalty (0--20).
-5. The final score is:
+The authoritative specification is the OR-Space article, Appendix C and
+Appendix E (P6). Protocol identifier: `orspace-explain-appendix-c-v2`.
 
-```text
-clip(coverage + reasoning + grounding + answer_quality
-     - hallucination_penalty, 0, 100)
-```
+1. Compute Exact Coverage **only** over required `exact_match` target entities:
+   `coverage = 35 * exact_hits / exact_entities`.
+2. For each semantic criterion, collect `sub_coverage`, `sub_causality`, and
+   `sub_grounding` in {0, 1}, plus `sub_depth` in {0, 1, 2}. Each subgrade
+   includes a verbatim candidate-answer quote. Compute
+   `item = (coverage + causality + grounding + depth / 2) / 4` and
+   `reasoning = 35 * mean(item)`. Semantic items do not enter Exact Coverage.
+3. Grounding has four 0--3 anchored subdimensions; scale their sum from 12 to 20.
+   Answer Quality has four 0--3 anchored subdimensions; scale their sum from
+   12 to 10. See `judge_prompt.md` and `judgment_schema.json` for field names
+   and anchors. The judge reduces a Grounding subgrade by one level (floor 0)
+   if it cannot quote evidence; the returned score already includes that
+   adjustment, so aggregation does not subtract it again.
+4. Map hallucination levels `none/minor/material/severe` to **0/5/12/20**.
+   An empty unsupported-claim list forces `none` and a zero penalty.
+5. Compute `clip(coverage + reasoning + grounding + answer_quality - penalty, 0, 100)`.
 
-The scorer recomputes coverage and the final total; it does not trust totals
-returned by the judge. Missing semantic judgments are an error rather than an
-implicit zero or a skipped item.
+All released rubrics contain exact entities and at least one semantic item.
+For custom empty components, the historical v2 convention assigns the full 35
+points to that component. Missing or duplicate judgments, invalid subgrades,
+and obsolete aggregate-only judge outputs are errors, not silent zeros.
+Canonical records identify semantic items by `criterion_id`; historical v2
+records with zero-based `criterion_index` into the **full** checklist are also
+accepted. Scored records retain the subgrades, evidence quotes, penalty level,
+protocol version, judge identity, and prompt hash for audit.
+
+### Migration from the obsolete public scorer
+
+The earlier public code included semantic boolean hits in Exact Coverage,
+accepted direct aggregate dimension scores, and allowed arbitrary penalties
+between 0 and 20. That implementation is superseded by the article's protocol.
+Old `llm_boolean_judgments`/aggregate-score records cannot be converted to the
+required subgrades from totals alone and are rejected. Use stored structured
+v2 judgments when available. Otherwise any new judge run requires a separately
+audited experiment configuration and budget; this code update itself performs
+no model calls and recomputes no reported benchmark results.
+
+Published scores remain those reported in the OR-Space article. Updating the
+implementation does not replace the paper's result tables or claim that new
+endpoint calls reproduce historical scores exactly.
 
 ## Reproduction workflow
 
@@ -64,7 +91,7 @@ python evaluation_programs/explain/run_judge.py \
   --model gpt-5.1
 ```
 
-Then compute the released metric:
+Then compute the released metric locally (no API calls):
 
 ```bash
 python evaluation_programs/explain/score_explain.py \
@@ -82,3 +109,10 @@ prompt hash, and dataset commit. LLM-assisted scores can drift when the judge
 endpoint changes. `judge_prompt.md` and `judgment_schema.json` are the stable
 public protocol; the runner requires an explicit model instead of silently
 choosing one.
+
+The judge runner validates each structured output before saving it and rejects
+truncated responses. Resume refuses an existing output file with a different
+protocol version, prompt hash, or judge model; use a separate output file for
+a different configuration. Pin the answers, evidence, and input manifest as
+well when resuming an experiment. The JSON examples above invoke paid model
+services only at the explicitly shown `run_judge.py` step.

@@ -100,7 +100,10 @@ and [`supporting_files/metadata/empirical_difficulty.csv`](supporting_files/meta
 [`evaluation/`](evaluation/) contains task references and Explain rubrics. The
 Explain release includes normalized exact checks, semantic checklist judgments,
 evidence verification, the judge prompt and schema, and the final 35/35/20/10
-rubric with an unsupported-claim penalty of up to 20 points.
+rubric with discrete unsupported-claim penalties of 0/5/12/20 points. The
+implementation follows the article's Appendix C and scoring prompt P6;
+reported benchmark scores remain those in the OR-Space article. See the
+[Explain protocol and migration notes](evaluation_programs/explain/README.md#score-definition).
 
 ## Validation
 

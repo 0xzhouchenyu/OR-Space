@@ -93,8 +93,8 @@ def exact_results(answer: str, rubric: dict[str, Any]) -> list[dict[str, Any]]:
             text = str(entity)
             rows.append(
                 {
-                    "criterion_id": f"c{index}",
-                    "entity_id": f"c{index}.e{entity_index}",
+                    "criterion_id": str(item.get("criterion_id") or f"c{index}"),
+                    "entity_id": f"{item.get('criterion_id') or f'c{index}'}.e{entity_index}",
                     "entity": text,
                     "hit": int(entity_hit(answer, text)),
                 }
@@ -102,74 +102,133 @@ def exact_results(answer: str, rubric: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
-def _dimension(judgment: dict[str, Any], name: str, maximum: float) -> float:
-    value = judgment.get(name)
-    if not isinstance(value, dict) or not isinstance(value.get("score"), (int, float)):
-        raise ValueError(f"Judge output is missing numeric {name}.score")
-    score = float(value["score"])
-    if not 0.0 <= score <= maximum:
-        raise ValueError(f"{name}.score={score} is outside [0, {maximum}]")
-    return score
+PROTOCOL_VERSION = "orspace-explain-appendix-c-v2"
+GROUNDING_KEYS = (
+    "code_or_model_structure", "data_or_numeric_evidence",
+    "solver_record_evidence", "business_or_formulation_link",
+)
+QUALITY_KEYS = ("directness", "causal_explanation", "organization", "internal_consistency")
+REASONING_LIMITS = {"sub_coverage": 1, "sub_causality": 1, "sub_grounding": 1, "sub_depth": 2}
+PENALTIES = {"none": 0, "minor": 5, "material": 12, "severe": 20}
+
+
+def _subgrade(node: Any, name: str, maximum: int) -> float:
+    if not isinstance(node, dict):
+        raise ValueError(f"Missing structured subgrade: {name}")
+    score = node.get("score")
+    if isinstance(score, bool) or not isinstance(score, (int, float)):
+        raise ValueError(f"{name}.score must be an integer in [0, {maximum}]")
+    if not math.isfinite(score) or score != int(score) or not 0 <= score <= maximum:
+        raise ValueError(f"{name}.score must be an integer in [0, {maximum}]")
+    if not isinstance(node.get("evidence_quote"), str):
+        raise ValueError(f"Missing {name}.evidence_quote")
+    return float(score)
+
+
+def _anchored_dimension(judgment: dict[str, Any], name: str, keys: tuple[str, ...],
+                        maximum: float) -> float:
+    dimension = judgment.get(name)
+    if not isinstance(dimension, dict) or set(dimension) != set(keys):
+        raise ValueError(f"{name} must contain exactly these subdimensions: {keys}")
+    raw = sum(_subgrade(dimension[key], f"{name}.{key}", 3) for key in keys)
+    return raw / 12.0 * maximum
 
 
 def score_one(
     rubric: dict[str, Any], answer_row: dict[str, Any], judgment: dict[str, Any]
 ) -> dict[str, Any]:
+    if not isinstance(judgment, dict):
+        raise ValueError("Judge output must be an object")
+    if "llm_boolean_judgments" in judgment or "hallucination_penalty" in judgment:
+        raise ValueError("Obsolete judge output: use the Appendix C structured protocol")
+    if judgment.get("protocol_version", PROTOCOL_VERSION) != PROTOCOL_VERSION:
+        raise ValueError("Judge protocol_version does not match this scorer")
+    if not isinstance(judgment.get("notes"), str):
+        raise ValueError("Judge output is missing notes")
     answer = str(answer_row.get("answer") or "")
     exact = exact_results(answer, rubric)
+    checklist = rubric.get("checklist") or []
     semantic_items = {
-        f"c{index}": item
-        for index, item in enumerate(rubric.get("checklist") or [], 1)
+        str(item.get("criterion_id") or f"c{index}"): item
+        for index, item in enumerate(checklist, 1)
         if item.get("checklist_type") == "llm_boolean_judgment"
     }
-    raw_booleans = judgment.get("llm_boolean_judgments")
-    if not isinstance(raw_booleans, list):
-        raise ValueError("Judge output is missing llm_boolean_judgments")
-    boolean_by_id: dict[str, dict[str, Any]] = {}
-    for value in raw_booleans:
-        if not isinstance(value, dict):
-            raise ValueError("Each semantic judgment must be an object")
-        criterion_id = str(value.get("criterion_id") or "")
-        hit = value.get("hit")
-        if criterion_id in boolean_by_id or criterion_id not in semantic_items or hit not in (0, 1):
-            raise ValueError(f"Invalid or duplicate semantic judgment: {value!r}")
-        boolean_by_id[criterion_id] = value
-    missing = sorted(set(semantic_items) - set(boolean_by_id))
-    extra = sorted(set(boolean_by_id) - set(semantic_items))
-    if missing or extra:
-        raise ValueError(f"Semantic judgments do not match rubric; missing={missing}, extra={extra}")
-
-    boolean_results = [
-        {
-            "criterion_id": criterion_id,
-            "criterion": semantic_items[criterion_id].get("criterion"),
-            "hit": int(boolean_by_id[criterion_id]["hit"]),
-            "reason": str(boolean_by_id[criterion_id].get("reason") or ""),
-        }
-        for criterion_id in sorted(boolean_by_id, key=lambda value: int(value[1:]))
-    ]
-    atomic_total = len(exact) + len(boolean_results)
-    atomic_hits = sum(row["hit"] for row in exact) + sum(row["hit"] for row in boolean_results)
-    coverage = 35.0 * atomic_hits / atomic_total if atomic_total else 35.0
-    reasoning = _dimension(judgment, "reasoning", 35.0)
-    grounding = _dimension(judgment, "grounding", 20.0)
-    quality = _dimension(judgment, "answer_quality", 10.0)
-    penalty = _dimension(judgment, "hallucination_penalty", 20.0)
+    if len(semantic_items) != sum(item.get("checklist_type") == "llm_boolean_judgment"
+                                  for item in checklist):
+        raise ValueError("Duplicate semantic criterion IDs in rubric")
+    raw_items = judgment.get("reasoning_items")
+    if not isinstance(raw_items, list):
+        raise ValueError("Judge output is missing reasoning_items")
+    items_by_id: dict[str, dict[str, Any]] = {}
+    for item in raw_items:
+        if not isinstance(item, dict):
+            raise ValueError("Each reasoning item must be an object")
+        criterion_id = item.get("criterion_id")
+        # Historical v2 records use a zero-based index into the full checklist.
+        index = item.get("criterion_index")
+        if index is not None:
+            if type(index) is not int or not 0 <= index < len(checklist):
+                raise ValueError(f"Invalid criterion_index: {index!r}")
+            indexed_id = str(checklist[index].get("criterion_id") or f"c{index + 1}")
+            if criterion_id is not None and criterion_id != indexed_id:
+                raise ValueError("Conflicting criterion_id and criterion_index")
+            criterion_id = indexed_id
+        if (not isinstance(criterion_id, str) or criterion_id not in semantic_items
+                or criterion_id in items_by_id):
+            raise ValueError(f"Unknown or duplicate semantic criterion: {criterion_id!r}")
+        for key, maximum in REASONING_LIMITS.items():
+            _subgrade(item.get(key), f"{criterion_id}.{key}", maximum)
+        items_by_id[criterion_id] = item
+    missing = set(semantic_items) - set(items_by_id)
+    if missing:
+        raise ValueError(f"Missing reasoning items: {sorted(missing)}")
+    reasoning_items = []
+    for criterion_id in semantic_items:
+        item = items_by_id[criterion_id]
+        values = {key: float(item[key]["score"]) for key in REASONING_LIMITS}
+        item_score = (values["sub_coverage"] + values["sub_causality"]
+                      + values["sub_grounding"] + values["sub_depth"] / 2.0) / 4.0
+        reasoning_items.append({**item, "criterion_id": criterion_id, "item_score": item_score})
+    # Empty components follow the historical v2 convention; released rubrics
+    # all contain exact entities and at least one semantic item.
+    hits = sum(item["hit"] for item in exact)
+    coverage = 35.0 * hits / len(exact) if exact else 35.0
+    reasoning = (35.0 * sum(item["item_score"] for item in reasoning_items)
+                 / len(reasoning_items) if reasoning_items else 35.0)
+    grounding = _anchored_dimension(judgment, "grounding", GROUNDING_KEYS, 20.0)
+    quality = _anchored_dimension(judgment, "answer_quality", QUALITY_KEYS, 10.0)
+    hallucination = judgment.get("hallucination")
+    if not isinstance(hallucination, dict):
+        raise ValueError("Judge output is missing hallucination")
+    level = hallucination.get("level")
+    claims = hallucination.get("unsupported_claims")
+    if not isinstance(level, str) or level not in PENALTIES:
+        raise ValueError(f"Invalid hallucination level: {level!r}")
+    if not isinstance(claims, list) or any(not isinstance(c, str) or not c.strip() for c in claims):
+        raise ValueError("unsupported_claims must be a list of nonempty quoted strings")
+    if not claims:
+        level = "none"
+    elif level == "none":
+        raise ValueError("Nonempty unsupported_claims require a positive penalty level")
+    penalty = PENALTIES[level]
     total = max(0.0, min(100.0, coverage + reasoning + grounding + quality - penalty))
     return {
         "instance_id": rubric["instance_id"],
         "workspace_id": rubric["workspace_id"],
+        "protocol_version": PROTOCOL_VERSION,
         "score": total,
         "dimensions": {
-            "exact_coverage": coverage,
-            "reasoning": reasoning,
-            "grounding": grounding,
-            "answer_quality": quality,
+            "exact_coverage": coverage, "reasoning": reasoning,
+            "grounding": grounding, "answer_quality": quality,
             "hallucination_penalty": penalty,
         },
-        "coverage": {"hits": atomic_hits, "total": atomic_total},
+        "coverage": {"hits": hits, "total": len(exact)},
         "exact_match_results": exact,
-        "llm_boolean_judgments": boolean_results,
+        "reasoning_items": reasoning_items,
+        "grounding": judgment["grounding"],
+        "answer_quality": judgment["answer_quality"],
+        "hallucination": {**hallucination, "level": level},
+        "notes": judgment["notes"],
         "judge_model": judgment.get("judge_model"),
         "judge_prompt_sha256": judgment.get("judge_prompt_sha256"),
     }
@@ -207,6 +266,7 @@ def main() -> int:
     mean = sum(row["score"] for row in scored) / len(scored) if scored else 0.0
     summary = {
         "metric": "or_space_explain_five_dimensional_rubric",
+        "protocol_version": PROTOCOL_VERSION,
         "scored_instances": len(scored),
         "rubric_instances": len(rubrics),
         "rubric_mean": mean,

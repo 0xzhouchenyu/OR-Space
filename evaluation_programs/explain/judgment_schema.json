@@ -1,46 +1,332 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "OR-Space Explain judge output",
+  "title": "OR-Space Explain Appendix C v2 judge output",
   "type": "object",
   "required": [
-    "llm_boolean_judgments",
-    "reasoning",
+    "reasoning_items",
     "grounding",
     "answer_quality",
-    "hallucination_penalty"
+    "hallucination",
+    "notes"
   ],
   "properties": {
-    "llm_boolean_judgments": {
+    "reasoning_items": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["criterion_id", "hit", "reason"],
         "properties": {
-          "criterion_id": {"type": "string", "pattern": "^c[0-9]+$"},
-          "hit": {"type": "integer", "enum": [0, 1]},
-          "reason": {"type": "string"}
+          "criterion_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "criterion_index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sub_coverage": {
+            "type": "object",
+            "required": [
+              "score",
+              "evidence_quote"
+            ],
+            "properties": {
+              "score": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "evidence_quote": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "sub_causality": {
+            "type": "object",
+            "required": [
+              "score",
+              "evidence_quote"
+            ],
+            "properties": {
+              "score": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "evidence_quote": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "sub_grounding": {
+            "type": "object",
+            "required": [
+              "score",
+              "evidence_quote"
+            ],
+            "properties": {
+              "score": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "evidence_quote": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "sub_depth": {
+            "type": "object",
+            "required": [
+              "score",
+              "evidence_quote"
+            ],
+            "properties": {
+              "score": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2
+              },
+              "evidence_quote": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "missing_or_wrong": {
+            "type": "string"
+          }
         },
+        "required": [
+          "sub_coverage",
+          "sub_causality",
+          "sub_grounding",
+          "sub_depth"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "criterion_id"
+            ]
+          },
+          {
+            "required": [
+              "criterion_index"
+            ]
+          }
+        ],
         "additionalProperties": false
       }
     },
-    "reasoning": {"$ref": "#/$defs/reasoningScore"},
-    "grounding": {"$ref": "#/$defs/groundingScore"},
-    "answer_quality": {"$ref": "#/$defs/qualityScore"},
-    "hallucination_penalty": {"$ref": "#/$defs/penaltyScore"}
-  },
-  "$defs": {
-    "reasoningScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 35}}}]},
-    "groundingScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 20}}}]},
-    "qualityScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 10}}}]},
-    "penaltyScore": {"allOf": [{"$ref": "#/$defs/scored"}, {"properties": {"score": {"maximum": 20}}}]},
-    "scored": {
+    "grounding": {
       "type": "object",
-      "required": ["score", "reason"],
+      "required": [
+        "code_or_model_structure",
+        "data_or_numeric_evidence",
+        "solver_record_evidence",
+        "business_or_formulation_link"
+      ],
       "properties": {
-        "score": {"type": "number", "minimum": 0},
-        "reason": {"type": "string"}
+        "code_or_model_structure": {
+          "type": "object",
+          "required": [
+            "score",
+            "evidence_quote"
+          ],
+          "properties": {
+            "score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "evidence_quote": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "data_or_numeric_evidence": {
+          "type": "object",
+          "required": [
+            "score",
+            "evidence_quote"
+          ],
+          "properties": {
+            "score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "evidence_quote": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "solver_record_evidence": {
+          "type": "object",
+          "required": [
+            "score",
+            "evidence_quote"
+          ],
+          "properties": {
+            "score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "evidence_quote": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "business_or_formulation_link": {
+          "type": "object",
+          "required": [
+            "score",
+            "evidence_quote"
+          ],
+          "properties": {
+            "score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "evidence_quote": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
       },
       "additionalProperties": false
+    },
+    "answer_quality": {
+      "type": "object",
+      "required": [
+        "directness",
+        "causal_explanation",
+        "organization",
+        "internal_consistency"
+      ],
+      "properties": {
+        "directness": {
+          "type": "object",
+          "required": [
+            "score",
+            "evidence_quote"
+          ],
+          "properties": {
+            "score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "evidence_quote": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "causal_explanation": {
+          "type": "object",
+          "required": [
+            "score",
+            "evidence_quote"
+          ],
+          "properties": {
+            "score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "evidence_quote": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "organization": {
+          "type": "object",
+          "required": [
+            "score",
+            "evidence_quote"
+          ],
+          "properties": {
+            "score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "evidence_quote": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "internal_consistency": {
+          "type": "object",
+          "required": [
+            "score",
+            "evidence_quote"
+          ],
+          "properties": {
+            "score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "evidence_quote": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "hallucination": {
+      "type": "object",
+      "required": [
+        "level",
+        "unsupported_claims"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "none",
+            "minor",
+            "material",
+            "severe"
+          ]
+        },
+        "unsupported_claims": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "notes": {
+      "type": "string"
+    },
+    "instance_id": {
+      "type": "string"
+    },
+    "judge_model": {
+      "type": "string"
+    },
+    "judge_prompt_sha256": {
+      "type": "string"
+    },
+    "protocol_version": {
+      "const": "orspace-explain-appendix-c-v2"
     }
   },
   "additionalProperties": false

@@ -24,3 +24,12 @@ an audit aid and concise content reference; it is not defined as a guaranteed
 
 Runnable preparation, judge, and aggregation scripts are in
 [`evaluation_programs/explain/`](../../evaluation_programs/explain/).
+
+The scoring specification follows the article's Appendix C and P6:
+Exact Coverage uses only exact entities; semantic subgrades form Reasoning;
+Grounding and Answer Quality use four anchored subdimensions each; hallucination
+levels map to 0/5/12/20 points. The synchronized judge prompt is shared with
+`evaluation_programs/explain/`; its JSON schema is
+[`judgment_schema.json`](../../evaluation_programs/explain/judgment_schema.json).
+The superseded boolean-plus-aggregate protocol is not the paper metric.
+Reported benchmark scores remain those in the OR-Space article.

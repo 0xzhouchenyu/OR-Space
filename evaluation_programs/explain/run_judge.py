@@ -11,6 +11,8 @@ import time
 from pathlib import Path
 from typing import Any
 
+from score_explain import PROTOCOL_VERSION, score_one
+
 
 def load_rows(path: Path) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
@@ -33,6 +35,20 @@ def main() -> int:
     parser.add_argument("--retries", type=int, default=3)
     args = parser.parse_args()
 
+    prompt = args.prompt.read_text(encoding="utf-8")
+    prompt_hash = hashlib.sha256(prompt.encode()).hexdigest()
+    completed: set[str] = set()
+    if args.output.exists():
+        for row in load_rows(args.output):
+            if (row.get("protocol_version") != PROTOCOL_VERSION
+                    or row.get("judge_prompt_sha256") != prompt_hash
+                    or row.get("judge_model") != args.model):
+                raise SystemExit("Existing judgments use a different protocol, prompt, or model; "
+                                 "select a new output file instead of mixing records")
+            instance_id = str(row.get("instance_id") or "")
+            if not instance_id or instance_id in completed:
+                raise SystemExit("Existing judgments contain a missing or duplicate instance_id")
+            completed.add(instance_id)
     try:
         from openai import OpenAI
     except ImportError as exc:
@@ -45,11 +61,6 @@ def main() -> int:
         client_kwargs["base_url"] = args.base_url
     client = OpenAI(**client_kwargs)
 
-    prompt = args.prompt.read_text(encoding="utf-8")
-    prompt_hash = hashlib.sha256(prompt.encode()).hexdigest()
-    completed: set[str] = set()
-    if args.output.exists():
-        completed = {str(row.get("instance_id")) for row in load_rows(args.output)}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("a", encoding="utf-8") as output:
         for payload in load_rows(args.inputs):
@@ -69,11 +80,19 @@ def main() -> int:
                         max_completion_tokens=args.max_completion_tokens,
                         response_format={"type": "json_object"},
                     )
+                    if response.choices[0].finish_reason != "stop":
+                        raise ValueError("Incomplete judge response; no score was saved")
                     content = response.choices[0].message.content or ""
                     judgment = json.loads(content)
+                    score_one(
+                        {"instance_id": instance_id, "workspace_id": instance_id,
+                         "checklist": payload["checklist"]},
+                        {"answer": payload["answer"]}, judgment,
+                    )
                     judgment.update(
                         {
                             "instance_id": instance_id,
+                            "protocol_version": PROTOCOL_VERSION,
                             "judge_model": args.model,
                             "judge_prompt_sha256": prompt_hash,
                         }
